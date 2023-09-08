@@ -1,4 +1,4 @@
-# Dreszcz - Gra Paragrafowa
+# Dreszcz - Gra Paragrafowa (w przyotowaniu)
 Autor: Jacek Ciesielski.
 
 ## Opis Główny
@@ -9,6 +9,7 @@ Gra "Dreszcz" została napisana w języku Python 3 i korzysta z prostego interfe
 
 Aby ją uruchomić, będziesz potrzebować:
 Python 3.10 zainstalowanego na Twoim komputerze i dostępu do konsoli lub terminala.
+
 ## Instrukcje Uruchomienia
 - Pobierz repozytorium gry na swój komputer.
 
@@ -26,6 +27,7 @@ Python 3.10 zainstalowanego na Twoim komputerze i dostępu do konsoli lub termin
 
 ## Instrukcje i Zasady Gry
 Gra jest oparta na wyborach. Po przeczytaniu opisu sytuacji, będziesz musiał/a wybrać jedną z dostępnych opcji, wpisując jej numer lub odpowiednią komendę.
+
 Twoje wybory wpłyną na rozwój historii i mogą mieć różne konsekwencje. Bądź ostrożny/a!
 Aby zakończyć grę, wpisz "quit" lub "q" w dowolnym momencie.
 
