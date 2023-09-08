@@ -42,7 +42,9 @@ class Actions:
             print("Potwór ginie")
         else:
             print(
-                f"Wytrzymałość gracza: {player.stamina} vs. Wytrzymałość potwora: {monster.stamina}")
+                f"Wytrzymałość gracza: {player.stamina} vs. "
+                f"Wytrzymałość potwora: {monster.stamina}"
+            )
 
     def fight_round(self, player, monster):
         got_luck = player.am_i_lucky()
@@ -50,7 +52,10 @@ class Actions:
         player_attack_force = player.attack()
 
         if monster_attack_force > player_attack_force:
-            print(f"Monster's attack outcome: {monster.name} > Hero = Hero gets injured.")
+            print(
+                f"Monster's attack outcome: {monster.name} > Hero = Hero gets "
+                f"injured."
+            )
             if self.make_luck_test(player):
                 if got_luck:
                     print("You were lucky! Hero stamina -1")
@@ -63,7 +68,10 @@ class Actions:
                 player.stamina -= 2
 
         elif player_attack_force > monster_attack_force:
-            print(f"Monster's attack outcome: {monster.name} < Hero = Monster gets hurt.")
+            print(
+                f"Monster's attack outcome: {monster.name} < Hero = Monster "
+                f"gets hurt."
+            )
             if self.make_luck_test(player):
                 if got_luck:
                     print("You were lucky! Monster stamina -4")
@@ -79,13 +87,17 @@ class Actions:
 
     @staticmethod
     def make_luck_test(player):
-        luck_input = input(f"Do you want to test your luck? [t]/[n] Current LUCK level: {player.luck}.")
+        luck_input = input(
+            f"Do you want to test your luck? [t]/[n] Current LUCK level: "
+            f"{player.luck}."
+        )
         return luck_input == "t"
 
     @staticmethod
     def monster_attack_narrative():
         attacks_pl = [
-            "Potwór rzucił się na Ciebie, rozszarpując Cię swoimi ostrymi pazurami.",
+            "Potwór rzucił się na Ciebie, rozszarpując Cię swoimi ostrymi "
+            "pazurami.",
             "Potężny cios potwora spadł na Ciebie, powodując Ci druzgocące obrażenia.",
             "Potwór wystrzelił strumień ognia w Twoim kierunku, spalając wszystko na swojej drodze.",
             "Potwór chwycił Ciebie swoimi ogromnymi szczękami, miażdżąc Cię w swoim żelaznym uścisku.",
@@ -98,7 +110,7 @@ class Actions:
             "Potwór otoczył się chmurą ciemności, wysysając energię życiową Ciebie, osłabiając Cię z każdą sekundą.",
             "Potwór rzucił się na Ciebie z potężnym zamachem ogromnego młota, powodując wstrząsające wstrząsy.",
             "Potwór zwinął swoje ciało wokół Ciebie, dusząc Cię i pozbawiając Cię możliwości ruchu.",
-            "Potwór wydał przerażający ryk, który sparaliżował Ciebie na chwilę, dając mu przewagę w ataku."
+            "Potwór wydał przerażający ryk, który sparaliżował Ciebie na chwilę, dając mu przewagę w ataku.",
         ]
         return random.choice(attacks_pl)
 
@@ -126,7 +138,7 @@ class Actions:
             "Twoje precyzyjne cięcia mieczem są nieustępliwe, doprowadzając potwora na skraj wyczerpania.",
             "Z impetem atakujesz potwora, siekając go bezlitosnymi ciosami miecza.",
             "Twój cios mieczem trafia potwora w kluczowe miejsce, sprawiając, że traci on siły i trudności w "
-            "poruszaniu się."
+            "poruszaniu się.",
         ]
 
         return random.choice(attacks_pl)
@@ -155,7 +167,7 @@ class Actions:
             "Obaj trwacie w nieustępliwej walce, nie pozwalając przeciwnikowi zdobyć przewagi.",
             "Potwór i ty nadal zmierzacie się w walce, żaden z was nie ustępuje przed drugim.",
             "Walka między tobą a potworem trwa nadal, obaj niezłomnie dążycie do zwycięstwa.",
-            "Potwór nie ustępuje, ale ty również nie rezygnujesz z walki, co prowadzi do utrzymania się impasu."
+            "Potwór nie ustępuje, ale ty również nie rezygnujesz z walki, co prowadzi do utrzymania się impasu.",
         ]
 
         return random.choice(outcomes_pl)
@@ -354,7 +366,8 @@ class Player(Creature):
             "Aveline Swiftarrow",
             "Darius Emberheart",
             "Seraphiel Dawnlight",
-            "Ashlyn Shadowthorn"]
+            "Ashlyn Shadowthorn",
+        ]
         return random.choice(fantasy_names)
 
     def choose_potion(self):
@@ -395,7 +408,10 @@ class Player(Creature):
             print("Nie masz eliksiru zręczności")
 
     def wanna_check_sss(self):
-        asking = input(f"Chcesz sprawdzić swoje szczęście? [t]/[n] Obecny poziom SZCZĘŚCIA wynosi {self.luck}.")
+        asking = input(
+            f"Chcesz sprawdzić swoje szczęście? [t]/[n] "
+            f"Obecny poziom SZCZĘŚCIA wynosi {self.luck}."
+        )
         match asking:
             case "t":
                 return True
@@ -412,33 +428,35 @@ class Player(Creature):
     def run(self):
         if self.wanna_check_sss():
             if self.am_i_lucky():
-                print("Miałeś szczęście, potwór ledwo drasnął twoje plecy. Wytrzymałość -1")
+                print(
+                    "Miałeś szczęście, potwór ledwo drasnął twoje plecy. "
+                    "Wytrzymałość -1"
+                )
                 self.stamina -= 1
             else:
-                print("Masz pecha. Kiedy zacząłeś uciekać potwór zdążył w ostaniej chwili zadać ci głęboką ranę."
-                      "Wytrzymałość -3")
+                print(
+                    "Masz pecha. "
+                    "Kiedy zacząłeś uciekać potwór zdążył w ostaniej chwili "
+                    "zadać ci głęboką ranę."
+                    "Wytrzymałość -3"
+                )
                 self.stamina -= 3
         else:
-            print("Kiedy odwróciłeś się aby uciec, potwór zdążył uderzyć po raz ostatni, zadając ci bolesną ranę."
-                  "Wytrzymałość -2")
+            print(
+                "Kiedy odwróciłeś się aby uciec, potwór zdążył uderzyć po "
+                "raz ostatni, zadając ci bolesną ranę."
+                "Wytrzymałość -2"
+            )
             self.stamina -= 2
 
 
 class Inventory:
     def __init__(self):
-        self.sword = {
-            "plain sword": 1
-        }
-        self.shield = {
-            "plain shield": 1
-        }
+        self.sword = {"plain sword": 1}
+        self.shield = {"plain shield": 1}
         self.bag = {}
-        self.lantern = 'lantern'
-        self.potion = {
-            "agility": 0,
-            "stamina": 0,
-            "luck": 0
-        }
+        self.lantern = "lantern"
+        self.potion = {"agility": 0, "stamina": 0, "luck": 0}
         self.food = 8
         self.gold = 0
 
@@ -452,7 +470,9 @@ class Monster(Creature):
         self.monster_name = monster_data[1]
         self.paragraph = monster_data[0]
         self.name = monster_data[1]
-        self.agility, self.stamina = self.monsters_list[self.monster_name][self.paragraph]
+        self.agility, self.stamina = self.monsters_list[self.monster_name][
+            self.paragraph
+        ]
 
     def __str__(self):
         return (
