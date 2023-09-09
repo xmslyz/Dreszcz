@@ -20,7 +20,7 @@ Python 3.10 zainstalowanego na Twoim komputerze i dostępu do konsoli lub termin
 
 - Uruchom grę, wpisując następujące polecenie w konsoli:
 
-```python game.py```
+```python main.py```
 
 - Teraz rozpocznij przygodę w świecie "Dreszcz"!
 

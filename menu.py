@@ -4,9 +4,11 @@ import os
 def intro(player):
     return (
         f"Hej, {player.name}!\n"
-        "To o Tobie mówią, że w Twoich żyłach zamiast krwi płynie lodowata woda, "
+        "To o Tobie mówią, "
+        "że w Twoich żyłach zamiast krwi płynie lodowata woda, "
         "a twoje mięśnie są z najszlachetniejszej stali?\n"
-        "Jeśli tak, spójrz w stronę zachodzącego słońca. Tam, na rubieżach królestwa "
+        "Jeśli tak, spójrz w stronę zachodzącego słońca. "
+        "Tam, na rubieżach królestwa "
         "Almanhagor, rozpoczynają się niezbadane Podziemia. "
         "Tylko Ty możesz wydrzeć ich  Wielką Tajemnicę. Ruszaj!\n\n"
     )
