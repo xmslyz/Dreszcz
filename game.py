@@ -17,9 +17,10 @@ def start_new_game():
 
 def load_last_saved_game():
     global visited
+    global last_valid_paragraph
     if os.path.exists("save.txt"):
         with open("save.txt") as sv:
-            last_paragraph = sv.read().strip()
+            last_valid_paragraph = sv.read().strip()
             if os.path.exists("visited.json"):
                 with open("visited.json") as vis:
                     visited = json.load(vis)
@@ -36,7 +37,6 @@ def is_valid_move(number):
 
 
 def quit_game():
-    global s, v
     print("Do zobaczenia")
     with open("save.txt", "w", encoding="utf-8") as s:
         s.write(last_valid_paragraph)
@@ -59,6 +59,28 @@ def in_game_menu():
             print("Nieprawidłowy znak. Spróbuj ponownie.")
 
 
+def main_menu():
+    global last_valid_paragraph
+    while True:
+        paragraph = input("Podaj numer: ")
+        if paragraph == "q":
+            quit_game()
+        elif paragraph == "m":
+            in_game_menu()
+
+        elif paragraph.isdigit() and paragraph in book:
+            last_valid_paragraph = paragraph
+            if paragraph not in visited:
+                # show actual paragraph
+                print(f"[{paragraph}] [] {book[paragraph]}")
+                # add paragraph to visited places
+                visited[paragraph] = True
+            else:
+                print(f"[{paragraph}] [+] {book[paragraph]}")
+        else:
+            print("Nieprawidłowy numer paragrafu. Spróbuj ponownie.")
+
+
 try:
     # open last saved or first
     while True:
@@ -78,24 +100,7 @@ try:
         else:
             print("Zła komenda. Spróbuj jeszcze raz.")
 
-    while True:
-        paragraph = input("Podaj numer: ")
-        if paragraph == "q":
-            quit_game()
-        elif paragraph == "m":
-            in_game_menu()
-
-        elif paragraph.isdigit() and paragraph in book:
-            last_valid_paragraph = paragraph
-            if paragraph not in visited:
-                # show actual paragraph
-                print(f"[{paragraph}] [] {book[paragraph]}")
-                # add paragraph to visited places
-                visited[paragraph] = True
-            else:
-                print(f"[{paragraph}] [+] {book[paragraph]}")
-        else:
-            print("Nieprawidłowy numer paragrafu. Spróbuj ponownie.")
+    main_menu()
 
 except FileNotFoundError:
     print("Nie znaleziono pliku gry.")
