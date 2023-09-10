@@ -1,9 +1,11 @@
 import json
 import os
+import re
 
 # game play
 last_valid_paragraph: str = "1"
 visited = {}
+
 # open game file
 with open("dreszcz.json") as f:
     book = json.load(f)
@@ -23,6 +25,14 @@ def load_last_saved_game():
                     visited = json.load(vis)
     else:
         start_new_game()
+
+
+def is_valid_move(number):
+    """checks if introduced number is valid next move"""
+    for key, value in book.items():
+        if key == last_valid_paragraph:
+            if number in re.findall(r"(?<!:)\b\d+\b", value):
+                return True
 
 
 try:
