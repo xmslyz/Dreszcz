@@ -35,6 +35,30 @@ def is_valid_move(number):
                 return True
 
 
+def quit_game():
+    global s, v
+    print("Do zobaczenia")
+    with open("save.txt", "w", encoding="utf-8") as s:
+        s.write(last_valid_paragraph)
+    with open("visited.json", "w") as v:
+        json.dump(visited, v, indent=4)
+    exit()
+
+
+def in_game_menu():
+    while True:
+        menu_input = input("Menu:\n"
+                           "     [v] pokaż odwiedzone paragrafy\n"
+                           "     >>> ")
+        if menu_input == "v":
+            print(sorted([int(x) for x in visited.keys()]))
+            break
+        if menu_input == "q":
+            quit_game()
+        else:
+            print("Nieprawidłowy znak. Spróbuj ponownie.")
+
+
 try:
     # open last saved or first
     while True:
@@ -56,31 +80,10 @@ try:
 
     while True:
         paragraph = input("Podaj numer: ")
-
         if paragraph == "q":
-            print("Do zobaczenia")
-            with open("save.txt", "w", encoding="utf-8") as s:
-                s.write(last_valid_paragraph)
-            with open("visited.json", "w") as v:
-                json.dump(visited, v, indent=4)
-            exit()
+            quit_game()
         elif paragraph == "m":
-            while True:
-                menu_input = input("Menu:\n"
-                                   "     [v] pokaż odwiedzone paragrafy\n"
-                                   "     >>> ")
-                if menu_input == "v":
-                    print(sorted([int(x) for x in visited.keys()]))
-                    break
-                if menu_input == "q":
-                    print("Do zobaczenia")
-                    with open("save.txt", "w", encoding="utf-8") as s:
-                        s.write(last_valid_paragraph)
-                    with open("visited.json", "w") as v:
-                        json.dump(visited, v, indent=4)
-                    exit()
-                else:
-                    print("Nieprawidłowy znak. Spróbuj ponownie.")
+            in_game_menu()
 
         elif paragraph.isdigit() and paragraph in book:
             last_valid_paragraph = paragraph
