@@ -14,13 +14,13 @@ def start_new_game():
 
 
 def load_last_saved_game():
-    global save, v, visited
+    global visited
     if os.path.exists("save.txt"):
-        with open("save.txt") as save:
-            last_paragraph = save.read().strip()
+        with open("save.txt") as sv:
+            last_paragraph = sv.read().strip()
             if os.path.exists("visited.json"):
-                with open("visited.json") as v:
-                    visited = json.load(v)
+                with open("visited.json") as vis:
+                    visited = json.load(vis)
     else:
         start_new_game()
 
@@ -28,8 +28,10 @@ def load_last_saved_game():
 try:
     # open last saved or first
     while True:
-        user_input = input("Nowa gra [n] czy wczytać ostatni zapis [l]?"
-                           "[q] zawsze aby zakończyć: ")
+        user_input = input("Nowa gra [N] czy wczytać ostatni zapis [L]?\n"
+                           "Wybierz [Q] aby zakończyć w dowolnym momencie.\n"
+                           ">>> ").lower()
+
         if user_input == "n":
             start_new_game()
             break
@@ -38,6 +40,7 @@ try:
             break
         elif user_input == "q":
             exit()
+
         else:
             print("Zła komenda. Spróbuj jeszcze raz.")
 
@@ -46,19 +49,38 @@ try:
 
         if paragraph == "q":
             print("Do zobaczenia")
-            with open("save.txt", "w", encoding="utf-8") as save:
-                save.write(last_valid_paragraph)
+            with open("save.txt", "w", encoding="utf-8") as s:
+                s.write(last_valid_paragraph)
             with open("visited.json", "w") as v:
                 json.dump(visited, v, indent=4)
-            break
+            exit()
+        elif paragraph == "m":
+            while True:
+                menu_input = input("Menu:\n"
+                                   "     [v] pokaż odwiedzone paragrafy\n"
+                                   "     >>> ")
+                if menu_input == "v":
+                    print(sorted([int(x) for x in visited.keys()]))
+                    break
+                if menu_input == "q":
+                    print("Do zobaczenia")
+                    with open("save.txt", "w", encoding="utf-8") as s:
+                        s.write(last_valid_paragraph)
+                    with open("visited.json", "w") as v:
+                        json.dump(visited, v, indent=4)
+                    exit()
+                else:
+                    print("Nieprawidłowy znak. Spróbuj ponownie.")
+
         elif paragraph.isdigit() and paragraph in book:
             last_valid_paragraph = paragraph
             if paragraph not in visited:
+                # show actual paragraph
+                print(f"[{paragraph}] [] {book[paragraph]}")
                 # add paragraph to visited places
                 visited[paragraph] = True
-                # show actual paragraph
-                print(f"[{paragraph}] [{'+' if visited[paragraph] else ''}]"
-                      f" {book[paragraph]}")
+            else:
+                print(f"[{paragraph}] [+] {book[paragraph]}")
         else:
             print("Nieprawidłowy numer paragrafu. Spróbuj ponownie.")
 
