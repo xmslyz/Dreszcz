@@ -1,11 +1,11 @@
 import json
 import re
 from itertools import combinations
-import menu
+import _menu
 import os
 from colorama import Fore, Style
 
-from player import Player, Actions
+from _player import Player, Actions
 
 
 class Game:

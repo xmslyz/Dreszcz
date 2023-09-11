@@ -1,4 +1,4 @@
-from main import Game
+from _main import Game
 
 
 class Paragraphs:

@@ -1,6 +1,6 @@
 import unittest
 import random
-from player import Dice
+from _player import Dice
 
 
 class TestDice(unittest.TestCase):

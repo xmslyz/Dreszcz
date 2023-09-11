@@ -16,12 +16,12 @@ def step1():
                                     '[document]']:
             txt += text
 
-    with open("dreszcz1.txt", "w", encoding='utf-8') as f:
+    with open("book/dreszcz1.txt", "w", encoding='utf-8') as f:
         f.write(txt)
 
 
 def step2():
-    with open("dreszcz1.txt", encoding='utf-8') as f:
+    with open("book/dreszcz1.txt", encoding='utf-8') as f:
         old_txt = f.readlines()
 
     txt = ''
@@ -34,12 +34,12 @@ def step2():
         except Exception:
                 pass
 
-    with open("dreszcz2.txt", "w", encoding='utf-8') as f:
+    with open("book/dreszcz2.txt", "w", encoding='utf-8') as f:
         f.write(txt)
 
 
 def step3():
-    with open("dreszcz2.txt", encoding='utf-8') as f:
+    with open("book/dreszcz2.txt", encoding='utf-8') as f:
         old_txt = f.readlines()
 
     txt = ''
@@ -52,12 +52,12 @@ def step3():
         except Exception:
             pass
 
-    with open("dreszcz3.txt", "w", encoding='utf-8') as f:
+    with open("book/dreszcz3.txt", "w", encoding='utf-8') as f:
         f.write(txt)
 
 
 def step4():
-    with open("dreszcz3.txt", encoding='utf-8') as f:
+    with open("book/dreszcz3.txt", encoding='utf-8') as f:
         old_txt = f.readlines()
 
     txt = ''
@@ -83,7 +83,7 @@ def step4():
 
 
 def step5():
-    with open("dreszcz3.txt", encoding='utf-8') as f:
+    with open("book/dreszcz3.txt", encoding='utf-8') as f:
         old_txt = f.readlines()
 
     txt = ''
@@ -97,12 +97,12 @@ def step5():
         except:
             pass
 
-    with open("dreszcz4.txt", "w", encoding='utf-8') as f:
+    with open("book/dreszcz4.txt", "w", encoding='utf-8') as f:
         f.write(txt)
 
 
 def step6():
-    with open("dreszcz4.txt", encoding='utf-8') as f:
+    with open("book/dreszcz4.txt", encoding='utf-8') as f:
         old_txt = f.readlines()
 
     txt = ''
@@ -115,12 +115,12 @@ def step6():
         except:
             pass
 
-    with open("dreszcz5.txt", "w", encoding='utf-8') as f:
+    with open("book/dreszcz5.txt", "w", encoding='utf-8') as f:
         f.write(txt)
 
 
 def step7():
-    with open("dreszcz5.txt", encoding='utf-8') as f:
+    with open("book/dreszcz5.txt", encoding='utf-8') as f:
         old_txt = f.readlines()
 
     txt = ''
@@ -130,12 +130,12 @@ def step7():
         except:
             pass
 
-    with open("dreszcz6.txt", "w", encoding='utf-8') as f:
+    with open("book/dreszcz6.txt", "w", encoding='utf-8') as f:
         f.write(txt)
 
 
 def step8():
-    with open("dreszcz6.txt", encoding='utf-8') as f:
+    with open("book/dreszcz6.txt", encoding='utf-8') as f:
         txt = f.readlines()
 
     dreszcz = {}
@@ -150,7 +150,7 @@ def step8():
 
 def step9():
     # Open the text file
-    with open('dreszcz6.txt', 'r', encoding='utf-8') as file:
+    with open('book/dreszcz6.txt', 'r', encoding='utf-8') as file:
         text = file.read()
 
     # Create a dictionary to store the creature information
