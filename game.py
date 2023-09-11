@@ -81,26 +81,33 @@ def main_menu():
             print("Nieprawidłowy numer paragrafu. Spróbuj ponownie.")
 
 
-try:
-    # open last saved or first
-    while True:
-        user_input = input("Nowa gra [N] czy wczytać ostatni zapis [L]?\n"
-                           "Wybierz [Q] aby zakończyć w dowolnym momencie.\n"
-                           ">>> ").lower()
+def game_initialization():
+    try:
+        # open last saved or first
+        while True:
+            user_input = input(
+                "Nowa gra [N] czy wczytać ostatni zapis [L]?\n"
+                "Wybierz [Q] aby zakończyć w dowolnym momencie.\n"
+                ">>> "
+            ).lower()
 
-        if user_input == "n":
-            start_new_game()
-            break
-        elif user_input == "l":
-            load_last_saved_game()
-            break
-        elif user_input == "q":
-            exit()
+            if user_input == "n":
+                start_new_game()
+                break
+            elif user_input == "l":
+                load_last_saved_game()
+                break
+            elif user_input == "q":
+                quit_game()
 
-        else:
-            print("Zła komenda. Spróbuj jeszcze raz.")
+            else:
+                print("Zła komenda. Spróbuj jeszcze raz.")
 
-    main_menu()
+        main_menu()
 
-except FileNotFoundError:
-    print("Nie znaleziono pliku gry.")
+    except FileNotFoundError:
+        print("Nie znaleziono pliku gry.")
+
+
+if __name__ == "__main__":
+    game_initialization()
