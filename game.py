@@ -6,9 +6,13 @@ import re
 last_valid_paragraph: str = "1"
 visited = {}
 
-# open game file
-with open("dreszcz.json") as f:
-    book = json.load(f)
+
+def open_book():
+    global book
+    # open game file
+    with open("dreszcz.json") as f:
+        book = json.load(f)
+    return book
 
 
 def start_new_game():
@@ -110,4 +114,5 @@ def game_initialization():
 
 
 if __name__ == "__main__":
+    book = open_book()
     game_initialization()

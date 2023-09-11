@@ -1,3 +1,4 @@
+import json
 import random
 
 
@@ -45,3 +46,29 @@ def play_cards(hero, with_luck: bool):
     #         self.inventory.gold += k2
     #
     # print(self.inventory.gold)
+
+
+def get_monster_atributes(paragraph):
+    with open("dreszcz.json") as f:
+        book = json.load(f)
+    prickle = book[paragraph].split(" ")
+
+    index_nums = []
+    for i, word in enumerate(prickle):
+        if str(word).isupper():
+            index_nums.append(i)
+
+    monsters = []
+
+    consecutive_lists = []
+    for i in range(len(index_nums) - 2):
+        if index_nums[i] + 1 == index_nums[i + 1] and index_nums[i + 1] + 1 == index_nums[i + 2]:
+            consecutive_lists.append(index_nums[i: i + 3])
+
+    for i in consecutive_lists:
+        if prickle[i[1]].startswith("Z:") and prickle[
+            i[2]
+        ].startswith("W:"):
+            monsters.append([paragraph, prickle[i[0]]])
+
+    return monsters
