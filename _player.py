@@ -1,25 +1,6 @@
 import json
 import random
 
-
-class Creature:
-    def __init__(self):
-        self.agility = None
-        self.stamina = None
-
-    def attack(self):
-        return self.agility + Dice().d2()
-
-
-class Dice:
-    @staticmethod
-    def d1():
-        return random.randint(1, 6)
-
-    def d2(self):
-        return self.d1() + self.d1()
-
-
 class Actions:
     def action_dialogue(self, player, monster):
         while True:
@@ -227,38 +208,6 @@ class Actions:
 
 
 class Player(Creature):
-    def __init__(self):
-        super().__init__()
-        self.luck = 0
-        self.name = self.set_name()
-        self.inventory = Inventory()
-
-        self.max_luck = None
-        self.max_stamina = None
-        self.max_agility = None
-
-        self.max_luck_potion_usage = 2
-        self.max_agility_potion_usage = 2
-        self.max_stamina_potion_usage = 2
-
-    def __str__(self):
-        return (
-            f"{self.name}:\n"
-            f"ZRĘCZNOŚĆ: {self.agility}\n"
-            f"WYTRZYMAŁOŚĆ: {self.stamina}\n"
-            f"SZCZĘŚCIE: {self.luck}"
-        )
-
-    def set_level(self):
-        dice = Dice()
-        self.max_agility = dice.d1() + 6
-        self.max_stamina = dice.d2() + 12
-        self.max_luck = dice.d1() + 6
-
-        self.agility = self.max_agility
-        self.stamina = self.max_stamina
-        self.luck = self.max_luck
-
     # noinspection SpellCheckingInspection
     @staticmethod
     def set_name():
@@ -596,10 +545,3 @@ class Monster(Creature):
         self.agility, self.stamina = self.monsters_list[self.monster_name][
             self.paragraph
         ]
-
-    def __str__(self):
-        return (
-            f"{self.name}\n"
-            f"ZRĘCZNOŚĆ: {self.agility}\n"
-            f"WYTRZYMAŁOŚĆ: {self.stamina}"
-        )
