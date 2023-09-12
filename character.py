@@ -1,13 +1,15 @@
+import json
+import random
+
 import game_mechanics as mech
 
 
 class Character:
-    def __int__(self, name):
+    def __init__(self, name, agility, stamina):
         self.name = name
-        self.agility = 0
-        self.stamina = 0
+        self.agility = agility
+        self.stamina = stamina
         self.luck = 0
-
 
     def __str__(self):
         return (
@@ -15,6 +17,10 @@ class Character:
             f"ZRĘCZNOŚĆ: {self.agility}\n"
             f"WYTRZYMAŁOŚĆ: {self.stamina}"
         )
+
+    # def set_attribute_levels(self, agility, stamina):
+    #     self.agility = agility
+    #     self.stamina = stamina
 
     def attack_strenght(self):
         return self.agility + mech.roll_2d6()
@@ -28,7 +34,8 @@ class Character:
 
 class Hero(Character):
     def __init__(self, name):
-        super().__init__(name)
+        super().__init__(name, 0, 0)
+        self.name = None
         self.agility, self.stamina, self.luck = 0, 0, 0
         self.max_luck, self.max_stamina, self.max_agility = 0, 0, 0
 
@@ -45,7 +52,7 @@ class Hero(Character):
             f"SZCZĘŚCIE: {self.luck}"
         )
 
-    def set_max_attribute_levels(self):
+    def set_attribute_levels(self):
         self.max_agility = mech.roll_d6() + 6
         self.max_stamina = mech.roll_2d6() + 12
         self.max_luck = mech.roll_d6() + 6
@@ -53,3 +60,21 @@ class Hero(Character):
         self.agility = self.max_agility
         self.stamina = self.max_stamina
         self.luck = self.max_luck
+
+    def set_name(self):
+        with open("hero_names.json") as hero:
+            names = json.load(hero)
+
+        self.name = random.choice(names)
+
+    def am_i_lucky(self):
+        rolling_2d6 = mech.roll_2d6()
+        return True if rolling_2d6 <= self.luck else False
+
+
+class Monster(Character):
+    def __init__(self, name, agility, stamina):
+        super().__init__(name, agility, stamina)
+
+    def __str__(self):
+        return f"{self.name} Z:{self.agility}, W:{self.stamina}"

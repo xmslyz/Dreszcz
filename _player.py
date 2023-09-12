@@ -208,12 +208,6 @@ class Actions:
 
 
 class Player(Creature):
-
-    @staticmethod
-    def set_name():
-        fantasy_names = []
-        return random.choice(fantasy_names)
-
     def choose_potion(self):
         potion = input("Jaki eliksir wybierasz [s]/[w]/[z]? :  ")
         match potion:
@@ -252,24 +246,9 @@ class Player(Creature):
         else:
             print("Nie masz eliksiru zręczności")
 
-    def wanna_check_sss(self):
-        asking = input(
-            f"Chcesz sprawdzić swoje szczęście? [t]/[n] "
-            f"Obecny poziom SZCZĘŚCIA wynosi {self.luck}."
-        )
-        match asking:
-            case "t":
-                return True
-            case "n":
-                return False
-            case _:
-                print("[t]/[n]?")
-                self.wanna_check_sss()
 
-    def am_i_lucky(self):
-        k2 = Dice().d2()
-        print("luk", k2)
-        return True if k2 <= self.luck else False
+
+
 
     def run(self):
         if self.wanna_check_sss():

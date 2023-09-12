@@ -2,6 +2,8 @@ import json
 import os
 import re
 
+import game_mechanics
+
 # game play
 last_valid_paragraph: str = "1"
 visited = {}
@@ -114,5 +116,6 @@ def game_initialization():
 
 
 if __name__ == "__main__":
-    book = open_book()
-    game_initialization()
+    # book = open_book()
+    # game_initialization()
+    game_mechanics.get_monster_attributes("312")

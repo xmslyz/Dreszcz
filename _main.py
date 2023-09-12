@@ -112,24 +112,6 @@ class Game:
                 print(Fore.RED + "Zły znak" + Style.RESET_ALL)
                 self.action_menu()
 
-    def extract_monster(self, number):
-        prickle = self.book[number]
-        splitted_prickle = prickle.split(" ")
-
-        index_nums = []
-        for i, word in enumerate(splitted_prickle):
-            if str(word).isupper():
-                index_nums.append(i)
-
-        monsters = []
-        for i in extract_consecutive_lists(index_nums):
-            if splitted_prickle[i[1]].startswith("Z:") and splitted_prickle[
-                i[2]
-            ].startswith("W:"):
-                monsters.append([number, splitted_prickle[i[0]]])
-
-        return monsters
-
     def save_current_paragraph(self, number):
         self.saved_paragraph = number
 
