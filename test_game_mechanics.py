@@ -2,7 +2,6 @@ import random
 import unittest
 from unittest import TestCase
 
-
 import game_mechanics
 import character
 
@@ -45,7 +44,7 @@ class TestDice(unittest.TestCase):
         self.assertAlmostEqual(std_deviation, 1.71, delta=0.1)
 
 
-class Test(unittest.TestCase):
+class TestMonsters(unittest.TestCase):
     def test_get_single_monster_attributes(self):
         monsters = game_mechanics.get_monster_attributes("2")
         expected_monster = character.Monster(
@@ -96,6 +95,68 @@ class Test(unittest.TestCase):
         no_monster = game_mechanics.get_monster_attributes("37")
         assertion = []
         self.assertEqual(no_monster, assertion)
+
+    def test_all_monsters(self):
+        all_monsters = {
+            "GARAZAN": {"2": [10, 10]},
+            "WILKOLUDY": {"32": [8, 7]},
+            "UPIÓR": {"69": [5, 3]},
+            "STRZYGA": {"69": [5, 4]},
+            "MINOTAUR": {"92": [10, 10]},
+            "GROBOK": {"98": [9, 8]},
+            "BLACKTHORN": {"107": [10, 14],
+                           "255": [10, 16],
+                           "344": [10, 16],
+                           "361": [8, 12]},
+            "KROMAA": {"109": [7, 8]},
+            "ORK": {"116": [6, 4],
+                    "277": [7, 7]},
+            "WILKOŁAK": {"157": [9, 6],
+                         "216": [7, 6],
+                         "309": [9, 6]},
+            "DEMON": {"169": [8, 5],
+                      "184": [7, 6]},
+            "ROBALE": {"213": [7, 8]},
+            "GREMLIN": {"238": [5, 3]},
+            "LICHA": {"238": [6, 5]},
+            "BRONGO": {"238": [8, 4]},
+            "ORKONIK": {"238": [6, 4]},
+            "SAMASKÓRA": {"238": [6, 5]},
+            "WAMPIR": {"277": [9, 7]},
+            "NIETOPERZ": {"288": [7, 6]},
+            "JASZCZURY": {"307": [7, 6],
+                          "341": [7, 6]},
+            "LUDOJAD": {"312": [7, 5]},
+            "ZOMBI": {"312": [6, 5]},
+            "SZKIELET": {"312": [5, 4]},
+            "OGRE": {"317": [8, 10]},
+            "TROLL": {"332": [8, 8]},
+            "GIGANT": {"355": [10, 12]},
+            "ZŁY": {"367": [6, 6]}
+        }
+
+        new_monsters = {}
+        for monster, attributes in all_monsters.items():
+            for key, values in attributes.items():
+                if key not in new_monsters:
+                    new_monsters[key] = []
+                new_monsters[key].append([monster] + values)
+
+        for paragraph in new_monsters.keys():
+            # extract monsters from paraghaph
+            monsters = game_mechanics.get_monster_attributes(paragraph)
+
+            # for each monster
+            for i, monster in enumerate(monsters):
+                # creates sample monster
+                name, agility, stamina = new_monsters[paragraph][i]
+                sample_monster = character.Monster(name,
+                                                   agility,
+                                                   stamina)
+
+                if monster.name == sample_monster.name:
+                    self.assertEqual(monster.agility, sample_monster.agility)
+                    self.assertEqual(monster.stamina, sample_monster.stamina)
 
 
 class TestKeysChecker(TestCase):

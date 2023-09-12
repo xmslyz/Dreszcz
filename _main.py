@@ -1,8 +1,6 @@
 import json
 import re
-from itertools import combinations
-import _menu
-import os
+
 from colorama import Fore, Style
 
 from _player import Player, Actions
@@ -114,42 +112,3 @@ class Game:
 
     def save_current_paragraph(self, number):
         self.saved_paragraph = number
-
-
-def play_game():
-    game = Game()
-
-    while True:
-        try:
-            user_input = game.users_move()
-
-            # get paragraph content
-            game.show_paragraph(user_input)
-            os.system("cls")
-
-        except KeyError:
-            game.show_paragraph(game.last_valid_input)
-
-
-def extract_consecutive_lists(lst):
-    consecutive_lists = []
-    for i in range(len(lst) - 2):
-        if lst[i] + 1 == lst[i + 1] and lst[i + 1] + 1 == lst[i + 2]:
-            consecutive_lists.append(lst[i: i + 3])
-    return consecutive_lists
-
-
-def check_keys(key_a, key_b, key_c):
-    target_sum = 204
-    found_combination = None
-
-    for combination in combinations([key_a, key_b, key_c], 3):
-        if sum(combination) == target_sum:
-            found_combination = combination
-            break
-
-    return True if found_combination else False
-
-
-if __name__ == "__main__":
-    play_game()

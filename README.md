@@ -46,3 +46,8 @@ znajdziesz w pliku LICENSE.
 ## Dziękujemy
 Dziękuję, że zdecydowałeś/aś się zagrać w "Dreszcz"! Mam nadzieję, że 
 przeżyjesz wiele niezapomnianych przygód.
+
+## Zmiany w tekście orginalnym
++ paragraf 69: UPIÓR (drugi) na OBLEC 
++ paragraf 98: HERSZT GOBLINÓW na GROBOK
++ paragrafy 170, 255, 244, 361 STRAŻNIK TAJEMNICY na BLACKTHORNE 

@@ -116,6 +116,5 @@ def game_initialization():
 
 
 if __name__ == "__main__":
-    # book = open_book()
-    # game_initialization()
-    game_mechanics.get_monster_attributes("312")
+    book = open_book()
+    game_initialization()
