@@ -133,6 +133,26 @@ def check_keys(key_a, key_b, key_c):
     return found_combination
 
 
+def combat(game_instance):
+    monsters = get_monsters(game_instance.last_valid_chapter)
+    if monsters:
+        while True:
+            for monster in monsters:
+                if game_instance.hero.is_dead():
+                    print(f"{game_instance.hero.name} zginął!")
+                    game_instance.game_over()
+                elif monster.is_dead():
+                    print(f"{monster.name} został pokonany!")
+                    print(f"Zostało ci W: {game_instance.hero.stamina}")
+                    game_instance.main_menu(game_instance.last_valid_chapter,
+                                            combat="after")
+                    break
+                else:
+                    fight(game_instance.hero, monster)
+    else:
+        print("Nie ma z kim walczyć w tym paragrafie.")
+
+
 def resolve_fight(hero, monster):
     monster_result = roll_2d6()
     print(monster_result)

@@ -29,11 +29,11 @@ class Shiver:
                 )
 
                 if user_input == "1":
-                    self.load_chapter("1")
+                    self.open_chapter(chapter="1")
                     break
                 elif user_input == "2":
                     self.load_last_saved_game()
-                    self.load_chapter(self.last_valid_chapter)
+                    self.open_chapter(self.last_valid_chapter)
                     break
                 elif user_input == "0":
                     self.quit_game()
@@ -46,6 +46,14 @@ class Shiver:
         except FileNotFoundError:
             print("Nie znaleziono pliku gry.")
 
+    def quit_game(self):
+        print("Do zobaczenia wkrótce Śmiałku!")
+        with open("save.txt", "w", encoding="utf-8") as s:
+            s.write(self.last_valid_chapter)
+        with open("visited.json", "w") as v:
+            json.dump(self.visited_chapters, v, indent=4)
+        exit()
+
     def load_last_saved_game(self):
         if os.path.exists("save.txt"):
             with open("save.txt") as f:
@@ -56,86 +64,6 @@ class Shiver:
         else:
             print("Nie ma zapisanej gry w bibliotece.")
             self.start_game()
-
-    def quit_game(self):
-        print("Do zobaczenia wkrótce Śmiałku!")
-        with open("save.txt", "w", encoding="utf-8") as s:
-            s.write(self.last_valid_chapter)
-        with open("visited.json", "w") as v:
-            json.dump(self.visited_chapters, v, indent=4)
-        exit()
-
-    def main_menu(self, last_capter=None):
-        if last_capter:
-            print("cd. ", end='')
-            self.load_chapter(last_capter)
-
-        while True:
-            chapter = input("Podaj numer: ")
-            if chapter == "0":
-                self.quit_game()
-            elif chapter == "m":
-                self.action_menu()
-            elif (self.check_move(chapter)
-                  and chapter.isdigit()
-                  and chapter in self.book_chapters):
-                self.last_valid_chapter = chapter
-                if chapter not in self.visited_chapters:
-                    # show actual paragraph
-                    print(f"[{chapter}] {self.book_chapters[chapter]}")
-                    # add paragraph to visited places
-                    self.visited_chapters[chapter] = True
-                else:
-                    print(f"[{chapter}*] {self.book_chapters[chapter]}")
-            else:
-                print("Nieprawidłowy numer paragrafu. Spróbuj ponownie.")
-
-    def action_menu(self):
-        """Main action menu"""
-        while True:
-            menu_input = input("Menu:\n"
-                               "[1] Pokaż odwiedzone paragrafy\n"
-                               "[2] Walka\n"
-                               "\n"
-                               ">>> ")
-            if menu_input == "1":
-                print(sorted([int(x) for x in self.visited_chapters.keys()]))
-                break
-            if menu_input == "2":
-                monsters = game_mechanics.get_monsters(self.last_valid_chapter)
-                if monsters:
-                    while True:
-                        for monster in monsters:
-                            if self.hero.is_dead():
-                                print(f"{self.hero.name} zginął!")
-                                self.game_over()
-                            elif monster.is_dead():
-                                print(f"{monster.name} został pokonany!")
-                                self.main_menu(self.last_valid_chapter)
-                                break
-                            else:
-                                game_mechanics.fight(self.hero, monster)
-                else:
-                    print("Nie ma z kim walczyć w tym paragrafie.")
-                break
-            if menu_input == "q":
-                self.quit_game()
-            else:
-                print("Nieprawidłowy znak. Spróbuj ponownie.")
-
-    def load_chapter(self, chapter_number):
-        """Prints chapter"""
-        print(f"[{chapter_number}] {self.book_chapters[chapter_number]}")
-
-    def check_move(self, chapter):
-        """checks if introduced number is valid next move"""
-        if not self.test:
-            for key, value in self.book_chapters.items():
-                if key == self.last_valid_chapter:
-                    if chapter in re.findall(r"(?<!:)\b\d+\b", value):
-                        return True
-        else:
-            return True
 
     def game_over(self):
         while True:
@@ -153,6 +81,96 @@ class Shiver:
                 break
             elif game_over == "0":
                 self.quit_game()
+
+    def main_menu(self, relecture=None, combat=None):
+        if relecture:
+            print("cd. ", end='')
+            self.open_chapter(relecture, combat=combat)
+
+        while True:
+            chapter = input("Podaj numer: ")
+            if chapter == "0":
+                self.quit_game()
+            elif chapter == "o":
+                self.show_action_menu()
+            elif chapter == "v":
+                print(sorted([int(x) for x in self.visited_chapters.keys()]))
+            elif chapter == "f":
+                game_mechanics.combat(self)
+            elif (self.check_move(chapter)
+                  and chapter.isdigit()
+                  and chapter in self.book_chapters):
+                self.open_chapter(chapter)
+            else:
+                print("Nieprawidłowy numer paragrafu. Spróbuj ponownie.")
+
+    @staticmethod
+    def show_action_menu():
+        print("--- Opcje\n"
+              "-- [v] Pokaż odwiedzone paragrafy\n"
+              "-- [f] Walka"
+              )
+
+    def action_menu(self):
+        """Main action menu"""
+        while True:
+            menu_input = input("Menu:\n"
+                               "[1] Pokaż odwiedzone paragrafy\n"
+                               "[2] Walka\n"
+                               "\n"
+                               ">>> ")
+            if menu_input == "1":
+                break
+            if menu_input == "2":
+                game_mechanics.combat(self)
+                break
+            if menu_input == "q":
+                self.quit_game()
+            else:
+                print("Nieprawidłowy znak. Spróbuj ponownie.")
+
+    def open_chapter(self, chapter, *, combat=None):
+        self.last_valid_chapter = chapter
+        text = self.chapter_text(chapter, combat)
+
+        if chapter not in self.visited_chapters:
+            # show actual paragraph
+            print(f"[{chapter}] {text}")
+            # add paragraph to visited places
+            self.visited_chapters[chapter] = True
+        else:
+            print(f"[{chapter}*] {text}")
+
+    def chapter_text(self, chapter, combat):
+        """
+
+        Args:
+            chapter: number of paragraph
+            combat:
+
+        Returns:
+            text: str
+        """
+
+        text = self.book_chapters[chapter]
+        # if game_mechanics.get_monsters(chapter):
+        #     if combat == "after":
+        #         text = text.split("|")[1].lstrip()
+        #     else:
+        #         text = f"{text.split('|')[0].lstrip()} ... c.d.n. "
+        # else:
+        #     text = self.book_chapters[chapter]
+        return text
+
+    def check_move(self, chapter):
+        """checks if introduced number is valid next move"""
+        if not self.test:
+            for key, value in self.book_chapters.items():
+                if key == self.last_valid_chapter:
+                    if chapter in re.findall(r"(?<!:)\b\d+\b", value):
+                        return True
+        else:
+            return True
 
 
 if __name__ == "__main__":

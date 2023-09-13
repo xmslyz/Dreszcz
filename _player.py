@@ -2,31 +2,6 @@ import json
 import random
 
 class Actions:
-    def action_dialogue(self, player, monster):
-        while True:
-            dialogue = input("[1] Walczysz, [2] Uciekasz, [3] Jesz ... ")
-            match dialogue:
-                case "1":
-                    self.fight_round_result(player, monster)
-                case "2":
-                    player.run()
-                case "3":
-                    player.eat()
-
-    def fight_round_result(self, player, oponent):
-        monster = Monster(oponent)
-        self.fight_round(player, monster)
-
-        if player.stamina <= 0:
-            print("Giniesz")
-        elif monster.stamina <= 0:
-            print("Potwór ginie")
-        else:
-            print(
-                f"Wytrzymałość gracza: {player.stamina} vs. "
-                f"Wytrzymałość potwora: {monster.stamina}"
-            )
-
     def fight_round(self, player, monster):
         got_luck = player.am_i_lucky()
         monster_attack_force = monster.attack()
