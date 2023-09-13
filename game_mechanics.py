@@ -134,21 +134,20 @@ def check_keys(key_a, key_b, key_c):
 
 
 def combat(game_instance):
+    monster_index = 0
     monsters = get_monsters(game_instance.last_valid_chapter)
     if monsters:
-        while True:
-            for monster in monsters:
-                if game_instance.hero.is_dead():
-                    print(f"{game_instance.hero.name} zginął!")
-                    game_instance.game_over()
-                elif monster.is_dead():
-                    print(f"{monster.name} został pokonany!")
-                    print(f"Zostało ci W: {game_instance.hero.stamina}")
-                    game_instance.main_menu(game_instance.last_valid_chapter,
-                                            combat="after")
-                    break
-                else:
-                    fight(game_instance.hero, monster)
+        while monster_index < len(monsters):
+            if game_instance.hero.is_dead():
+                print(f"{game_instance.hero.name} zginął!")
+                game_instance.game_over()
+            elif monsters[monster_index].is_dead():
+                print(f"{monsters[monster_index].name} został pokonany!")
+                print(f"Zostało ci W: {game_instance.hero.stamina}")
+                monster_index += 1
+            else:
+                fight(game_instance.hero, monsters[monster_index])
+        game_instance.main_menu(game_instance.last_valid_chapter)
     else:
         print("Nie ma z kim walczyć w tym paragrafie.")
 
