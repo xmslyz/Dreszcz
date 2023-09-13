@@ -31,7 +31,6 @@ class Shiver:
                 )
 
                 if user_input == "1":
-                    # self.visited_chapters["1"] = True
                     self.open_chapter("1")
                     break
                 elif user_input == "2":

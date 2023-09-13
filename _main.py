@@ -7,27 +7,6 @@ from _player import Player, Actions
 
 
 class Game:
-    def __init__(self):
-        with open("dreszcz.json") as f:
-            self.book = json.load(f)
-        self.saved_paragraph = None
-        self.is_test = False
-        self.numbers = []
-        self.last_valid_input = "1"
-
-        # create hero
-        self.hero = Player()
-        self.hero.set_level()
-
-        # print 1st paragraph
-        self.show_paragraph("1")
-
-    def get_new_paths(self, number):
-        for key, value in self.book.items():
-            if key == number:
-                self.numbers = re.findall(r"(?<!:)\b\d+\b", value)
-        return self.numbers
-
     def show_paragraph(self, number):
         print(Fore.YELLOW + self.book[number] + Style.RESET_ALL)
         print(self.get_new_paths(number))

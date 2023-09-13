@@ -1,6 +1,8 @@
 import json
 import random
 
+from colorama import Back, Style, Fore
+
 import game_mechanics as mech
 
 
@@ -21,7 +23,9 @@ class Character:
     def attack_strenght(self):
         roll = mech.roll_2d6()
         attack = self.agility + roll
-        print(f"{self.name}: {roll} + Z:{self.agility} = {attack}")
+        txt = f"{self.name}: {roll} + Z:{self.agility} = {attack}"
+        spacer = 40 - len(txt)
+        print(Fore.RED + f"{txt}" f"{' ' * spacer}" + Style.RESET_ALL)
         return attack
 
     def take_damage(self, damage):

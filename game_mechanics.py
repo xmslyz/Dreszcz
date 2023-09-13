@@ -3,6 +3,9 @@ import pathlib
 import random
 from itertools import combinations
 
+import colorama
+from colorama import Fore, Style, Back
+
 from character import Monster
 
 
@@ -13,7 +16,9 @@ def roll_d6():
         Returns:
             int: A random integer between 1 and 6 (inclusive).
         """
-    return random.randint(1, 6)
+    result = random.randint(1, 6)
+    d6(random.randint(1, 6), random.randint(1, 6))
+    return result
 
 
 def roll_2d6():
@@ -152,7 +157,9 @@ def combat(story):
                 story.bout = 1
                 story.monsters_kiled_counter += 1
             else:
-                print(f"Runda {story.bout}")
+                print(Back.RED +
+                      f"   {monsters[story.monsters_kiled_counter].name}"
+                      f": runda {story.bout}   " + Style.RESET_ALL)
                 combat_menu = input("[1] Starcie - rzut koścmi\n"
                                     "[2] Ucieczka\n"
                                     "[3] Zmiana broni\n"
@@ -179,24 +186,25 @@ def combat(story):
         print("Nie ma z kim walczyć w tym paragrafie.")
 
 
-def resolve_fight(hero, monster):
-    monster_result = roll_2d6()
-    print(monster_result)
-
-    hero_result = roll_2d6()
-    print(hero_result)
-
-
 def fight(hero, monster):
     monster_atack = monster.attack_strenght()
     hero_atack = hero.attack_strenght()
 
     if hero_atack > monster_atack:
         monster.stamina -= 2
+        show_stamina(hero, monster)
     elif hero_atack < monster_atack:
         hero.stamina -= 2
+        show_stamina(hero, monster)
     else:
-        ...
+        print(Fore.YELLOW + "Remis" + Style.RESET_ALL)
+
+
+def show_stamina(hero, monster):
+    staminas = (
+        f"{monster.name} W:{monster.stamina} vs. "
+        f"{hero.name} W:{hero.stamina}")
+    print(Fore.GREEN + staminas + Style.RESET_ALL)
 
 
 def can_escape(game_instance):
@@ -270,3 +278,36 @@ special = {
     '309': 'zmiana broni po 1 rundzie',
     '238': 'dalej albo 316 albo 103',
 }
+
+
+def d6(left, right):
+    top = "_______"
+    line = "|       |"
+    line_o_ = "|   ●   |"
+    lineo__ = "| ●     |"
+    line__o = "|     ● |"
+    lineo_o = "| ●   ● |"
+    bottom = "‾‾‾‾‾‾‾"
+
+    def get_lines(value):
+        if value == 1:
+            return line, line_o_, line
+        elif value == 2:
+            return lineo__, line, line__o
+        elif value == 3:
+            return lineo__, line_o_, line__o
+        elif value == 4:
+            return lineo_o, line, lineo_o
+        elif value == 5:
+            return lineo_o, line_o_, lineo_o
+        elif value == 6:
+            return lineo_o, lineo_o, lineo_o
+        return line, line, line
+
+    left_lines = get_lines(left)
+    right_lines = get_lines(right)
+
+    print("", top, "  ", top)
+    for left_line, right_line in zip(left_lines, right_lines):
+        print(left_line, "", right_line)
+    print("", bottom, "  ", bottom)
