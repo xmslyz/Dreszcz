@@ -3,58 +3,7 @@ import pathlib
 import random
 from itertools import combinations
 
-import colorama
-from colorama import Fore, Style, Back
-
 from character import Monster
-
-
-def roll_d6():
-    """
-        Simulate the roll of a 6-sided die (D6).
-
-        Returns:
-            int: A random integer between 1 and 6 (inclusive).
-        """
-    result = random.randint(1, 6)
-    d6(random.randint(1, 6), random.randint(1, 6))
-    return result
-
-
-def roll_2d6():
-    """
-        Simulate the roll of two 6-sided dice (2D6) and calculate their sum.
-
-        Returns:
-            int: The sum of two random integers between 1 and 6 (inclusive).
-        """
-    return roll_d6() + roll_d6()
-
-
-def play_cards(hero, with_luck: bool):
-    rolling = roll_2d6()
-    # if with_luck:
-    #     if self.am_i_lucky():
-    #         self.inventory.gold += k2
-    #     else:
-    #         for i in range(k2):
-    #             if self.inventory.gold == 0:
-    #                 print("Nie masz więcej pieniędzy")
-    #                 break
-    #             else:
-    #                 self.inventory.gold -= 1
-    # else:
-    #     if k2 % 2 == 0:
-    #         for i in range(k2):
-    #             if self.inventory.gold == 0:
-    #                 print("Nie masz więcej pieniędzy")
-    #                 break
-    #             else:
-    #                 self.inventory.gold -= 1
-    #     else:
-    #         self.inventory.gold += k2
-    #
-    # print(self.inventory.gold)
 
 
 def get_monsters(chapter):
@@ -126,6 +75,12 @@ def wanna_check_sss(hero):
             wanna_check_sss(hero)
 
 
+def sss(hero):
+    """ Sprawdzian Swojego Szczęścia """
+    hero.luck -= 1
+    return True if roll_2d6() <= hero.luck else False
+
+
 def check_keys(key_a, key_b, key_c):
     target_sum = 204
     found_combination = False
@@ -157,9 +112,10 @@ def combat(story):
                 story.bout = 1
                 story.monsters_kiled_counter += 1
             else:
-                print(Back.RED +
+                print("")
+                print(
                       f"   {monsters[story.monsters_kiled_counter].name}"
-                      f": runda {story.bout}   " + Style.RESET_ALL)
+                      f": runda {story.bout}   ")
                 combat_menu = input("[1] Starcie - rzut koścmi\n"
                                     "[2] Ucieczka\n"
                                     "[3] Zmiana broni\n"
@@ -187,24 +143,72 @@ def combat(story):
 
 
 def fight(hero, monster):
-    monster_atack = monster.attack_strenght()
-    hero_atack = hero.attack_strenght()
+    while True:
+        input("Rzuć kośćmi dla potwora.")
+        monster_roll = roll_2d6()
+        monster_atack = monster.attack_strenght(monster_roll)
+        input("Rzuć kośćmi za siebie")
+        hero_roll = roll_2d6()
+        hero_atack = hero.attack_strenght(hero_roll)
+        break
 
     if hero_atack > monster_atack:
-        monster.stamina -= 2
+        narrative("hero")
+        if sss_check(hero):
+            if sss(hero):
+                print("Masz szczęście!")
+                monster.stamina -= 4
+            else:
+                print("Zabrakło ci szczęścia!")
+                monster.stamina -= 1
+        else:
+            monster.stamina -= 2
         show_stamina(hero, monster)
     elif hero_atack < monster_atack:
-        hero.stamina -= 2
+        narrative("monster")
+        if sss_check(hero):
+            if sss(hero):
+                print("Masz szczęście!")
+                hero.stamina -= 1
+            else:
+                print("Zabrakło ci szczęścia!")
+                hero.stamina -= 3
+        else:
+            hero.stamina -= 2
         show_stamina(hero, monster)
     else:
-        print(Fore.YELLOW + "Remis" + Style.RESET_ALL)
+        print("Remis")
+        narrative("tie")
+
+
+def sss_check(hero):
+    question = input(f"Twój aktualny poziom SZCZĘŚCIA wynosi {hero.luck}.\n"
+                     f"Jeśli chcesz Sprawdzić Swoje Szczęście (SSS) >>> ["
+                     f"t]: ").upper()
+    if question == "T":
+        return True
+
+
+def narrative(character):
+    """
+    Epic narrative of combat
+
+    Args:
+        character: hero, monster, tie
+
+    Returns:
+        random element of the list
+    """
+    with open("narratives.json", encoding="utf=8") as f:
+        narratives = json.load(f)
+    print(random.choice(narratives[character]))
 
 
 def show_stamina(hero, monster):
     staminas = (
         f"{monster.name} W:{monster.stamina} vs. "
         f"{hero.name} W:{hero.stamina}")
-    print(Fore.GREEN + staminas + Style.RESET_ALL)
+    print(staminas)
 
 
 def can_escape(game_instance):
@@ -280,7 +284,58 @@ special = {
 }
 
 
-def d6(left, right):
+def roll_d6():
+    """
+    Simulate the roll of a 6-sided die (D6).
+
+    Returns:
+        int: A random integer between 1 and 6 (inclusive).
+    """
+
+    roll = random.randint(1, 6)
+    top = "_______"
+    line = "|       |"
+    line_o_ = "|   ●   |"
+    lineo__ = "| ●     |"
+    line__o = "|     ● |"
+    lineo_o = "| ●   ● |"
+    bottom = "‾‾‾‾‾‾‾"
+
+    def get_lines(value):
+        if value == 1:
+            return line, line_o_, line
+        elif value == 2:
+            return lineo__, line, line__o
+        elif value == 3:
+            return lineo__, line_o_, line__o
+        elif value == 4:
+            return lineo_o, line, lineo_o
+        elif value == 5:
+            return lineo_o, line_o_, lineo_o
+        elif value == 6:
+            return lineo_o, lineo_o, lineo_o
+        return line, line, line
+
+    lines = get_lines(roll)
+
+    print("", top)
+    for line in lines:
+        print(line)
+    print("", bottom)
+
+    return roll
+
+
+def roll_2d6():
+    """
+    Simulate the roll of two 6-sided dice (2D6) and calculate their sum.
+
+    Returns:
+        int: The sum of two random integers between 1 and 6 (inclusive).
+    """
+
+    left = random.randint(1, 6)
+    right = random.randint(1, 6)
     top = "_______"
     line = "|       |"
     line_o_ = "|   ●   |"
@@ -311,3 +366,5 @@ def d6(left, right):
     for left_line, right_line in zip(left_lines, right_lines):
         print(left_line, "", right_line)
     print("", bottom, "  ", bottom)
+
+    return left + right

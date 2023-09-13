@@ -20,10 +20,9 @@ class Character:
             f"WYTRZYMAŁOŚĆ: {self.stamina}"
         )
 
-    def attack_strenght(self):
-        roll = mech.roll_2d6()
-        attack = self.agility + roll
-        txt = f"{self.name}: {roll} + Z:{self.agility} = {attack}"
+    def attack_strenght(self, dices_roll):
+        attack = self.agility + dices_roll
+        txt = f"{self.name}: {dices_roll} + Z:{self.agility} = {attack}"
         spacer = 40 - len(txt)
         print(Fore.RED + f"{txt}" f"{' ' * spacer}" + Style.RESET_ALL)
         return attack
@@ -72,10 +71,6 @@ class Hero(Character):
             names = json.load(hero)
 
         self.name = random.choice(names)
-
-    def am_i_lucky(self):
-        rolling_2d6 = mech.roll_2d6()
-        return True if rolling_2d6 <= self.luck else False
 
 
 class Monster(Character):
