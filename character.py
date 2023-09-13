@@ -18,24 +18,23 @@ class Character:
             f"WYTRZYMAŁOŚĆ: {self.stamina}"
         )
 
-    # def set_attribute_levels(self, agility, stamina):
-    #     self.agility = agility
-    #     self.stamina = stamina
-
     def attack_strenght(self):
-        return self.agility + mech.roll_2d6()
+        roll = mech.roll_2d6()
+        attack = self.agility + roll
+        print(f"{self.name}: {roll} + Z:{self.agility} = {attack}")
+        return attack
 
     def take_damage(self, damage):
         self.stamina -= damage
 
-    def is_alive(self):
-        return self.stamina > 0
+    def is_dead(self):
+        return self.stamina <= 0
 
 
 class Hero(Character):
     def __init__(self, name):
         super().__init__(name, 0, 0)
-        self.name = None
+        self.name = name
         self.agility, self.stamina, self.luck = 0, 0, 0
         self.max_luck, self.max_stamina, self.max_agility = 0, 0, 0
 

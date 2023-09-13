@@ -52,27 +52,28 @@ def play_cards(hero, with_luck: bool):
     # print(self.inventory.gold)
 
 
-def get_monster_attributes(paragraph):
+def get_monsters(chapter):
     """
     Extracts monster attributes from a JSON book file.
 
     Args:
-        paragraph (str): The paragraph key to look up in the JSON book file.
+        chapter (str): The paragraph key to look up in the JSON book file.
 
     Returns:
         list: A list of monster attributes in the format [paragraph,
         monster_name].
     """
 
-    # Define the path to the JSON book file
-    book_path = pathlib.Path.cwd() / "dreszcz.json"
+    book = open_book()
 
-    # Open and load the JSON book file
-    with open(book_path) as f:
-        book = json.load(f)
+    # Initialize an empty list to store monster attributes
+    monsters = []
+
+    # Identify consecutive index positions indicating monster name & attributes
+    consecutive_lists = []
 
     # Split the paragraph into words
-    prickle = book[paragraph].split(" ")
+    prickle = book[chapter].split(" ")
 
     # Find the index positions of uppercase words
     # (potential monster name and monster stamina and agility)
@@ -81,11 +82,6 @@ def get_monster_attributes(paragraph):
         if str(word).isupper():
             index_nums.append(i)
 
-    # Initialize an empty list to store monster attributes
-    monsters = []
-
-    # Identify consecutive index positions indicating monster name & attributes
-    consecutive_lists = []
     for i in range(len(index_nums) - 2):
         if (index_nums[i] + 1 == index_nums[i + 1]
                 and index_nums[i + 1] + 1 == index_nums[i + 2]):
@@ -135,3 +131,105 @@ def check_keys(key_a, key_b, key_c):
             break
 
     return found_combination
+
+
+def resolve_fight(hero, monster):
+    monster_result = roll_2d6()
+    print(monster_result)
+
+    hero_result = roll_2d6()
+    print(hero_result)
+
+
+def fight(hero, monster):
+    monster_atack = monster.attack_strenght()
+    hero_atack = hero.attack_strenght()
+
+    if hero_atack > monster_atack:
+        monster.stamina -= 2
+    elif hero_atack < monster_atack:
+        hero.stamina -= 2
+    else:
+        ...
+
+
+def can_escape():
+    """
+    Checks if hero can escape from fight.
+
+    Args:
+        chapter (str):
+
+    Returns:
+        bool: True, if can escape.
+    """
+    book = open_book()
+
+    # Initialize an empty list to store monster attributes
+    paragraphs = []
+
+    for chapter in book.keys():
+        # Split the paragraph into words
+        prickle = book[chapter].split(" ")
+
+        # Find the index positions of uppercase words
+        index_nums = []
+        for i, word in enumerate(prickle):
+            if str(word).isupper():
+                index_nums.append(i)
+
+        # Identify chapter with monster
+        for i in range(len(index_nums) - 2):
+            if (index_nums[i] + 1 == index_nums[i + 1]
+                    and index_nums[i + 1] + 1 == index_nums[i + 2]):
+                print(chapter)
+                if chapter not in paragraphs:
+                    paragraphs.append(chapter)
+
+
+# [1] nie
+# [2] po każdej rundzie
+# [3] po 1 rundzie
+# [4] po pokonaniu potwora
+# [5] przejdź do innego punktu
+# [6] inne
+
+def open_book():
+    # Define the path to the JSON book file
+    book_path = pathlib.Path.cwd() / "dreszcz.json"
+
+    # Open and load the JSON book file
+    with open(book_path) as f:
+        return json.load(f)
+
+
+escape = {
+    '2': 'po każdej rundzie',
+    '32': 'no',
+    '69': 'no',
+    '92': 'po każdej rundzie i po minotaurze',
+    '98': 'no',
+    '107': 'no',
+    '109': 'no, akcja z podniesieniem kraty [340..251..39]',
+    '116': 'no',
+    '157': 'tylko po pierwszej rundzie',
+    '166': 'no nie walka',
+    '169': 'tylko po pierwszej rundzie',
+    '184': 'tylko po pierwszej rundzie lub po drugiej rundzie [226]',
+    '213': 'no',
+    '216': 'no',
+    '238': 'po każdej walce ! brak numeru gdzie iść dalej!! ',
+    '255': 'no',
+    '277': 'po każdej walce',
+    '288': 'no',
+    '307': 'no',
+    '309': 'po 1 rundzie ! zmiana broni',
+    '312': 'dopiero po każdym',
+    '317': 'no',
+    '332': 'no',
+    '341': 'no',
+    '344': 'inna zasada walki - fireball',
+    '355': 'po pierwszej rundzie pytanie',
+    '361': 'no',
+    '367': 'no'
+}

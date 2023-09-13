@@ -46,7 +46,7 @@ class TestDice(unittest.TestCase):
 
 class TestMonsters(unittest.TestCase):
     def test_get_single_monster_attributes(self):
-        monsters = game_mechanics.get_monster_attributes("2")
+        monsters = game_mechanics.get_monsters("2")
         expected_monster = character.Monster(
             "GARAZAN", 10, 10
         )
@@ -63,7 +63,7 @@ class TestMonsters(unittest.TestCase):
             self.assertEqual(first_monster.stamina, expected_monster.stamina)
 
     def test_get_multiply_monsters_atributes(self):
-        monsters = game_mechanics.get_monster_attributes("312")
+        monsters = game_mechanics.get_monsters("312")
         expected_monsters = [
             ['LUDOJAD', 7, 5],
             ['ZOMBI', 6, 5],
@@ -86,13 +86,13 @@ class TestMonsters(unittest.TestCase):
                 self.assertEqual(monster.stamina, sample_monster.stamina)
 
     def test_no_monster(self):
-        no_monster = game_mechanics.get_monster_attributes("37")
+        no_monster = game_mechanics.get_monsters("37")
         assertion = []
         self.assertEqual(no_monster, assertion)
 
     def test_similar_semantic(self):
         # "Jaką tarczę wybieras[z:] "
-        no_monster = game_mechanics.get_monster_attributes("37")
+        no_monster = game_mechanics.get_monsters("37")
         assertion = []
         self.assertEqual(no_monster, assertion)
 
@@ -144,7 +144,7 @@ class TestMonsters(unittest.TestCase):
 
         for paragraph in new_monsters.keys():
             # extract monsters from paraghaph
-            monsters = game_mechanics.get_monster_attributes(paragraph)
+            monsters = game_mechanics.get_monsters(paragraph)
 
             # for each monster
             for i, monster in enumerate(monsters):
