@@ -8,13 +8,14 @@ import character
 
 class Shiver:
     def __init__(self):
-        self.test = True
+        self.test = False
         self.last_valid_chapter: str = "1"
         self.visited_chapters: dict = {}
         self.hero = character.Hero("Stefan")
         self.hero.set_attribute_levels()
         self.bout = 0
-        self.monsters_kiled = 0
+        self.monsters_kiled_counter = 0
+        self.killed_monsters_dict = {}
         self.book_chapters = game_mechanics.open_book()
 
     def start_game(self):
@@ -78,6 +79,7 @@ class Shiver:
 
             if game_over == "1":
                 self.start_game()
+                # tu potrzebna replikacja martwego bohatera
                 break
             elif game_over == "2":
                 break
@@ -99,17 +101,16 @@ class Shiver:
                 print(sorted([int(x) for x in self.visited_chapters.keys()]))
             elif chapter == "f":
                 game_mechanics.combat(self)
-            elif chapter == "r":
-                if game_mechanics.can_escape(self):
-                    print("run")
-                else:
-                    print("cant run")
+            elif chapter == "test":
+                self.test = not self.test
+                print(f"TEST: {self.test}")
             elif (self.check_move(chapter)
                   and chapter.isdigit()
                   and chapter in self.book_chapters):
                 self.open_chapter(chapter)
             else:
-                print("Nieprawidłowy numer paragrafu. Spróbuj ponownie.")
+                print(f"Nieprawidłowy znak. Masz do wyboru: "
+                      f"{self.possible_moves()}")
 
     @staticmethod
     def show_action_menu():
@@ -134,7 +135,7 @@ class Shiver:
             if menu_input == "q":
                 self.quit_game()
             else:
-                print("Nieprawidłowy znak. Spróbuj ponownie.")
+                print(f"Nieprawidłowy znak. Spróbuj ponownie.")
 
     def open_chapter(self, chapter: str):
         self.last_valid_chapter = chapter
@@ -150,13 +151,26 @@ class Shiver:
 
     def check_move(self, chapter):
         """checks if introduced number is valid next move"""
+        pass_from_238 = ["316", "103"]
         if not self.test:
             for key, value in self.book_chapters.items():
                 if key == self.last_valid_chapter:
                     if chapter in re.findall(r"(?<!:)\b\d+\b", value):
                         return True
+                    elif (self.last_valid_chapter == "238" and chapter in
+                          pass_from_238):
+                        return True
         else:
             return True
+
+    def possible_moves(self):
+        book = self.book_chapters
+        moves = re.findall(r"(?<!:)\b\d+\b", book[self.last_valid_chapter])
+        txt = ""
+        for move in moves:
+            txt += f"{move} / "
+
+        return f"{txt}"
 
 
 if __name__ == "__main__":

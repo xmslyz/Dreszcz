@@ -51,6 +51,9 @@ class Hero(Character):
             f"SZCZĘŚCIE: {self.luck}"
         )
 
+    def clone_hero(self):
+        ...
+
     def set_attribute_levels(self):
         self.max_agility = mech.roll_d6() + 6
         self.max_stamina = mech.roll_2d6() + 12

@@ -133,27 +133,48 @@ def check_keys(key_a, key_b, key_c):
     return found_combination
 
 
-def combat(game_instance):
-    game_instance.monsters_kiled = 0
-    game_instance.bout = 1
-    monsters = get_monsters(game_instance.last_valid_chapter)
+def combat(story):
+    story.monsters_kiled_counter = 0
+    story.bout = 1
+    monsters = get_monsters(story.last_valid_chapter)
     if monsters:
-
-        while game_instance.monsters_kiled < len(monsters):
-            game_instance.monsters_in_line = len(monsters)
-            if game_instance.hero.is_dead():
-                print(f"{game_instance.hero.name} zginął!")
-                game_instance.game_over()
-            elif monsters[game_instance.monsters_kiled].is_dead():
-                print(f"{monsters[game_instance.monsters_kiled].name} został pokonany!")
-                print(f"Zostało ci W: {game_instance.hero.stamina}")
-                game_instance.bout = 1
-                game_instance.monsters_kiled += 1
+        while story.monsters_kiled_counter < len(monsters):
+            story.monsters_in_line = len(monsters)
+            if story.hero.is_dead():
+                print(f"{story.hero.name} zginął!")
+                story.game_over()
+            elif monsters[story.monsters_kiled_counter].is_dead():
+                print(
+                    f"{monsters[story.monsters_kiled_counter].name} "
+                    f"został pokonany!"
+                )
+                print(f"Zostało ci W: {story.hero.stamina}")
+                story.bout = 1
+                story.monsters_kiled_counter += 1
             else:
-                print(f"Runda {game_instance.bout}")
-                fight(game_instance.hero, monsters[game_instance.monsters_kiled])
-                game_instance.bout += 1
-        game_instance.main_menu(game_instance.last_valid_chapter)
+                print(f"Runda {story.bout}")
+                combat_menu = input("[1] Starcie - rzut koścmi\n"
+                                    "[2] Ucieczka\n"
+                                    "[3] Zmiana broni\n"
+                                    "[4] ...\n"
+                                    "[0] Koniec gry\n"
+                                    ">>> ")
+                if combat_menu == "1":
+                    fight(story.hero, monsters[story.monsters_kiled_counter])
+                    story.bout += 1
+                elif combat_menu == "2":
+                    if can_escape(story):
+                        break
+                    else:
+                        print("Nie możesz teraz uciec Śmiałku!")
+                elif combat_menu == "3":
+                    print("Zmieniasz broń")
+                elif combat_menu == "0":
+                    story.quit_game()
+                else:
+                    print("Nie ma takiej opcji")
+
+        story.main_menu(story.last_valid_chapter)
     else:
         print("Nie ma z kim walczyć w tym paragrafie.")
 
@@ -183,9 +204,7 @@ def can_escape(game_instance):
     Checks if hero can escape from fight.
 
     x można uciec
-    x po 1 rundzie
-    x po 2 rundzie
-    x po każdej rundzie
+    x po x rundzie (jeśli 0 to po każdej rundzie)
     x po każdej walce
 
     Returns:
@@ -193,49 +212,42 @@ def can_escape(game_instance):
     """
     run = False
     escape = {
-        '2': '11110',
-        '32': '00000',
-        '69': '00000',
-        '92': '10001',
-        '98': '00000',
-        '107': '00000',
-        '109': '00000',
-        '116': '00000',
-        '157': '11000',
-        '169': '11000',
-        '184': '11100',
-        '213': '00000',
-        '216': '00000',
-        '238': '10001',
-        '255': '00000',
-        '277': '10001',
-        '288': '00000',
-        '307': '00000',
-        '309': '11000',
-        '312': '10001',
-        '317': '00000',
-        '332': '00000',
-        '341': '00000',
-        '344': '00000',
-        '355': '00000',
-        '361': '00000',
-        '367': '00000'
+        '2': '1990',
+        '32': '0000',
+        '69': '0000',
+        '92': '1990',
+        '98': '0000',
+        '107': '0000',
+        '109': '0000',
+        '116': '0000',
+        '157': '1010',
+        '169': '1010',
+        '184': '1020',
+        '213': '0000',
+        '216': '0000',
+        '238': '1001',
+        '255': '0000',
+        '277': '1001',
+        '288': '0000',
+        '307': '0000',
+        '309': '1010',
+        '312': '1001',
+        '317': '0000',
+        '332': '0000',
+        '341': '0000',
+        '344': '0000',
+        '355': '0000',
+        '361': '0000',
+        '367': '0000'
     }
     bout = game_instance.bout
     par = game_instance.last_valid_chapter
-    monsters_kiled = game_instance.monsters_kiled
+    monsters_kiled = game_instance.monsters_kiled_counter
 
     if par in escape.keys() and escape[par][0] != "0":
-        if bout == 1 and escape[par][1] != "0":
-            print(1)
+        if 0 < bout <= int(escape[par][1:3]):
             run = True
-        elif 0 < bout < 3 and escape[par][2] != "0":
-            print(2)
-            run = True
-        elif bout < 0 and escape[par][3] != "0":
-            print(3)
-            run = True
-        elif monsters_kiled > 0 and escape[par][4] != "0":
+        elif monsters_kiled > 0 and escape[par][3] != "0":
             print(4)
             run = True
 
@@ -249,11 +261,6 @@ def open_book():
     # Open and load the JSON book file
     with open(book_path) as f:
         return json.load(f)
-
-
-
-
-
 
 
 special = {
