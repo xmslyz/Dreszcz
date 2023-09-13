@@ -13,7 +13,8 @@ class Shiver:
         self.visited_chapters: dict = {}
         self.hero = character.Hero("Stefan")
         self.hero.set_attribute_levels()
-
+        self.bout = 0
+        self.monsters_kiled = 0
         self.book_chapters = game_mechanics.open_book()
 
     def start_game(self):
@@ -99,7 +100,7 @@ class Shiver:
             elif chapter == "f":
                 game_mechanics.combat(self)
             elif chapter == "r":
-                if game_mechanics.can_escape(self.last_valid_chapter):
+                if game_mechanics.can_escape(self):
                     print("run")
                 else:
                     print("cant run")

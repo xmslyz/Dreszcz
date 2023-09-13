@@ -37,7 +37,7 @@ class Hero(Character):
         self.name = name
         self.agility, self.stamina, self.luck = 0, 0, 0
         self.max_luck, self.max_stamina, self.max_agility = 0, 0, 0
-
+        self.kills = {}
         # self.max_luck_potion_usage = 2
         # self.max_agility_potion_usage = 2
         # self.max_stamina_potion_usage = 2

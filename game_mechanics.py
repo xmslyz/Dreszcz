@@ -134,19 +134,25 @@ def check_keys(key_a, key_b, key_c):
 
 
 def combat(game_instance):
-    monster_index = 0
+    game_instance.monsters_kiled = 0
+    game_instance.bout = 1
     monsters = get_monsters(game_instance.last_valid_chapter)
     if monsters:
-        while monster_index < len(monsters):
+
+        while game_instance.monsters_kiled < len(monsters):
+            game_instance.monsters_in_line = len(monsters)
             if game_instance.hero.is_dead():
                 print(f"{game_instance.hero.name} zginął!")
                 game_instance.game_over()
-            elif monsters[monster_index].is_dead():
-                print(f"{monsters[monster_index].name} został pokonany!")
+            elif monsters[game_instance.monsters_kiled].is_dead():
+                print(f"{monsters[game_instance.monsters_kiled].name} został pokonany!")
                 print(f"Zostało ci W: {game_instance.hero.stamina}")
-                monster_index += 1
+                game_instance.bout = 1
+                game_instance.monsters_kiled += 1
             else:
-                fight(game_instance.hero, monsters[monster_index])
+                print(f"Runda {game_instance.bout}")
+                fight(game_instance.hero, monsters[game_instance.monsters_kiled])
+                game_instance.bout += 1
         game_instance.main_menu(game_instance.last_valid_chapter)
     else:
         print("Nie ma z kim walczyć w tym paragrafie.")
@@ -172,46 +178,69 @@ def fight(hero, monster):
         ...
 
 
-def can_escape(chapter):
+def can_escape(game_instance):
     """
     Checks if hero can escape from fight.
 
-    Args:
-        chapter (str):
+    x można uciec
+    x po 1 rundzie
+    x po 2 rundzie
+    x po każdej rundzie
+    x po każdej walce
 
     Returns:
-        bool: True, when can escape.
+        bool: True, when he/she can.
     """
-    book = open_book()
+    run = False
+    escape = {
+        '2': '11110',
+        '32': '00000',
+        '69': '00000',
+        '92': '10001',
+        '98': '00000',
+        '107': '00000',
+        '109': '00000',
+        '116': '00000',
+        '157': '11000',
+        '169': '11000',
+        '184': '11100',
+        '213': '00000',
+        '216': '00000',
+        '238': '10001',
+        '255': '00000',
+        '277': '10001',
+        '288': '00000',
+        '307': '00000',
+        '309': '11000',
+        '312': '10001',
+        '317': '00000',
+        '332': '00000',
+        '341': '00000',
+        '344': '00000',
+        '355': '00000',
+        '361': '00000',
+        '367': '00000'
+    }
+    bout = game_instance.bout
+    par = game_instance.last_valid_chapter
+    monsters_kiled = game_instance.monsters_kiled
 
-    # Initialize an empty list to store a monster with attributes
-    paragraphs = []
+    if par in escape.keys() and escape[par][0] != "0":
+        if bout == 1 and escape[par][1] != "0":
+            print(1)
+            run = True
+        elif 0 < bout < 3 and escape[par][2] != "0":
+            print(2)
+            run = True
+        elif bout < 0 and escape[par][3] != "0":
+            print(3)
+            run = True
+        elif monsters_kiled > 0 and escape[par][4] != "0":
+            print(4)
+            run = True
 
-    # Split the paragraph into words
-    prickle = book[chapter].split(" ")
+    return run
 
-    # Find the index positions of uppercase words
-    index_nums = []
-    for i, word in enumerate(prickle):
-        if str(word).isupper():
-            index_nums.append(i)
-
-    # Identify if chapter has any monster
-    for i in range(len(index_nums) - 2):
-        if (index_nums[i] + 1 == index_nums[i + 1]
-                and index_nums[i + 1] + 1 == index_nums[i + 2]):
-            if chapter not in paragraphs:
-                paragraphs.append(chapter)
-
-    return chapter in paragraphs
-
-
-# [1] nie
-# [2] po każdej rundzie
-# [3] po 1 rundzie
-# [4] po pokonaniu potwora
-# [5] przejdź do innego punktu
-# [6] inne
 
 def open_book():
     # Define the path to the JSON book file
@@ -222,42 +251,15 @@ def open_book():
         return json.load(f)
 
 
-""" nie
-    nie, ale po wygranej 1 rundzie patrz
-    tylko po 1 rundzie
-    po 1 i 2 rundzie
-    po każdej rundzie
-    po każdej rundzie i po każdej walce
-    po każdej walce  
-    * fireball
-"""
 
-escape = {
-    '2': 'po każdej rundzie',
-    '32': 'no',
-    '69': 'no',
-    '92': 'po wygranej walce',
-    '98': 'no',
-    '107': 'no',
-    '109': 'no, *po wygranej! 1 rundzie patrz 77 **po przegranej 163',
-    '116': 'no',
-    '157': 'tylko po pierwszej rundzie',
-    '169': 'tylko po pierwszej rundzie',
-    '184': 'po 1 rundzie lub po drugiej rundzie',
-    '213': 'no',
-    '216': 'no',
-    '238': 'po każdej walce * dalej albo 316 albo 103',
-    '255': 'no',
-    '277': 'po każdej walce',
-    '288': 'no',
-    '307': 'no',
-    '309': 'po 1 rundzie * zmiana broni po 1 rundzie',
-    '312': 'po każdym',
-    '317': 'no',
-    '332': 'no',
-    '341': 'no',
-    '344': 'special - fireball',
-    '355': 'no, ale po pierwszej wygranej rundzie pytanie',
-    '361': 'no',
-    '367': 'no'
+
+
+
+
+special = {
+    '109': 'po !wygranej! 1 rundzie patrz 77 **po przegranej 163',
+    '355': 'po pierwszej wygranej rundzie pytanie',
+    '344': 'fireball',
+    '309': 'zmiana broni po 1 rundzie',
+    '238': 'dalej albo 316 albo 103',
 }
