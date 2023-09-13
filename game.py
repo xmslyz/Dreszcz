@@ -10,7 +10,7 @@ class Shiver:
     def __init__(self):
         self.test = True
         self.last_valid_chapter: str = "1"
-        self.visited_chapters: dict = {"1": True}
+        self.visited_chapters: dict = {}
         self.hero = character.Hero("Stefan")
         self.hero.set_attribute_levels()
 
@@ -29,7 +29,8 @@ class Shiver:
                 )
 
                 if user_input == "1":
-                    self.open_chapter(chapter="1")
+                    # self.visited_chapters["1"] = True
+                    self.open_chapter("1")
                     break
                 elif user_input == "2":
                     self.load_last_saved_game()
@@ -82,13 +83,13 @@ class Shiver:
             elif game_over == "0":
                 self.quit_game()
 
-    def main_menu(self, relecture=None, combat=None):
+    def main_menu(self, relecture=None):
         if relecture:
             print("cd. ", end='')
-            self.open_chapter(relecture, combat=combat)
+            self.open_chapter(relecture)
 
         while True:
-            chapter = input("Podaj numer: ")
+            chapter = input(">>> ")
             if chapter == "0":
                 self.quit_game()
             elif chapter == "o":
@@ -97,6 +98,11 @@ class Shiver:
                 print(sorted([int(x) for x in self.visited_chapters.keys()]))
             elif chapter == "f":
                 game_mechanics.combat(self)
+            elif chapter == "r":
+                if game_mechanics.can_escape(self.last_valid_chapter):
+                    print("run")
+                else:
+                    print("cant run")
             elif (self.check_move(chapter)
                   and chapter.isdigit()
                   and chapter in self.book_chapters):
@@ -129,9 +135,9 @@ class Shiver:
             else:
                 print("Nieprawidłowy znak. Spróbuj ponownie.")
 
-    def open_chapter(self, chapter, *, combat=None):
+    def open_chapter(self, chapter: str):
         self.last_valid_chapter = chapter
-        text = self.chapter_text(chapter, combat)
+        text = self.book_chapters[chapter]
 
         if chapter not in self.visited_chapters:
             # show actual paragraph
@@ -140,27 +146,6 @@ class Shiver:
             self.visited_chapters[chapter] = True
         else:
             print(f"[{chapter}*] {text}")
-
-    def chapter_text(self, chapter, combat):
-        """
-
-        Args:
-            chapter: number of paragraph
-            combat:
-
-        Returns:
-            text: str
-        """
-
-        text = self.book_chapters[chapter]
-        # if game_mechanics.get_monsters(chapter):
-        #     if combat == "after":
-        #         text = text.split("|")[1].lstrip()
-        #     else:
-        #         text = f"{text.split('|')[0].lstrip()} ... c.d.n. "
-        # else:
-        #     text = self.book_chapters[chapter]
-        return text
 
     def check_move(self, chapter):
         """checks if introduced number is valid next move"""

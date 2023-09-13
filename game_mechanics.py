@@ -172,7 +172,7 @@ def fight(hero, monster):
         ...
 
 
-def can_escape():
+def can_escape(chapter):
     """
     Checks if hero can escape from fight.
 
@@ -180,30 +180,30 @@ def can_escape():
         chapter (str):
 
     Returns:
-        bool: True, if can escape.
+        bool: True, when can escape.
     """
     book = open_book()
 
-    # Initialize an empty list to store monster attributes
+    # Initialize an empty list to store a monster with attributes
     paragraphs = []
 
-    for chapter in book.keys():
-        # Split the paragraph into words
-        prickle = book[chapter].split(" ")
+    # Split the paragraph into words
+    prickle = book[chapter].split(" ")
 
-        # Find the index positions of uppercase words
-        index_nums = []
-        for i, word in enumerate(prickle):
-            if str(word).isupper():
-                index_nums.append(i)
+    # Find the index positions of uppercase words
+    index_nums = []
+    for i, word in enumerate(prickle):
+        if str(word).isupper():
+            index_nums.append(i)
 
-        # Identify chapter with monster
-        for i in range(len(index_nums) - 2):
-            if (index_nums[i] + 1 == index_nums[i + 1]
-                    and index_nums[i + 1] + 1 == index_nums[i + 2]):
-                print(chapter)
-                if chapter not in paragraphs:
-                    paragraphs.append(chapter)
+    # Identify if chapter has any monster
+    for i in range(len(index_nums) - 2):
+        if (index_nums[i] + 1 == index_nums[i + 1]
+                and index_nums[i + 1] + 1 == index_nums[i + 2]):
+            if chapter not in paragraphs:
+                paragraphs.append(chapter)
+
+    return chapter in paragraphs
 
 
 # [1] nie
@@ -222,33 +222,42 @@ def open_book():
         return json.load(f)
 
 
+""" nie
+    nie, ale po wygranej 1 rundzie patrz
+    tylko po 1 rundzie
+    po 1 i 2 rundzie
+    po każdej rundzie
+    po każdej rundzie i po każdej walce
+    po każdej walce  
+    * fireball
+"""
+
 escape = {
     '2': 'po każdej rundzie',
     '32': 'no',
     '69': 'no',
-    '92': 'po każdej rundzie i po minotaurze',
+    '92': 'po wygranej walce',
     '98': 'no',
     '107': 'no',
-    '109': 'no, akcja z podniesieniem kraty [340..251..39]',
+    '109': 'no, *po wygranej! 1 rundzie patrz 77 **po przegranej 163',
     '116': 'no',
     '157': 'tylko po pierwszej rundzie',
-    '166': 'no nie walka',
     '169': 'tylko po pierwszej rundzie',
-    '184': 'tylko po pierwszej rundzie lub po drugiej rundzie [226]',
+    '184': 'po 1 rundzie lub po drugiej rundzie',
     '213': 'no',
     '216': 'no',
-    '238': 'po każdej walce ! brak numeru gdzie iść dalej!! ',
+    '238': 'po każdej walce * dalej albo 316 albo 103',
     '255': 'no',
     '277': 'po każdej walce',
     '288': 'no',
     '307': 'no',
-    '309': 'po 1 rundzie ! zmiana broni',
-    '312': 'dopiero po każdym',
+    '309': 'po 1 rundzie * zmiana broni po 1 rundzie',
+    '312': 'po każdym',
     '317': 'no',
     '332': 'no',
     '341': 'no',
-    '344': 'inna zasada walki - fireball',
-    '355': 'po pierwszej rundzie pytanie',
+    '344': 'special - fireball',
+    '355': 'no, ale po pierwszej wygranej rundzie pytanie',
     '361': 'no',
     '367': 'no'
 }

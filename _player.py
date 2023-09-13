@@ -1,6 +1,7 @@
 import json
 import random
 
+
 class Actions:
     def fight_round(self, player, monster):
         got_luck = player.am_i_lucky()
