@@ -3,7 +3,39 @@ import pathlib
 import random
 from itertools import combinations
 
+from colorama import Fore, Style
+
 from character import Monster
+
+
+def consume(hero, extra: bool = False):
+    """
+    Consume supplies. Each supply gives S: +4.
+
+    Args:
+        hero: instance of hero
+        extra: when chapter [162] S: +5
+
+    Returns:
+        Actual value of food.
+
+    """
+    value = 5 if extra else 4
+    food = hero.inventory.food
+    j = 0
+    if food > 0:
+        while not hero.stamina >= hero.max_stamina:
+            for _ in range(value):
+                hero.stamina += 1
+                j += 1
+                if hero.stamina <= hero.max_stamina:
+                    break
+        hero.inventory.food -= 1
+        print(f"Spożyłeś prowiant. W: +{j}")
+    else:
+        print("Nie masz już Prowiantu")
+
+    return hero.inventory.food
 
 
 def get_monsters(chapter):
@@ -20,10 +52,10 @@ def get_monsters(chapter):
 
     book = open_book()
 
-    # Initialize an empty list to store monster attributes
+    # Initialize an empty list to store monster objects
     monsters = []
 
-    # Identify consecutive index positions indicating monster name & attributes
+    # Initialize an empty list to store posible monsters occurences
     consecutive_lists = []
 
     # Split the paragraph into words
@@ -127,6 +159,28 @@ def combat(story):
                     story.bout += 1
                 elif combat_menu == "2":
                     if can_escape(story):
+                        if sss_check(story.hero):
+                            if sss(story.hero):
+                                print(
+                                    "Miałeś szczęście, potwór ledwo drasnął "
+                                    "twoje plecy. Wytrzymałość -1"
+                                )
+                                story.hero.stamina -= 1
+                            else:
+                                print(
+                                    "Masz pecha. "
+                                    "Kiedy zacząłeś uciekać potwór zdążył w "
+                                    "ostatniej chwili zadać ci głęboką ranę. "
+                                    "Wytrzymałość -3"
+                                )
+                                story.hero.stamina -= 3
+                        else:
+                            print(
+                                "Kiedy odwróciłeś się aby uciec, potwór zdążył "
+                                "uderzyć po raz ostatni, zadając ci bolesną "
+                                "ranę. Wytrzymałość -2"
+                            )
+                            story.hero.stamina -= 2
                         break
                     else:
                         print("Nie możesz teraz uciec Śmiałku!")
@@ -275,15 +329,6 @@ def open_book():
         return json.load(f)
 
 
-special = {
-    '109': 'po !wygranej! 1 rundzie patrz 77 **po przegranej 163',
-    '355': 'po pierwszej wygranej rundzie pytanie',
-    '344': 'fireball',
-    '309': 'zmiana broni po 1 rundzie',
-    '238': 'dalej albo 316 albo 103',
-}
-
-
 def roll_d6():
     """
     Simulate the roll of a 6-sided die (D6).
@@ -295,10 +340,10 @@ def roll_d6():
     roll = random.randint(1, 6)
     top = "_______"
     line = "|       |"
-    line_o_ = "|   ●   |"
-    lineo__ = "| ●     |"
-    line__o = "|     ● |"
-    lineo_o = "| ●   ● |"
+    line_o_ = "|   " + Fore.BLACK + "●" + Style.RESET_ALL + "   |"
+    lineo__ = "| " + Fore.BLACK + "●" + Style.RESET_ALL + "     |"
+    line__o = "|     " + Fore.BLACK + "●" + Style.RESET_ALL + " |"
+    lineo_o = "| " + Fore.BLACK + "●   ●" + Style.RESET_ALL + " |"
     bottom = "‾‾‾‾‾‾‾"
 
     def get_lines(value):
@@ -338,10 +383,10 @@ def roll_2d6():
     right = random.randint(1, 6)
     top = "_______"
     line = "|       |"
-    line_o_ = "|   ●   |"
-    lineo__ = "| ●     |"
-    line__o = "|     ● |"
-    lineo_o = "| ●   ● |"
+    line_o_ = "|   " + Fore.BLACK + "●" + Style.RESET_ALL + "   |"
+    lineo__ = "| " + Fore.BLACK + "●" + Style.RESET_ALL + "     |"
+    line__o = "|     " + Fore.BLACK + "●" + Style.RESET_ALL + " |"
+    lineo_o = "| " + Fore.BLACK + "●   ●" + Style.RESET_ALL + " |"
     bottom = "‾‾‾‾‾‾‾"
 
     def get_lines(value):
@@ -368,3 +413,12 @@ def roll_2d6():
     print("", bottom, "  ", bottom)
 
     return left + right
+
+
+special = {
+    '109': 'po !wygranej! 1 rundzie patrz 77 **po przegranej 163',
+    '355': 'po pierwszej wygranej rundzie pytanie',
+    '344': 'fireball',
+    '309': 'zmiana broni po 1 rundzie',
+    '238': 'dalej albo 316 albo 103',
+}

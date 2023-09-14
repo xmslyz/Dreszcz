@@ -2,8 +2,13 @@ import json
 import os
 import re
 
+from colorama import Fore, Style, init
+
 import game_mechanics
 import character
+import menu
+
+init(autoreset=True)
 
 
 class Shiver:
@@ -11,8 +16,7 @@ class Shiver:
         self.test = False
         self.last_valid_chapter: str = "1"
         self.visited_chapters: dict = {}
-        self.hero = character.Hero("Stefan")
-        self.hero.set_attribute_levels()
+        self.hero = None
         self.bout = 0
         self.monsters_kiled_counter = 0
         self.killed_monsters_dict = {}
@@ -22,22 +26,25 @@ class Shiver:
         try:
             # open last saved or first
             while True:
-                user_input = input(
-                    "[1] Nowa gra\n"
-                    "[2] Wczytaj ostatni zapis\n"
-                    "\n"
-                    "[0] Zakończ [w dowolnym momencie gry]\n"
-                    ">>> "
+                start_game = input(
+                    Fore.MAGENTA + "[1] " + Fore.GREEN + "Nowa gra\n" +
+                    Fore.MAGENTA + "[2] " + Fore.GREEN + "Wczytaj ostatni "
+                                                        "zapis\n" + "\n" +
+                    Fore.MAGENTA + "[0] " + Fore.GREEN + "Zakończ [w dowolnym "
+                                                        "momencie gry]\n" +
+                    Fore.MAGENTA + ">>> " + Style.RESET_ALL
                 )
 
-                if user_input == "1":
+                if start_game == "1":
+                    self.create_new_hero()
                     self.open_chapter("1")
                     break
-                elif user_input == "2":
+                elif start_game == "2":
                     self.load_last_saved_game()
+                    self.load_hero()
                     self.open_chapter(self.last_valid_chapter)
                     break
-                elif user_input == "0":
+                elif start_game == "0":
                     self.quit_game()
 
                 else:
@@ -47,6 +54,14 @@ class Shiver:
 
         except FileNotFoundError:
             print("Nie znaleziono pliku gry.")
+
+    def create_new_hero(self):
+        self.hero = character.Hero()
+        self.hero.set_attribute_levels()
+        self.hero.choose_potion()
+        print(Fore.RED + "\n *** ZACZYNAMY !!! *** " +
+              Style.RESET_ALL)
+        print(menu.intro(self.hero))
 
     def quit_game(self):
         print("Do zobaczenia wkrótce Śmiałku!")
@@ -70,11 +85,12 @@ class Shiver:
     def game_over(self):
         while True:
             game_over = input(
-                "I tak oto kończy się twoja przygoda Śmiałku! Zginąłeś!\n\n"
-                "[1] Chcesz zagrać raz jeszcze?\n"
-                "[2] Wczytać zapis gry?\n\n"
-                "[0] Zakończyć grę?\n"
-                ">>> ")
+                Fore.GREEN +
+                "I tak oto kończy się twoja przygoda Śmiałku! Zginąłeś!\n\n" +
+                Fore.MAGENTA + "[1]" + Fore.GREEN + "Chcesz zagrać raz jeszcze?\n" +
+                Fore.MAGENTA + "[2]" + Fore.GREEN + "Wczytać zapis gry?\n\n" +
+                Fore.MAGENTA + "[0]" + Fore.GREEN + "Zakończyć grę?\n" +
+                Fore.MAGENTA + ">>> " + Style.RESET_ALL)
 
             if game_over == "1":
                 self.start_game()
@@ -96,16 +112,27 @@ class Shiver:
                 self.quit_game()
             elif chapter == "o":
                 self.show_action_menu()
+            elif chapter == "h":
+                print(self.hero)
             elif chapter == "v":
                 print(sorted([int(x) for x in self.visited_chapters.keys()]))
             elif chapter == "f":
                 game_mechanics.combat(self)
+            elif chapter == "e":
+                if "Prowiant" in self.book_chapters[self.last_valid_chapter]:
+                    game_mechanics.consume(self.hero)
+                else:
+                    print("Nie możesz w tej chwili zjeść Prowiantu")
+            elif chapter == "i":
+                print(self.hero.inventory)
             elif chapter == "test":
                 self.test = not self.test
                 print(f"TEST: {self.test}")
             elif (self.check_move(chapter)
                   and chapter.isdigit()
                   and chapter in self.book_chapters):
+                if chapter == "89":
+                    self.hero.change_atribute_level("luck", False, 2)
                 self.open_chapter(chapter)
             else:
                 print(f"Nieprawidłowy znak. Masz do wyboru: "
@@ -115,7 +142,10 @@ class Shiver:
     def show_action_menu():
         print("--- Opcje\n"
               "-- [v] Pokaż odwiedzone paragrafy\n"
-              "-- [f] Walka"
+              "-- [h] Parametry Śmiałka\n"
+              "-- [f] Walka\n"
+              "-- [e] Zjedz Prowiant\n"
+              "-- [i] Plecak\n"
               )
 
     def action_menu(self):
@@ -170,6 +200,9 @@ class Shiver:
             txt += f"{move} / "
 
         return f"{txt}"
+
+    def load_hero(self):
+        pass
 
 
 if __name__ == "__main__":
