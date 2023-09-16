@@ -182,3 +182,8 @@ class TestKeysChecker(TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+# class TestConsume(TestCase):
+#     def test_consume(self):
+#         self.fail()

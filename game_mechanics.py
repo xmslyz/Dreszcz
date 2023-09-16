@@ -125,71 +125,93 @@ def check_keys(key_a, key_b, key_c):
     return found_combination
 
 
-def combat(story):
+def combat(story, cheat=False):
+    # create conter of dueled monsters
     story.monsters_kiled_counter = 0
+
+    # create counter for rounds
     story.bout = 1
+
+    # get all monster to fight with form chapter
     monsters = get_monsters(story.last_valid_chapter)
+
     if monsters:
         while story.monsters_kiled_counter < len(monsters):
-            story.monsters_in_line = len(monsters)
-            if story.hero.is_dead():
-                print(f"{story.hero.name} zginął!")
-                story.game_over()
-            elif monsters[story.monsters_kiled_counter].is_dead():
-                print(
-                    f"{monsters[story.monsters_kiled_counter].name} "
-                    f"został pokonany!"
-                )
-                print(f"Zostało ci W: {story.hero.stamina}")
-                story.bout = 1
-                story.monsters_kiled_counter += 1
+            monster_name = monsters[story.monsters_kiled_counter].name
+            # if the monster was allready killed
+            if monster_name in story.hero.kills.keys():
+                if story.last_valid_chapter == story.hero.kills[monster_name]:
+                    print(f"{monster_name} już nieżyje!")
+                    story.monsters_kiled_counter += 1  # get the next one
             else:
-                print("")
-                print(
-                      f"   {monsters[story.monsters_kiled_counter].name}"
-                      f": runda {story.bout}   ")
-                combat_menu = input("[1] Starcie - rzut koścmi\n"
-                                    "[2] Ucieczka\n"
-                                    "[3] Zmiana broni\n"
-                                    "[4] ...\n"
-                                    "[0] Koniec gry\n"
-                                    ">>> ")
-                if combat_menu == "1":
-                    fight(story.hero, monsters[story.monsters_kiled_counter])
-                    story.bout += 1
-                elif combat_menu == "2":
-                    if can_escape(story):
-                        if sss_check(story.hero):
-                            if sss(story.hero):
-                                print(
-                                    "Miałeś szczęście, potwór ledwo drasnął "
-                                    "twoje plecy. Wytrzymałość -1"
-                                )
-                                story.hero.stamina -= 1
-                            else:
-                                print(
-                                    "Masz pecha. "
-                                    "Kiedy zacząłeś uciekać potwór zdążył w "
-                                    "ostatniej chwili zadać ci głęboką ranę. "
-                                    "Wytrzymałość -3"
-                                )
-                                story.hero.stamina -= 3
-                        else:
-                            print(
-                                "Kiedy odwróciłeś się aby uciec, potwór zdążył "
-                                "uderzyć po raz ostatni, zadając ci bolesną "
-                                "ranę. Wytrzymałość -2"
-                            )
-                            story.hero.stamina -= 2
-                        break
-                    else:
-                        print("Nie możesz teraz uciec Śmiałku!")
-                elif combat_menu == "3":
-                    print("Zmieniasz broń")
-                elif combat_menu == "0":
-                    story.quit_game()
+                # for tests only!
+                if cheat:
+                    print(monster_name, "SUCKERPUNCH", sep=": ")
+                    monsters[story.monsters_kiled_counter].stamina = 0
+                    story.hero.kills[monster_name] = story.last_valid_chapter
+                    story.monsters_kiled_counter += 1
                 else:
-                    print("Nie ma takiej opcji")
+                    # hero dies
+                    if story.hero.is_dead():
+                        print(f"{story.hero.name} zginął!")
+                        story.game_over()
+                    # monster dies
+                    elif monsters[story.monsters_kiled_counter].is_dead():
+                        story.hero.kills[monster_name] = (
+                            story.last_valid_chapter)
+                        print(f"{monster_name} został pokonany!")
+                        print(f"Zostało ci W: {story.hero.stamina}")
+                        story.bout = 1
+                        story.monsters_kiled_counter += 1
+                    # tie
+                    else:
+                        print(f"\n   {monster_name}"
+                              f": runda {story.bout}   ")
+                        combat_menu = input("[1] Starcie - rzut koścmi\n"
+                                            "[2] Ucieczka\n"
+                                            "[3] Zmiana broni\n"
+                                            "[4] ...\n"
+                                            "[0] Koniec gry\n"
+                                            ">>> ")
+                        if combat_menu == "1":
+                            fight(story.hero,
+                                  monsters[story.monsters_kiled_counter])
+                            story.bout += 1
+                        elif combat_menu == "2":
+                            if can_escape(story):
+                                if sss_check(story.hero):
+                                    if sss(story.hero):
+                                        print(
+                                            "Miałeś szczęście, potwór ledwo "
+                                            "drasnął twoje plecy. "
+                                            "Wytrzymałość -1"
+                                        )
+                                        story.hero.stamina -= 1
+                                    else:
+                                        print(
+                                            "Masz pecha.  Kiedy zacząłeś "
+                                            "uciekać potwór zdążył w "
+                                            "ostatniej chwili zadać ci głęboką "
+                                            "ranę. Wytrzymałość -3"
+                                        )
+                                        story.hero.stamina -= 3
+                                else:
+                                    print(
+                                        "Kiedy odwróciłeś się aby uciec, "
+                                        "potwór zdążył uderzyć po raz "
+                                        "ostatni, zadając ci bolesną ranę. "
+                                        "Wytrzymałość -2"
+                                    )
+                                    story.hero.stamina -= 2
+                                break
+                            else:
+                                print("Nie możesz teraz uciec Śmiałku!")
+                        elif combat_menu == "3":
+                            print("Zmieniasz broń")
+                        elif combat_menu == "0":
+                            story.quit_game()
+                        else:
+                            print("Nie ma takiej opcji")
 
         story.main_menu(story.last_valid_chapter)
     else:
@@ -197,6 +219,7 @@ def combat(story):
 
 
 def fight(hero, monster):
+    print(monster.stamina)
     while True:
         input("Rzuć kośćmi dla potwora.")
         monster_roll = roll_2d6()
