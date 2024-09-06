@@ -8,3 +8,7 @@
   
 * Błędy w scenariuszu (prawdopodobnie)
   - [174] odsyła do 200!
+
+* Ustawić w pliku dreszcz.json separator
+  *  separator zwycięstwa — to znaczy, że tekst jest odczytywany tylko do tego miejsca. A druga jego część tylko wtedy kiedy wygrana walka lub skorzystał z ucieczki.
+  * 

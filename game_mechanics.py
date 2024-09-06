@@ -1,6 +1,7 @@
 import json
 import pathlib
 import random
+import re
 from itertools import combinations
 
 from colorama import Fore, Style
@@ -170,7 +171,7 @@ def combat(story, cheat=False):
                         combat_menu = input("[1] Starcie - rzut koścmi\n"
                                             "[2] Ucieczka\n"
                                             "[3] Zmiana broni\n"
-                                            "[4] ...\n"
+                                            "[4] Modyfikacja parametrów\n"
                                             "[0] Koniec gry\n"
                                             ">>> ")
                         if combat_menu == "1":
@@ -208,6 +209,11 @@ def combat(story, cheat=False):
                                 print("Nie możesz teraz uciec Śmiałku!")
                         elif combat_menu == "3":
                             print("Zmieniasz broń")
+                        elif combat_menu == "4":
+                            print(f"Podaj modyfikator:")
+                            modificator = input("+/- number Z/S/W (np.: +1Z, -2S\n"
+                                                ">>> ")
+                            modify_atributes(story, modificator)
                         elif combat_menu == "0":
                             story.quit_game()
                         else:
@@ -341,6 +347,22 @@ def can_escape(game_instance):
             run = True
 
     return run
+
+
+def modify_atributes(story, modificator: str):
+    check_input = re.findall(r'(([+|-])([0-9])([WSZ]))', modificator)
+    if check_input:
+        inplus, value, atribute = modificator
+        inplus = True if inplus == "+" else False
+        if atribute == "S":
+            atribute = "luck"
+        elif atribute == "W":
+            atribute = "stamina"
+        else:
+            atribute = "agility"
+        story.hero.change_atribute_level(atribute, inplus, int(value))
+    else:
+        print("zły format")
 
 
 def open_book():

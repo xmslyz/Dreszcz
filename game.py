@@ -206,8 +206,8 @@ class Shiver:
                   and chapter in self.book_chapters):
                 self.open_chapter(chapter)
                 checks = re.findall(r'(([+|-])([0-9])*([WSZ]))',
-                                 self.book_chapters[chapter]
-                                 )
+                                    self.book_chapters[chapter]
+                                    )
                 print(checks)
 
             else:

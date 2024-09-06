@@ -135,11 +135,20 @@ class Hero(Character):
         attr = getattr(self, attribute)
         max_attr = getattr(self, f"max_{attribute}")
         for i in range(abs(value)):
-            while attr <= max_attr:
-                if in_plus:
+            # Check if the attribute is within the allowed range
+            if in_plus:
+                if attr < max_attr:
                     attr += 1
+                    setattr(self, attribute, attr)
                 else:
+                    print("Osiągnięto maksymalny poziom atrybutu")
+                    break
+            else:
+                if attr > 0:
                     attr -= 1
+                    setattr(self, attribute, attr)
+                else:
+                    break
 
     def change_atribute_level_(self, attribute: str, new_value: int):
         """

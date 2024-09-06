@@ -21,9 +21,10 @@
     "VISITED": {
         "1": true,
         "312": true,
-        "193": true
+        "193": true,
+        "2": true
     },
-    "LAST_CHAPTER": "193",
+    "LAST_CHAPTER": "2",
     "KILLS": {
         "LUDOJAD": "312",
         "ZOMBI": "312",
