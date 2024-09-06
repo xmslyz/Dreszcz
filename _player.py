@@ -13,20 +13,6 @@ def drink_agility_potion(self, points):
         print("Nie masz eliksiru zręczności")
 
 
-def use_gold(self, in_plus: bool, value):
-
-    if in_plus:
-        for i in range(value):
-            if self.inventory.gold > 0:
-                self.inventory.gold += 1
-    else:
-        for i in range(value):
-            if self.inventory.gold == 0:
-                print("Nie masz więcej pieniędzy")
-                break
-            else:
-                self.inventory.gold -= 1
-
 
 def use_bag(self, object_name):
     self.inventory.bag.update({object_name: 1})

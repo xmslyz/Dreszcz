@@ -1,6 +1,6 @@
 
 
-class Inventory:
+class Inventory(object):
     def __init__(self):
         self.sword = {"miecz": 1}
         self.shield = {"tarcza": 1}
@@ -45,3 +45,23 @@ class Inventory:
             f"     - złoto: {self.gold} szt.\n"
 
         )
+
+    def put_helmet(self):
+        # 2
+        ...
+
+    def transactions(self, in_plus: bool, value):
+        """ Buying or seling / eventualy loosing or finding gold """
+        if in_plus:
+            for i in range(value):
+                self.gold += 1
+        else:
+            if value > self.gold:
+                print("Nie masz tyle pieniędzy")
+            else:
+                for i in range(value):
+                    if self.gold == 0:
+                        print("Nie masz więcej pieniędzy")
+                        break
+                    else:
+                        self.gold -= 1

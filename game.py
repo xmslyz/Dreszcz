@@ -2,7 +2,6 @@ import json
 import os
 import pathlib
 import re
-import arrow
 from colorama import Fore, Style, init
 import game_mechanics
 import character
@@ -113,7 +112,7 @@ class Shiver:
             files = [f for f in os.listdir(directory_path) if
                      os.path.isfile(os.path.join(directory_path, f))]
             return directory_path, files
-        except WindowsError as e:
+        except WindowsError:
             ...
         except Exception as e:
             print(e)
@@ -155,10 +154,37 @@ class Shiver:
                 self.save_game(quicksave=True)
             elif chapter == "h":
                 print(self.hero)
+            elif chapter == "g":
+                prompt = input("Podaj kwotę (użyj symbolu '-' jesli kwota "
+                               "ujemna)\n>>> ").replace(" ", "")
+                while True:
+                    in_plus = not prompt[0] == "-"
+                    if prompt.isdigit():
+                        gold = int(prompt)
+                        break
+                    elif not in_plus and prompt[1:].isdigit():
+                        gold = int(prompt[1:])
+                        break
+                    else:
+                        print("Podano błędnie ilosc złota. Spróbuj raz "
+                              "jeszcze.")
+                self.hero.inventory.transactions(in_plus, gold)
+                # extract last digit from gold
+                last_digit = gold % 10
+                if gold == 1:
+                    coin = "monetę"
+                elif 1 < last_digit < 5:
+                    coin = "monety"
+                else:
+                    coin = "monet"
+                pouch = "powiększyła" if in_plus else "pomniejszyła"
+                print(f"Twoja sakiewka {pouch} się o {gold} {coin}.")
             elif chapter == "killself":
                 self.hero.stamina = 0
                 print(f"{self.hero.name} zginął!")
                 self.game_over()
+            elif chapter == "sal":
+                self.hero.change_atribute_level_("stamina", 10)
             elif chapter == "k":
                 game_mechanics.combat(self, True)
             elif chapter == "v":
@@ -178,9 +204,12 @@ class Shiver:
             elif (self.check_move(chapter)
                   and chapter.isdigit()
                   and chapter in self.book_chapters):
-                # if chapter == "89":
-                #     self.hero.change_atribute_level("luck", False, 2)
                 self.open_chapter(chapter)
+                checks = re.findall(r'(([+|-])([0-9])*([WSZ]))',
+                                 self.book_chapters[chapter]
+                                 )
+                print(checks)
+
             else:
                 print(f"Nieprawidłowy znak. Masz do wyboru: "
                       f"{self.possible_moves()}")
@@ -300,20 +329,15 @@ class Shiver:
                 "KILLS": self.hero.kills
             }
 
-            save_time = arrow.Arrow.now().format(
-                f"[{self.hero.name}] YYYY-MM-DD HH-mm-ss")
-
-            save_hero = self.hero.name
-
             dir_path = pathlib.Path.cwd() / "SAVE"
             if not os.path.exists(dir_path):
                 os.mkdir(dir_path)
 
-            save_path = dir_path / save_hero
+            save_path = dir_path / self.hero.name
             with open(save_path.with_suffix(".json"), "w",
                       encoding="utf-8") as f:
                 json.dump(self.TEMP, f, indent=4)
-            print(f"Zapisano plik: {save_hero}")
+            print(f"Zapisano plik: {self.hero.name}")
         else:
             if quicksave:
                 print("Nie można było zapisać pliku.")

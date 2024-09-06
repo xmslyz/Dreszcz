@@ -7,7 +7,7 @@ import game_mechanics as mech
 from inventory import Inventory
 
 
-class Character:
+class Character(object):
     def __init__(self):
         self.name = None
         self.agility = 0
@@ -140,6 +140,21 @@ class Hero(Character):
                     attr += 1
                 else:
                     attr -= 1
+
+    def change_atribute_level_(self, attribute: str, new_value: int):
+        """
+
+        Args:
+            attribute: "stamina", "agility", "luck
+            new_value: int
+
+        """
+
+        max_attr = getattr(self, f"max_{attribute}")
+        if new_value <= max_attr:
+            setattr(self, attribute, new_value)
+        else:
+            print("Osiągnięto maksymalny poziom atrybutu")
 
 
 class Monster(Character):
