@@ -1,0 +1,26 @@
+{
+    "NAME": "Soren Ironclaw",
+    "TEST": true,
+    "MAX_AGILITY": 7,
+    "MAX_STAMINA": 19,
+    "MAX_LUCK": 12,
+    "AGILITY": 7,
+    "STAMINA": 19,
+    "LUCK": 12,
+    "INVENTORY": {
+        "SWORD": "{'miecz': 1}",
+        "SHIELD": "{'tarcza': 1}",
+        "LANTERN": "latarnia",
+        "A_POTION": 0,
+        "S_POTION": 0,
+        "L_POTION": 2,
+        "FOOD": 8,
+        "GOLD": 5,
+        "BAG": {}
+    },
+    "VISITED": {
+        "1": true
+    },
+    "LAST_CHAPTER": "1",
+    "KILLS": {}
+}
