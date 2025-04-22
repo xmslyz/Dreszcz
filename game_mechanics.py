@@ -1,77 +1,10 @@
 import json
 import pathlib
 import random
-import re
 from itertools import combinations
 
-from colorama import Fore, Style
-
 from character import Monster
-
-
-class Paragraph:
-    def __init__(self, number: str, text: str):
-        self.number: str = number
-        self.text: str = text
-        self.can_escape: bool = self._detect_escape_in_text()
-        self.escape_rule: dict | None = ESCAPE_RULES.get(number)
-        self.has_monsters = self._detect_monsters()
-
-        if self.escape_rule:
-            self.can_escape = self.escape_rule.get("enabled", False)
-
-    @property
-    def contains_choices(self) -> bool:
-        return bool(self.get_choices())
-
-    def _detect_monsters(self) -> bool:
-        """
-        Returns True if paragraph contains a valid monster block like: NAME Z:x W:y
-        """
-        words = self.text.split()
-        index_nums = [i for i, word in enumerate(words) if word.isupper()]
-
-        for i in range(len(index_nums) - 2):
-            a, b, c = index_nums[i:i + 3]
-            if a + 1 == b and b + 1 == c:
-                if words[b].startswith("Z:") and words[c].startswith("W:"):
-                    return True
-        return False
-
-    def _detect_escape_in_text(self) -> bool:
-        """
-        Checks if paragraph text suggests escape is allowed.
-        """
-        keywords = [
-            "możesz się ratować ucieczką",
-            "masz prawo uciec",
-            "możesz próbować ucieczki",
-            "wolno ci uciec",
-            "masz możliwość ucieczki"
-        ]
-        text_lower = self.text.lower()
-        return any(kw in text_lower for kw in keywords)
-
-    def get_escape_reason(self) -> str:
-        """
-        Optional helper: returns explanation for GUI/log.
-        """
-        if self.escape_rule:
-            if self.escape_rule.get("enabled"):
-                if self.escape_rule.get("max_round") == 0:
-                    return "Ucieczka możliwa w każdej rundzie."
-                return f"Ucieczka możliwa do rundy {self.escape_rule['max_round']}."
-            return "Ucieczka jest zablokowana."
-        if self.can_escape:
-            return "Ucieczka możliwa (na podstawie treści paragrafu)."
-        return "Ucieczka niedozwolona."
-
-    def get_choices(self) -> list[str]:
-        """
-        Returns a list of chapter numbers mentioned in the paragraph
-        as possible options (e.g., 'patrz 123').
-        """
-        return re.findall(r"(?<!:)\b\d+\b", self.text)
+from paragraph import Paragraph
 
 
 def consume(hero, extra: bool = False) -> tuple[int, int]:
@@ -300,7 +233,7 @@ def resolve_combat_round(hero, monster, use_sss: bool = False) -> dict:
 
 
 def combat_cli(story, cheat=False):
-    story.monsters_kiled_counter = 0
+    story.monsters_killed_counter = 0
     story.bout = 1
     paragraph = story.book_raw[story.last_valid_chapter]
     monsters = get_monsters(paragraph)
@@ -309,20 +242,20 @@ def combat_cli(story, cheat=False):
         print("Nie ma z kim walczyć w tym paragrafie.")
         return
 
-    while story.monsters_kiled_counter < len(monsters):
-        monster = monsters[story.monsters_kiled_counter]
+    while story.monsters_killed_counter < len(monsters):
+        monster = monsters[story.monsters_killed_counter]
 
         # Jeśli potwór już pokonany w tym paragrafie
         if monster.name in story.hero.kills and \
                 story.hero.kills[monster.name] == story.last_valid_chapter:
             print(f"{monster.name} już nieżyje!")
-            story.monsters_kiled_counter += 1
+            story.monsters_killed_counter += 1
             continue
 
         if cheat:
             monster.stamina = 0
             story.hero.kills[monster.name] = story.last_valid_chapter
-            story.monsters_kiled_counter += 1
+            story.monsters_killed_counter += 1
             continue
 
         # Główna pętla walki z jednym potworem
@@ -337,7 +270,7 @@ def combat_cli(story, cheat=False):
                 story.bout += 1
             elif choice == "2":
                 paragraph = story.book_raw[story.last_valid_chapter]
-                if can_escape(paragraph, story.bout, story.monsters_kiled_counter):
+                if can_escape(paragraph, story.bout, story.monsters_killed_counter):
                     use_luck = sss_check_cli(story.hero)
                     escape_result = process_escape(story.hero, True, use_luck)
                     print(escape_result["narrative"])
@@ -356,7 +289,7 @@ def combat_cli(story, cheat=False):
         if monster.is_dead():
             print(f"{monster.name} został pokonany!")
             story.hero.kills[monster.name] = story.last_valid_chapter
-            story.monsters_kiled_counter += 1
+            story.monsters_killed_counter += 1
             story.bout = 1
 
         if story.hero.is_dead():
@@ -554,113 +487,10 @@ def can_escape(paragraph: Paragraph, bout: int, monsters_killed: int) -> bool:
 
 
 def open_book() -> dict[str, Paragraph]:
-    path = pathlib.Path.cwd() / "dreszcz.json"
+    path = pathlib.Path.cwd() / "shiver.json"
     with open(path, encoding="utf-8") as f:
         raw = json.load(f)
     return {k: Paragraph(k, v) for k, v in raw.items()}
-
-
-def roll_d6_raw() -> int:
-    """Returns a random int from 1 to 6 without any output."""
-    return random.randint(1, 6)
-
-
-def roll_2d6_raw() -> tuple[int, int]:
-    """Returns two random ints (1–6 each), representing 2D6."""
-    return random.randint(1, 6), random.randint(1, 6)
-
-
-def roll_d6_cli() -> int:
-    roll = roll_d6_raw()
-    _print_d6_graphic(roll)
-    return roll
-
-
-def roll_2d6_cli() -> int:
-    left, right = roll_2d6_raw()
-    _print_d6_double_graphic(left, right)
-    return left + right
-
-
-def _print_d6_graphic(value: int) -> None:
-    """
-    Prints an ASCII graphic of a single D6 die.
-
-    Args:
-        value (int): Rolled value from 1 to 6.
-    """
-    top = "_______"
-    line = "|       |"
-    line_o_ = "|   " + Fore.BLACK + "●" + Style.RESET_ALL + "   |"
-    lineo__ = "| " + Fore.BLACK + "●" + Style.RESET_ALL + "     |"
-    line__o = "|     " + Fore.BLACK + "●" + Style.RESET_ALL + " |"
-    lineo_o = "| " + Fore.BLACK + "●   ●" + Style.RESET_ALL + " |"
-    bottom = "‾‾‾‾‾‾‾"
-
-    def get_lines(v):
-        match v:
-            case 1:
-                return [line, line_o_, line]
-            case 2:
-                return [lineo__, line, line__o]
-            case 3:
-                return [lineo__, line_o_, line__o]
-            case 4:
-                return [lineo_o, line, lineo_o]
-            case 5:
-                return [lineo_o, line_o_, lineo_o]
-            case 6:
-                return [lineo_o, lineo_o, lineo_o]
-            case _:
-                return [line, line, line]
-
-    print("", top)
-    for ln in get_lines(value):
-        print(ln)
-    print("", bottom)
-
-
-def _print_d6_double_graphic(left: int, right: int) -> None:
-    """
-    Prints two D6 dice side by side using ASCII graphics.
-
-    Args:
-        left (int): First die roll.
-        right (int): Second die roll.
-    """
-    top = "_______"
-    line = "|       |"
-    line_o_ = "|   " + Fore.BLACK + "●" + Style.RESET_ALL + "   |"
-    lineo__ = "| " + Fore.BLACK + "●" + Style.RESET_ALL + "     |"
-    line__o = "|     " + Fore.BLACK + "●" + Style.RESET_ALL + " |"
-    lineo_o = "| " + Fore.BLACK + "●   ●" + Style.RESET_ALL + " |"
-    bottom = "‾‾‾‾‾‾‾"
-
-    def get_lines(v):
-        match v:
-            case 1:
-                return [line, line_o_, line]
-            case 2:
-                return [lineo__, line, line__o]
-            case 3:
-                return [lineo__, line_o_, line__o]
-            case 4:
-                return [lineo_o, line, lineo_o]
-            case 5:
-                return [lineo_o, line_o_, lineo_o]
-            case 6:
-                return [lineo_o, lineo_o, lineo_o]
-            case _:
-                return [line, line, line]
-
-    left_lines = get_lines(left)
-    right_lines = get_lines(right)
-
-    print("", top, "  ", top)
-    for l, r in zip(left_lines, right_lines):
-        print(l, "", r)
-    print("", bottom, "  ", bottom)
-
 
 ESCAPE_RULES = {
     "2": {"enabled": True, "max_round": None, "after_kill": False},

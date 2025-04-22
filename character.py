@@ -3,7 +3,7 @@ import random
 
 from colorama import Fore, Style, Back
 
-import game_mechanics as mech
+import roll
 from inventory import Inventory
 
 
@@ -136,9 +136,9 @@ class Hero(Character):
             int: Rolled value.
         """
         if attr == "agility" or attr == "luck":
-            return mech.roll_d6_cli() + 6
+            return roll.roll_d6_cli() + 6
         elif attr == "stamina":
-            return mech.roll_2d6_cli() + 12
+            return roll.roll_2d6_cli() + 12
         else:
             raise ValueError("Nieznany atrybut.")
 

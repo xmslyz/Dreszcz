@@ -1,7 +1,6 @@
 import json
 import os
 import pathlib
-import re
 from typing import Callable
 import sys
 
@@ -9,23 +8,24 @@ from colorama import Fore, Style, init
 import game_mechanics
 import character
 import menu
+from paragraph import Paragraph
 
 init(autoreset=True)
 
 
 class Shiver:
     def __init__(self):
+        self.book_raw: dict[str, dict] = {}
+        self.book_chapters: dict[str, Paragraph] = {}
         self.dev_mode: bool = False
         self.test = False
         self.last_valid_chapter: str = "1"
+        self.book_chapters: dict[str, Paragraph] = {}
         self.visited_chapters: dict = {}
         self.hero = None
         self.bout = 0
-        self.monsters_kiled_counter = 0
+        self.monsters_killed_counter = 0
         self.killed_monsters_dict = {}
-
-        self.book_raw = game_mechanics.open_book()
-        self.book_chapters = game_mechanics.BookAdapter(self.book_raw)
 
         self.COMMANDS: dict[str, Callable[[], bool]] = {
             "0": self.quit_game,
@@ -60,40 +60,50 @@ class Shiver:
         return input(prompt)
 
     def start_game(self):
-        try:
-            # open last saved or first
-            while True:
-                start_game = self._next_input_or_prompt(
-                    Fore.MAGENTA + "[1] " + Fore.GREEN + "Nowa gra\n" +
-                    Fore.MAGENTA + "[2] " + Fore.GREEN + "Wczytaj ostatni "
-                                                         "zapis\n" +
-                    Fore.MAGENTA + "[3] " + Fore.GREEN + "Usuń zapis\n" + "\n" +
-                    Fore.MAGENTA + "[0] " + Fore.GREEN + "Zakończ [w dowolnym "
-                                                         "momencie gry]\n" +
-                    Fore.MAGENTA + ">>> " + Style.RESET_ALL
-                )
+        # Wczytanie i przygotowanie danych książki
+        path = pathlib.Path.cwd() / "shiver.json"
+        with open(path, encoding="utf-8") as f:
+            raw = json.load(f)
 
-                if start_game == "1":
-                    self.create_new_hero()
-                    self.save_game()
-                    self.open_chapter("1")
-                    break
-                elif start_game == "2":
-                    self.load_last_saved_game()
-                    self.open_chapter(self.last_valid_chapter)
-                    break
-                elif start_game == "3":
-                    self.delete_game()
-                elif start_game == "0":
-                    self.quit_game()
+        self.book_raw = raw
+        self.book_chapters = {k: Paragraph(k, v) for k, v in raw.items()}
 
-                else:
-                    print("Spróbuj jeszcze raz.")
+        # Otwarcie pierwszego rozdziału
+        self.open_chapter(self.last_valid_chapter)
 
-            self.main_menu()
-
-        except FileNotFoundError:
-            print("Nie znaleziono pliku gry.")
+        # Uruchomienie głównego menu gry
+        self.main_menu(self.last_valid_chapter)
+        # try:
+        #     # open last saved or first
+        #     while True:
+        #         start_game = self._next_input_or_prompt(
+        #             Fore.MAGENTA + "[1] " + Fore.GREEN + "Nowa gra\n" +
+        #             Fore.MAGENTA + "[2] " + Fore.GREEN + "Wczytaj ostatni "
+        #                                                  "zapis\n" +
+        #             Fore.MAGENTA + "[3] " + Fore.GREEN + "Usuń zapis\n" + "\n" +
+        #             Fore.MAGENTA + "[0] " + Fore.GREEN + "Zakończ [w dowolnym "
+        #                                                  "momencie gry]\n" +
+        #             Fore.MAGENTA + ">>> " + Style.RESET_ALL
+        #         )
+        #
+        #         if start_game == "1":
+        #             self.create_new_hero()
+        #             self.save_game()
+        #             self.open_chapter("1")
+        #             break
+        #         elif start_game == "2":
+        #             self.load_last_saved_game()
+        #             self.open_chapter(self.last_valid_chapter)
+        #             break
+        #         elif start_game == "3":
+        #             self.delete_game()
+        #         elif start_game == "0":
+        #             self.quit_game()
+        #         else:
+        #             print("Spróbuj jeszcze raz.")
+        #     self.main_menu()
+        # except FileNotFoundError:
+        #     print("Nie znaleziono pliku gry.")
 
     def create_new_hero(self):
         self.hero = character.Hero()
@@ -198,6 +208,8 @@ class Shiver:
         return False
 
     def handle_main_menu_command(self, cmd: str) -> bool:
+        paragraph = self.book_chapters.get(self.last_valid_chapter)
+
         if cmd in self.COMMANDS:
             return self.COMMANDS[cmd]()
         elif self.dev_mode and cmd in self.DEV_COMMANDS:
@@ -206,17 +218,23 @@ class Shiver:
               and cmd.isdigit()
               and cmd in self.book_chapters):
             self.open_chapter(cmd)
-            para = self.book_raw[cmd]
-            print(re.findall(r'(([+|-])([0-9])*([WSZ]))', para.text))
             return False
         else:
-            print(Fore.YELLOW + f"Nieprawidłowy wybór. Możliwe ruchy: {self.possible_moves()}")
+            if paragraph:
+                posible_moves = [int(x) for x in paragraph.edges]
+                print(posible_moves)
+                print(Fore.YELLOW + f"Nieprawidłowy wybór. Możliwe ruchy: {posible_moves}")
+            else:
+                print(Fore.YELLOW + "Nieprawidłowy wybór i brak dostępu do aktualnego paragrafu.")
             return False
+
+    def check_move(self, cmd):
+        return True
 
     def main_menu(self, relecture=None):
         if relecture:
             print("cd. ", end='')
-            self.open_chapter(relecture)
+            # self.open_chapter(None, relecture)
 
         while True:
             chapter = input(">>> ")
@@ -311,30 +329,36 @@ class Shiver:
                 print(Fore.MAGENTA + f"[{key}]" + Fore.GREEN + f" {label}")
         return False
 
+    @staticmethod
+    def open_book() -> dict[str, Paragraph]:
+        path = pathlib.Path.cwd() / "shiver.json"
+        with open(path, encoding="utf-8") as f:
+            raw = json.load(f)
+        print({k: Paragraph(k, v) for k, v in raw.items()})
+        return {k: Paragraph(k, v) for k, v in raw.items()}
+
     def open_chapter(self, chapter: str):
         self.last_valid_chapter = chapter
-        text = self.book_chapters[chapter]
+        paragraph = self.book_chapters.get(chapter)
 
-        if chapter not in self.visited_chapters:
-            # show actual paragraph
-            print(f"[{chapter}] {text}")
-            # add paragraph to visited places
-            self.visited_chapters[chapter] = True
+        if not paragraph:
+            print(Fore.RED + f"Nie znaleziono paragrafu {chapter}.")
+            return
+
+        # Wyświetl tekst paragrafu
+        print(Fore.CYAN + f"\n[{chapter}]\n" + Style.RESET_ALL + paragraph.text)
+
+        # Dodaj do odwiedzonych
+        self.visited_chapters[chapter] = True
+
+        # Wyświetl możliwe przejścia
+        if paragraph.edges:
+            if "END" in paragraph.edges:
+                print(Fore.RED + "\n🔚 To może być koniec twojej przygody...\n")
+            else:
+                print(Fore.GREEN + "\nMożliwe przejścia: " + " / ".join(str(x) for x in paragraph.edges))
         else:
-            print(f"[{chapter}*] {text}")
-
-    def check_move(self, chapter: str) -> bool:
-        if self.test:
-            return True
-
-        para = self.book_raw[self.last_valid_chapter]
-        if chapter in para.get_choices():
-            return True
-
-        if self.last_valid_chapter == "238" and chapter in ["316", "103"]:
-            return True
-
-        return False
+            print(Fore.YELLOW + "\nBrak oczywistych dróg dalszych.\n")
 
     def possible_moves(self) -> str:
         paragraph = self.book_raw[self.last_valid_chapter]
@@ -440,22 +464,4 @@ class Shiver:
 if __name__ == "__main__":
     args = sys.argv[1:]
     game = Shiver()
-
-    # Tryb deweloperski
-    if "--dev" in args:
-        game.dev_mode = True
-        print("[DEV MODE] Tryb deweloperski został aktywowany.")
-
-    # Szybki start od wybranego paragrafu
-    if "--start" in args:
-        try:
-            idx = args.index("--start")
-            hero_idx = args[idx + 1]
-            game.load_last_saved_game(int(hero_idx))
-            game.open_chapter(game.last_valid_chapter)
-            game.main_menu()
-        except (IndexError, ValueError):
-            print("❌ Użyj: --start <numer_paragrafu>")
-            sys.exit(1)
-    else:
-        game.start_game()
+    game.start_game()
