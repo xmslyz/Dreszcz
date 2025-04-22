@@ -10,7 +10,7 @@ class TestDice(unittest.TestCase):
 
     def test_rolling_d6(self):
         random.seed(42)  # Set a seed for reproducibility
-        result = game_mechanics.roll_d6()
+        result = game_mechanics.roll_d6_cli()
         self.assertIn(result, range(1, 7))
 
     def test_if_each_rolling_of_d6_is_different(self):
@@ -18,19 +18,19 @@ class TestDice(unittest.TestCase):
         results = set()
 
         for _ in range(100):  # Perform 100 rolls
-            result = game_mechanics.roll_d6()
+            result = game_mechanics.roll_d6_cli()
             results.add(result)
         # There should be 6 unique results (1 through 6)
         self.assertEqual(len(results), 6)
 
     def test_rolling_2d6(self):
         random.seed(42)  # Set a seed for reproducibility
-        result = game_mechanics.roll_2d6()
+        result = game_mechanics.roll_2d6_cli()
         self.assertIn(result, range(2, 13), result)
 
     def test_rolls_distribution(self):
         num_rolls = 10000  # Adjust the number of rolls as needed
-        rolls = [game_mechanics.roll_d6() for _ in range(num_rolls)]
+        rolls = [game_mechanics.roll_d6_cli() for _ in range(num_rolls)]
 
         # Calculate the mean and standard deviation
         mean = sum(rolls) / num_rolls

@@ -2,6 +2,9 @@ import json
 import os
 import pathlib
 import re
+from typing import Callable
+import sys
+
 from colorama import Fore, Style, init
 import game_mechanics
 import character
@@ -12,6 +15,7 @@ init(autoreset=True)
 
 class Shiver:
     def __init__(self):
+        self.dev_mode: bool = False
         self.test = False
         self.last_valid_chapter: str = "1"
         self.visited_chapters: dict = {}
@@ -19,14 +23,47 @@ class Shiver:
         self.bout = 0
         self.monsters_kiled_counter = 0
         self.killed_monsters_dict = {}
-        self.book_chapters = game_mechanics.open_book()
-        self.TEMP = {}
+
+        self.book_raw = game_mechanics.open_book()
+        self.book_chapters = game_mechanics.BookAdapter(self.book_raw)
+
+        self.COMMANDS: dict[str, Callable[[], bool]] = {
+            "0": self.quit_game,
+            "q": self.quit_game,
+            "s": lambda: self.save_game(quicksave=True) or False,
+            "h": lambda: print(self.hero) or False,
+            "f": lambda: game_mechanics.combat_cli(self) or False,
+            "v": lambda: print(sorted([int(x) for x in self.visited_chapters.keys()])) or False,
+            "e": self._eat_provision,
+            "i": lambda: print(self.hero.inventory) or False,
+            "?": self._show_command_list,
+            "help": self._show_command_list,
+            "dev": lambda: self._toggle_dev_mode()
+        }
+
+        self.DEV_COMMANDS: dict[str, Callable[[], bool]] = {
+            "t": self._toggle_test_mode,
+            "k": lambda: game_mechanics.combat_cli(self, True) or False,
+            "killself": self._hero_suicide,
+            "sal": lambda: self.hero.change_attribute_level("stamina", 10) or False,
+        }
+
+    def _toggle_dev_mode(self) -> bool:
+        self.dev_mode = not self.dev_mode
+        print(Fore.MAGENTA + f"Tryb deweloperski: {self.dev_mode}")
+        return False
+
+    def _next_input_or_prompt(self, prompt: str) -> str:
+        if hasattr(self, "_menu_sequence") and self._menu_sequence:
+            return self._menu_sequence.pop(0)
+
+        return input(prompt)
 
     def start_game(self):
         try:
             # open last saved or first
             while True:
-                start_game = input(
+                start_game = self._next_input_or_prompt(
                     Fore.MAGENTA + "[1] " + Fore.GREEN + "Nowa gra\n" +
                     Fore.MAGENTA + "[2] " + Fore.GREEN + "Wczytaj ostatni "
                                                          "zapis\n" +
@@ -60,8 +97,8 @@ class Shiver:
 
     def create_new_hero(self):
         self.hero = character.Hero()
-        self.hero.set_attribute_levels()
-        self.hero.choose_potion()
+        self.hero.interactive_character_creation()
+        self.hero.choose_potion_cli()  # TODO: W wersji GUI zastąpić interaktywnym modułem wyboru mikstury
         print(Fore.RED + "\n *** ZACZYNAMY !!! *** " +
               Style.RESET_ALL)
         print(menu.intro(self.hero))
@@ -71,9 +108,8 @@ class Shiver:
         self.save_game()
         exit()
 
-    def load_last_saved_game(self):
+    def load_last_saved_game(self, default: int=None):
         directory_path, files = self.get_saved_files()
-
         if files:
             txt = ("Wybierz zapis. "
                    "[* aby wrócić do poprzedniego menu]\n"
@@ -139,6 +175,44 @@ class Shiver:
             elif game_over == "0":
                 self.quit_game()
 
+    def _toggle_test_mode(self):
+        self.test = not self.test
+        print(f"TEST: {self.test}")
+        return False
+
+    def _hero_suicide(self):
+        self.hero.stamina = 0
+        print(f"{self.hero.name} zginął!")
+        self.game_over()
+        return True
+
+    def _eat_provision(self):
+        if "Prowiant" in self.book_chapters[self.last_valid_chapter]:
+            healed, _ = game_mechanics.consume(self.hero)
+            if healed > 0:
+                print(f"Spożyłeś prowiant. W: +{healed}")
+            else:
+                print("Nie masz już Prowiantu albo jesteś najedzony.")
+        else:
+            print("Nie możesz w tej chwili zjeść Prowiantu")
+        return False
+
+    def handle_main_menu_command(self, cmd: str) -> bool:
+        if cmd in self.COMMANDS:
+            return self.COMMANDS[cmd]()
+        elif self.dev_mode and cmd in self.DEV_COMMANDS:
+            return self.DEV_COMMANDS[cmd]()
+        elif (self.check_move(cmd)
+              and cmd.isdigit()
+              and cmd in self.book_chapters):
+            self.open_chapter(cmd)
+            para = self.book_raw[cmd]
+            print(re.findall(r'(([+|-])([0-9])*([WSZ]))', para.text))
+            return False
+        else:
+            print(Fore.YELLOW + f"Nieprawidłowy wybór. Możliwe ruchy: {self.possible_moves()}")
+            return False
+
     def main_menu(self, relecture=None):
         if relecture:
             print("cd. ", end='')
@@ -146,101 +220,96 @@ class Shiver:
 
         while True:
             chapter = input(">>> ")
-            if chapter == "0":
-                self.quit_game()
-            elif chapter == "o":
-                self.show_action_menu()
-            elif chapter == "s":
-                self.save_game(quicksave=True)
-            elif chapter == "h":
-                print(self.hero)
-            elif chapter == "g":
-                prompt = input("Podaj kwotę (użyj symbolu '-' jesli kwota "
-                               "ujemna)\n>>> ").replace(" ", "")
-                while True:
-                    in_plus = not prompt[0] == "-"
-                    if prompt.isdigit():
-                        gold = int(prompt)
-                        break
-                    elif not in_plus and prompt[1:].isdigit():
-                        gold = int(prompt[1:])
-                        break
-                    else:
-                        print("Podano błędnie ilosc złota. Spróbuj raz "
-                              "jeszcze.")
-                self.hero.inventory.transactions(in_plus, gold)
-                # extract last digit from gold
-                last_digit = gold % 10
-                if gold == 1:
-                    coin = "monetę"
-                elif 1 < last_digit < 5:
-                    coin = "monety"
-                else:
-                    coin = "monet"
-                pouch = "powiększyła" if in_plus else "pomniejszyła"
-                print(f"Twoja sakiewka {pouch} się o {gold} {coin}.")
-            elif chapter == "killself":
-                self.hero.stamina = 0
-                print(f"{self.hero.name} zginął!")
-                self.game_over()
-            elif chapter == "sal":
-                self.hero.change_atribute_level_("stamina", 10)
-            elif chapter == "k":
-                game_mechanics.combat(self, True)
-            elif chapter == "v":
-                print(sorted([int(x) for x in self.visited_chapters.keys()]))
-            elif chapter == "f":
-                game_mechanics.combat(self)
-            elif chapter == "e":
-                if "Prowiant" in self.book_chapters[self.last_valid_chapter]:
-                    game_mechanics.consume(self.hero)
-                else:
-                    print("Nie możesz w tej chwili zjeść Prowiantu")
-            elif chapter == "i":
-                print(self.hero.inventory)
-            elif chapter == "test":
-                self.test = not self.test
-                print(f"TEST: {self.test}")
-            elif (self.check_move(chapter)
-                  and chapter.isdigit()
-                  and chapter in self.book_chapters):
-                self.open_chapter(chapter)
-                checks = re.findall(r'(([+|-])([0-9])*([WSZ]))',
-                                 self.book_chapters[chapter]
-                                 )
-                print(checks)
-
-            else:
-                print(f"Nieprawidłowy znak. Masz do wyboru: "
-                      f"{self.possible_moves()}")
-
-    @staticmethod
-    def show_action_menu():
-        print("--- Opcje\n"
-              "-- [v] Pokaż odwiedzone paragrafy\n"
-              "-- [h] Parametry Śmiałka\n"
-              "-- [f] Walka\n"
-              "-- [e] Zjedz Prowiant\n"
-              "-- [i] Plecak\n"
-              )
-
-    def action_menu(self):
-        """Main action menu"""
-        while True:
-            menu_input = input("Menu:\n"
-                               "[1] Pokaż odwiedzone paragrafy\n"
-                               "[2] Walka\n"
-                               "\n"
-                               ">>> ")
-            if menu_input == "1":
+            should_break = self.handle_main_menu_command(chapter)
+            if should_break:
                 break
-            if menu_input == "2":
-                game_mechanics.combat(self)
-                break
-            if menu_input == "q":
-                self.quit_game()
-            else:
-                print(f"Nieprawidłowy znak. Spróbuj ponownie.")
+
+    def _show_command_list(self) -> bool:
+        """
+        Displays a grouped list of available command keys for the player.
+        """
+        print(Fore.CYAN + "\nDostępne komendy:" + Style.RESET_ALL)
+
+        command_groups = {
+            "🧱 System": [],
+            "🧙‍♂️ Bohater": [],
+            "⚔️ Walka": [],
+            "🧪 Debug / Dev": []
+        }
+
+        label_map = {
+            "0": "Zakończ grę",
+            "q": "Zakończ grę",
+            "s": "Zapisz grę",
+            "dev": "Tryb developerski",
+            "?": "Lista komend",
+            "help": "Lista komend",
+
+            "h": "Parametry bohatera",
+            "i": "Plecak",
+            "e": "Zjedz Prowiant",
+
+            "f": "Walka",
+            "k": "Walka testowa (1hp)",
+            "v": "Odwiedzone paragrafy",
+
+            "t": "Tryb testowy",
+            "killself": "Zabij się",
+            "sal": "Ulecz się"
+        }
+
+        group_map = {
+            "0": "🧱 System",
+            "q": "🧱 System",
+            "s": "🧱 System",
+            "dev": "🧱 System",
+            "?": "🧱 System",
+            "help": "🧱 System",
+
+            "h": "🧙‍♂️ Bohater",
+            "i": "🧙‍♂️ Bohater",
+            "e": "🧙‍♂️ Bohater",
+
+            "f": "⚔️ Walka",
+            "k": "🧪 Debug / Dev",
+            "v": "⚔️ Walka",
+
+            "t": "🧪 Debug / Dev",
+            "killself": "🧪 Debug / Dev",
+            "sal": "🧪 Debug / Dev"
+        }
+
+        dev_items = []
+        if self.dev_mode:
+            dev_items = [
+                ("test", "Tryb testowy"),
+                ("k","Walka testowa z 1hp"),
+                ("killself", "Zabij się"),
+                ("sal", "Ulecz się"),
+            ]
+
+        printed = set()
+
+        for key, func in self.COMMANDS.items():
+            if func in printed:
+                continue
+            printed.add(func)
+
+            group = group_map.get(key, "🧱 System")
+            label = label_map.get(key, "<nieznana akcja>")
+            command_groups[group].append((key, label))
+
+        for group, items in command_groups.items():
+            if items:
+                print(Fore.BLUE + f"\n{group}" + Style.RESET_ALL)
+                for key, label in sorted(items):
+                    print(Fore.MAGENTA + f"[{key}]" + Fore.GREEN + f" {label}")
+
+        if self.dev_mode:
+            print(Fore.BLUE + "\n🧪 Debug / Dev" + Style.RESET_ALL)
+            for key, label in sorted(dev_items):
+                print(Fore.MAGENTA + f"[{key}]" + Fore.GREEN + f" {label}")
+        return False
 
     def open_chapter(self, chapter: str):
         self.last_valid_chapter = chapter
@@ -254,28 +323,27 @@ class Shiver:
         else:
             print(f"[{chapter}*] {text}")
 
-    def check_move(self, chapter):
-        """checks if introduced number is valid next move"""
-        pass_from_238 = ["316", "103"]
-        if not self.test:
-            for key, value in self.book_chapters.items():
-                if key == self.last_valid_chapter:
-                    if chapter in re.findall(r"(?<!:)\b\d+\b", value):
-                        return True
-                    elif (self.last_valid_chapter == "238" and chapter in
-                          pass_from_238):
-                        return True
-        else:
+    def check_move(self, chapter: str) -> bool:
+        if self.test:
             return True
 
-    def possible_moves(self):
-        book = self.book_chapters
-        moves = re.findall(r"(?<!:)\b\d+\b", book[self.last_valid_chapter])
-        txt = ""
-        for move in moves:
-            txt += f"{move} / "
+        para = self.book_raw[self.last_valid_chapter]
+        if chapter in para.get_choices():
+            return True
 
-        return f"{txt}"
+        if self.last_valid_chapter == "238" and chapter in ["316", "103"]:
+            return True
+
+        return False
+
+    def possible_moves(self) -> str:
+        paragraph = self.book_raw[self.last_valid_chapter]
+        moves = paragraph.get_choices()
+
+        if not moves:
+            return "Brak widocznych opcji przejścia."
+
+        return " / ".join(moves)
 
     def load_hero(self, hero_data):
         self.hero = character.Hero()
@@ -299,10 +367,11 @@ class Shiver:
         self.hero.kills = hero_data["KILLS"]
         self.last_valid_chapter = hero_data["LAST_CHAPTER"]
         self.visited_chapters = hero_data["VISITED"]
+        self.dev_mode = hero_data["DEV"]
 
     def save_game(self, quicksave: bool = False):
         if self.hero is not None:
-            self.TEMP = {
+            save_payload = {
                 "NAME": f"{self.hero.name}",
                 "TEST": self.test,
                 "MAX_AGILITY": self.hero.max_agility,
@@ -326,7 +395,8 @@ class Shiver:
                 },
                 "VISITED": self.visited_chapters,
                 "LAST_CHAPTER": self.last_valid_chapter,
-                "KILLS": self.hero.kills
+                "KILLS": self.hero.kills,
+                "DEV": self.dev_mode
             }
 
             dir_path = pathlib.Path.cwd() / "SAVE"
@@ -334,9 +404,8 @@ class Shiver:
                 os.mkdir(dir_path)
 
             save_path = dir_path / self.hero.name
-            with open(save_path.with_suffix(".json"), "w",
-                      encoding="utf-8") as f:
-                json.dump(self.TEMP, f, indent=4)
+            with open(save_path.with_suffix(".json"), "w", encoding="utf-8") as f:
+                json.dump(save_payload, f, indent=4)
             print(f"Zapisano plik: {self.hero.name}")
         else:
             if quicksave:
@@ -369,5 +438,24 @@ class Shiver:
 
 
 if __name__ == "__main__":
+    args = sys.argv[1:]
     game = Shiver()
-    game.start_game()
+
+    # Tryb deweloperski
+    if "--dev" in args:
+        game.dev_mode = True
+        print("[DEV MODE] Tryb deweloperski został aktywowany.")
+
+    # Szybki start od wybranego paragrafu
+    if "--start" in args:
+        try:
+            idx = args.index("--start")
+            hero_idx = args[idx + 1]
+            game.load_last_saved_game(int(hero_idx))
+            game.open_chapter(game.last_valid_chapter)
+            game.main_menu()
+        except (IndexError, ValueError):
+            print("❌ Użyj: --start <numer_paragrafu>")
+            sys.exit(1)
+    else:
+        game.start_game()
