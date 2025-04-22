@@ -74,6 +74,7 @@ class Paragraph:
         return re.findall(r"(?<!:)\b\d+\b", self.text)
 
 
+
 def consume(hero, extra: bool = False) -> tuple[int, int]:
     """
     Heals the hero by consuming one food unit.
@@ -213,7 +214,6 @@ def check_keys(key_a: int, key_b: int, key_c: int, target: int = 204) -> bool:
     """
     return any(sum(combo) == target for combo in combinations([key_a, key_b, key_c], 3))
 
-
 def resolve_combat_round(hero, monster, use_sss: bool = False) -> dict:
     """
     Resolves a single round of combat with optional luck check.
@@ -297,7 +297,6 @@ def resolve_combat_round(hero, monster, use_sss: bool = False) -> dict:
         "sss_roll": sss_roll,
         "damage": damage
     }
-
 
 def combat_cli(story, cheat=False):
     story.monsters_kiled_counter = 0
