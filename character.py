@@ -105,8 +105,8 @@ class Hero(Character):
             "max_stamina": self.max_stamina,
             "luck": self.luck,
             "max_luck": self.max_luck,
-            "kills": self.kills.copy()
-            # "inventory": self.inventory.describe()  # zakładam, że Inventory to obsługuje
+            "kills": self.kills.copy(),
+            "inventory": self.inventory.describe()
         }
 
     @classmethod
@@ -179,8 +179,33 @@ class Hero(Character):
         self.name = random.choice(names["hero"])
         return self.name
 
-    def clone_hero(self):
-        ...
+    def clone_hero(self) -> "Hero":
+        """
+        Creates a 'respawn' copy of the hero with original max stats and initial inventory.
+
+        Returns:
+            Hero: A fresh hero with reset stats and initial equipment.
+        """
+        clone = Hero()
+        print("describe clone", clone.describe())
+        clone.describe()
+        clone.name = self.name
+        clone.max_agility = self.max_agility
+        clone.max_stamina = self.max_stamina
+        clone.max_luck = self.max_luck
+
+        # Reset current stats to max
+        clone.agility = clone.max_agility
+        clone.stamina = clone.max_stamina
+        clone.luck = clone.max_luck
+
+        # Start with clean kill count
+        clone.kills = {}
+
+        # Create fresh inventory (or use predefined starter set)
+        clone.inventory = Inventory().starter_pack()
+        print("describe respawned", clone.describe())
+        return clone
 
     @staticmethod
     def roll_single_attribute(attr: str) -> int:

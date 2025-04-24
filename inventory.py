@@ -46,9 +46,46 @@ class Inventory(object):
 
         )
 
+    def describe(self) -> dict:
+        """
+        Returns a dictionary representation of the inventory for UI or serialization.
+
+        Returns:
+            dict: Inventory contents by category.
+        """
+        return {
+            "sword": self.sword,
+            "shield": self.shield,
+            "lantern": self.lantern,
+            "agility_potion": self.agility_potion,
+            "stamina_potion": self.stamina_potion,
+            "luck_potion": self.luck_potion,
+            "food": self.food,
+            "gold": self.gold,
+            "bag": self.bag.copy()  # assumes bag is a dict
+        }
+
     def put_helmet(self):
         # 2
         ...
+
+    def starter_pack(self) -> "Inventory":
+        """
+        Initializes a new inventory with default starting items.
+
+        Returns:
+            Inventory: Freshly filled starter inventory.
+        """
+        self.sword = True
+        self.shield = False
+        self.lantern = True
+        self.agility_potion = 1
+        self.stamina_potion = 1
+        self.luck_potion = 1
+        self.food = 2
+        self.gold = 0
+        self.bag = {}
+        return self
 
     def transactions(self, in_plus: bool, value):
         """ Buying or seling / eventualy loosing or finding gold """

@@ -3,6 +3,7 @@ import os
 import pathlib
 from typing import Callable
 import sys
+import random
 
 from colorama import Fore, Style, init
 import game_mechanics
@@ -50,7 +51,7 @@ def choose_game_mode_gui() -> str:
 def get_game_over_choice(input_func=input) -> str:
     prompt = (
         Fore.GREEN + "I tak oto kończy się twoja przygoda Śmiałku! Zginąłeś!\n\n" +
-        Fore.MAGENTA + "[1]" + Fore.GREEN + " Chcesz zagrać raz jeszcze?\n" +
+        Fore.MAGENTA + "[1]" + Fore.GREEN + " Respawn?\n" +
         Fore.MAGENTA + "[2]" + Fore.GREEN + " Wczytać zapis gry?\n" +
         Fore.MAGENTA + "[0]" + Fore.GREEN + " Zakończyć grę?\n" +
         Fore.MAGENTA + ">>> " + Style.RESET_ALL
@@ -147,8 +148,24 @@ class Shiver:
                 break
 
     def handle_main_menu_command(self, cmd: str) -> bool:
+        """
+        Handles player input during the main menu loop.
+
+        Args:
+            cmd (str): The input command or chapter number entered by the player.
+
+        Returns:
+            bool: True if the game should exit the main loop, False otherwise.
+        """
         paragraph = self.book_chapters.get(self.last_valid_chapter)
-        is_valid = utils.is_valid_move(book_chapters=self.book_chapters, current=paragraph.number, target=cmd)
+
+        # Walidacja przejścia: w trybie testowym zawsze pozwala, w przeciwnym razie sprawdza realnie
+        is_valid = self.test or utils.is_valid_move(
+            book_chapters=self.book_chapters,
+            current=self.last_valid_chapter,
+            target=cmd
+        )
+
         if cmd in self.COMMANDS:
             return self.COMMANDS[cmd]()
         elif self.dev_mode and cmd in self.DEV_COMMANDS:
@@ -158,10 +175,8 @@ class Shiver:
             return False
         else:
             if paragraph:
-                posible_moves = [int(x) for x in paragraph.edges]
-                print(posible_moves)
-
-                print(Fore.YELLOW + f"Nieprawidłowy wybór. Możliwe ruchy: {posible_moves}")
+                possible_moves = [str(x) for x in paragraph.edges]
+                print(Fore.YELLOW + f"Nieprawidłowy wybór. Możliwe ruchy: {', '.join(possible_moves)}")
             else:
                 print(Fore.YELLOW + "Nieprawidłowy wybór i brak dostępu do aktualnego paragrafu.")
             return False
@@ -507,6 +522,13 @@ class Shiver:
             except ValueError:
                 print("❌ Wprowadź poprawny numer.")
 
+    def respawn(self):
+        print(Fore.YELLOW + "Powracasz do życia..." + Style.RESET_ALL)
+        self.hero = self.hero.clone_hero()
+        # Wybierz miejsce startowe — np. losowe z odwiedzonych:
+        restart_point = random.choice(list(self.visited_chapters.keys()))
+        self.open_chapter(restart_point)
+
     @staticmethod
     def get_saved_files() -> tuple[pathlib.Path, list[str]]:
         """
@@ -545,8 +567,7 @@ class Shiver:
             choice = get_game_over_choice()
 
             if choice == "1":
-                self.start_game()
-                # tu potrzebna replikacja martwego bohatera
+                self.respawn()
                 break
             elif choice == "2":
                 self.load_last_saved_game()
