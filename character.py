@@ -109,6 +109,63 @@ class Hero(Character):
             # "inventory": self.inventory.describe()  # zakładam, że Inventory to obsługuje
         }
 
+    @classmethod
+    def from_data(cls, data: dict) -> "Hero":
+        hero = cls()
+        hero.name = data["name"]
+        hero.agility = data["agility"]
+        hero.stamina = data["stamina"]
+        hero.luck = data["luck"]
+        return hero
+
+    @staticmethod
+    def create_from_user_input(input_func=input) -> dict:
+        """
+        Collects character creation data using the provided input function.
+
+        Args:
+            input_func (callable): Function to use for user input (default: input)
+
+        Returns:
+            dict: Dictionary with hero attributes
+        """
+        name = input_func("Podaj imię bohatera: ")
+        agility = int(input_func("Zręczność (1-12): "))
+        stamina = int(input_func("Wytrzymałość (2-24): "))
+        luck = int(input_func("Szczęście (1-12): "))
+
+        return {
+            "name": name,
+            "agility": agility,
+            "stamina": stamina,
+            "luck": luck,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "Hero":
+        hero = cls()
+        hero.name = data["NAME"]
+        hero.max_agility = data["MAX_AGILITY"]
+        hero.max_stamina = data["MAX_STAMINA"]
+        hero.max_luck = data["MAX_LUCK"]
+        hero.agility = data["AGILITY"]
+        hero.stamina = data["STAMINA"]
+        hero.luck = data["LUCK"]
+        hero.kills = data["KILLS"]
+
+        inv = data["INVENTORY"]
+        hero.inventory.sword = inv["SWORD"]
+        hero.inventory.shield = inv["SHIELD"]
+        hero.inventory.lantern = inv["LANTERN"]
+        hero.inventory.agility_potion = inv["A_POTION"]
+        hero.inventory.stamina_potion = inv["S_POTION"]
+        hero.inventory.luck_potion = inv["L_POTION"]
+        hero.inventory.food = inv["FOOD"]
+        hero.inventory.gold = inv["GOLD"]
+        hero.inventory.bag = inv["BAG"]
+
+        return hero
+
     def set_name(self) -> str:
         """
         Randomly selects a name for the hero from a JSON file
@@ -125,7 +182,8 @@ class Hero(Character):
     def clone_hero(self):
         ...
 
-    def roll_single_attribute(self, attr: str) -> int:
+    @staticmethod
+    def roll_single_attribute(attr: str) -> int:
         """
         Rolls a single attribute based on its type.
 

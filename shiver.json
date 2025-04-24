@@ -1,6 +1,6 @@
 {
   "1": {
-    "text": "Wejście do podziemi jest szerokie, obrośnięte trawą i bujnymi krzewami. Poprawiasz ubranie i ekwipunek. Zapal latarnię! Wchodzisz do korytarza. Jest wysoki, nie musisz się schylać. Prowadzi prosto na północ. Wkrótce dochodzisz do skrzyżowania. Ma ono kształt litery T. Odnogi prowadzą na zachód, wschód i południe (skąd przyszedłeś).",
+    "text": "Wejście do podziemi jest szerokie, obrośnięte trawą i bujnymi krzewami. Poprawiasz ubranie i ekwipunek. Zapal latarnię! Wchodzisz do korytarza. Jest wysoki, nie musisz się schylać. Prowadzi prosto na północ. Wkrótce dochodzisz do skrzyżowania. Ma ono kształt litery T. Odnogi prowadzą na zachód, wschód i południe (skąd przyszedłeś). Patrz 25.",
     "edges": [
       {
         "label": "Idź dalej korytarzem na północ",
@@ -9,7 +9,7 @@
     ]
   },
   "2": {
-    "text": "Kopiesz drzwi i wchodzisz z mieczem gotowym do zadania ciosu. Przed tobą stoi GARAZAN. Jeśli masz hełm, załóż go (+3W).",
+    "text": "Kopnij drzwi. Otwierają się i uderzają o skałę. Wchodzisz do środka z mieczem gotowym do zadania ciosu. Na pewno potwór nigdzie się nie ukrywa. Czuje się zbyt potężny. Tak, widzisz go przed sobą. Stoi na szeroko rozstawionych nogach. On też ma miecz. Czub wbił się w piasek. Opiera dłonie na rękojeści. Czeka. Ty nie czekaj! Jeśli masz hełm, załóż go koniecznie, zapewni ci +3W na czas trwania tej walki. GARAZAN Z:10 W:10 Po każdej rundzie możesz się ratować Ucieczką - patrz 372. Jeśli zwyciężyłeś - patrz 380.",
     "combat": [
       {
         "name": "GARAZAN",
@@ -82,7 +82,7 @@
     ]
   },
   "5": {
-    "text": "Lubisz walkę? Przed tobą SZKIELET, ZOMBI i LUDOJAD. Wystarczy?",
+    "text": "Lubisz walkę? Tak? To wspaniale. Przyjrzyj się więc dokładnie. Od lewej stoją: SZKIELET, ZOMBI i LUDOJAD. Wystarczy? Jeśli tak - patrz 312, jeśli nie - patrz 140.",
     "edges": [
       {
         "label": "Podejmij walkę",
@@ -104,7 +104,7 @@
     ]
   },
   "7": {
-    "text": "Kupiec oferuje ci dwa prezenty: drewniany pal lub słój żrącego pyłu.",
+    "text": "Może ma Pan na składzie coś, co mógłbym ofiarować w prezencie?\" - mówisz. \"Jak mógłbym nie mieć? Jestem zawsze przygotowany na takie zachcianki. Mam uroczy drewniany pal i słój żrącego pyłu. Zapakować ze wstążeczką?\". Patrz 219.",
     "items": [
       "drewniany pal",
       "słój żrącego pyłu"
@@ -117,7 +117,7 @@
     ]
   },
   "8": {
-    "text": "Spotykasz przerażonego goblina, który ukradł kości. Jego pobratymcy nadciągają. Pomagasz mu lub uciekasz.",
+    "text": "Zaglądasz do komnaty. Drzwi lekko się uchylają. Co widzisz? Jakiś dziwny stwór biega jak oszalały od ściany do ściany. Nie wygląda groźnie. Za pas, w kieszenie, do cholew powtykane ma rozmaitej długości i różnego gatunku kości. Wchodzisz do środka. \"Czemu tak biegasz, biedaku?\" - pytasz. -\"O, panie, co ja im zrobiłem? Taki raban o tych parę kostek! Moi bracia, gobliny upolowali kilka kocmołuchów. Jak pewnie wiesz, kocmołuchy to największy przysmak goblinów. Nie mogłem sobie odmówić. Podkradłem się i gwizdnąłem kilka kostek. Siadłem tu, by je sobie zjeść, a te bestie wyśledziły mnie i zaraz tu wpadną. O, już biegną\". I goblin znów zaczyna szaleć. Bierzesz go za ramię i stajesz na środku komnaty. Za chwilę w drzwiach pojawia się stado goblinów. Jeśli będziesz walczył u boku prześladowanego stwora przeciw zgrai jego współplemieńców - patrz 98. Jeśli ratujesz się Ucieczką - patrz 210.",
     "edges": [
       {
         "label": "Walcz po stronie prześladowanego goblina",
@@ -172,7 +172,7 @@
     ]
   },
   "12": {
-    "text": "Używasz zaczarowanego szmaragdu. Wyrastają ci skrzydła i przenosisz się na drugi brzeg przepaści.",
+    "text": "Wyjmujesz zaczarowany szmaragd. Ból rozrywa ci plecy, pęka skórzana kurtka. Z pleców wyrastają ci szerokie, sinoszare skrzydła. Unosisz się. Lądujesz na wymarzonym brzegu przepaści. Czar pryska - patrz 288.",
     "items_out": [
       "szmaragd"
     ],
@@ -200,7 +200,7 @@
     ]
   },
   "14": {
-    "text": "Możesz wyjść z komnaty przez drzwi północne lub wschodnie.",
+    "text": "Możesz wyjść północnymi drzwiami - patrz 197, albo wschodnimi - patrz 39.",
     "edges": [
       {
         "label": "Północne drzwi",
@@ -213,7 +213,7 @@
     ]
   },
   "15": {
-    "text": "Stajesz nad jeziorem. Możesz spróbować je przepłynąć lub zrezygnować.",
+    "text": "Jeśli rezygnujesz z przepłynięcia jeziora - patrz 241. Natomiast jeśli decydujesz się podjąć próbę przepłynięcia jeziora, zapisz numer niniejszego paragrafu i patrz 113.",
     "edges": [
       {
         "label": "Przepłyń jezioro",
@@ -226,7 +226,7 @@
     ]
   },
   "16": {
-    "text": "Idziesz korytarzem. Możesz zjeść Prowiant i kontynuować. Korytarz prowadzi do komnaty.",
+    "text": "Wychodzisz na korytarz. Po pewnym czasie skręca on na południe. W tym samym miejscu możesz usiąść i zjeść Prowiant. Ruszasz dalej. Idziesz na południe do czasu, gdy tunel skręca na znowu zachód. W odległości dwudziestu kroków widzisz przed sobą wejście do komnaty. Patrz 80.",
     "actions": [
       "eat_food"
     ],
@@ -238,7 +238,7 @@
     ]
   },
   "17": {
-    "text": "Przed tobą coś tajemniczego. Możesz sprawdzić lub się wycofać.",
+    "text": "Jeśli chcesz zobaczyć co za nimi jest - patrz 265, jeśli wolisz się wycofać - patrz 50.",
     "edges": [
       {
         "label": "Sprawdź co tam jest",
@@ -282,7 +282,7 @@
     ]
   },
   "20": {
-    "text": "Docierasz na Szalone Pola. Biegniesz, ale dopadają cię potwory. Jeśli je pokonasz lub uciekasz – kontynuujesz.",
+    "text": "Po długim marszu dochodzisz do jakiejś wielkiej jaskini. Nie, to raczej bezkresna równina. Zapewne sławetne Szalone Pola. Słyszysz jakiś hałas. Co sił w nogach biegniesz na zachód. Jednak potwory dopadają cię - patrz 238. Jeżeli je pokonasz albo wycofasz się z walki - patrz 316 - zapisz ten numer, bo zgubisz drogę.",
     "combat": [
       "nieznane potwory"
     ],
@@ -295,7 +295,7 @@
     ]
   },
   "21": {
-    "text": "Za drzwiami może coś być. Decyzja należy do ciebie.",
+    "text": "Jeśli chcesz zobaczyć co jest za drzwiami - patrz 332, jeśli nie - zawracasz i patrz 212.",
     "edges": [
       {
         "label": "Zobacz co jest za drzwiami",
@@ -330,7 +330,7 @@
     ]
   },
   "23": {
-    "text": "Stoisz przed drzwiami do skarbca. Potrzebujesz dwóch kluczy.",
+    "text": "Drzwi do skarbca stoją przed tobą... otworem? O, nie! Są zamknięte. Widzisz dwa zamki. Jeśli masz przynajmniej dwa numerowane kluczyki, możesz otworzyć nimi drzwi - patrz 185. Jeśli nie masz choć dwóch kluczy, tu  kończy się twoja wyprawa. A było tak blisko!",
     "requires_keys": 2,
     "edges": [
       {
@@ -338,22 +338,29 @@
         "target": "185"
       },
       {
-        "label": "Brak kluczy – koniec gry",
-        "target": "END"
+        "label": "Nie masz kluczy – koniec gry",
+        "target": "END",
+        "flag": "failure"
       }
     ]
   },
   "24": {
-    "text": "Rzuć 1k6 by sprawdzić skuteczność broni przeciw ROBALOM.",
+    "text": "Rzuć raz kostką. Jeśli wylosujesz 1, 2, 3 - twoja broń okaże się skutecznym narzędziem w walce z ROBALAMI - patrz 58. Jeśli wylosujesz 4, 5, 6, nic z tego - patrz 168.",
     "requires_test": true,
     "test_type": "1d6",
-    "outcomes": {
-      "1-3": "58",
-      "4-6": "168"
-    }
+    "edges": [
+      {
+        "label": "1, 2, 3",
+        "target": "58"
+      },
+      {
+        "label": "4, 5, 6",
+        "target": "168"
+      }
+    ]
   },
   "25": {
-    "text": "Stary człowiek radzi: idź na zachód i trzymaj się prawej.",
+    "text": "Na kamieniu siedzi stary człowiek. Radzi ci iść na zachód, a później na kilku najbliższych skrzyżowaniach skręcać w prawo. Jeśli idziesz na zachód - patrz 200, jeśli wybierasz drogę prowadzącą na wschód - patrz 44.",
     "edges": [
       {
         "label": "Idź na zachód",
@@ -366,7 +373,7 @@
     ]
   },
   "26": {
-    "text": "Dostajesz 5 sztuk złota za każdego trafionego grubasa.",
+    "text": "Za celne trafienie każdego grubasa dostajesz 5 sztuk złota. Patrz 171.",
     "rewards": [
       "gold"
     ],
@@ -378,7 +385,7 @@
     ]
   },
   "27": {
-    "text": "Po odpoczynku wychodzisz na Szalone Pola. Dudnienie potworów...",
+    "text": "Korytarz prowadzi prosto na północ. Po drodze możesz zjeść Prowiant. Zaczyna się rozszerzać, powiększać, aż wychodzisz na bezkresną równinę. To Szalone Pola. Lepiej się tam nie zapuszczaj. Ale... czy słyszysz to dudnienie? To na pewno potwory. Patrz 238. Jeśli je pokonasz albo wycofasz się w trakcie walki - patrz 316 - zapisz ten numer, bo zgubisz drogę.",
     "actions": [
       "eat_food"
     ],
@@ -393,7 +400,7 @@
     ]
   },
   "28": {
-    "text": "Podnosisz kamień. Wymagane 18W.",
+    "text": "Podnieś wielki kamień leżący przy ścianie. Żeby go podnieść, musisz mieć przynajmniej 18W. Jeśli masz - patrz 177, jeśli nie - patrz 330.",
     "requires_attribute": {
       "stamina": 18
     },
@@ -409,7 +416,7 @@
     ]
   },
   "29": {
-    "text": "Potykasz się, ORK cię zauważa i rzuca się do walki.",
+    "text": "Potykasz się na kamyku. Miecz brzęknął o skałę. ORK podnosi głowę. Zauważył cię. Rzuca się do walki. Patrz 116.",
     "combat": [
       "ORK"
     ],
@@ -421,7 +428,7 @@
     ]
   },
   "30": {
-    "text": "Test SSS – masz Szczęście?",
+    "text": "SSS. Jeśli masz S - patrz 159. Jeśli nie masz S - patrz 342.",
     "requires_test": "sss",
     "edges": [
       {
@@ -501,18 +508,30 @@
       "gold": 10
     },
     "requires_test": "sss",
-    "outcomes": {
-      "success": "186",
-      "failure": "158"
-    }
+     "edges": [
+      {
+        "label": "Miałeś Szczęście",
+        "target": "186"
+      },
+      {
+        "label": "Zabrakło ci szczęścia",
+        "target": "158"
+      }
+    ]
   },
   "36": {
     "text": "SSS. Jeśli masz S - patrz 152. Jeśli nie masz S - patrz 176.",
     "requires_test": "sss",
-    "outcomes": {
-      "success": "152",
-      "failure": "176"
-    }
+    "edges": [
+      {
+        "label": "Miałeś Szczęście",
+        "target": "152"
+      },
+      {
+        "label": "Zabrakło ci szczęścia",
+        "target": "176"
+      }
+    ]
   },
   "37": {
     "text": "Jaką tarczę wybierasz: metalową, paradną, czy skórzaną? Wpisz swój wybór na \"Listę ekwipunku\" - patrz 324.",
@@ -576,18 +595,27 @@
   "41": {
     "text": "Udało ci się zrobić tylko parę kroków a tu korytarz zupełnie zatarasowany masą kamieni i piasku. Spróbuj tupnąć nogą. Stare gremliny mówią, że to jest sposób na takie zawalidrogi. SSS. Jeśli masz S - góra skał wpada gdzieś w przepaść, możesz iść dalej - patrz 348. Jeśli nie masz S - musisz wrócić - patrz 221.",
     "requires_test": "sss",
-    "outcomes": {
-      "success": "348",
-      "failure": "221"
-    }
+    "edges": [
+      {
+        "label": "Miałeś Szczęście",
+        "target": "348"
+      },
+      {
+        "label": "Zabrakło ci szczęścia",
+        "target": "221"
+      }
+    ]
   },
   "42": {
     "text": "Mówią o nim BARBARZYŃCA. Czy słusznie? Kto wie? Gdy tak siedzi na ławie z wyciągniętymi nogami i rękami założonymi na piersiach, nie wygląda groźnie. Cicho chrapie. Walisz mieczem w ścianę. \"Co jest?\" - ocknął się. Wchodzisz teraz do komnaty i pokazujesz drzwi po przeciwnej, zachodniej stronie. \"Otwieraj szybko tamte drzwi\" - pokazujesz mu końcem miecza. \"Sam sobie otwórz\" - rechoce - \"Klucz jest w zamku\". Istotnie. Podchodzisz do drzwi. Obawiając się zasadzki, nie dotykasz ręką klucza, lecz wsadzasz czub miecza i próbujesz przekręcić. Nic z tego. \"Nic z tego\" - ryczy BARBARZYŃCA - \"Zaklęcie znasz? Jeśli nie znasz, to się stąd wynoś!\" No, właśnie. Pamiętasz zaklęcie ze starej księgi gremlinów? Zaraz, a może ty wcale nie widziałeś tej księgi? Tak czy owak, jeżeli nie znasz zaklęcia to koniec z tobą, bratku. Spróbuj jeszcze raz, od samego początku. Jeśli wydaje ci się, że pamiętasz zaklęcie, powtórz je. Teraz zajrzyj do paragrafu 122. Jeśli zapamiętałeś prawidłowo - patrz 376. Jeżeli zrobiłeś choćby najmniejszy błąd, kończysz przygodę. Jej dalsze prowadzenie w takiej sytuacji nie jest godne prawdziwego Śmiałka.",
-    "requires_memory": true,
+    "requires_memory_test": true,
+    "expected_input": "Barum baram barota, otwierajcie się wrota!",
     "edges": [
       {
         "label": "Pamiętasz zaklęcie poprawnie",
-        "target": "376"
+        "target": "376",
+        "condition": {"memory_test": true}
+
       },
       {
         "label": "Nie pamiętasz (koniec gry)",
@@ -716,13 +744,16 @@
   "52": {
     "text": "Z otworu w ścianie wystrzeliwuje strumień gryzącego gazu. Jeśli masz hełm \"garnkowy\", nie dzieje ci się krzywda, choć hełm ulega zniszczeniu. Jeśli nie masz takiego hełmu - patrz najpierw 315, a potem 274 (zapisz ten numer).",
     "requires_item": "hełm garnkowy",
-    "outcomes": {
-      "has_item": null,
-      "no_item": [
-        315,
-        274
-      ]
-    }
+    "edges": [
+      {
+        "label": "Hełm ratuje cię.",
+        "target": "274"
+      },
+      {
+        "label": "Zabrakło ci chyba szczęścia.",
+        "target": "315"
+      }
+    ]
   },
   "53": {
     "text": "Lądujesz w przestronnym chodniku. Wiedzie na północ a po pewnym czasie skręca ostro na wschód. Robisz kilkadziesiąt kroków i stajesz przed ciężkimi drzwiami. Czy byłeś już tu? Jeśli tak - patrz 322, jeśli nie - patrz 299.",
@@ -841,13 +872,18 @@
   "62": {
     "text": "SSS. Jeśli masz S - patrz 201. Jeśli nie masz S - patrz 145.",
     "requires_test": "sss",
-    "outcomes": {
-      "success": 201,
-      "failure": 145
-    }
+    "edges": [
+      {
+        "label": "Masz Szczęście.",
+        "target": 201
+      },{
+        "label": "Zabrakło ci szczęścia.",
+        "target": 145
+      }
+    ]
   },
   "63": {
-    "text": "Miecz nie jest skuteczną bronią przeciw WILKOŁAKOWI. [...] Jeśli nie masz żadnego z tych przedmiotów, pozostaje ci tylko Ucieczka - patrz 275.",
+    "text": "Miecz nie jest skuteczną bronią przeciw WILKOŁAKOWI. Jeśli masz któryś z wymienionych przedmiotów, możesz użyć go do walki: kość ze szkieletu przedwiecznego potwora - patrz 157, młot goblinów - patrz 346, metalowa tarcza - patrz 216, sieć - patrz 337, pęk kluczy - patrz 181. Jeśli nie masz żadnego z tych przedmiotów, pozostaje ci tylko Ucieczka - patrz 275.",
     "requires_item": [
       "kość",
       "młot",
@@ -855,16 +891,27 @@
       "sieć",
       "pęk kluczy"
     ],
-    "outcomes": {
-      "has_item": [
-        "157",
-        "346",
-        "216",
-        "337",
-        "181"
-      ],
-      "no_item": 275
-    }
+    "edges": [
+      {
+        "label": "Kość ze szkieletu przedwiecznego potwora",
+        "target": 157
+      },{
+        "label": "Młot goblinów",
+        "target": 346
+      },{
+        "label": "Metalowa tarcza",
+        "target": 216
+      },{
+        "label": "Sieć",
+        "target": 337
+      },{
+        "label": "Pęk kluczy",
+        "target": 181
+      },{
+        "label": "Ucieczka",
+        "target": 275
+      }
+    ]
   },
   "64": {
     "text": "Zbliżasz się do skrzyżowania. Możesz iść w każdym z czterech kierunków. Jeśli wybierzesz: · zachód - patrz 296, · północ - patrz 264, · wschód - patrz 284, · południe - patrz 224.",
@@ -937,7 +984,7 @@
     ]
   },
   "69": {
-    "text": "Sam tego chciałeś. Pod ścianą komnaty siedzą dwa koszmarne stwory. [...] UPIÓR Z:5 W:3 STRZYGA Z:5 W:4 Jeśli pokonałeś je, możesz przeszukać komnatę. Robisz to - patrz 305, nie - patrz 291.",
+    "text": "Sam tego chciałeś. Pod ścianą komnaty siedzą dwa koszmarne stwory. Takie spotkanie może zakończyć się tylko walką, najpierw z jednym, a później z drugim potworem. UPIÓR Z:5 W:3 STRZYGA Z:5 W:4 Jeśli pokonałeś je, możesz przeszukać komnatę. Robisz to - patrz 305, nie - patrz 291.",
     "combat": [
       "UPIÓR Z:5 W:3",
       "STRZYGA Z:5 W:4"
@@ -963,7 +1010,7 @@
     ]
   },
   "71": {
-    "text": "Zaglądasz do pokoju... Czy pójdziesz go uwolnić? Tak - patrz 258, nie - patrz 49.",
+    "text": "Zaglądasz do pokoju. Okazuje się, że gdy dzielnie stawiałeś czoła ZŁYM, staruszek czmychnął. Ale zostawił jakąś zagadkową księgę. Gdy chcesz ją otworzyć, dobiegają cię ciche jęki gremlina przykutego do ściany. Czy pójdziesz go uwolnić? Tak - patrz 258, nie - patrz 49.",
     "edges": [
       {
         "label": "Uwolnić gremlina",
@@ -976,7 +1023,7 @@
     ]
   },
   "72": {
-    "text": "Kończysz walkę z DEMONEM. Teraz złoto!... - patrz 199.",
+    "text": "Kończysz walkę z DEMONEM. Teraz złoto! Podchodzisz do miejsca, gdzie stały wazy - patrz 199.",
     "edges": [
       {
         "label": "Idziesz po złoto",
@@ -985,7 +1032,7 @@
     ]
   },
   "73": {
-    "text": "Znalazłeś się w ślepym korytarzu... - patrz 386.",
+    "text": "Znalazłeś się w ślepym korytarzu. Ze złości walisz mieczem o skałę. W ślad za tym walą się odłamki skalne. Niektóre uderzają w ciebie. Tracisz świadomość. Gdy otwierasz oczy, jesteś nieopodal skrzyżowania - patrz 386.",
     "edges": [
       {
         "label": "Po odzyskaniu przytomności",
@@ -994,7 +1041,7 @@
     ]
   },
   "74": {
-    "text": "Podchodzisz do mostu... Jeśli masz sieć - patrz 240. Jeśli nie, pozostaje ci tylko Ucieczka - patrz 35, 269 lub 110.",
+    "text": "Podchodzisz do mostu. Drewniane bale skrzypią pod każdym krokiem. Nagle jeden z nich ucieka ci spod nóg i wali się z łoskotem w przepaść. Czy coś ci się stało? Rzucasz raz jedną kostką, jeśli masz 1 lub 2, tracisz 1W. Idziesz dalej. Most jak pałąk wygina się ku górze. Widzisz, że w najwyższym miejscu jest potężna dziura. Istnieje tylko jeden sposób, by ją pokonać. Ale musisz mieć sieć. Jeśli masz - patrz 240. Jeśli nie, pozostaje ci tylko Ucieczka - patrz 35, 269 lub 110.",
     "edges": [
       {
         "label": "Masz sieć",
@@ -1024,11 +1071,20 @@
     ]
   },
   "76": {
-    "text": "Próbujesz otworzyć kłódki kluczami...",
-    "edges": []
+    "text": "Próbujesz otworzyć kłódki kluczami. Jeśli nie masz choć trzech, tu kończy się twoja przygoda. Tak blisko celu! Jeśli masz trzy klucze, dodajesz zapisane na nich liczby i otrzymujesz sumę. Szukasz paragrafu oznaczonego liczba równą tej sumie. Jeżeli masz więcej niż trzy klucze, wybierz dowolne trzy i postąp tak jak opisano w poprzednim zdaniu.",
+    "edges": [{
+        "label": "Brak kluczy – koniec gry",
+        "target": "END"
+      },
+      {
+        "label": "Masz właściwy zestaw kluczy",
+        "target": "END",
+        "requires_math": true
+      }
+    ]
   },
   "77": {
-    "text": "Możesz zmusić potwora... - patrz 340 albo dalej prowadzisz walkę - patrz 163.",
+    "text": "Możesz zmusić potwora, by podniósł kratę - patrz 340, albo dalej prowadzisz walkę - patrz 163.",
     "edges": [
       {
         "label": "Zmuszasz potwora",
@@ -1054,7 +1110,7 @@
     ]
   },
   "79": {
-    "text": "Po pewnym czasie korytarz... Jeśli tak - patrz 8. Jeśli wycofujesz się - patrz 161.",
+    "text": "Po pewnym czasie korytarz skręca na północ. Przed tobą ukazują się drzwi. Czy chcesz zobaczyć, co jest za nimi? Jeśli tak - patrz 8. Jeżeli wycofujesz się - patrz 161.",
     "edges": [
       {
         "label": "Zaglądasz za drzwi",
@@ -1084,7 +1140,7 @@
     ]
   },
   "81": {
-    "text": "Możesz, mimo wszystko, usiąść... Patrz 121.",
+    "text": "Możesz, mimo wszystko, usiąść wygodnie i odpocząć. Dzięki temu; +2W, +1Z. Patrz 121.",
     "edges": [
       {
         "label": "Odpoczynek",
@@ -1093,7 +1149,7 @@
     ]
   },
   "82": {
-    "text": "Robisz zaledwie kilka kroków... Chcesz poszukać? - patrz 155. Jeśli wolisz wracać - patrz 212.",
+    "text": "Robisz zaledwie kilka kroków, gdy korytarz gwałtownie skręca na południe i zaraz się kończy. Przejście zawalone jest głazami. Może potwory zbudowały jakieś okrężne przejście? Chcesz poszukać? Jeśli tak - patrz 155. Jeżeli wolisz wracać do skrzyżowania - patrz 212.",
     "edges": [
       {
         "label": "Szukanie przejścia",
@@ -1106,7 +1162,7 @@
     ]
   },
   "83": {
-    "text": "Gospodarz częstuje cię napojem... Odmawiasz - patrz 124. Wypijasz - patrz 217. Przelewasz - patrz 171.",
+    "text": "Gospodarz częstuje cię napojem, który stoi na stole. Odmawiasz - patrz 124. Wypijasz - patrz 217. Wlewasz do naczynia, jeśli masz takowe i wkładasz do plecaka - patrz 171.",
     "edges": [
       {
         "label": "Odmowa",
@@ -1123,7 +1179,7 @@
     ]
   },
   "84": {
-    "text": "Zbliżasz się do skrzyżowania... północ - patrz 209, wschód - patrz 144, południe - patrz 170.",
+    "text": "Zbliżasz się do skrzyżowania. Możesz pójść na: · północ - patrz 209, · wschód - patrz 144, · południe - patrz 170.",
     "edges": [
       {
         "label": "Północ",
@@ -1140,7 +1196,7 @@
     ]
   },
   "85": {
-    "text": "Skręcasz w lewo... Dochodzisz do stołu - patrz 10.",
+    "text": "Skręcasz w lewo. Postanowiłeś iść wzdłuż północnej ściany. Ocierasz się plecami o skały. Pośrodku ściany wyczuwasz za sobą jakieś sekretne drzwi. Nic nie mówisz, posuwasz się dalej. Dochodzisz do stołu - patrz 10.",
     "edges": [
       {
         "label": "Idziesz dalej",
@@ -1149,7 +1205,7 @@
     ]
   },
   "86": {
-    "text": "Prowadzisz walkę do końca. Jeśli wygrałeś - patrz 94.",
+    "text": "Prowadzisz walkę do końca. Jeśli wygrałeś - patrz 94. Jeśli przegrałeś, pozostaniesz tu na wieki.",
     "edges": [
       {
         "label": "Wygrywasz walkę",
@@ -1167,7 +1223,7 @@
     ]
   },
   "88": {
-    "text": "Płyniesz jak szalony... -2W... Patrz 195.",
+    "text": "Płyniesz jak szalony. Udaje ci się bezpiecznie dotrzeć do brzegu. Jesteś w tym samym miejscu, w którym wylądowałeś po przepłynięciu jeziora. Wyciągasz sieć. Rozkładasz ją na brzegu. Wyrzucasz zaplątane liścia i korzenie. Nagle spod wyłowionych śmieci wyskakuje URUBURU, biały szczur wodny. Wbija zęby w twą stopę po czym ucieka: -2W. Czyścisz sieć i wkładasz do plecaka. Patrz 195.",
     "edges": [
       {
         "label": "Po uratowaniu się",
@@ -1176,7 +1232,7 @@
     ]
   },
   "89": {
-    "text": "Czubem miecza podważasz wieko... - patrz 120.",
+    "text": "Czubem miecza podważasz wieko pudełka. Wewnątrz są 3 sztuki złota. Możesz je wziąć. Rozglądasz się po kątach. Nagle słyszysz jakiś hałas. Zbierasz szybko swój ekwipunek i wybiegasz zostawiając drzwi otwarte - patrz 120. Dostajesz 2S (punkty szczęścia).",
     "edges": [
       {
         "label": "Wychodzisz z pokoju",
@@ -1185,7 +1241,7 @@
     ]
   },
   "90": {
-    "text": "Wdrapujesz się po schodkach... Patrz 212.",
+    "text": "Wdrapujesz się po schodkach na górę. Korytarz prowadzi najpierw na zachód, a później skręca na południe. Patrz 212.",
     "edges": [
       {
         "label": "Dalej korytarzem",
@@ -1194,7 +1250,7 @@
     ]
   },
   "91": {
-    "text": "Jeśli jesteś na brzegu... patrz 35, 74 lub 110. Inaczej - patrz 288.",
+    "text": "Jeśli jesteś na brzegu, z którego wyruszyłeś, NIETOPERZ, ku twojemu zaskoczeniu, oddala się. Spróbuj innego sposobu przedostania się przez szczelinę - patrz 35, 74 lub 110. Jeśli jesteś na drugim brzegu - patrz 288.",
     "edges": [
       {
         "label": "Opcja 1",
@@ -1215,7 +1271,7 @@
     ]
   },
   "92": {
-    "text": "Czeka cię prawdziwa jatka... Jeśli walka źle się układa - patrz 193, jeśli zostajesz - patrz 277.",
+    "text": "Czeka cię prawdziwa jatka. Zaczynasz od MINOTAURA. MINOTAUR Z:10 W:10 Jeśli walka źle ci się układa, możesz ratować się Ucieczką, ale dopiero po rozprawieniu się z MINOTAUREM - patrz 193. Jeśli pozostajesz na polu walki - patrz 277.",
     "edges": [
       {
         "label": "Ucieczka po walce",
@@ -1228,7 +1284,7 @@
     ]
   },
   "93": {
-    "text": "Wracasz do komnaty ZłYCH - patrz 313.",
+    "text": "Wracasz do komnaty ZŁYCH - patrz 313.",
     "edges": [
       {
         "label": "Wracasz",
@@ -1237,7 +1293,7 @@
     ]
   },
   "94": {
-    "text": "Nie znalazłszy żadnego innego wyjścia... - patrz 129.",
+    "text": "Nie znalazłszy żadnego innego wyjścia, przeciskasz się przez wąski otwór, którym tu dotarłeś. Patrz 129.",
     "edges": [
       {
         "label": "Wychodzisz",
@@ -1264,7 +1320,7 @@
     ]
   },
   "96": {
-    "text": "Znajdujesz klucz. Ma numer 12... - patrz 253.",
+    "text": "Znajdujesz klucz. Ma numer 12. Dostajesz +2S - patrz 253.",
     "edges": [
       {
         "label": "Z kluczem",
@@ -1273,7 +1329,7 @@
     ]
   },
   "97": {
-    "text": "Wchodzisz do pieczary... nie zabiłeś - patrz 211, zabiłeś - patrz 286.",
+    "text": "Wchodzisz do małej pieczary przylegającej do komnaty. Pamiętasz, że - kiedy pierwszy raz tu wszedłeś - spotkałeś trzy ZŁE. Jeśli nie zabiłeś wszystkich potworów - patrz 211 i pamiętaj, że każdy z nich ma znowu 10 sztuk złota (skąd one je biorą?). Jeśli zabiłeś wszystkie ZŁE - patrz 286.",
     "edges": [
       {
         "label": "Zabici wszyscy",
@@ -1286,7 +1342,7 @@
     ]
   },
   "98": {
-    "text": "Gobliny czmychają... pokonaliście potwora - patrz 250.",
+    "text": "Gobliny zorientowały się, że będziecie walczyć solidarnie. Czmychają w popłochu. Zostaje tylko herszt goblinów - GROBOK KRWAWY! Zręczność (Z) goblina - twojego sojusznika wynosi 3. Dodajesz ją do swojej, obliczając siłę ataku. Ewentualne rany będziesz, niestety, odnosił tylko ty. GROBOK Z:9 W:8 Jeśli pokonaliście potwora - patrz 250.",
     "edges": [
       {
         "label": "Po zwycięstwie",
@@ -1295,7 +1351,7 @@
     ]
   },
   "99": {
-    "text": "Korytarz biegnie... Jeśli tak - patrz 259, jeśli nie - patrz 182.",
+    "text": "Korytarz biegnie na wschód, ale zaraz skręca na północ. Dość długo prowadzi w tym kierunku, aby znowu skręcić na wschód. Licząc od zakrętu robisz dwadzieścia trzy kroki i korytarz się kończy. Czy już tu byłeś? Jeśli tak - patrz 259, jeśli nie - patrz 182.",
     "edges": [
       {
         "label": "Byłeś tu",
@@ -1423,7 +1479,7 @@
     ]
   },
   "107": {
-    "text": "Przystępujesz do walki mieczem. BLACKTHORN Z:10 W:14. Jeśli wygrałeś - patrz 23.",
+    "text": "Przystępujesz do walki mieczem. BLACKTHORN Z:10 W:14 Jeśli wygrałeś - patrz 23.",
     "edges": [
       {
         "target": 23,
@@ -1452,7 +1508,7 @@
     ]
   },
   "109": {
-    "text": "Nagle pojawia się KROMAA. KROMAA Z:7 W:8. Jeśli wygrałeś pierwszą rundę - patrz 77, jeśli nie - patrz 163.",
+    "text": "Ni stąd, ni zowąd pojawia się w komnacie obrzydliwy potwór. To KROMAA. Nie masz innego wyjścia: musisz walczyć. KROMAA Z:7 W:8 Jeśli wygrałeś pierwszą rundę - patrz 77, jeśli nie - patrz 163.",
     "edges": [
       {
         "target": 77,
@@ -1472,7 +1528,7 @@
     ]
   },
   "110": {
-    "text": "Próbujesz przeskoczyć rozpadlinę. Musisz mieć 18W i 9Z. Skok kosztuje -3Z i 1/2 W. Rzucasz kostką: 1-2 - patrz 314, 3-6 - patrz 288.",
+    "text": "Jeśli zachowałeś dość siły, możesz spróbować przeskoczyć przez rozpadlinę. Przedtem możesz zjeść Prowiant. Musisz mieć przynajmniej 18W i 9Z. Skok \"kosztuje\" cię -3Z i połowę W (zaokrąglone w dół). Bierzesz długi rozpęd i... rzucasz kostką. Jeśli otrzymałeś 1 lub 2, skok okazał się zbyt krótki - patrz 314. Jeśli wylosowałeś 3-6, udało ci się, jesteś na drugim brzegu - patrz 288.",
     "edges": [
       {
         "target": 314,
@@ -1602,7 +1658,7 @@
     ]
   },
   "116": {
-    "text": "ORK Z:6 W:4 | Możesz rozejrzeć się po pokoju - patrz 89, jeśli nie - opuszczasz pieczarę - patrz 120.",
+    "text": "Odbiegasz w kat pieczary. Kamienie pryskają spod stóp. ORK przygląda się uważnie i naciera. Musisz walczyć. ORK Z:6 W:4 | Możesz rozejrzeć się po pokoju, jeśli masz na to ochotę - patrz 89, jeśli nie - opuszczasz pieczarę - patrz 120.",
     "edges": [
       {
         "target": 89,
@@ -1638,7 +1694,7 @@
     ]
   },
   "119": {
-    "text": "Dotykasz ściany [...] To jest schowek! A w nim lina, flasza i skalp WILKOŁAKA. Możesz wziąć najwyżej dwie z tych rzeczy. Jeśli chcesz przeszukać ciało - patrz 31. Jeśli chcesz opuścić komnatę - patrz 102.",
+    "text": "Co ta bestia tak zasłaniała? Dotykasz ściany w miejscu, o które opierał swe plecy włochaty OGRE. Nagle cześć ściany uchyla się. To jest schowek! A w nim długa, ognioodporna lina z hakiem, pusta omszała flasza i skalp WILKOŁAKA. Możesz wziąć najwyżej dwie z tych rzeczy. Jeśli chcesz przeszukać ciało - patrz 31. Jeśli chcesz opuścić komnatę - patrz 102.",
     "edges": [
       {
         "target": 31,
@@ -1675,7 +1731,7 @@
     ]
   },
   "122": {
-    "text": "Gremlin czyta zaklęcie, ale ucieka zanim je zapiszesz. Zerknij jeszcze raz na zaklęcie i szybko patrz 286. Przedtem dodaj sobie +2Z.",
+    "text": "Podnosisz gremlinowi głowę. Wypija wszystko. Szybko wraca do sił. Otwiera księgę. \"Ależ to księga czarów i zaklęć! Należała niegdyś do rodu gremlinów. Skradł ją podstępnie Biały Troll (gdy trolle były jeszcze sługami gremlinów). Od tego czasu wszyscy pomiatają nami, bo żaden z nas nie pamięta już żadnego czaru\". Gremlin otwiera księgę gdzie bądź i czyta: Napotkawszy drzwi ustąpić nie chcące rzeknij: Barum baram barota Otwierajcie się wrota! Ledwie gremlin zdążył przeczytać te słowa, trzasnął księgą i w nogi. Nie zdążyłeś nawet zapisać tych słów i już nie wolno ci tego zrobić. Zerknij jeszcze raz na zaklęcie i szybko patrz 286. Przedtem dodaj sobie +2Z.",
     "edges": [
       {
         "target": 286
@@ -1697,7 +1753,7 @@
     ]
   },
   "124": {
-    "text": "Grubasy znikają. Jeśli chcesz przeszukać komnatę - patrz 294, jeśli nie - patrz 231.",
+    "text": "Tego nie robi się w towarzystwie. Grubasy znikają. Jeśli chcesz przeszukać komnatę - patrz 294, jeśli nie - patrz 231.",
     "edges": [
       {
         "target": 294,
@@ -1723,7 +1779,7 @@
     ]
   },
   "126": {
-    "text": "SSS. Jeśli masz S, rozpoczyna się walka - patrz 309. Jeśli nie masz S - patrz 244.",
+    "text": "Atakujesz go mieczem. SSS. Jeśli masz S, rozpoczyna się walka - patrz 309. Jeśli nie masz S - patrz 244.",
     "edges": [
       {
         "target": 309,
@@ -1756,7 +1812,7 @@
     ]
   },
   "129": {
-    "text": "Brakuje ci tchu i tracisz przytomność. Gdy się budzisz, jesteś przy skrzyżowaniu - patrz 345.",
+    "text": "Możesz pójść tylko na południe. W pewnym momencie czujesz, że brakuje ci tchu. Padasz na ziemię bez przytomności. Gdy dochodzisz do siebie, siedzisz przy skrzyżowaniu dróg - patrz 345.",
     "edges": [
       {
         "target": 345
@@ -1764,7 +1820,7 @@
     ]
   },
   "130": {
-    "text": "Idziesz szerokim korytarzem. Dochodzisz do skrzyżowania - patrz 212.",
+    "text": "Korytarz ma teraz prawie pięć kroków szerokości. Idziesz więc wygodnie. Prostujesz kości. Przeszedłeś zaledwie sto kroków, a tu następne skrzyżowanie. Patrz 212.",
     "edges": [
       {
         "target": 212
@@ -1772,7 +1828,7 @@
     ]
   },
   "131": {
-    "text": "Krata się podnosi, ale musisz zostawić klucz. Patrz 251.",
+    "text": "Istotnie, krata się podnosi, ale klucz za nic nie daje się wyjąć. Musisz go zostawić. Patrz 251.",
     "edges": [
       {
         "target": 251
@@ -1788,7 +1844,7 @@
     ]
   },
   "133": {
-    "text": "Zaczynasz zgarniać skarb, ale potwory ruszają na ciebie. Możesz tylko uciec - patrz 385.",
+    "text": "Rzucasz się na kolana i zaczynasz zgarniać ten ogromny skarb na jeden kopczyk. Ale potwory tylko na to czekały. Ruszają na ciebie. Możesz tylko ratować się Ucieczką - patrz 385.",
     "edges": [
       {
         "target": 385,
@@ -1797,7 +1853,7 @@
     ]
   },
   "134": {
-    "text": "Przed tobą skrzyżowanie. Możesz iść: północ - 270, wschód - 384, południe - 276.",
+    "text": "Przed tobą skrzyżowanie. Możesz skorzystać z drogi na: · północ - patrz 270, · wschód - patrz 384, · południe - patrz 276.",
     "edges": [
       {
         "target": 270,
@@ -1814,7 +1870,7 @@
     ]
   },
   "135": {
-    "text": "Jeśli masz: motyla, pal lub szmaragd – patrz 22. Jeśli nie masz żadnego – patrz 43.",
+    "text": "Nie wchodź do tego pokoju, jeśli nie masz choć jednego z tych przedmiotów: blaszanego motyla, drewnianego pala lub szmaragdu, który zapewnia Dar Skrzydeł. Co, nie masz? A, to szkoda - patrz 43. Jeśli masz - patrz 22.",
     "edges": [
       {
         "target": 22,
@@ -1844,7 +1900,7 @@
     ]
   },
   "137": {
-    "text": "Korytarz prowadzi do drzwi. Otwierasz je - patrz 13.",
+    "text": "Króciutki korytarz - możesz tu zjeść Prowiant - prowadzi do skrzyżowania w kształcie litery T, możesz skręcić tylko na wschód. Później korytarz skręca na południe i znów na wschód i... przed tobą drzwi. Otwierasz je - patrz 13.",
     "edges": [
       {
         "target": 13
@@ -1852,7 +1908,7 @@
     ]
   },
   "138": {
-    "text": "SSS. Jeśli masz S, trafiasz STRAŻNIKA - patrz 361. Jeśli nie masz S - patrz 255.",
+    "text": "Twój atak wypadł bardzo mizernie. Zaglądasz do plecaka. Jeśli masz smoczek, ciskasz nim w STRAŻNIKA. SSS. Jeśli masz S - patrz 361. Jeśli nie masz S - patrz 255.",
     "edges": [
       {
         "target": 361,
@@ -1877,7 +1933,7 @@
     ]
   },
   "140": {
-    "text": "Za drzwiami ukrywają się ORK i WAMPIR. Jeśli chcesz walczyć – patrz 277, jeśli nie – patrz 235.",
+    "text": "No to spójrz jeszcze za siebie. Za drzwiami ukrywają się: ORK i WAMPIR. Wystarczy? Jeśli tak - patrz 277, jeśli nie - patrz 235.",
     "edges": [
       {
         "target": 277,
@@ -1890,7 +1946,7 @@
     ]
   },
   "141": {
-    "text": "Jesteś w ślepym zaułku. Możesz zjeść prowiant. Patrz 357.",
+    "text": "Jesteś w ślepym zaułku korytarza, który tu się kończy, a prowadzi prosto na północ. Możesz tu zjeść prowiant. Teraz nie pozostaje ci już nic innego, jak tylko iść w tym kierunku. Patrz 357.",
     "edges": [
       {
         "target": 357
@@ -1926,7 +1982,7 @@
     ]
   },
   "144": {
-    "text": "Korytarz się kończy. Możesz zjeść Prowiant. +1S jeśli miałeś sałatę. Wracasz - patrz 84.",
+    "text": "Wchodzisz w krótki korytarz. Ledwie się zaczął, a już się kończy: gładka ściana zasłania przejście. Siadasz na kamiennym progu. Możesz zjeść cos ze swojego Prowiantu. Jeśli niosłeś w plecaku sałatę (podeptaną), okazuje się, że zepsuła się i zniszczyła jeden posiłek. Wyrzucasz ją. Nagle słyszysz jakieś dudnienie. Chowasz się za skalny wyłom. To stado potworów przebiegło głównym korytarzem. Miałeś szczęście: +1S. Wracasz. Patrz 84.",
     "edges": [
       {
         "target": 84
@@ -1940,7 +1996,7 @@
     ]
   },
   "145": {
-    "text": "Rzucasz 2k6 i tracisz tyle złota. Patrz 40 lub 19.",
+    "text": "Rzucasz dwiema kostkami, przegrywasz tyle sztuk złota, ile oczek pokażą kostki. Gdy wylosowana liczba przekracza ilość sztuk złota, które masz, tracisz wszystko. Jeśli chcesz znowu zagrać - patrz 40. Jeśli nie - patrz 19.",
     "edges": [
       {
         "target": 40,
@@ -1954,7 +2010,7 @@
     "requires_test": "2d6"
   },
   "146": {
-    "text": "Korytarz skręca. Przed tobą skrzyżowanie - patrz 64.",
+    "text": "Korytarz biegnie na południe i skręca na wschód. Przed sobą widzisz skrzyżowanie - patrz 64.",
     "edges": [
       {
         "target": 64
@@ -1962,7 +2018,7 @@
     ]
   },
   "147": {
-    "text": "Otrzymujesz prezent: pal i słoik pyłu. Patrz 196.",
+    "text": "Tak przyjemnie się z Panem rozmawiało. Proszę, oto drewniany pal i słój żrącego pyłu. Prezent od firmy\". Patrz 196.",
     "edges": [
       {
         "target": 196
@@ -1974,7 +2030,7 @@
     ]
   },
   "148": {
-    "text": "Masz przed sobą drzwi. Chcesz sprawdzić - patrz 8, wycofujesz się - patrz 93.",
+    "text": "Korytarz skręca na północ i po pewnym czasie masz przed sobą drzwi. Chcesz zobaczyć co za nimi jest - patrz 8, gdy wycofujesz się - patrz 93.",
     "edges": [
       {
         "target": 8,
@@ -1987,7 +2043,7 @@
     ]
   },
   "149": {
-    "text": "Ziemia się osuwa. SSS. Jeśli masz S - patrz 76, jeśli nie - patrz 352.",
+    "text": "Ledwie podniosłeś miecz do góry, a tu ziemia osuwa ci się spod nóg. Walisz się jak długi. SSS. Jeśli masz S - patrz 76. Jeśli nie masz S - patrz 352.",
     "edges": [
       {
         "target": 76,
@@ -2026,7 +2082,7 @@
     ]
   },
   "152": {
-    "text": "Przeszkoda ustępuje. Idziesz korytarzem. Możesz pójść: zachód (73), północ (20).",
+    "text": "Przeszkoda ustępuje. Idziesz korytarzem na wschód, a później skręca on na północ. Po pewnym czasie napotykasz skrzyżowanie. Możesz pójść albo na zachód - patrz 73, albo na północ - patrz 20.",
     "edges": [
       {
         "target": 73
@@ -2037,7 +2093,7 @@
     ]
   },
   "153": {
-    "text": "Miecz zaczarowany: +1 do siły ataku. +1S. Patrz 115.",
+    "text": "Szczur to dobry znak. Twój miecz jest zaczarowany. W każdej walce, którą będziesz odtąd prowadził, możesz dodać 1 do siły ataku. Dostajesz +1S. Teraz patrz 115.",
     "edges": [
       {
         "target": 115
@@ -2068,7 +2124,7 @@
     ]
   },
   "155": {
-    "text": "Nic nie znalazłeś. Patrz 212.",
+    "text": "Oglądasz ściany, przerzucasz co lżejsze kamienie. Nic z tego - patrz 212.",
     "edges": [
       {
         "target": 212
@@ -2076,7 +2132,7 @@
     ]
   },
   "156": {
-    "text": "Jeśli pokonałeś dwóch ZŁYCH - patrz 350, jeśli nie - patrz 286.",
+    "text": "Zabiłeś, albo ograłeś do cna, przynajmniej dwa ZŁE! Jeśli tak - patrz 350, jeśli nie - patrz 286.",
     "edges": [
       {
         "target": 350
@@ -2087,7 +2143,7 @@
     ]
   },
   "157": {
-    "text": "Walka z Wilkołakiem Z:9 W:6. Jeśli przegrywasz – możesz uciekać - patrz 275. Jeśli wygrasz - patrz 32.",
+    "text": "O, tak, ta kość jest twarda jak stal. Wspaniale nadaje się do walki. WILKOŁAK Z:9 W:6 Jeśli w walce WILKOŁAK jest górą, po pierwszej rundzie możesz ratować się Ucieczką - patrz 275. Gdy nie korzystasz z tej szansy, walczysz dalej i jeśli zwyciężyłeś - patrz 32.",
     "edges": [
       {
         "target": 275,
@@ -2107,7 +2163,7 @@
     ]
   },
   "158": {
-    "text": "Możesz próbować jeszcze raz jeśli masz 10 złota - patrz 225. Jeśli nie chcesz - patrz 269, 74 lub 110.",
+    "text": "Nie masz dosyć? Jeśli chcesz jeszcze raz spróbować ze Smokiem, musisz mieć choć 10 sztuk złota - patrz 225. Jeśli nie chcesz - patrz 269, 74 lub 110.",
     "edges": [
       {
         "target": 225
@@ -2129,7 +2185,7 @@
     ]
   },
   "159": {
-    "text": "Ściana się odsuwa. Patrz 78.",
+    "text": "Obsuwa się ściana, która zasłaniała korytarz. Błyskawicznie przebiegasz przez powstały otwór. Tuż za tobą ściana zatrzaskuje się z powrotem - patrz 78.",
     "edges": [
       {
         "target": 78
@@ -2145,7 +2201,7 @@
     ]
   },
   "161": {
-    "text": "Wracasz do skrzyżowania - patrz 348.",
+    "text": "Wracasz chodnikiem do skrzyżowania - patrz 348.",
     "edges": [
       {
         "target": 348
@@ -2193,7 +2249,7 @@
     ]
   },
   "164": {
-    "text": "Schody kończą się drzwiami. Jeśli byłeś – patrz 290. Jeśli nie – wybierz: patrz 302 albo 253.",
+    "text": "Korytarz prowadzi na wschód, potem skręca na północ i znowu na wschód. Po przejściu kilkunastu kroków widzisz przed sobą schody kończące się drzwiami. Prowadzą w dół. Podchodzisz do drzwi. Czy byłeś już tutaj?. Jeśli tak - patrz 290. Jeśli nie, zastanów się czy chcesz zobaczyć co kryje się za drzwiami. Chcesz - patrz 302, nie chcesz - patrz 253.",
     "edges": [
       {
         "target": 290
@@ -2232,7 +2288,7 @@
     ]
   },
   "166": {
-    "text": "Odpoczywasz. +3W, +2Z. Oddajesz motyla. Patrz 202 albo 320.",
+    "text": "Przekomarzasz się z KRASNALEM. Dzięki temu odpoczywasz: +3W, +2Z, w końcu odstępujesz motyla. Za darmo - patrz 202, czy za złoto? - patrz 320.",
     "edges": [
       {
         "target": 202
@@ -2253,7 +2309,7 @@
     ]
   },
   "167": {
-    "text": "Jeśli masz napój – patrz 236. Jeśli nie – patrz 90.",
+    "text": "Czy masz ze sobą jakiś napój lub wodę (byle nie zaczarowaną)? Jeśli tak - patrz 236, jeśli nie - patrz 90.",
     "edges": [
       {
         "target": 236
@@ -2272,7 +2328,7 @@
     ]
   },
   "168": {
-    "text": "Możesz użyć miecza - patrz 213. Jeśli nie chcesz walczyć – patrz 320.",
+    "text": "Możesz użyć miecza - patrz 213. Jeśli nie chcesz walki, musisz ratować się Ucieczką - patrz 320.",
     "edges": [
       {
         "target": 213
@@ -2301,7 +2357,7 @@
     ]
   },
   "170": {
-    "text": "Skrzyżowanie T. Możesz iść: północ - 84, wschód - 319, południe - 357.",
+    "text": "Dochodzisz do skrzyżowania. Ma kształt litery T. Możesz iść na: · północ - patrz 84, · wschód - patrz 319, · południe - patrz 357.",
     "edges": [
       {
         "target": 84
@@ -2315,7 +2371,7 @@
     ]
   },
   "171": {
-    "text": "Dwa wyjścia: pierwsze - patrz 50, drugie - patrz 99.",
+    "text": "Pospiesznie wychodzisz z komnaty. Są dwa wyjścia: to, którym wszedłeś i drugie - na wschodniej ścianie. Jeśli wybierasz pierwsze - patrz 50, a jeśli drugie - patrz 99.",
     "edges": [
       {
         "target": 50
@@ -2326,7 +2382,7 @@
     ]
   },
   "172": {
-    "text": "Jeśli płynąłeś jezioro 2x - patrz 15, jeśli więcej - patrz 365.",
+    "text": "Czy przepłynąłeś jezioro po raz drugi? Jeśli tak - patrz 15, jeśli przepłynąłeś je więcej niż dwa razy - patrz 365.",
     "edges": [
       {
         "target": 15
@@ -2337,7 +2393,7 @@
     ]
   },
   "173": {
-    "text": "Korytarz skręca. Patrz 134.",
+    "text": "Po pewnym czasie korytarz skręca na zachód - patrz 134.",
     "edges": [
       {
         "target": 134
@@ -2345,7 +2401,7 @@
     ]
   },
   "174": {
-    "text": "Powierzchnia parzy stopy. Patrz 315, potem 200.",
+    "text": "Gdziekolwiek stąpniesz, ziemia pali cię w stopy. By określić, czy ten żar wyrządza ci krzywdę - patrz 315, a potem 200.",
     "edges": [
       {
         "target": 315
@@ -2364,7 +2420,7 @@
     ]
   },
   "176": {
-    "text": "Skrzyżowanie. Możesz iść: północ - 27, wschód - 230.",
+    "text": "Zbliżasz się do skrzyżowania. Możesz pójść na: · północ - patrz 27, · wschód - patrz 230.",
     "edges": [
       {
         "target": 27
@@ -2375,7 +2431,7 @@
     ]
   },
   "177": {
-    "text": "Znalazłeś ognistą kulę. +3S. Wychodzisz - patrz 330.",
+    "text": "Pod kamieniem schowana była ognista kula. Możesz ja zabrać. Dolicz sobie +3S. Wychodzisz. Patrz 330.",
     "edges": [
       {
         "target": 330
@@ -2408,7 +2464,7 @@
     ]
   },
   "180": {
-    "text": "W torbie ORKA znajdujesz klucz 45. Patrz 120.",
+    "text": "Ponownie przeszukujesz pokój. W torbie ORKA, której nie zdążyłeś przejrzeć, znajdujesz klucz. Jest na nim wygrawerowana liczba 45. Możesz go wziąć ze sobą. Wpisz klucz na swoją \"Listę ekwipunku\". Nie zapomnij o zapisaniu liczby podanej na kluczu. Wychodzisz z komnaty pozostawiając drzwi otwarte - patrz 120.",
     "edges": [
       {
         "target": 120
@@ -2419,7 +2475,7 @@
     ]
   },
   "181": {
-    "text": "Ciskasz w potwora pękiem kluczy... Jeśli masz linę - patrz 329, jeśli nie - patrz 32.",
+    "text": "Ciskasz w potwora pękiem kluczy, który znalazłeś w jednej z odwiedzonych komnat. Rzut jest celny, ale niegroźny. WILKOŁAK przechwytuje pęk i ucieka. Ruszasz w pogoń. WILKOŁAK wpada do wąskiej, ale głębokiej rozpadliny znajdującej się w rogu pieczary. Spada na dno i ginie. Przyświecasz sobie latarnią. Widzisz w głębi zwaliste cielsko potwora, a obok niego pobłyskują klucze. Jeśli masz przy sobie linę - patrz 329. Jeśli nie masz liny - patrz 32.",
     "edges": [
       {
         "target": 329,
@@ -2435,7 +2491,7 @@
     ]
   },
   "182": {
-    "text": "Chcesz szukać przejść? Tak - patrz 30, nie - patrz 259.",
+    "text": "Czy chcesz szukać jakichś sekretnych przejść? Jeśli tak - patrz 30. Jeżeli chcesz zawrócić - patrz 259.",
     "edges": [
       {
         "target": 30,
@@ -2448,7 +2504,7 @@
     ]
   },
   "183": {
-    "text": "Możesz grać uczciwie - patrz 40, albo nieuczciwie - patrz 229.",
+    "text": "To, co spotkałeś w tym pokoju, tak bardzo się różni od okrutnej rzeczywistości podziemnego świata, że z sympatii dla wesołych stworów postanawiasz grać uczciwie - patrz 40. \"Te naiwniaki pewnie dadzą się oszukać: - myślisz; będziesz grał nieuczciwie - patrz 229.",
     "edges": [
       {
         "target": 40,
@@ -2461,7 +2517,7 @@
     ]
   },
   "184": {
-    "text": "Walka z demonem. Z:7 W:6. Ucieczka - patrz 385, walcz dalej - patrz 226.",
+    "text": "Wycierasz zakrwawiony miecz o skóry leżące pod twymi nogami. Nacierasz. DEMON Z:7 W:6 Już po pierwszej rundzie możesz ratować się Ucieczką - patrz 385. Nie chcesz? - patrz 226.",
     "edges": [
       {
         "target": 385,
@@ -2481,7 +2537,7 @@
     ]
   },
   "185": {
-    "text": "Korytarzyk prowadzi do dużego pomieszczenia - patrz 252.",
+    "text": "Wchodzisz do wąskiego korytarzyka. Prowadzi on do dużego pomieszczenia - patrz 252.",
     "edges": [
       {
         "target": 252
@@ -2489,7 +2545,7 @@
     ]
   },
   "186": {
-    "text": "Dotarłeś na drugi brzeg. Możesz wybrać: A - 368, B - 117, C - 360.",
+    "text": "Udało ci się dotrzeć na drugi brzeg. Masz trzy wyjścia: jedno prowadzi na zachód (A), a dwa na północ, jedno z nich jest położone bardziej na zachód (B) niż drugie (C). Które wybierasz? A - patrz 368, B - patrz 117, C - patrz 360.",
     "edges": [
       {
         "target": 368,
@@ -2506,7 +2562,7 @@
     ]
   },
   "187": {
-    "text": "Szmaragd nie zainteresował krasnala. Patrz 81.",
+    "text": "Niestety szmaragd nie zainteresował KRASNALA - patrz 81.",
     "edges": [
       {
         "target": 81
@@ -2522,7 +2578,7 @@
     ]
   },
   "189": {
-    "text": "Jeśli grałeś już ze wszystkimi ZŁYMI - patrz 156, jeśli nie - patrz 303.",
+    "text": "Jeśli nie grałeś jeszcze ze wszystkimi trzema ZŁYMI - patrz 303. Jeśli grałeś już ze wszystkimi trzema - patrz 156.",
     "edges": [
       {
         "target": 303,
@@ -2543,7 +2599,7 @@
     ]
   },
   "191": {
-    "text": "Krata spada za tobą. Patrz 386.",
+    "text": "Maszerujesz dość długo, gdy nagle słyszysz piekielny trzask. Tuz za tobą spadła potężna krata, która odcięła ci powrót. Z duszą na ramieniu idziesz dalej. Patrz 386.",
     "edges": [
       {
         "target": 386
@@ -2551,7 +2607,7 @@
     ]
   },
   "192": {
-    "text": "Znikająca istota, zapada krata. Możesz wziąć 1 rzecz z fontanny - patrz 220, albo wodę (jeśli masz naczynie) - patrz 306.",
+    "text": "\"A może by tak wycisnąć coś z tego pajaca?\" - myślisz. Sięgasz po miecz. Ech, po co po miecz? Wystarczy zdzielić go pięścią. Podchodzisz do stwora i zamierzasz się. Istota znika. Na dodatek z hukiem opada krata w przejściu, którym dostałeś się do tego pokoju. Rozglądasz się. Nie widzisz żadnego innego wyjścia. Podchodzisz do fontanny. Istotnie na jej dnie widzisz różne zagadkowe przedmioty: kość potwora, słój z wszystkożerami (wiecznie głodnymi skorupiakami), blaszanego motyla, włócznię i błyszczący kluczyk. To co: chcesz wodę, czy którąś z tych rzeczy. Pamiętaj, ze możesz wziąć tylko jedna rzecz. Żeby nabrać wody musisz mieć naczynie. Jeśli masz, ale jest pełne, zastanów się: może warto wylać jego zawartość. Wybierasz wodę? - patrz 306. Jeśli wybierasz przedmiot, wpisz go na \"Listę ekwipunku\" i patrz 220.",
     "edges": [
       {
         "target": 220,
@@ -2572,7 +2628,7 @@
     ]
   },
   "193": {
-    "text": "Nagroda: +2Z, +2S, 5 złota za potwora. Patrz 51.",
+    "text": "Za jednego pokonanego potwora dostajesz 5 sztuk złota. Za odwagę dostajesz +2Z, a za szczęście +2S. Patrz 51.",
     "edges": [
       {
         "target": 51
@@ -2602,7 +2658,7 @@
     ]
   },
   "195": {
-    "text": "Możesz znów przepłynąć jezioro - patrz 113. Jeśli nie - patrz 46.",
+    "text": "Możesz próbować ponownie przepłynąć jezioro. Decydujesz się. Jeśli tak, zapisz numer niniejszego paragrafu i patrz 113, jeśli nie - patrz 46.",
     "edges": [
       {
         "target": 113,
@@ -2615,7 +2671,7 @@
     ]
   },
   "196": {
-    "text": "Opuszczasz komnatę przez północne drzwi - patrz 282.",
+    "text": "Opuszczasz komnatę drzwiami w północnej ścianie - patrz 282.",
     "edges": [
       {
         "target": 282
@@ -2623,7 +2679,7 @@
     ]
   },
   "197": {
-    "text": "Chodnik prowadzi na północ. Patrz 276.",
+    "text": "Długi chodnik prowadzi prosto na północ. Patrz 276.",
     "edges": [
       {
         "target": 276
@@ -2645,7 +2701,7 @@
     ]
   },
   "199": {
-    "text": "Zbierasz tylko 20 sztuk złota. Patrz 385.",
+    "text": "Szukasz miejsca, gdzie rozsypane było złoto. Jest go teraz znacznie mniej! Udaje ci się zebrać tylko 20 sztuk. Dobre i to... Spokojnie ruszasz ku wyjściu - patrz 385.",
     "edges": [
       {
         "target": 385
@@ -2763,7 +2819,7 @@
     ]
   },
   "209": {
-    "text": "Długi korytarz... kończy się otworem z czerwonym brzaskiem. Patrz 207.",
+    "text": "Długi korytarz prowadzi na północ, następnie szerokim łukiem skręca na zachód i gwałtownie zmienia kierunek na północny. Kończy się niewielkim otworem, przez który prześwieca czerwony brzask. Patrz 207.",
     "edges": [
       {
         "target": 207
@@ -2771,7 +2827,7 @@
     ]
   },
   "210": {
-    "text": "Możesz opuścić komnatę tylko wyjściem północnym - patrz 248.",
+    "text": "Możesz opuścić tę komnatę tylko wyjściem północnym - patrz 248.",
     "edges": [
       {
         "target": 248
@@ -2792,7 +2848,7 @@
     ]
   },
   "212": {
-    "text": "Placyk z 4 kierunkami: zachód - 287, północ - 38, wschód - 82, południe - 336.",
+    "text": "Dochodzisz do sporego placyku, którego drogi rozchodzą się w czterech kierunkach. Który wybierasz? · zachód - patrz 287, · północ - patrz 38, · wschód - patrz 82, · południe - patrz 336.",
     "edges": [
       {
         "target": 287,
@@ -2813,7 +2869,7 @@
     ]
   },
   "213": {
-    "text": "Walka z ROBALAMI: Z:7 W:8. Jeśli wygrasz - patrz 320.",
+    "text": "Wszystkie ROBALE traktujesz jako jednego potwora, bo kto by je policzył. ROBALE Z:7 W:8 Jeśli zwyciężyłeś - patrz 320.",
     "edges": [
       {
         "target": 320,
@@ -2829,7 +2885,7 @@
     ]
   },
   "214": {
-    "text": "Jeśli pierwszy raz przepłynąłeś jezioro - 65, jeśli nie - 172.",
+    "text": "Czy pierwszy raz przepłynąłeś z jednego brzegu na drugi? Jeśli tak - patrz 65, jeśli nie - patrz 172.",
     "edges": [
       {
         "target": 65,
@@ -2842,7 +2898,7 @@
     ]
   },
   "215": {
-    "text": "Idziesz na południe do komnaty z fontanną, opuszczasz ją na wschód - patrz 39.",
+    "text": "Idziesz prosto na południe aż dochodzisz do komnaty z fontanną, opuszczasz ją wschodnim wejściem - patrz 39.",
     "edges": [
       {
         "target": 39
@@ -2872,7 +2928,7 @@
     ]
   },
   "217": {
-    "text": "Eliksir niewidzialności. Walka z grubasami ma podwójne rzuty. Po wszystkim - patrz 26.",
+    "text": "Spoglądasz na grubasy siedzące za stołem. Znowu niektóre znikają, inne pojawiają się. Na dobre zniknął gospodarz. Oj, już wiesz w czym rzecz. To jest eliksir niewidzialności. Masz teraz przewagę: grubasy nie widzą cię. Możesz skutecznie wymierzać ciosy mieczem. Postępujesz podobnie jak poprzednio, ale dwukrotnie rzucasz kostką dla jednego grubasa. Masz podwójną szansę wylosowania odpowiedniej liczby. Zajmujesz się dwoma grubasami. Gdy skończyłeś - patrz 26.",
     "edges": [
       {
         "target": 26
@@ -2886,7 +2942,7 @@
     ]
   },
   "218": {
-    "text": "Skrzyżowanie: zachód - 61, północ - 333.",
+    "text": "Zbliżasz się do skrzyżowania. Możesz pójść na: · zachód - patrz 61, · północ - patrz 333.",
     "edges": [
       {
         "target": 61,
@@ -2899,7 +2955,7 @@
     ]
   },
   "219": {
-    "text": "Weź pal i słoik - 323, albo nie - 147.",
+    "text": "To co: bierzesz ten drewniany pal i słój żrącego pyłu? Może lepiej wziąć? Jeśli podoba ci się ten pomysł patrz 323, jeśli nie - patrz 147.",
     "edges": [
       {
         "target": 323,
@@ -2912,7 +2968,7 @@
     ]
   },
   "220": {
-    "text": "Wybór przedmiotu: klucz - 366, inne - 109.",
+    "text": "Jeśli wybrałeś kość potwora, słój z wszystkożernymi skorupiakami, blaszanego motyla lub włócznię - patrz 109, a jeśli klucz - patrz 366.",
     "edges": [
       {
         "target": 366,
@@ -2925,7 +2981,7 @@
     ]
   },
   "221": {
-    "text": "Skrzyżowanie: północ - 339, wschód - 41, południe - 173.",
+    "text": "Dochodzisz do skrzyżowania, którym możesz przedostać się na: · północ - patrz 339, · wschód - patrz 41, · południe - patrz 173.",
     "edges": [
       {
         "target": 339,
@@ -2942,7 +2998,7 @@
     ]
   },
   "222": {
-    "text": "Składasz ofertę Kaelanowi Blackthornowi. Patrz 311.",
+    "text": "Wykładasz na stół całe złoto, które zdobyłeś, niektóre przedmioty i skarby, obiecujesz mu swój zaczarowany miecz. To wszystko za otwarcie skarbca. On nie mówi ani słowa. Patrz 311.",
     "edges": [
       {
         "target": 311
@@ -2971,7 +3027,7 @@
     ]
   },
   "225": {
-    "text": "Płacisz kolejne 10 złota. SSS: jeśli masz S - 186, jeśli nie - 3.",
+    "text": "Płacisz następne 10 sztuk złota. Smok robi rozkrok i... znowu się zaczyna. SSS. Jeśli masz S, przechodzisz na drugi brzeg - patrz 186. Jeśli nie masz S, Smok zrzuca cię z powrotem - patrz 3.",
     "edges": [
       {
         "target": 186,
@@ -2990,7 +3046,7 @@
     ]
   },
   "226": {
-    "text": "Walka z demonem. Po drugiej rundzie możesz uciec - 385. Jeśli walczysz dalej - 101.",
+    "text": "Walka trwa dalej. Po drugiej rundzie znów możesz Uciec - patrz 385. Na pewno chcesz walczyć dalej? Jeśli tak - patrz 101.",
     "edges": [
       {
         "target": 385,
@@ -3011,7 +3067,7 @@
     ]
   },
   "228": {
-    "text": "Korytarz: północ → wschód → skrzyżowanie. Patrz 102.",
+    "text": "Korytarz biegnie na północ i skręca na wschód. Przed sobą widzisz skrzyżowanie - patrz 102.",
     "edges": [
       {
         "target": 102
@@ -3019,7 +3075,7 @@
     ]
   },
   "229": {
-    "text": "SSS: jeśli masz S - patrz 66, jeśli nie - patrz 383.",
+    "text": "SSS. Jeśli masz S - patrz 66. Jeśli nie masz S - patrz 383.",
     "edges": [
       {
         "target": 66,
@@ -3032,7 +3088,7 @@
     ]
   },
   "230": {
-    "text": "Koniec korytarza. Szukasz przejścia - 36, nie - 176.",
+    "text": "Po kilku zaledwie krokach korytarz się kończy. Czy chcesz szukać sekretnych przejść? Jeśli tak - patrz 36, jeśli nie - patrz 176.",
     "edges": [
       {
         "target": 36,
@@ -3058,7 +3114,7 @@
     ]
   },
   "232": {
-    "text": "Jeśli miecz jest pierwszą wybraną przez ciebie bronią - patrz 271, a jeśli drugą - patrz 68.",
+    "text": "Jeśli miecz jest pierwsza wybraną przez ciebie bronią - patrz 271, a jeśli drugą - patrz 68.",
     "edges": [
       {
         "target": 271,
@@ -3071,7 +3127,7 @@
     ]
   },
   "233": {
-    "text": "Podłoga obraca się razem ze ścianą... Patrz 78.",
+    "text": "Nagle - jak ruchoma scena - podłoga obraca się razem ze ścianą przegradzającą przejście. Lądujesz w korytarzu biegnącym z północy na południe. Po przejściu w skale ani śladu. Patrz 78.",
     "edges": [
       {
         "target": 78
@@ -3079,7 +3135,7 @@
     ]
   },
   "234": {
-    "text": "Kończysz walkę z DEMONEM. Zaglądasz do puszki - patrz 205, albo interesuje cię tylko złoto - patrz 199.",
+    "text": "Kończysz walkę z DEMONEM. Czy chcesz zajrzeć do kamiennej puszki stojącej na ołtarzyku? - patrz 205, czy też interesuje cię tylko złoto? - patrz 199.",
     "edges": [
       {
         "target": 205,
@@ -3121,7 +3177,15 @@
     ]
   },
   "238": {
-    "text": "Walka z GREMLIN, LICHA, BRONGO, ORKONIK, SAMASKÓRA. Możesz uciekać po każdej walce.",
+    "text": "Napotykasz grupę wędrujących Potworów. Są to: GREMLIN, LICHA, BRONGO, ORKONIK i SAMASKÓRA. Walczysz z nimi w podanej kolejności. Po walce z każdym możesz ratować się Ucieczką (pamiętasz drogę?). GREMLIN Z:5 W:3, LICHA Z:6 W:5, BRONGO Z:8 W:4, ORKONIK Z:6 W:4, SAMASKÓRA Z:6 W:5.",
+    "": "",
+    "edges": [
+      {
+        "target": 0,
+        "label": "Pamiętasz drogę?",
+        "requires_memory": true
+      }
+    ],
     "combat": [
       {
         "name": "GREMLIN",
@@ -3152,7 +3216,7 @@
     "escape_possible": true
   },
   "239": {
-    "text": "Po kilkunastu krokach widzisz drzwi. Przystawiasz ucho. Patrz 125.",
+    "text": "Już po kilkunastu krokach chodnik skręca w lewo, potem kolejnych kilkanaście kroków i widzisz przed sobą drzwi. Przystawiasz ucho. Patrz 125.",
     "edges": [
       {
         "target": 125
@@ -3175,7 +3239,7 @@
     ]
   },
   "241": {
-    "text": "Możesz nabrać wody z jeziora - patrz 132.",
+    "text": "Pamiętaj, że możesz nabrać wody z jeziora - patrz 132.",
     "edges": [
       {
         "target": 132
@@ -3183,7 +3247,7 @@
     ]
   },
   "242": {
-    "text": "Ściana przegradza chodnik. SSS: jeśli masz S - patrz 233, jeśli nie - patrz 111.",
+    "text": "Robisz kilkadziesiąt kroków i... skalna ściana przegradza chodnik. SSS. Jeśli masz S - patrz 233. Jeśli nie masz S - patrz 111.",
     "edges": [
       {
         "target": 233,
@@ -3196,7 +3260,7 @@
     ]
   },
   "243": {
-    "text": "Chcesz wejść? Tak - patrz 355, nie - patrz 129.",
+    "text": "A czy chcesz wejść? Tak - patrz 355, nie - patrz 129.",
     "edges": [
       {
         "target": 355,
@@ -3209,7 +3273,7 @@
     ]
   },
   "244": {
-    "text": "WILKOŁAK paraliżuje cię i odbiera miecz: -1W. Podnosisz miecz i atakujesz inną bronią - patrz 63.",
+    "text": "WILKOŁAK znowu paraliżuje cię wzrokiem i wytrąca z ręki miecz: -1W. Podnosisz miecz i atakujesz inną bronią - patrz 63.",
     "edges": [
       {
         "target": 63
@@ -3223,7 +3287,7 @@
     ]
   },
   "245": {
-    "text": "Uderzasz barkiem w drzwi. Bez efektu: -1W. Patrz 108.",
+    "text": "Uderzasz barkiem z całej siły. Ale drzwi ani drgnęły. Tracisz 1W. Patrz 108.",
     "edges": [
       {
         "target": 108
@@ -3237,7 +3301,7 @@
     ]
   },
   "246": {
-    "text": "KRASNAL oferuje: złoto - patrz 289, smoczek - patrz 369, rezygnujesz - patrz 81.",
+    "text": "Nic z tego. Ale KRASNAL inaczej formułuje swą ofertę: albo 20 sztuk złota, albo smoczek. Co wolisz! Złoto - patrz 289, smoczek - patrz 369. Wycofujesz się z transakcji - patrz 81.",
     "edges": [
       {
         "target": 289,
@@ -3254,7 +3318,7 @@
     ]
   },
   "247": {
-    "text": "Drzwi komnaty: jeśli otwarte - wracasz (33), jeśli zamknięte - próbujesz otworzyć (5) lub wycofać (33).",
+    "text": "Po kilku krokach dochodzisz do drzwi komnaty. Jeśli są otwarte, nie zbliżaj się, wracaj - patrz 33. Jeśli są zamknięte, możesz spróbować je otworzyć - patrz 5, albo wycofać się - patrz 33.",
     "edges": [
       {
         "target": 5,
@@ -3267,7 +3331,7 @@
     ]
   },
   "248": {
-    "text": "Korytarz prowadzi na zachód, potem północ... Widzisz otwór w skale - patrz 207.",
+    "text": "Idziesz korytarzem prosto na północ. Później skręca on w lewo. Właśnie w tym miejscu możesz usiąść i zjeść Prowiant. Gdy już skończyłeś, idź na zachód. Korytarz skręca na północ i po pewnym czasie widzisz przed sobą otwór w skale. Spróbuj się przecisnąć - patrz 207.",
     "edges": [
       {
         "target": 207
@@ -3275,7 +3339,7 @@
     ]
   },
   "249": {
-    "text": "Pytasz o środek leczniczy. Dostajesz pal i słoik. Patrz 7.",
+    "text": "\"To może jakiś cudowny środek do leczenia ran?\" - pytasz. \"Zaraz się coś znajdzie. Co my tu mamy? Aha, jest drewniany pal i słój żrącego pyłu\". Patrz 7.",
     "edges": [
       {
         "target": 7
@@ -3287,7 +3351,7 @@
     ]
   },
   "250": {
-    "text": "Gobliny atakują podstępami. Stawiasz czoła - 143, wycofujesz się - 210.",
+    "text": "Gobliny, które uciekły nie skapitulowały. Atakują was, a właściwie - ciebie, bo twój sojusznik ledwie żywy usiadł pod ścianą. Ale nie staja do walki, tylko wymyślają różne podstępne sztuczki. Czy chcesz stawić im czoła? Jeśli tak - patrz 143, jeśli nie - patrz 210.",
     "edges": [
       {
         "target": 143,
@@ -3300,7 +3364,7 @@
     ]
   },
   "251": {
-    "text": "Wychodzisz tą samą drogą - patrz 39.",
+    "text": "Wychodzisz tędy, którędy wszedłeś - patrz 39.",
     "edges": [
       {
         "target": 39
@@ -3308,7 +3372,7 @@
     ]
   },
   "252": {
-    "text": "Skarbiec: na stole skrzynia z trzema kłódkami. Możesz rozbić mieczem - 149, lub użyć kluczy - 76.",
+    "text": "Wchodzisz do skarbca. Nie ma tu jednak żadnych skarbów. Jest za to stół, a na stole skrzynia obita blachą, zamknięta na trzy kłódki. Możesz albo rozbić kłódki mieczem - patrz 149, albo spróbować otworzyć je kluczami - patrz 76.",
     "edges": [
       {
         "target": 149,
@@ -3321,7 +3385,7 @@
     ]
   },
   "253": {
-    "text": "Po schodach, przez korytarz, aż do skrzyżowania. Patrz 267.",
+    "text": "Wchodzisz po schodach, później korytarzem, aż ujrzysz skrzyżowanie. Wówczas patrz 267.",
     "edges": [
       {
         "target": 267
@@ -3329,7 +3393,7 @@
     ]
   },
   "254": {
-    "text": "Z komnaty dobiega ryk. Chwytasz 10 złota i uciekasz - patrz 385.",
+    "text": "Nagle z końca komnaty rozlega się potężny ryk. Udaje ci się pochwycić garść złota (jak się później okazało 10 sztuk) i ratujesz się Ucieczką - patrz 385.",
     "edges": [
       {
         "target": 385
@@ -3359,7 +3423,7 @@
     ]
   },
   "256": {
-    "text": "Znowu nie znajdujesz przejścia. Patrz 378.",
+    "text": "Znowu nie znajdujesz żadnego przejścia - patrz 378.",
     "edges": [
       {
         "target": 378
@@ -3375,7 +3439,7 @@
     ]
   },
   "258": {
-    "text": "Uwalniasz gremlina. Potrzebuje wody. Masz wodę? Tak - 122, nie - 337.",
+    "text": "Rozbijasz mieczem łańcuchy, którymi przykuty był do skały. Biedaczysko, słania się na nogach. Prowadzisz go do pokoju i kładziesz na skórze. Teraz już spokojnie otwierasz księgę. Próbujesz czytać. Nie rozumiesz ani słowa. Księga napisana jest w języku gremlinów. Szarpiesz za ramię nieprzytomnego stworka. Nie jest w stanie podnieść głowy. Cicho szepce: \"pić, pić\". Masz wodę? Jeśli tak - patrz 122, jeśli nie - patrz 337.",
     "edges": [
       {
         "target": 122,
@@ -3388,7 +3452,7 @@
     ]
   },
   "259": {
-    "text": "Wracasz przez komnatę znikających grubasów. Przechodzisz dalej - patrz 50.",
+    "text": "Wracasz korytarzem, aż dochodzisz do drzwi prowadzących do komnaty znikających grubasów. Śmiało otwierasz drzwi. Nikogo nie widzisz. Szybkim krokiem przechodzisz do drugich drzwi i wychodzisz na korytarz - patrz 50.",
     "edges": [
       {
         "target": 50
@@ -3404,7 +3468,7 @@
     ]
   },
   "261": {
-    "text": "Czy poszedłeś po wodę? Tak - patrz 122, nie - patrz 313.",
+    "text": "Czy poszedłeś po wodę? Jeśli tak - patrz 122, jeśli nie - patrz 313.",
     "edges": [
       {
         "target": 122,
@@ -3425,7 +3489,7 @@
     ]
   },
   "263": {
-    "text": "Ranny demon rzuca się na ciebie: -2W. Ostatecznie go dobijasz. Patrz 326.",
+    "text": "Zostawiasz ledwie żywego potwora i podchodzisz do ołtarzyka. Postępujesz taj jak polecił ci DEMON. Właśnie zapinasz rzemień plecaka, gdy słyszysz za sobą przeraźliwy wrzask. To ranny DEMON rzuca się na ciebie resztą sił. Wbija ci szpony w plecy: -2W. Odskakujesz i zadajesz mu ostatni - jak się okazuje cios. Patrz 326.",
     "edges": [
       {
         "target": 326
@@ -3460,7 +3524,7 @@
     ]
   },
   "266": {
-    "text": "Dopływasz do południowego brzegu jeziora. Patrz 15.",
+    "text": "Dopływasz bez kłopotów do południowego brzegu jeziora - patrz 15.",
     "edges": [
       {
         "target": 15
@@ -3468,7 +3532,7 @@
     ]
   },
   "267": {
-    "text": "Zbliżasz się do skrzyżowania: zachód - 333, wschód - 164, południe - 345.",
+    "text": "Zbliżasz się do skrzyżowania. Możesz udać się na: · zachód - patrz 333, · wschód - patrz 164, · południe - patrz 345.",
     "edges": [
       {
         "target": 333,
@@ -3485,7 +3549,7 @@
     ]
   },
   "268": {
-    "text": "Tunel dochodzi do starych drzwi. Jeśli chcesz wejść - 317, jeśli wrócić - 102.",
+    "text": "Krótki tunel dochodzi do zbutwiałych, starych drzwi. Jeśli jeszcze za nimi nie byłeś, możesz wejść - patrz 317. Jeśli wolisz zawrócić - patrz 102.",
     "edges": [
       {
         "target": 317,
@@ -3498,7 +3562,7 @@
     ]
   },
   "269": {
-    "text": "Lina puszcza: -2W. Możesz spróbować innego sposobu: 35, 74, 110, lub ponowić próbę: 358.",
+    "text": "Wyciągasz z plecaka linę. Jest ognioodporna i zakończona hakiem. Podchodzisz do krawędzi. Szerokim zamachem rzucasz hak między skały na przeciwnym brzegu. Zaczepił się. Przywiązujesz drugi koniec liny. Będziesz \"szedł\" wisząc na rękach. Opuszczasz się. Nagle... trach! Hak puścił. Wdrapujesz się z powrotem. Tracisz 2W. Możesz wybrać inny sposób pokonania szczeliny - patrz 35, 74 lub 110, albo ponowić próbę z liną - patrz 358. Pamiętaj, ze lina pozostanie już nad szczeliną, niezależnie od tego czy przejdziesz, czy też nie. Przedtem możesz zjeść Prowiant.",
     "edges": [
       {
         "target": 35
@@ -3521,7 +3585,7 @@
     ]
   },
   "270": {
-    "text": "Stajesz przed drzwiami. Jeśli otwarte - wracasz (134). Jeśli zamknięte i chcesz wejść - 5, jeśli nie - 134.",
+    "text": "Po kilku zaledwie krokach stajesz przed obciągniętymi skórą drzwiami. Jeśli są otwarte, musisz wycofać się - patrz 134. Jeśli nie, zdecyduj się czy chcesz wejść. Jeśli tak - patrz 5, jeśli nie - patrz 134.",
     "edges": [
       {
         "target": 5,
@@ -3534,7 +3598,7 @@
     ]
   },
   "271": {
-    "text": "Bogaty miecz rani cię: -1W. Drugi miecz zamienia się w szczura. Chcesz go wymienić? Tak - 190, nie - 153.",
+    "text": "Zdejmujesz ze stojaka bogato zdobiony,, błyszczący miecz. Obracasz rękojeść w dłoni. Nagle broń wypada ci z ręki i rani ramie: -1W. Wybierasz inny. Wygląda skromnie. Dobrze leży w dłoni. Odrzucasz swój stary miecz. Ten z sykiem zamienia się w szczura. Dobry to, czy zły znak? Chcesz swój nowy miecz wymienić na inny? Jeśli tak - patrz 190, jeśli nie patrz 153.",
     "edges": [
       {
         "target": 190,
@@ -3553,7 +3617,7 @@
     ]
   },
   "272": {
-    "text": "Krasnoludy zapraszają do stołu. Trzy ścieżki: pierwsza - 85, druga - 160, trzecia - 356.",
+    "text": "Podbiegają do ciebie trzy KRASNOLUDY. Zapraszają do stołu, który stoi w przeciwnym końcu pokoju. Ba, ale tu wszędzie są grządki... \"Nie chcę podeptać wam sałaty\" - mówisz. \"To przejdź tuż przy ścianach\" - odpowiada pierwszy KRASNOLUD. \"Idź tą ścieżką przez sam środek pokoju\" - mówi drugi. \"Co się przejmujesz? Idź na wprost, wszystko jedno którędy!\" - woła trzeci. Jeśli korzystasz z rady pierwszego - patrz 85, drugiego - patrz 160, trzeciego - patrz 356.",
     "edges": [
       {
         "target": 85,
@@ -3570,7 +3634,7 @@
     ]
   },
   "273": {
-    "text": "Możesz zjeść Prowiant. Słyszysz kroki: patrz 238. Po walce - patrz 103.",
+    "text": "Korytarz biegnie prosto, by rozszerzyć na końcu w obszerną salę. Możesz usiąść i zjeść Prowiant. Nagle słyszysz jakieś kroki. To na pewno potwory. Patrz 238. Jeśli je pokonasz albo wycofasz się w trakcie walki - patrz 103. Zapisz ten numer, bo zgubisz drogę.",
     "edges": [
       {
         "target": 238
@@ -3581,7 +3645,7 @@
     ]
   },
   "274": {
-    "text": "SSS. Jeśli masz S - 210. Jeśli nie - 174.",
+    "text": "Nagle czujesz jak faluje powietrze. Zaczynasz tracić równowagę. Powiewy miotają tobą jak liściem. SSS. Jeśli masz S - patrz 210. Jeśli nie masz S - patrz 174.",
     "edges": [
       {
         "target": 210,
@@ -3594,7 +3658,7 @@
     ]
   },
   "275": {
-    "text": "Wybiegasz przez wschodnie drzwi - patrz 279.",
+    "text": "Wybiegasz z tej komnaty przez drzwi znajdujące się we wschodniej ścianie - patrz 279.",
     "edges": [
       {
         "target": 279
@@ -3602,7 +3666,7 @@
     ]
   },
   "276": {
-    "text": "Skrzyżowanie: północ - 308, wschód - 382, południe - 215.",
+    "text": "Dochodzisz do skrzyżowania, na którym możesz iść na: · północ - patrz 308, · wschód - patrz 382, · południe - patrz 215.",
     "edges": [
       {
         "target": 308
@@ -3616,7 +3680,7 @@
     ]
   },
   "277": {
-    "text": "WAMPIR Z:9 W:7, ORK Z:7 W:7. Po walce - 312. Możesz uciec tylko po każdej walce - patrz 193.",
+    "text": "No, to do dzieła. Najpierw WAMPIR, później ORK. WAMPIR Z:9 W:7 ORK Z:7 W:7 Pamiętaj, że w trakcie walki nie możesz ratować się Ucieczką. Dopiero po rozprawieniu się z ORKIEM lub WAMPIREM. Jeśli korzystasz z tej możliwości - patrz 193. Po pokonaniu ORKA patrz 312.",
     "combat": [
       {
         "name": "WAMPIR",
@@ -3641,7 +3705,7 @@
     ]
   },
   "278": {
-    "text": "Klucz z numerem 122. Patrz 109.",
+    "text": "Dokładnie oglądasz klucz. Wyryty jest na nim numer 122. Wrzucasz klucz do plecaka - patrz 109.",
     "edges": [
       {
         "target": 109
@@ -3652,7 +3716,7 @@
     ]
   },
   "279": {
-    "text": "Korytarz na wschód, potem skrzyżowanie: północ - 191, dalej na wschód - 47.",
+    "text": "Korytarz prowadzi na wschód. Zbliżasz się do skrzyżowania. Możesz skręcić albo na północ - patrz 191, albo iść dalej na wschód - patrz 47.",
     "edges": [
       {
         "target": 191
@@ -3663,7 +3727,7 @@
     ]
   },
   "280": {
-    "text": "ORK zaprasza cię do stołu. Jeśli masz złoto - 100, jeśli nie - 196.",
+    "text": "\"Dzień dobry. O, pardon. Noc dobra. Czy mogę służyć?\" - zgarbiony ORK zaciera spiczaste, pomarszczone paluchy. Wskazuje ci miejsce przy stole. Sam siada. Masz złoto? Jeśli nie, to lepiej zwiewaj stąd ile sił w nogach - patrz 196. Jeśli masz - patrz 100.",
     "edges": [
       {
         "target": 100,
@@ -3676,7 +3740,7 @@
     ]
   },
   "281": {
-    "text": "Włócznia odbija się od zbroi STRAŻNIKA. Patrz 138.",
+    "text": "Włócznia trafia prosto w piersi STRAŻNIKA, ale odskakuje jak patyk. Zapewne pod płaszczem STRAŻNIK nosi solidną zbroję. Patrz 138.",
     "edges": [
       {
         "target": 138
@@ -3684,7 +3748,7 @@
     ]
   },
   "282": {
-    "text": "Tunel na północ, potem na wschód i drzwi - patrz 135.",
+    "text": "Ciasny tunel biegnie ku północy, by po kilkunastu krokach zwrócić się ku wschodowi i zaraz skończyć się drzwiami - patrz 135.",
     "edges": [
       {
         "target": 135
@@ -3692,7 +3756,7 @@
     ]
   },
   "283": {
-    "text": "Szuwary i kulki - to sieć. Jeśli chcesz wyciągnąć - 154, jeśli nie - 139.",
+    "text": "\"Tak groźne jezioro, a taka łatwa przeprawa? Muszę poszukać przygód\" - postanawiasz. Zapuszczasz się w szuwary. W niewielkiej odległości od brzegu widzisz pływające po powierzchni czerwone kulki. Intrygujące, prawda? Powoli schodzisz do wody. Podpływasz bliżej. Zanurzasz dłoń. Okazuje się, że to sieć zawieszona na korkowych bojach. Chcesz wyciągnąć ją na brzeg? Jeśli tak - patrz 154, jeśli nie - patrz 139.",
     "edges": [
       {
         "target": 154,
@@ -3705,7 +3769,7 @@
     ]
   },
   "284": {
-    "text": "SSS. Jeśli masz S - ok. Jeśli nie - -2W. Patrz 50.",
+    "text": "Korytarz jest coraz węższy. Ze sklepienia zwisają długie kamienne brody. Mogą lada chwila urwać się. SSS. Jeśli masz S - wszystko w porządku. Jeśli nie masz S - minus 2W. Patrz 50.",
     "edges": [
       {
         "target": 50
@@ -3728,7 +3792,7 @@
     ]
   },
   "286": {
-    "text": "Opuszczasz siedlisko ZŁYCH: zachód - 206, wschód - 148.",
+    "text": "Opuszczasz siedlisko ZŁYCH. Jeśli zachodnim wyjściem - patrz 206, a jeśli wschodnim - patrz 148.",
     "edges": [
       {
         "target": 206,
@@ -3741,7 +3805,7 @@
     ]
   },
   "287": {
-    "text": "Po pewnym czasie widzisz skrzyżowanie - patrz 50.",
+    "text": "Po pewnym czasie widzisz w oddali skrzyżowanie - patrz 50.",
     "edges": [
       {
         "target": 50
@@ -3749,7 +3813,7 @@
     ]
   },
   "288": {
-    "text": "NIETOPERZ Z:7 W:6. Jeśli wygrasz - patrz 186.",
+    "text": "Ledwie żywy leżysz na skalnej gładzi, gdy znienacka atakuje cię NIETOPERZ. NIETOPERZ Z:7 W:6 Jeśli zwyciężyłeś - patrz 186.",
     "combat": [
       {
         "name": "NIETOPERZ",
@@ -3772,7 +3836,7 @@
     ]
   },
   "290": {
-    "text": "Czy ktoś cię tu przysłał? Tak - 96, nie - 253.",
+    "text": "Czy ktoś cię tu przysłał? Jeśli tak - patrz 96, jeśli nie - patrz 253.",
     "edges": [
       {
         "target": 96,
@@ -3799,7 +3863,7 @@
     ]
   },
   "292": {
-    "text": "Rzucasz kostką: 1-3 – żrący płyn, 4-6 – wszystkożery. Patrz 24.",
+    "text": "Rzuć raz kostką. Jeśli wylosujesz 1, 2, 3 - użyjesz w walce żrącego płynu, jeśli 4, 5, 6 - wszystkożerów. Niezależnie od wyniku patrz 24.",
     "edges": [
       {
         "target": 24
@@ -3807,7 +3871,7 @@
     ]
   },
   "293": {
-    "text": "Tunel, ławka, odpoczynek, potem wschód i północ. Mały otwór - patrz 207.",
+    "text": "Ledwo można przecisnąć się przez odłamki skał. Korytarz zakręca. Na łuku jest mała kamienna ławka. Możesz usiąść i zjeść Prowiant. A potem wstajesz i idziesz na wschód. Po pewnym czasie tunel zmienia kierunek i biegnie na północ. Dochodzisz do końca korytarza. W skale jest tylko mały otwór. Przeciskasz się przez niego. Patrz 207.",
     "edges": [
       {
         "target": 207
@@ -3815,7 +3879,7 @@
     ]
   },
   "294": {
-    "text": "Znalazłeś eliksir niewidzialności. +2S. Patrz 171.",
+    "text": "W skalnej szczelinie znajdujesz butelkę z eliksirem niewidzialności. Możesz go zabrać. Dostajesz +2S. Patrz 171.",
     "edges": [
       {
         "target": 171
@@ -3832,7 +3896,7 @@
     ]
   },
   "295": {
-    "text": "Krasnoludy wracają z kartami. Masz złoto? Tak - 183, nie - 19.",
+    "text": "Dwa KRASNOLUDY wracają rozbawione, trzymając w dłoniach talię kart. Wszyscy wybuchają śmiechem. Będzie gra. Będzie, jeśli masz złoto - patrz 183. Jeśli nie masz - patrz 19.",
     "edges": [
       {
         "target": 183,
@@ -3845,7 +3909,7 @@
     ]
   },
   "296": {
-    "text": "Korytarz na zachód, potem północ. Możesz zjeść Prowiant. Dochodzisz do skrzyżowania - patrz 39.",
+    "text": "Korytarz biegnie na zachód i skręca na północ. Na zakręcie możesz zjeść Prowiant. Idziesz dalej. Przed sobą widzisz skrzyżowanie - patrz 39.",
     "edges": [
       {
         "target": 39
@@ -3853,7 +3917,7 @@
     ]
   },
   "297": {
-    "text": "Zbierasz złoto - patrz 254, zaglądasz do puszki - 205, walczysz z drugim demonem - 184.",
+    "text": "Możesz wziąć się do zbierania rozsypanego złota - patrz 254. A może chciałbyś zobaczyć, co jest w kamiennej puszce stojącej na ołtarzyku? - patrz 205. Jeśli starczy ci sił i odwagi, możesz podjąć walkę z drugim DEMONEM - patrz 184.",
     "edges": [
       {
         "target": 254,
@@ -3870,7 +3934,7 @@
     ]
   },
   "298": {
-    "text": "Hełm może się przydać - patrz 324.",
+    "text": "Ten hełm naprawdę może się przydać - patrz 324.",
     "edges": [
       {
         "target": 324
@@ -3878,7 +3942,7 @@
     ]
   },
   "299": {
-    "text": "Chcesz je otworzyć? - 349. Jeśli nie - 194.",
+    "text": "Jeśli chcesz je otworzyć - patrz 349. Jeśli nie - patrz 194.",
     "edges": [
       {
         "target": 349,
@@ -3891,7 +3955,7 @@
     ]
   },
   "300": {
-    "text": "Nie? To nie - patrz 81.",
+    "text": "Nie, to nie - patrz 81.",
     "edges": [
       {
         "target": 81
@@ -3951,7 +4015,7 @@
     ]
   },
   "305": {
-    "text": "Ukryty skarb. Rzuć 4x kostką i uzyskaj co najmniej 18 - patrz 112. Albo zastosuj SSS - patrz 381.",
+    "text": "W tej komnacie ukryte jest coś bardzo wartościowego. Żeby to znaleźć musisz albo uzyskać przynajmniej 18, rzucając cztery razy kostką - patrz 112, albo zastosować SSS - patrz 381.",
     "edges": [
       {
         "target": 112,
@@ -3964,7 +4028,7 @@
     ]
   },
   "306": {
-    "text": "Nabierasz zaczarowanej wody. +2S. Patrz 109.",
+    "text": "Nabierasz wody. Jest zaczarowana. Chowasz naczynie do plecaka. Dostajesz +2S. Patrz 109.",
     "edges": [
       {
         "target": 109
@@ -4005,7 +4069,7 @@
     ]
   },
   "308": {
-    "text": "Ślepy zaułek. Chcesz szukać przejść? Tak - 114, nie - 276.",
+    "text": "Krótki tunel kończy się ślepym zaułkiem. Czy chcesz poszukać sekretnych przejść? Jeśli tak - patrz 114, jeśli nie - patrz 276.",
     "edges": [
       {
         "target": 114,
@@ -4018,7 +4082,7 @@
     ]
   },
   "309": {
-    "text": "WILKOŁAK Z:9 W:6. Twoje ciosy nieskuteczne. Możesz uciec - 275, lub zmienić broń - 63.",
+    "text": "WILKOŁAK Z:9 W:6 Po pierwszej rundzie okazuje się, że twoje ciosy są nieskuteczne. Potwór nie odnosi żadnych ran. Możesz albo ratować się Ucieczką - patrz 275, albo walczyć inną bronią - patrz 63.",
     "combat": [
       {
         "name": "WILKOŁAK",
@@ -4038,7 +4102,7 @@
     ]
   },
   "310": {
-    "text": "Zmurszałe drzwi. Już tu byłeś? Tak - 67, nie - 17.",
+    "text": "Tylko dziesięć kroków dzieli cię od zmurszałych, drewnianych drzwi. Czy byłeś już za nimi? Jeśli tak - patrz 67, jeśli nie - patrz 17.",
     "edges": [
       {
         "target": 67,
@@ -4051,7 +4115,7 @@
     ]
   },
   "311": {
-    "text": "Blackthorn staje do walki. Patrz 165.",
+    "text": "Wstał z bogato zdobionego krzesła i stanął w rozkroku, kładąc prawą dłoń na rękojeści miecza. Teraz twój ruch. Patrz 165.",
     "edges": [
       {
         "target": 165
@@ -4059,7 +4123,7 @@
     ]
   },
   "312": {
-    "text": "LUDOJAD Z:7 W:5, ZOMBI Z:6 W:5, SZKIELET Z:5 W:4. Możesz uciec po każdej walce - 193.",
+    "text": "LUDOJAD, ZOMBI i SZKIELET czekają na ciebie. Walczysz z nimi w podanej kolejności. LUDOJAD Z:7 W:5 ZOMBI Z:6 W:5 SZKIELET Z:5 W:4 Możesz ratować się Ucieczką, ale dopiero po zwycięstwie nad LUDOJADEM lub ZOMBI - patrz 193. Gdy pokonasz SZKIELETA - patrz 193.",
     "combat": [
       {
         "name": "LUDOJAD",
@@ -4084,7 +4148,7 @@
     ]
   },
   "313": {
-    "text": "Jeśli grałeś już z potworami - 97, jeśli nie - 18.",
+    "text": "Wchodzisz do komnaty. Jeśli grałeś już z potworami - patrz 97, jeśli nie grałeś - patrz 18.",
     "edges": [
       {
         "target": 97,
@@ -4097,7 +4161,7 @@
     ]
   },
   "314": {
-    "text": "Lecisz w dół. Masz Dar Skrzydeł? Tak - 12, nie - 370.",
+    "text": "Lecisz w dół. Jedynym twoim ratunkiem jest Dar Skrzydeł. Jeśli go masz, skorzystaj - patrz 12. Jeśli nie masz - patrz 370.",
     "edges": [
       {
         "target": 12,
@@ -4110,22 +4174,22 @@
     ]
   },
   "315": {
-    "text": "Rzut kostką: 1-3 nic się nie dzieje. 4-6: -3W, -1Z.",
+    "text": "Rzuć raz kostką. Jeśli wylosujesz 1, 2, 3 - wychodzisz bez szwanku, jeśli zaś 4, 5, 6 - tracisz 3W i 1Z.",
     "effects": [
       {
-        "condition": "roll=4-6",
+        "condition": {"roll": [4,5,6]},
         "attr": "stamina",
         "change": -3
       },
       {
-        "condition": "roll=4-6",
+        "condition": {"roll": [4,5,6]},
         "attr": "agility",
         "change": -1
       }
     ]
   },
   "316": {
-    "text": "Korytarz prowadzi na południe. Patrz 176.",
+    "text": "Idziesz korytarzem na południe - patrz 176.",
     "edges": [
       {
         "target": 176
@@ -4133,7 +4197,7 @@
     ]
   },
   "317": {
-    "text": "Wchodzisz do komnaty. OGRE Z:8 W:10. Po walce: 119 (oglądasz), 31 (idziesz dalej).",
+    "text": "Drzwi ustępują. Bucha spoza nich przeraźliwy smród. W nikłym świetle oliwnej lampy stojącej na ławie porozrzucane po całym pomieszczeniu jakieś szczątki. Przyglądasz się bliżej. To kości! Odwracasz z obrzydzeniem twarz. A czego tu się spodziewałeś? Wonnych kwiatów? Tańczących elfów? Melancholijnej muzyki? To są, bracie podziemia - królestwo zła. I dlatego tu jesteś. Masz wydrzeć ich tajemnicę. Śmiało - rozgarnij te gnaty! Teraz szaaa... Słyszysz te ciche kroki? Są coraz głośniejsze... O, królu Almanhagorze, ten hałas rozwala mi łeb! Już nie słychać kroków, tylko przeraźliwy syk powietrza przelatującego przez nozdrza. W drzwiach stoi OGRE. Błyskawicznie wyciągasz miecz. Zapierasz się o ścianę. OGRE wbiega do pieczary. Ale nie rusza na ciebie. Dopada przeciwległej ściany i rozkłada ramiona. Jakby coś ukrywał za plecami. Szczerzy zęby, wymachuje porwaną z klepiska długą kością. W jego oczach widzisz przerażenie. Teraz twój ruch. Powoli, rozgarniając nogami wszelkie paskudztwa, podchodzisz do potwora. OGRE Z:8 W:10 OGRE leży u twych stóp. Ciągle jeszcze się brzydzisz? Jeśli tak, rozejrzyj się chociaż po ścianach - patrz 119, jeśli nie - patrz 31.",
     "combat": [
       {
         "name": "OGRE",
@@ -4151,7 +4215,7 @@
     ]
   },
   "318": {
-    "text": "Oślepia cię światło. Tracisz 3W i 2Z. Patrz 90.",
+    "text": "Wyciągasz miecz. Bierzesz szeroki zamach. Nagle z przeraźliwym łoskotem rozchyla się sklepienie pieczary. Pokój zalewa niezwykła jasność. To tylko dzienne światło. Które zapewne potrzebne jest sałacie, ale ciebie oślepia tak, że wycofujesz się z pokoju drzwiami, którymi wszedłeś. Tracisz 3W i 2Z. Patrz 90.",
     "effects": [
       {
         "attr": "stamina",
@@ -4169,7 +4233,7 @@
     ]
   },
   "319": {
-    "text": "Otwierasz drzwi. Chcesz zobaczyć co za nimi? Tak - 69, nie - 170.",
+    "text": "Krótkim wąskim korytarzem dochodzisz do drzwi. Otwierasz je szeroko. Czy chcesz zobaczyć, co za nimi jest? Jeśli tak - patrz 69, jeśli nie - zawracasz - patrz 170.",
     "edges": [
       {
         "target": 69,
@@ -4182,7 +4246,7 @@
     ]
   },
   "320": {
-    "text": "Opuszczasz komnatę przez północne drzwi - patrz 137.",
+    "text": "Opuszczasz komnatę drzwiami znajdującymi się w północnej ścianie - patrz 137.",
     "edges": [
       {
         "target": 137
@@ -4190,7 +4254,7 @@
     ]
   },
   "321": {
-    "text": "KRASNAL chce motyla. Oddajesz go? Tak - 166, nie - 81.",
+    "text": "Blaszany motyl bardzo się podoba KRASNALOWI. Chce go od ciebie wycyganić. Chcesz pozbyć się motyla? Jeśli tak - patrz 166, jeśli nie - patrz 81.",
     "edges": [
       {
         "target": 166,
@@ -4203,7 +4267,7 @@
     ]
   },
   "322": {
-    "text": "Komnata jest pusta. Wracasz - 194 lub wychodzisz na wschód - 242.",
+    "text": "Komnata jest zupełnie pusta. Możesz albo wrócić - patrz 194, albo wyjść wschodnimi drzwiami - patrz 242.",
     "edges": [
       {
         "target": 194
@@ -4214,7 +4278,7 @@
     ]
   },
   "323": {
-    "text": "Cena: pal 15, słoik 10. Kupujesz? Tak - 55, nie - 196.",
+    "text": "\"Ile to kosztuje\" - pytasz. \"Mały drobiazg: 15 sztuk złota za pal i 10 za słój z pyłem. Jak darmo\". Kupujesz? Jeśli tak - patrz 55, jeśli nie - patrz 196.",
     "edges": [
       {
         "target": 55
@@ -4225,7 +4289,7 @@
     ]
   },
   "324": {
-    "text": "Jeśli to pierwsza wybrana rzecz - patrz 115, jeśli druga - patrz 68.",
+    "text": "Jeśli jest pierwszą wybraną przez ciebie rzeczą - patrz 115, jeśli drugą - patrz 68.",
     "edges": [
       {
         "target": 115
@@ -4244,7 +4308,7 @@
     ]
   },
   "326": {
-    "text": "Zbierasz 30 sztuk złota. +3S. Patrz 385.",
+    "text": "Teraz dobierasz się do rozsypanego złota. Jest tego aż 30 sztuk! Dostajesz +3S. Ruszasz ku wyjściu - patrz 385.",
     "effects": [
       {
         "attr": "luck",
@@ -4266,7 +4330,7 @@
     ]
   },
   "328": {
-    "text": "Słyszysz rozmowy. Wchodzisz - 151, nie - 90.",
+    "text": "Przykładasz ucho do drzwi. Słyszysz jakieś rozmowy i stukanie. Jeśli chcesz wejść do komnaty - patrz 151, jeśli nie - patrz 90.",
     "edges": [
       {
         "target": 151
@@ -4288,7 +4352,7 @@
     ]
   },
   "330": {
-    "text": "Wracasz do korytarza - patrz 170.",
+    "text": "Ta komnata ma tylko jedno wyjście: to, którym się tu dostałeś. Wracasz do korytarza. Patrz 170.",
     "edges": [
       {
         "target": 170
@@ -4296,7 +4360,7 @@
     ]
   },
   "331": {
-    "text": "Tunel do pomieszczenia. Jeśli byłeś - 59, jeśli nie - 11.",
+    "text": "Króciutki tunel prowadzi do jakiegoś pomieszczenia. Jeśli już w nim byłeś - patrz 59, jeśli nie - patrz 11.",
     "edges": [
       {
         "target": 59
@@ -4307,7 +4371,7 @@
     ]
   },
   "332": {
-    "text": "Walka z TROLLEM Z:8 W:8. Po zwycięstwie - patrz 6. +1S.",
+    "text": "Wrota obite są grubą metalową blachą. Ukośnie przebiegają wąskie metalowe pasy, w miejscach przecięcia nabite żelaznymi guzami. Zapierasz się plecami. Stopy ślizgają się po grząskim gruncie. Wrota ustępują. Przeraźliwie skrzypią. Słyszysz dobiegający z komnaty pospieszny szmer. Wciskasz się do szpary i opierając się plecami o skałę z całą mocą odpychasz wrota. Opornie otwierają się na całą szerokość. To był szalony wysiłek: -2W. Podnosisz latarnię na wysokość oczu i... serce podchodzi ci do gardła. Schowany za ścianą stoi TROLL. Ciało ma wygięte w pałąk. Wysoko za głową oburącz trzyma miecz. Wypina do przodu owłosiony brzuch. Szalone oczy nabiegły mu krwią. Szczerzy zaciśnięte zęby. Jeszcze chwila i ogromny miecz przetnie powietrze. Sięgasz po swój miecz. W okamgnieniu TROLL wyprowadza cios. Udaje ci się odskoczyć. To będzie walka na śmierć i życie. TROLL Z:8 W:8 Jeśli zwyciężyłeś - patrz 6. Dolicz sobie +1S.",
     "combat": [
       {
         "name": "TROLL",
@@ -4328,7 +4392,7 @@
     ]
   },
   "333": {
-    "text": "Skrzyżowanie: zachód - 304, północ - 176, wschód - 267, południe - 218.",
+    "text": "Zbliżasz się do skrzyżowania. Możesz pójść na: · zachód - patrz 304, · północ - patrz 176, · wschód - patrz 267, · południe - patrz 218.",
     "edges": [
       {
         "target": 304
@@ -4345,7 +4409,7 @@
     ]
   },
   "334": {
-    "text": "Rzucasz 2 kostkami. Parzyste = strata złota, nieparzyste = zysk. Chcesz grać dalej? - 40, nie - 19.",
+    "text": "Rzucasz dwiema kostkami. Jeśli wylosowałeś liczbę parzystą, przegrywasz tyle sztuk złota, ile oczek pokazała kostka. Jeśli masz liczbę nieparzystą, tyle właśnie sztuk złota wygrywasz. Możesz grać dowolną liczbę razy. Gdy postanawiasz skończyć grę - patrz 19.",
     "edges": [
       {
         "target": 40
@@ -4356,7 +4420,7 @@
     ]
   },
   "335": {
-    "text": "Brzeg: jeśli startowy - patrz 35/74/110, jeśli drugi - patrz 186.",
+    "text": "Zgadza się. Jeśli jesteś na brzegu, z którego wyruszyłeś, spróbuj innego sposobu - patrz 35, 74 lub 110. Jeśli jesteś na drugim brzegu - patrz 186.",
     "edges": [
       {
         "target": 35
@@ -4387,7 +4451,7 @@
     ]
   },
   "337": {
-    "text": "Wyruszasz po wodę - patrz 286.",
+    "text": "Możesz wyruszyć na poszukiwanie wody i wrócić tu. Tak czy owak - patrz 286.",
     "edges": [
       {
         "target": 286
@@ -4395,7 +4459,7 @@
     ]
   },
   "338": {
-    "text": "KRASNAL oferuje 30 zł i smoczek. Akceptujesz? Tak - 104, nie - 300.",
+    "text": "KRASNAL oferuje ci 30 sztuk złota i smoczek. Akceptujesz? Tak - patrz 104, nie - patrz 300.",
     "edges": [
       {
         "target": 104
@@ -4406,7 +4470,7 @@
     ]
   },
   "339": {
-    "text": "Korytarz skręca. Możesz zjeść Prowiant. Patrz 33.",
+    "text": "Po pewnym czasie korytarz skręca na zachód. Na zakręcie możesz zjeść Prowiant - patrz 33.",
     "edges": [
       {
         "target": 33
@@ -4414,7 +4478,7 @@
     ]
   },
   "340": {
-    "text": "KARMAA ucieka. Patrz 251.",
+    "text": "KARMAA wykonuje twoje polecenie i... ucieka - patrz 251.",
     "edges": [
       {
         "target": 251
@@ -4459,7 +4523,7 @@
     ]
   },
   "344": {
-    "text": "Ognista kula to skuteczna broń przeciw STRAŻNIKOWI. Dodajesz +2 do ataku, zadajesz 3 rany, a jego atak może być nieskuteczny. BLACKTHORN Z:10 W:16. Jeśli wygrałeś - patrz 23.",
+    "text": "Ognista kula jest znakomitą bronią przeciw STRAŻNIKOWI TAJEMNICY. Jest bardzo skuteczna i szybka. Wraca do twojej ręki po każdym rzucie. Daje ci to następujące korzyści podczas walki: *możesz dodać 2 do liczby uzyskanej na kostkach przy określaniu siły ataku, *każdy atak powoduje nie 2 lecz 3 rany, *gdy STRAŻNIK zrani cię, rzuć kostką: jeśli uzyskasz liczbę nieparzystą, zadaje ci - jak normalnie - 2 rany; jeśli wyrzucisz 2 lub 4 otrzymujesz 1 ranę; jeśli masz 6, nie trafia cię w ogóle. BLACKTHORN Z:10 W:16 Jeśli wygrałeś - patrz 23.",
     "combat": [
       {
         "name": "BLACKTHORN",
@@ -4485,7 +4549,7 @@
     ]
   },
   "346": {
-    "text": "Próbujesz użyć młota goblinów. Łamie się trzon: -1W. Uciekasz - patrz 275.",
+    "text": "W jednej z potyczek między trollami a goblinami, ci pierwsi zdobyli imponujący młot wojenny. Znalazłeś go w zbrojowni. Spróbuj zrobić z niego użytek. Chwytasz za trzon, robisz półobrót i... traach. Łamie się drewniane stylisko: -1W. Co prędzej ratuj się Ucieczką - patrz 275.",
     "effects": [
       {
         "attr": "stamina",
@@ -4499,7 +4563,7 @@
     ]
   },
   "347": {
-    "text": "Potwór radzi: dwa razy w lewo, raz w prawo. Ale idziesz prosto. Patrz 345.",
+    "text": "Potwór burzy wąskie przejście i wyprowadza cię na korytarz. Wskazuje na południe i radzi ci dwukrotnie skręcić w lewo, a potem w prawo i dalej... już nie pamięta. Wie jednak na pewno, ze jest w okolicy komnata, w której można znaleźć klucz. Schowany jest na skalnej półce tuż nad drzwiami. Stosując się do rady potwora na najbliższym skrzyżowaniu skręcasz w lewo. Ale po namyśle postanawiasz na następnym skrzyżowaniu nie skręcać. Maszerujesz na wprost. Patrz 345.",
     "edges": [
       {
         "target": 345
@@ -4507,7 +4571,7 @@
     ]
   },
   "348": {
-    "text": "Korytarz rozwidla się: zachód - 221, wschód - 79, południe - 239.",
+    "text": "Korytarz rozwidla się. Możesz iść na: · zachód - patrz 221, · wschód - patrz 79, · południe - patrz 239.",
     "edges": [
       {
         "target": 221
@@ -4532,7 +4596,7 @@
     ]
   },
   "350": {
-    "text": "Jeśli jesteś tu pierwszy raz: +2S i patrz 71. Inaczej - patrz 286.",
+    "text": "Jeśli jesteś w tej komnacie po raz pierwszy, dolicz sobie +2S i patrz 71, jeśli nie - patrz 286.",
     "effects": [
       {
         "attr": "luck",
@@ -4558,15 +4622,13 @@
   },
   "352": {
     "text": "Ziemia drży ponownie, rozstępuje się. Wali się strop. Wpadasz w szczelinę. To koniec.",
-    "effects": [
-      {
-        "attr": "end",
-        "change": true
-      }
-    ]
+    "edges": [{
+        "label": "Brak kluczy – koniec gry",
+        "target": "END"
+      }]
   },
   "353": {
-    "text": "KRASNAL oferuje za motyla 10 sztuk złota. Akceptujesz? Tak - 262, nie - 60.",
+    "text": "KRASNAL oferuje ci za motyla 10 sztuk złota, akceptujesz cenę? Tak - patrz 262, nie - patrz 60.",
     "edges": [
       {
         "target": 262
@@ -4577,7 +4639,7 @@
     ]
   },
   "354": {
-    "text": "Idziesz na północ. Potem skręt na wschód. Słyszysz hałasy. Chcesz zbadać ścianę? - 256, albo idź dalej - 378.",
+    "text": "Idziesz na północ. Z czasem korytarz skręca na wschód. Przechodzisz pięćdziesiąt kroków i znów słyszysz dziwne hałasy; śmiechy i piski. Jeśli chcesz zbadać, czy w południowej ścianie są jakieś sekretne drzwi - patrz 256. Jeśli decydujesz się iść dalej - patrz 378.",
     "edges": [
       {
         "target": 256
@@ -4603,7 +4665,7 @@
     ]
   },
   "356": {
-    "text": "Idziesz środkiem sali. Depczesz sałatę. Krasnoludy żegnają cię chłodno. Dają dwie główki. Wychodzisz - 141.",
+    "text": "Idziesz stawiając kroki gdzie popadnie. Oczywiście, popadło na sałatę. I to dwa razy. Tym na pewno nie mogłeś zdobyć ich sympatii. Żegnają cię chłodno i odprowadzają do wschodnich drzwi. Aha, już na progu wręczają ci dwie główki sałaty. Właśnie te, które nadepnąłeś. Z hukiem zamykają za tobą drzwi - patrz 141.",
     "edges": [
       {
         "target": 141
@@ -4611,7 +4673,7 @@
     ]
   },
   "357": {
-    "text": "Zachodnia ściana ma drzwi. Wyważasz? Tak - 245, nie - 108.",
+    "text": "Po pewnym czasie zauważasz drzwi w zachodniej ścianie korytarza. Czy chcesz wyważyć te drzwi? Jeśli tak - patrz 245, jeśli nie - patrz 108.",
     "edges": [
       {
         "target": 245
@@ -4633,7 +4695,7 @@
     ]
   },
   "359": {
-    "text": "Masz jeszcze dwie próby trafienia. Gdy skończysz - patrz 26.",
+    "text": "Masz jeszcze dwie takie próby. Gdy skończysz - patrz 26.",
     "edges": [
       {
         "target": 26
@@ -4649,7 +4711,7 @@
     ]
   },
   "361": {
-    "text": "Smoczek był źródłem siły STRAŻNIKA. BLACKTHORN Z:8 W:12. Jeśli wygrałeś - 23.",
+    "text": "Cios jest bardzo groźny. Okazuje się, że właśnie smoczek był źródłem wytrzymałości i sprawności STRAŻNIKA. Opada on z sił. Wyjmujesz miecz i nacierasz. BLACKTHORN Z:8 W:12 Jeśli wygrałeś - patrz 23.",
     "combat": [
       {
         "name": "BLACKTHORN",
@@ -4664,7 +4726,7 @@
     ]
   },
   "362": {
-    "text": "Demon zdradza sekret o szmaragdzie dającym Dar Skrzydeł. Wierzysz - 263, nie wierzysz - 72.",
+    "text": "Wdzięczny potwór zdradza ci tajemnicę. W kamiennym pudełku stojącym na ołtarzyku jest zaczarowany szmaragd. Temu, kto go posiada, daje - choć tylko raz - Dar Skrzydeł. Ale musisz uważać: nie wolno ci dotknąć szmaragdu. Musisz po prostu przechylić pudełko i wysypać kamień do plecaka. Czy wierzysz potworowi? Jeśli tak - patrz 263, jeśli nie - patrz 72.",
     "edges": [
       {
         "target": 263
@@ -4675,7 +4737,7 @@
     ]
   },
   "363": {
-    "text": "Korytarz wiedzie na północ. Widzisz skrzyżowanie - patrz 170.",
+    "text": "Długi korytarz prowadzi prosto w kierunku północnym. Po pewnym czasie zauważasz przed sobą skrzyżowanie - patrz 170.",
     "edges": [
       {
         "target": 170
@@ -4683,7 +4745,7 @@
     ]
   },
   "364": {
-    "text": "Drzwi się uchylają. W środku śpi ORK. Skradasz się - 29, atakujesz - 116.",
+    "text": "Popychasz drzwi, uchylają się. Otwiera się ciemna czeluść. Wchodzisz oświetlając drogę latarnią. Pod stopami czujesz kamyki. Z przeciwległego końca pokoju dochodzi ciebie ciche chrapanie. Na podłodze śpi ORK. Obok niego leży jakieś pudełko. Jeśli chcesz spróbować zabrać ukradkiem pudełko - patrz 29. Jeśli decydujesz się podjąć walkę - patrz 116.",
     "edges": [
       {
         "target": 29
@@ -4694,7 +4756,7 @@
     ]
   },
   "365": {
-    "text": "Jeśli przepłynąłeś jezioro parzystą ilość razy - 15, jeśli nieparzystą - 195.",
+    "text": "Jeśli przepłynąłeś jezioro parzystą ilość razy - patrz 15, jeśli nieparzystą - patrz 195.",
     "edges": [
       {
         "target": 15
@@ -4716,7 +4778,7 @@
     ]
   },
   "367": {
-    "text": "ZŁY wygrywa, wpada w szał. Atakujesz go. ZŁY Z:6 W:6. Patrz 189.",
+    "text": "ZŁEGO ogarnia szał radości. Atakujesz go. ZŁY Z:6 W:6 Patrz 189.",
     "combat": [
       {
         "name": "ZŁY",
@@ -4731,7 +4793,7 @@
     ]
   },
   "368": {
-    "text": "Idziesz korytarzem, potem na północ. Słyszysz śmiech. Szukasz przejścia? - 87. Nie? - 354.",
+    "text": "Przechodzisz kilkanaście kroków i korytarz skręca na północ. Po pewnym czasie słyszysz jakiś rechot. Rzeczywiście, ktoś pęka ze śmiechu. Czy chcesz szukać sekretnego przejścia? Jeśli tak - patrz 87, jeśli nie - patrz 354.",
     "edges": [
       {
         "target": 87
@@ -4750,16 +4812,15 @@
     ]
   },
   "370": {
-    "text": "Koniec twojej przygody. Pochłania cię czerwona otchłań.",
-    "effects": [
+    "text": "To już koniec twojej przygody. Pochłania cię czerwona otchłań.",
+    "edges": [
       {
-        "attr": "end",
-        "change": true
-      }
-    ]
+        "label": "Koniec gry",
+        "target": "END"
+      }]
   },
   "371": {
-    "text": "KRASNOLUDY zapraszają na sałatkę. Masz coś do picia? Tak - 4. Nie - 90. Albo walka - 318.",
+    "text": "KRASNOLUDY mają dobry charakter. Uwielbiają towarzystwo i wizyty. Choć trzeba przyznać, ze najczęściej wpadają tu jakieś włochate stwory, obżerają się sałatą, biorą parę główek pod pachę i znikają. Podbiegają do ciebie dwa KRASNOLUDY. Stoisz jeszcze w drzwiach, zapraszają cię do środka. Ale... no właśnie, jeden ze stworków drapie się w kudłaty łeb: \"Chcemy poczęstować cię naszą sałatką, lecz nie mamy nic do picia. Może ty masz? Byle nie zaczarowana woda, bo nam trochę szkodzi!\" Jeśli masz coś takiego, to uczta gotowa - patrz 4. Jeśli nie, możesz poszukać w okolicy. Będziesz musiał wyjść z komnaty. Pamiętaj, że musisz mieć jakieś naczynie, do którego nabierzesz czegoś do picia; może być pusta flasza, a nawet hełm. Idziesz po picie? No, to wychodzisz tymi samymi drzwiami, którymi wszedłeś - patrz 90. Jeśli nie chcesz szukać picia, pozostaje ci tylko walka - patrz 318.",
     "edges": [
       {
         "target": 4
@@ -4773,7 +4834,7 @@
     ]
   },
   "372": {
-    "text": "Opuszczasz pokój drzwiami, którymi wszedłeś - patrz 253.",
+    "text": "Opuszczasz pokój jedynymi drzwiami, które tu prowadzą: przed chwilą wszedłeś nimi - patrz 253.",
     "edges": [
       {
         "target": 253
@@ -4781,16 +4842,15 @@
     ]
   },
   "373": {
-    "text": "To nieodpowiedni zestaw kluczy. Jeśli nie masz już kombinacji – koniec gry.",
-    "effects": [
-      {
-        "attr": "end",
-        "change": true
-      }
-    ]
+    "text": "To nieodpowiedni zestaw kluczy. Jeśli wykorzystałeś już wszystkie kombinacje, nie odnajdując właściwej - to już koniec!",
+    "edges": [{
+        "label": "Brak kluczy – koniec gry",
+        "target": "END",
+        "requires_math": true
+      }]
   },
   "374": {
-    "text": "To kanał, nie korytarz. Nogi zapadają się w maź. Skręca na południe, potem wschód, potem północ. Możesz zjeść Prowiant. Patrz 178.",
+    "text": "To nie korytarz, raczej jakiś kanał. Nogi zapadają się w błotnistą maź. Tunel zmienia kierunek: najpierw skręca na południe, później na wschód, a w końcu na północ. Po drodze możesz zjeść Prowiant. Patrz 178.",
     "edges": [
       {
         "target": 178
@@ -4798,7 +4858,7 @@
     ]
   },
   "375": {
-    "text": "Chcesz podbić cenę? – 246. Zaatakować – 223. Odejść – 81.",
+    "text": "Chcesz podbić cenę? - patrz 246. Chcesz zaatakować stwora, by przekonać się, czy nie chowa większej ilości złota? - patrz 223. A może, po prostu, nie chcesz złota? - patrz 81.",
     "edges": [
       {
         "target": 246
@@ -4812,7 +4872,7 @@
     ]
   },
   "376": {
-    "text": "Drzwi otwierają się same – patrz 16. +1Z, +2S.",
+    "text": "Drzwi same się otwierają - patrz 16. Otrzymujesz +1Z i +2S.",
     "effects": [
       {
         "attr": "willpower",
@@ -4844,7 +4904,7 @@
     ]
   },
   "378": {
-    "text": "Mijasz skrzyżowanie T. Trzecia odnoga prowadzi na południe. Potem skręt ku wschodowi. Drzwi – patrz 13.",
+    "text": "Po pewnym czasie mijasz skrzyżowanie w kształcie litery T, którego trzecia odnoga prowadzi na południe. Po pewnym czasie znów zmienia kierunek i biegnie ku wschodowi. Dochodzisz do grubych drzwi i otwierasz je, patrz 13.",
     "edges": [
       {
         "target": 13
@@ -4852,7 +4912,7 @@
     ]
   },
   "379": {
-    "text": "Rzucasz kostką. 1–3: GIGANT przekazuje informację – 347. 4–6: chce walczyć – 86.",
+    "text": "\"Śmierć albo informacja\" - mówisz do GIGANTA. Rzucasz raz kostką. Jeśli wylosowałeś 1, 2, 3 wówczas GIGANT zgadza się przekazać ci pewne wiadomości - patrz 347. Jeśli wyrzuciłeś 4, 5, 6, potwór chce walczyć - patrz 86.",
     "edges": [
       {
         "target": 347
@@ -4863,7 +4923,7 @@
     ]
   },
   "380": {
-    "text": "Chcesz przeszukać pokój? Tak – 118. Nie – 372. Za odwagę +1Z.",
+    "text": "Czy chcesz przeszukać pokój? Jeśli tak - patrz 118, jeśli nie - patrz 372. Za odwagę otrzymujesz +1Z.",
     "effects": [
       {
         "attr": "willpower",
@@ -4880,7 +4940,7 @@
     ]
   },
   "381": {
-    "text": "Jeśli masz S – patrz 28. Jeśli nie masz S – patrz 291.",
+    "text": "Jeśli masz S - patrz 28, jeśli nie masz S - patrz 291.",
     "edges": [
       {
         "target": 28
@@ -4891,7 +4951,7 @@
     ]
   },
   "382": {
-    "text": "Korytarz skręca na północ. Na zakręcie możesz zjeść Prowiant – patrz 134.",
+    "text": "Po pewnym czasie korytarz skręca na północ. Na zakręcie możesz zjeść Prowiant - patrz 134.",
     "edges": [
       {
         "target": 134
@@ -4899,7 +4959,7 @@
     ]
   },
   "383": {
-    "text": "Ogarnia cię wściekłość. Chwytasz za miecz i atakujesz – patrz 318.",
+    "text": "Ogarnia cię wściekłość. Chwytasz za miecz i atakujesz - patrz 318.",
     "edges": [
       {
         "target": 318
@@ -4907,7 +4967,7 @@
     ]
   },
   "384": {
-    "text": "Idziesz pięćdziesiąt kroków, potem w lewo (na północ), dalej trzydzieści kroków – patrz 221.",
+    "text": "Pięćdziesiąt kroków naprzód, a potem skręt w lewo (czyli na północ) i trzydzieści kroków. Patrz 221.",
     "edges": [
       {
         "target": 221
@@ -4915,7 +4975,7 @@
     ]
   },
   "385": {
-    "text": "Możesz opuścić komnatę Demonów: drzwi zachodnie – 194, wschodnie – 242.",
+    "text": "Możesz wydostać się z komnaty DEMONÓW albo przez wschodnie albo przez zachodnie drzwi. Co wybierasz? Drzwi zachodnie - patrz 194. Drzwi wschodnie - patrz 242.",
     "edges": [
       {
         "target": 194
@@ -4926,7 +4986,7 @@
     ]
   },
   "386": {
-    "text": "Zbliżasz się do skrzyżowania. Zachód – 345, wschód – 273.",
+    "text": "Zbliżasz się do skrzyżowania. Możesz iść albo na zachód - patrz 345, albo na wschód - patrz 273.",
     "edges": [
       {
         "target": 345
@@ -4938,10 +4998,11 @@
   },
   "387": {
     "text": "Wkładasz klucze do zamka. Najpierw pierwszy... stuk, później drugi... stuk i trzeci... stuk. Delikatnie podnosisz wieko skrzyni. Na jej dnie leżą jakieś papiery. Nie, to złożony na kilkanaście stron, ilustrowany druk. Ostrożnie przewracasz kartki. Znajdujesz w nim dokładny opis wędrówki po podziemnym labiryncie. Zatrzymaj go, bo to papier niezwykle wartościowy!",
-    "effects": [
+    "edges": [
       {
-        "attr": "item",
-        "change": "manuscript"
+        "target": "END",
+        "label": "Koniec gry.",
+        "flag": "victory"
       }
     ]
   }

@@ -1,7 +1,21 @@
+#
+#
+
 from paragraph import Paragraph
 from character import Hero as Player
 from typing import List, Dict, Any
 
+
+def resolve_post_combat(self, paragraph: Paragraph, result: str):
+    """
+    result: 'success' | 'escape' | 'failure'
+    """
+    target = paragraph.post_combat.get(f"on_{result}")
+    if target:
+        print(Fore.CYAN + f"Przechodzisz do paragrafu {target} (wynik walki: {result})")
+        self.open_chapter(target)
+    else:
+        print(Fore.YELLOW + "Nie określono przejścia po walce – gra zatrzymana.")
 
 def get_available_edges(paragraph: Paragraph, player: Player) -> List[Dict[str, Any]]:
     """

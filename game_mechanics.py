@@ -274,6 +274,7 @@ def combat_cli(story, cheat=False):
                     use_luck = sss_check_cli(story.hero)
                     escape_result = process_escape(story.hero, True, use_luck)
                     print(escape_result["narrative"])
+                    combat_result = "escape"
                     if escape_result["escaped"]:
                         return
                 else:
@@ -291,13 +292,16 @@ def combat_cli(story, cheat=False):
             story.hero.kills[monster.name] = story.last_valid_chapter
             story.monsters_killed_counter += 1
             story.bout = 1
+            # Po zakończeniu walki...
+            combat_result = "success"  # lub "escape" albo "failure", zależnie od wyniku
 
         if story.hero.is_dead():
+            combat_result = "failure"
             story.game_over()
             return
 
     # Po wszystkich walkach
-    story.main_menu(story.last_valid_chapter)
+    story.main_menu(replay_last_paragraph=True)
 
 
 def process_escape(hero, can_escape: bool, use_sss: bool) -> dict:

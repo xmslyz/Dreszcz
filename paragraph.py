@@ -40,14 +40,15 @@ class Paragraph:
         self.can_escape: bool = self._detect_escape()
         self.escape_rule: dict | None = ESCAPE_RULES.get(number)
         self.has_monsters = self._detect_monsters()
+        self.post_combat = self.text_raw.get("post_combat", {})
 
         if self.escape_rule:
             self.can_escape = self.escape_rule.get("enabled", False)
 
     def _detect_edges(self) -> list[str]:
-        edges = self.text_raw.get("edges")  # ← teraz OK!
+        edges = self.text_raw.get("edges")
         if isinstance(edges, list):
-            return [edge.get("target") for edge in edges if "target" in edge]
+            return [str(edge.get("target")) for edge in edges if "target" in edge]
         return []
 
     def _detect_escape(self) -> bool:
