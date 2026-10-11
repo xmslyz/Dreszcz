@@ -54,6 +54,43 @@ h1 { font: 700 2rem/1 var(--f-tytul); margin: 0; letter-spacing: .02em; }
 .koniec { font: 700 2.2rem/1.1 var(--f-tytul); color: var(--akcent); margin: 0; }
 .uwaga { font-size: .9rem; color: var(--przygaszony); margin: 0; }
 footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--linia); padding-top: 12px; }
+
+/* Karta Wyprawy: cechy bohatera „aktualne / początkowe”, jak na papierowej karcie. */
+.karta-wyprawy {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+  background: var(--tlo); border-bottom: 1px solid var(--linia); padding-block: 8px;
+}
+.cecha { display: grid; gap: 2px; justify-items: center; }
+.cecha b { font: 700 1.25rem/1 var(--f-tytul); color: var(--przygaszony); }
+.cecha span { font: 500 .95rem/1 var(--f-cyfry); font-variant-numeric: tabular-nums; }
+.cecha small { font: 500 .7rem/1 var(--f-cyfry); color: var(--przygaszony); }
+.cecha.slabo span { color: var(--akcent); }
+
+/* Walka */
+.walka { display: grid; gap: 14px; border: 1px solid var(--akcent); border-radius: 8px; padding: 14px; background: var(--karta); }
+.walka h2 { font: 700 1.5rem/1 var(--f-tytul); color: var(--akcent); margin: 0; }
+.potwor { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: baseline; }
+.potwor.martwy { opacity: .45; text-decoration: line-through; }
+.potwor .imie { font: 700 1.15rem/1.1 var(--f-tytul); letter-spacing: .03em; min-width: 0; }
+.potwor .staty { font: 500 .85rem/1 var(--f-cyfry); font-variant-numeric: tabular-nums; }
+.pasek { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--linia); overflow: hidden; }
+.pasek i { display: block; height: 100%; background: var(--akcent); transition: width .3s; }
+.akcje { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.sss { display: flex; gap: 8px; align-items: center; font-size: .95rem; }
+.sss input { width: 20px; height: 20px; accent-color: var(--akcent); }
+.dziennik { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font: 500 .8rem/1.4 var(--f-cyfry); color: var(--przygaszony); }
+.dziennik li:first-child { color: var(--atrament); }
+.dziennik .zle { color: var(--akcent); }
+
+/* Ekran startowy */
+.start { display: grid; gap: 16px; }
+.start h2 { font: 700 1.8rem/1.1 var(--f-tytul); margin: 0; }
+.rzuty { display: grid; gap: 8px; margin: 0; }
+.rzuty div { display: grid; grid-template-columns: 9rem 1fr; gap: 8px; align-items: baseline; }
+.rzuty dt { font: 700 1.1rem var(--f-tytul); }
+.rzuty dd { margin: 0; font: 500 .95rem var(--f-cyfry); font-variant-numeric: tabular-nums; }
+
 @media (prefers-reduced-motion: no-preference) {
   .numer, .tekst { animation: odslon .35s ease-out both; }
   @keyframes odslon { from { opacity: .4; transform: translateY(4px); } to { opacity: 1; transform: none; } }
@@ -65,6 +102,7 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
     <h1>Dreszcz</h1>
     <span class="licznik" id="licznik">wczytywanie…</span>
   </header>
+  <div class="karta-wyprawy" id="karta" hidden></div>
   <section id="akapit" aria-live="polite">
     <p class="uwaga">Wczytuję księgę…</p>
   </section>
@@ -77,9 +115,10 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 <script src="silnik.js"></script>
 <script>
 // Interfejs: tylko rysowanie ekranu i obsługa kliknięć.
-// Cała logika przejść jest w silnik.js.
+// Cała logika gry (przejścia, walka, SSS) jest w silnik.js.
 let ksiega = {};
-let stan = nowaGra();
+let stan = null;
+let uzyjSSS = false;
 const KLUCZ_ZAPISU = "dreszcz-stan";
 
 function zapisz() {
@@ -89,65 +128,172 @@ function wczytajZapis() {
   try { return JSON.parse(localStorage.getItem(KLUCZ_ZAPISU)); } catch (e) { return null; }
 }
 
-function idz(przejscie, numer) {
-  stan = wykonajPrzejscie(stan, przejscie, numer);
+/** Mały pomocnik do tworzenia elementów: el("p", "klasa", "tekst"). */
+function el(tag, klasa = "", tekst = "") {
+  const e = document.createElement(tag);
+  if (klasa) e.className = klasa;
+  if (tekst !== "") e.textContent = tekst;
+  return e;
+}
+
+function zmien(nowyStan, przewin = true) {
+  stan = nowyStan;
   zapisz();
   rysuj();
-  window.scrollTo({ top: 0 });
+  if (przewin) window.scrollTo({ top: 0 });
+}
+
+function idz(przejscie, numer) {
+  uzyjSSS = false;
+  zmien(wykonajPrzejscie(stan, przejscie, numer, ksiega));
+}
+
+// ---------------------------------------------------------------- rysowanie
+
+function rysujKarte() {
+  const karta = document.getElementById("karta");
+  const b = stan?.bohater;
+  karta.hidden = !b;
+  if (!b) return;
+  karta.replaceChildren();
+  const cechy = [["Z", "Zręczność"], ["W", "Wytrzymałość"], ["S", "Szczęście"]];
+  for (const [k, nazwa] of cechy) {
+    const c = el("div", "cecha" + (b[k] <= b.start[k] / 3 ? " slabo" : ""));
+    c.title = nazwa;
+    c.append(el("b", "", k), el("span", "", `${b[k]}/${b.start[k]}`), el("small", "", nazwa.toLowerCase()));
+    karta.append(c);
+  }
+  const p = el("div", "cecha");
+  p.title = "Prowiant";
+  p.append(el("b", "", "P"), el("span", "", String(b.prowiant)), el("small", "", "prowiant"));
+  karta.append(p);
 }
 
 function rysuj() {
   const box = document.getElementById("akapit");
+  box.replaceChildren();
+  rysujKarte();
+
+  if (!stan.bohater) { rysujStart(box); return; }
+
   const p = ksiega[stan.akapit];
   document.getElementById("licznik").textContent = `krok ${stan.historia.length} · paragraf ${stan.akapit}`;
   document.getElementById("stos").textContent = stan.stos.length ? `zapisany numer: ${stan.stos.at(-1)}` : "";
-  box.replaceChildren();
 
   if (stan.koniec) {
-    const h = document.createElement("p");
-    h.className = "koniec";
-    h.textContent = stan.koniec === "zwyciestwo" ? "Zwycięstwo!" : "Koniec przygody";
-    const u = document.createElement("p");
-    u.className = "uwaga";
-    u.textContent = `Odwiedzone paragrafy: ${stan.historia.length}. Zacznij od nowa przyciskiem poniżej.`;
-    box.append(h, u);
+    box.append(el("p", "koniec", stan.koniec === "zwyciestwo" ? "Zwycięstwo!" : "Koniec przygody"));
+    if (stan.walka && stan.koniec === "porazka") box.append(rysujWalke(p));
+    box.append(el("p", "uwaga", `Odwiedzone paragrafy: ${stan.historia.length}. Zacznij od nowa przyciskiem poniżej.`));
     return;
   }
 
-  const numer = document.createElement("p");
-  numer.className = "numer";
-  numer.textContent = stan.akapit;
-  const tekst = document.createElement("p");
-  tekst.className = "tekst";
-  tekst.textContent = p ? p.text : `Brak paragrafu ${stan.akapit} w księdze.`;
+  box.append(el("p", "numer", stan.akapit));
+  box.append(el("p", "tekst", p ? p.text : `Brak paragrafu ${stan.akapit} w księdze.`));
+  if (stan.walka) box.append(rysujWalke(p));
 
-  const wybory = document.createElement("div");
-  wybory.className = "wybory";
-  for (const przejscie of (p?.edges ?? [])) {
-    if (przejscie.target === "KEYS_SUM") {
-      wybory.append(poleKluczy(przejscie));
-      continue;
-    }
-    const b = document.createElement("button");
+  const wybory = el("div", "wybory");
+  for (const przejscie of dostepnePrzejscia(stan, p)) {
+    if (przejscie.target === "KEYS_SUM") { wybory.append(poleKluczy(przejscie)); continue; }
+    const b = el("button", "wybor");
     b.type = "button";
-    b.className = "wybor";
-    const cel = document.createElement("span");
-    cel.className = "cel";
-    cel.textContent = /^\d+$/.test(String(przejscie.target)) ? przejscie.target : "→";
-    const opis = document.createElement("span");
-    opis.className = "opis";
-    opis.textContent = etykieta(przejscie);
-    b.append(cel, opis);
+    b.append(
+      el("span", "cel", /^\d+$/.test(String(przejscie.target)) ? przejscie.target : "→"),
+      el("span", "opis", etykieta(przejscie)),
+    );
     b.addEventListener("click", () => idz(przejscie));
     wybory.append(b);
   }
-  box.append(numer, tekst, wybory);
+  box.append(wybory);
+}
+
+function rysujStart(box) {
+  document.getElementById("licznik").textContent = "nowa wyprawa";
+  document.getElementById("stos").textContent = "";
+  const s = el("div", "start");
+  s.append(el("h2", "", "Hej, Śmiałku!"));
+  s.append(el("p", "tekst", "Przed zejściem do podziemi rzucasz kośćmi, by ustalić swoje cechy: ZRĘCZNOŚĆ to 1K+6, WYTRZYMAŁOŚĆ 2K+12, SZCZĘŚCIE 1K+6. W plecaku masz Prowiant na 8 posiłków."));
+  const b = el("button", "przycisk", "Rzuć kośćmi i wyrusz");
+  b.type = "button";
+  b.addEventListener("click", () => zmien(nowaGra(nowyBohater())));
+  s.append(b);
+  box.append(s);
+}
+
+function rysujWalke(akapit) {
+  const opis = akapit.combat;
+  const w = stan.walka;
+  const sekcja = el("section", "walka");
+  sekcja.append(el("h2", "", w.zakonczona ? "Po walce" : "Walka"));
+
+  w.potwory.forEach((m, i) => {
+    const poczatek = opis.monsters[i].W;
+    const wiersz = el("div", "potwor" + (m.W <= 0 ? " martwy" : ""));
+    wiersz.append(el("span", "imie", m.name), el("span", "staty", `Z ${m.Z} · W ${m.W}/${poczatek}`));
+    const pasek = el("div", "pasek");
+    const wypelnienie = el("i");
+    wypelnienie.style.width = `${Math.round((m.W / poczatek) * 100)}%`;
+    pasek.append(wypelnienie);
+    wiersz.append(pasek);
+    sekcja.append(wiersz);
+  });
+
+  if (!w.zakonczona && !stan.koniec) {
+    const akcje = el("div", "akcje");
+    const atak = el("button", "przycisk", "Atakuj");
+    atak.type = "button";
+    atak.addEventListener("click", () => {
+      const sss = uzyjSSS;
+      uzyjSSS = false;
+      zmien(rundaWalki(stan, opis, sss), false);
+    });
+    akcje.append(atak);
+
+    if (moznaUciec(w, opis)) {
+      const uciekaj = el("button", "przycisk cichy", "Ratuj się Ucieczką (−2 W)");
+      uciekaj.type = "button";
+      uciekaj.addEventListener("click", () => {
+        const sss = uzyjSSS;
+        uzyjSSS = false;
+        zmien(ucieczka(stan, opis, sss, k6, ksiega));
+      });
+      akcje.append(uciekaj);
+    }
+
+    const etykietaSSS = el("label", "sss");
+    const pole = el("input");
+    pole.type = "checkbox";
+    pole.id = "sss";
+    pole.checked = uzyjSSS;
+    pole.disabled = stan.bohater.S <= 0;
+    pole.addEventListener("change", () => { uzyjSSS = pole.checked; });
+    etykietaSSS.append(pole, document.createTextNode("SSS w tej rundzie (−1 S)"));
+    akcje.append(etykietaSSS);
+    sekcja.append(akcje);
+  }
+
+  if (w.dziennik.length) {
+    const lista = el("ol", "dziennik");
+    lista.setAttribute("reversed", "");
+    for (const r of w.dziennik.slice(-5).reverse()) lista.append(wpisDziennika(r, opis));
+    sekcja.append(lista);
+  }
+  return sekcja;
+}
+
+function wpisDziennika(r, opis) {
+  const premia = (opis.hero_Z_bonus ?? 0) + (opis.hero_attack_bonus ?? 0);
+  const ty = `Ty ${r.b.oczka.join("+")}+${stan.bohater.Z}${premia ? (premia > 0 ? "+" : "") + premia : ""}=${r.silaBohatera}`;
+  const on = `${r.potwor} ${r.a.oczka.join("+")}+Z=${r.silaPotwora}`;
+  let wynik = "remis, powtórka";
+  if (r.wynik === "trafiasz") wynik = `trafiasz: −${r.rana} W`;
+  if (r.wynik === "obrywasz") wynik = `obrywasz: −${r.rana} W`;
+  if (r.sss !== undefined) wynik += r.sss ? " (masz SZCZĘŚCIE)" : " (bez SZCZĘŚCIA)";
+  return el("li", r.wynik === "obrywasz" ? "zle" : "", `${ty} · ${on} → ${wynik}`);
 }
 
 // Paragraf 76: gracz sam wpisuje sumę liczb z kluczy.
 function poleKluczy(przejscie) {
-  const f = document.createElement("form");
-  f.className = "klucze";
+  const f = el("form", "klucze");
   f.innerHTML = '<label class="uwaga" for="suma" style="flex-basis:100%">Suma liczb na trzech kluczach:</label>' +
     '<input id="suma" inputmode="numeric" pattern="[0-9]*" required>' +
     '<button class="przycisk" type="submit">Otwórz kłódki</button>';
@@ -161,9 +307,7 @@ function poleKluczy(przejscie) {
   return f;
 }
 
-document.getElementById("nowa").addEventListener("click", () => {
-  stan = nowaGra(); zapisz(); rysuj();
-});
+document.getElementById("nowa").addEventListener("click", () => zmien(nowaGra()));
 
 async function wczytajKsiege() {
   // W artefakcie plik leży obok strony, w repo – katalog wyżej.
@@ -179,9 +323,10 @@ async function wczytajKsiege() {
 wczytajKsiege().then((dane) => {
   ksiega = dane;
   const zapis = wczytajZapis();
-  if (zapis && ksiega[zapis.akapit]) stan = zapis;
+  // Zapisy sprzed wprowadzenia walki nie mają bohatera – zaczynamy od nowa.
+  stan = zapis && zapis.bohater && ksiega[zapis.akapit] ? zapis : nowaGra();
   rysuj();
-}).catch((e) => {
+}).catch(() => {
   document.getElementById("akapit").innerHTML = '<p class="uwaga">Nie udało się wczytać księgi. Odśwież stronę.</p>';
 });
 </script>
