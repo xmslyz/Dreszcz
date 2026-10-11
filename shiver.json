@@ -217,7 +217,8 @@
     "edges": [
       {
         "label": "Przepłyń jezioro",
-        "target": "113"
+        "target": "113",
+        "return_to": "15"
       },
       {
         "label": "Zrezygnuj i wróć",
@@ -288,9 +289,9 @@
     ],
     "edges": [
       {
-        "label": "Jeśli zwyciężysz lub uciekniesz",
-        "target": "316",
-        "note": "Zapisz numer paragrafu, by nie zgubić drogi."
+        "label": "Walcz z potworami",
+        "target": "238",
+        "return_to": "316"
       }
     ]
   },
@@ -347,10 +348,18 @@
     "text": "Rzuć raz kostką. Jeśli wylosujesz 1, 2, 3 - twoja broń okaże się skutecznym narzędziem w walce z ROBALAMI - patrz 58. Jeśli wylosujesz 4, 5, 6, nic z tego - patrz 168.",
     "requires_test": true,
     "test_type": "1d6",
-    "outcomes": {
-      "1-3": "58",
-      "4-6": "168"
-    }
+    "edges": [
+      {
+        "label": "Wyrzuciłeś 1–3: broń skuteczna",
+        "target": "58",
+        "condition": "roll:1-3"
+      },
+      {
+        "label": "Wyrzuciłeś 4–6",
+        "target": "168",
+        "condition": "roll:4-6"
+      }
+    ]
   },
   "25": {
     "text": "Na kamieniu siedzi stary człowiek. Radzi ci iść na zachód, a później na kilku najbliższych skrzyżowaniach skręcać w prawo. Jeśli idziesz na zachód - patrz 200, jeśli wybierasz drogę prowadzącą na wschód - patrz 44.",
@@ -387,8 +396,9 @@
     ],
     "edges": [
       {
-        "label": "Po walce lub ucieczce",
-        "target": "316"
+        "label": "Walcz z potworami",
+        "target": "238",
+        "return_to": "316"
       }
     ]
   },
@@ -501,18 +511,34 @@
       "gold": 10
     },
     "requires_test": "sss",
-    "outcomes": {
-      "success": "186",
-      "failure": "158"
-    }
+    "edges": [
+      {
+        "label": "Masz S",
+        "target": "186",
+        "condition": "has_S"
+      },
+      {
+        "label": "Nie masz S",
+        "target": "158",
+        "condition": "not has_S"
+      }
+    ]
   },
   "36": {
     "text": "SSS. Jeśli masz S - patrz 152. Jeśli nie masz S - patrz 176.",
     "requires_test": "sss",
-    "outcomes": {
-      "success": "152",
-      "failure": "176"
-    }
+    "edges": [
+      {
+        "label": "Masz S",
+        "target": "152",
+        "condition": "has_S"
+      },
+      {
+        "label": "Nie masz S",
+        "target": "176",
+        "condition": "not has_S"
+      }
+    ]
   },
   "37": {
     "text": "Jaką tarczę wybierasz: metalową, paradną, czy skórzaną? Wpisz swój wybór na \"Listę ekwipunku\" - patrz 324.",
@@ -576,10 +602,18 @@
   "41": {
     "text": "Udało ci się zrobić tylko parę kroków a tu korytarz zupełnie zatarasowany masą kamieni i piasku. Spróbuj tupnąć nogą. Stare gremliny mówią, że to jest sposób na takie zawalidrogi. SSS. Jeśli masz S - góra skał wpada gdzieś w przepaść, możesz iść dalej - patrz 348. Jeśli nie masz S - musisz wrócić - patrz 221.",
     "requires_test": "sss",
-    "outcomes": {
-      "success": "348",
-      "failure": "221"
-    }
+    "edges": [
+      {
+        "label": "Masz S",
+        "target": "348",
+        "condition": "has_S"
+      },
+      {
+        "label": "Nie masz S",
+        "target": "221",
+        "condition": "not has_S"
+      }
+    ]
   },
   "42": {
     "text": "Mówią o nim BARBARZYŃCA. Czy słusznie? Kto wie? Gdy tak siedzi na ławie z wyciągniętymi nogami i rękami założonymi na piersiach, nie wygląda groźnie. Cicho chrapie. Walisz mieczem w ścianę. \"Co jest?\" - ocknął się. Wchodzisz teraz do komnaty i pokazujesz drzwi po przeciwnej, zachodniej stronie. \"Otwieraj szybko tamte drzwi\" - pokazujesz mu końcem miecza. \"Sam sobie otwórz\" - rechoce - \"Klucz jest w zamku\". Istotnie. Podchodzisz do drzwi. Obawiając się zasadzki, nie dotykasz ręką klucza, lecz wsadzasz czub miecza i próbujesz przekręcić. Nic z tego. \"Nic z tego\" - ryczy BARBARZYŃCA - \"Zaklęcie znasz? Jeśli nie znasz, to się stąd wynoś!\" No, właśnie. Pamiętasz zaklęcie ze starej księgi gremlinów? Zaraz, a może ty wcale nie widziałeś tej księgi? Tak czy owak, jeżeli nie znasz zaklęcia to koniec z tobą, bratku. Spróbuj jeszcze raz, od samego początku. Jeśli wydaje ci się, że pamiętasz zaklęcie, powtórz je. Teraz zajrzyj do paragrafu 122. Jeśli zapamiętałeś prawidłowo - patrz 376. Jeżeli zrobiłeś choćby najmniejszy błąd, kończysz przygodę. Jej dalsze prowadzenie w takiej sytuacji nie jest godne prawdziwego Śmiałka.",
@@ -716,13 +750,19 @@
   "52": {
     "text": "Z otworu w ścianie wystrzeliwuje strumień gryzącego gazu. Jeśli masz hełm \"garnkowy\", nie dzieje ci się krzywda, choć hełm ulega zniszczeniu. Jeśli nie masz takiego hełmu - patrz najpierw 315, a potem 274 (zapisz ten numer).",
     "requires_item": "hełm garnkowy",
-    "outcomes": {
-      "has_item": null,
-      "no_item": [
-        315,
-        274
-      ]
-    }
+    "edges": [
+      {
+        "label": "Masz hełm garnkowy (hełm się niszczy)",
+        "target": "274",
+        "condition": "has_item:hełm garnkowy"
+      },
+      {
+        "label": "Nie masz hełmu",
+        "target": "315",
+        "condition": "no_item:hełm garnkowy",
+        "return_to": "274"
+      }
+    ]
   },
   "53": {
     "text": "Lądujesz w przestronnym chodniku. Wiedzie na północ a po pewnym czasie skręca ostro na wschód. Robisz kilkadziesiąt kroków i stajesz przed ciężkimi drzwiami. Czy byłeś już tu? Jeśli tak - patrz 322, jeśli nie - patrz 299.",
@@ -841,10 +881,18 @@
   "62": {
     "text": "SSS. Jeśli masz S - patrz 201. Jeśli nie masz S - patrz 145.",
     "requires_test": "sss",
-    "outcomes": {
-      "success": 201,
-      "failure": 145
-    }
+    "edges": [
+      {
+        "label": "Masz S",
+        "target": "201",
+        "condition": "has_S"
+      },
+      {
+        "label": "Nie masz S",
+        "target": "145",
+        "condition": "not has_S"
+      }
+    ]
   },
   "63": {
     "text": "Miecz nie jest skuteczną bronią przeciw WILKOŁAKOWI. Jeśli masz któryś z wymienionych przedmiotów, możesz użyć go do walki: ·kość ze szkieletu przedwiecznego potwora - patrz 157, ·młot goblinów - patrz 346, ·metalowa tarcza - patrz 216, ·sieć - patrz 337, ·pęk kluczy - patrz 181. Jeśli nie masz żadnego z tych przedmiotów, pozostaje ci tylko Ucieczka - patrz 275.",
@@ -855,16 +903,38 @@
       "sieć",
       "pęk kluczy"
     ],
-    "outcomes": {
-      "has_item": [
-        "157",
-        "346",
-        "216",
-        "337",
-        "181"
-      ],
-      "no_item": 275
-    }
+    "edges": [
+      {
+        "label": "Użyj: kość ze szkieletu",
+        "target": "157",
+        "condition": "has_item:kość"
+      },
+      {
+        "label": "Użyj: młot goblinów",
+        "target": "346",
+        "condition": "has_item:młot"
+      },
+      {
+        "label": "Użyj: metalowa tarcza",
+        "target": "216",
+        "condition": "has_item:metalowa tarcza"
+      },
+      {
+        "label": "Użyj: sieć",
+        "target": "337",
+        "condition": "has_item:sieć"
+      },
+      {
+        "label": "Użyj: pęk kluczy",
+        "target": "181",
+        "condition": "has_item:pęk kluczy"
+      },
+      {
+        "label": "Nie masz żadnego – ucieczka",
+        "target": "275",
+        "condition": "no_item"
+      }
+    ]
   },
   "64": {
     "text": "Zbliżasz się do skrzyżowania. Możesz iść w każdym z czterech kierunków. Jeśli wybierzesz: · zachód - patrz 296, · północ - patrz 264, · wschód - patrz 284, · południe - patrz 224.",
@@ -1025,7 +1095,30 @@
   },
   "76": {
     "text": "Próbujesz otworzyć kłódki kluczami. Jeśli nie masz choć trzech, tu kończy się twoja przygoda. Tak blisko celu! Jeśli masz trzy klucze, dodajesz zapisane na nich liczby i otrzymujesz sumę. Szukasz paragrafu oznaczonego liczba równą tej sumie. Jeżeli masz więcej niż trzy klucze, wybierz dowolne trzy i postąp tak jak opisano w poprzednim zdaniu.",
-    "edges": []
+    "edges": [
+      {
+        "label": "Masz trzy klucze: idź do paragrafu o numerze równym sumie liczb na kluczach",
+        "target": "KEYS_SUM",
+        "condition": "keys>=3",
+        "possible_targets": [
+          "127",
+          "150",
+          "175",
+          "179",
+          "204",
+          "208",
+          "227",
+          "237",
+          "260",
+          "285"
+        ]
+      },
+      {
+        "label": "Masz mniej niż trzy klucze – koniec przygody",
+        "target": "END",
+        "condition": "keys<3"
+      }
+    ]
   },
   "77": {
     "text": "Możesz zmusić potwora, by podniósł kratę - patrz 340, albo dalej prowadzisz walkę - patrz 163.",
@@ -1537,6 +1630,10 @@
       {
         "target": 307,
         "label": "płyniesz dalej"
+      },
+      {
+        "label": "Wycofujesz się – wróć do zapisanego paragrafu",
+        "target": "RETURN"
       }
     ],
     "flags_set": [
@@ -1918,10 +2015,9 @@
     "text": "Z ciemnego końca komnaty wylatuje w twoim kierunku rój błękitnych strzałek. Żeby określić czy wyrządzą ci jakąś krzywdę - patrz 315, a potem patrz 52 (zapisz ten numer).",
     "edges": [
       {
-        "target": 315
-      },
-      {
-        "target": 52
+        "label": "Sprawdź, czy strzałki cię zraniły",
+        "target": "315",
+        "return_to": "52"
       }
     ]
   },
@@ -2348,10 +2444,9 @@
     "text": "Gdziekolwiek stąpniesz, ziemia pali cię w stopy. By określić, czy ten żar wyrządza ci krzywdę - patrz 315, a potem 200.",
     "edges": [
       {
-        "target": 315
-      },
-      {
-        "target": 200
+        "label": "Sprawdź, czy żar cię zranił",
+        "target": "315",
+        "return_to": "200"
       }
     ]
   },
@@ -2605,11 +2700,12 @@
     "text": "Możesz próbować ponownie przepłynąć jezioro. Decydujesz się. Jeśli tak, zapisz numer niniejszego paragrafu i patrz 113, jeśli nie - patrz 46.",
     "edges": [
       {
-        "target": 113,
-        "label": "przepływasz"
+        "target": "113",
+        "label": "przepływasz",
+        "return_to": "195"
       },
       {
-        "target": 46,
+        "target": "46",
         "label": "nie"
       }
     ]
@@ -3149,7 +3245,13 @@
         "stamina": 5
       }
     ],
-    "escape_possible": true
+    "escape_possible": true,
+    "edges": [
+      {
+        "label": "Pokonałeś potwory albo uciekłeś – wróć do zapisanego paragrafu",
+        "target": "RETURN"
+      }
+    ]
   },
   "239": {
     "text": "Już po kilkunastu krokach chodnik skręca w lewo, potem kolejnych kilkanaście kroków i widzisz przed sobą drzwi. Przystawiasz ucho. Patrz 125.",
@@ -3573,10 +3675,9 @@
     "text": "Korytarz biegnie prosto, by rozszerzyć na końcu w obszerną salę. Możesz usiąść i zjeść Prowiant. Nagle słyszysz jakieś kroki. To na pewno potwory. Patrz 238. Jeśli je pokonasz albo wycofasz się w trakcie walki - patrz 103. Zapisz ten numer, bo zgubisz drogę.",
     "edges": [
       {
-        "target": 238
-      },
-      {
-        "target": 103
+        "label": "Walcz z potworami",
+        "target": "238",
+        "return_to": "103"
       }
     ]
   },
@@ -4122,6 +4223,12 @@
         "attr": "agility",
         "change": -1
       }
+    ],
+    "edges": [
+      {
+        "label": "Wróć do zapisanego paragrafu",
+        "target": "RETURN"
+      }
     ]
   },
   "316": {
@@ -4563,6 +4670,12 @@
         "attr": "end",
         "change": true
       }
+    ],
+    "edges": [
+      {
+        "label": "Koniec przygody",
+        "target": "END"
+      }
     ]
   },
   "353": {
@@ -4756,6 +4869,12 @@
         "attr": "end",
         "change": true
       }
+    ],
+    "edges": [
+      {
+        "label": "Koniec przygody",
+        "target": "END"
+      }
     ]
   },
   "371": {
@@ -4786,6 +4905,18 @@
       {
         "attr": "end",
         "change": true
+      }
+    ],
+    "edges": [
+      {
+        "label": "Spróbuj innej kombinacji kluczy",
+        "target": "76",
+        "condition": "combinations_left"
+      },
+      {
+        "label": "Wykorzystałeś wszystkie kombinacje – koniec",
+        "target": "END",
+        "condition": "no_combinations_left"
       }
     ]
   },
@@ -4942,6 +5073,13 @@
       {
         "attr": "item",
         "change": "manuscript"
+      }
+    ],
+    "edges": [
+      {
+        "label": "Zwycięstwo!",
+        "target": "END",
+        "ending": "victory"
       }
     ]
   }
