@@ -1,0 +1,187 @@
+<title>Dreszcz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@500;700&family=Alegreya:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Układ: jedna kolumna jak strona książki; numer paragrafu jako inicjał, wybory pod tekstem. */
+:root {
+  --tlo: #e6e9e4;         /* chłodny kamień */
+  --karta: #f3f4f0;
+  --atrament: #1d2420;
+  --przygaszony: #5d665f;
+  --akcent: #8a1f1f;      /* zaschnięta krew */
+  --linia: #c9cec7;
+  --f-tytul: "Grenze Gotisch", "UnifrakturMaguntia", Georgia, serif;
+  --f-tekst: "Alegreya", Georgia, "Times New Roman", serif;
+  --f-cyfry: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --tlo: #111513; --karta: #181d1a; --atrament: #dcd9cc; --przygaszony: #8f978f;
+    --akcent: #d6a24a; --linia: #2b322e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --tlo: #111513; --karta: #181d1a; --atrament: #dcd9cc; --przygaszony: #8f978f;
+  --akcent: #d6a24a; --linia: #2b322e; color-scheme: dark;
+}
+html, body { min-height: 100%; }
+body {
+  background: var(--tlo); color: var(--atrament);
+  font: 1.125rem/1.6 var(--f-tekst);
+  padding: 0 16px;
+}
+.strona { max-width: 36rem; margin: 0 auto; padding-block: 20px 40px; display: grid; gap: 22px; }
+header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--linia); padding-bottom: 10px; }
+h1 { font: 700 2rem/1 var(--f-tytul); margin: 0; letter-spacing: .02em; }
+.licznik { font: 500 .75rem/1 var(--f-cyfry); color: var(--przygaszony); letter-spacing: .06em; text-transform: uppercase; }
+.numer { font: 700 3.5rem/1 var(--f-tytul); color: var(--akcent); margin: 0; }
+.tekst { margin: 0; max-width: 65ch; hyphens: auto; }
+.wybory { display: grid; gap: 10px; }
+.wybor {
+  display: flex; gap: 12px; align-items: baseline; text-align: left; width: 100%;
+  font: 1.05rem/1.4 var(--f-tekst); color: var(--atrament);
+  background: var(--karta); border: 1px solid var(--linia); border-radius: 6px;
+  padding: 12px 14px; cursor: pointer;
+}
+.wybor:hover { border-color: var(--akcent); }
+.wybor:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--akcent); outline-offset: 2px; }
+.wybor .cel { font: 500 .8rem/1 var(--f-cyfry); color: var(--akcent); min-width: 3ch; font-variant-numeric: tabular-nums; }
+.wybor .opis { min-width: 0; }
+.klucze { display: flex; gap: 10px; flex-wrap: wrap; }
+.klucze input { font: 500 1.1rem var(--f-cyfry); width: 7ch; padding: 10px; border: 1px solid var(--linia); border-radius: 6px; background: var(--karta); color: var(--atrament); }
+.przycisk { font: 600 1rem var(--f-tekst); padding: 10px 16px; border-radius: 6px; border: 1px solid var(--akcent); background: var(--akcent); color: var(--tlo); cursor: pointer; }
+.przycisk.cichy { background: transparent; color: var(--przygaszony); border-color: var(--linia); }
+.koniec { font: 700 2.2rem/1.1 var(--f-tytul); color: var(--akcent); margin: 0; }
+.uwaga { font-size: .9rem; color: var(--przygaszony); margin: 0; }
+footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--linia); padding-top: 12px; }
+@media (prefers-reduced-motion: no-preference) {
+  .numer, .tekst { animation: odslon .35s ease-out both; }
+  @keyframes odslon { from { opacity: .4; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+}
+</style>
+
+<main class="strona">
+  <header>
+    <h1>Dreszcz</h1>
+    <span class="licznik" id="licznik">wczytywanie…</span>
+  </header>
+  <section id="akapit" aria-live="polite">
+    <p class="uwaga">Wczytuję księgę…</p>
+  </section>
+  <footer>
+    <span class="licznik" id="stos"></span>
+    <button class="przycisk cichy" id="nowa" type="button">Nowa gra</button>
+  </footer>
+</main>
+
+<script src="silnik.js"></script>
+<script>
+// Interfejs: tylko rysowanie ekranu i obsługa kliknięć.
+// Cała logika przejść jest w silnik.js.
+let ksiega = {};
+let stan = nowaGra();
+const KLUCZ_ZAPISU = "dreszcz-stan";
+
+function zapisz() {
+  try { localStorage.setItem(KLUCZ_ZAPISU, JSON.stringify(stan)); } catch (e) { /* brak pamięci – gramy dalej */ }
+}
+function wczytajZapis() {
+  try { return JSON.parse(localStorage.getItem(KLUCZ_ZAPISU)); } catch (e) { return null; }
+}
+
+function idz(przejscie, numer) {
+  stan = wykonajPrzejscie(stan, przejscie, numer);
+  zapisz();
+  rysuj();
+  window.scrollTo({ top: 0 });
+}
+
+function rysuj() {
+  const box = document.getElementById("akapit");
+  const p = ksiega[stan.akapit];
+  document.getElementById("licznik").textContent = `krok ${stan.historia.length} · paragraf ${stan.akapit}`;
+  document.getElementById("stos").textContent = stan.stos.length ? `zapisany numer: ${stan.stos.at(-1)}` : "";
+  box.replaceChildren();
+
+  if (stan.koniec) {
+    const h = document.createElement("p");
+    h.className = "koniec";
+    h.textContent = stan.koniec === "zwyciestwo" ? "Zwycięstwo!" : "Koniec przygody";
+    const u = document.createElement("p");
+    u.className = "uwaga";
+    u.textContent = `Odwiedzone paragrafy: ${stan.historia.length}. Zacznij od nowa przyciskiem poniżej.`;
+    box.append(h, u);
+    return;
+  }
+
+  const numer = document.createElement("p");
+  numer.className = "numer";
+  numer.textContent = stan.akapit;
+  const tekst = document.createElement("p");
+  tekst.className = "tekst";
+  tekst.textContent = p ? p.text : `Brak paragrafu ${stan.akapit} w księdze.`;
+
+  const wybory = document.createElement("div");
+  wybory.className = "wybory";
+  for (const przejscie of (p?.edges ?? [])) {
+    if (przejscie.target === "KEYS_SUM") {
+      wybory.append(poleKluczy(przejscie));
+      continue;
+    }
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "wybor";
+    const cel = document.createElement("span");
+    cel.className = "cel";
+    cel.textContent = /^\d+$/.test(String(przejscie.target)) ? przejscie.target : "→";
+    const opis = document.createElement("span");
+    opis.className = "opis";
+    opis.textContent = etykieta(przejscie);
+    b.append(cel, opis);
+    b.addEventListener("click", () => idz(przejscie));
+    wybory.append(b);
+  }
+  box.append(numer, tekst, wybory);
+}
+
+// Paragraf 76: gracz sam wpisuje sumę liczb z kluczy.
+function poleKluczy(przejscie) {
+  const f = document.createElement("form");
+  f.className = "klucze";
+  f.innerHTML = '<label class="uwaga" for="suma" style="flex-basis:100%">Suma liczb na trzech kluczach:</label>' +
+    '<input id="suma" inputmode="numeric" pattern="[0-9]*" required>' +
+    '<button class="przycisk" type="submit">Otwórz kłódki</button>';
+  f.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const n = f.querySelector("input").value.trim();
+    if (ksiega[n]) idz(przejscie, n);
+    else f.querySelector("input").setCustomValidity("Nie ma takiego paragrafu.");
+  });
+  f.querySelector("input").addEventListener("input", (e) => e.target.setCustomValidity(""));
+  return f;
+}
+
+document.getElementById("nowa").addEventListener("click", () => {
+  stan = nowaGra(); zapisz(); rysuj();
+});
+
+async function wczytajKsiege() {
+  // W artefakcie plik leży obok strony, w repo – katalog wyżej.
+  for (const sciezka of ["shiver.json", "../shiver.json"]) {
+    try {
+      const r = await fetch(sciezka);
+      if (r.ok) return await r.json();
+    } catch (e) { /* próbujemy dalej */ }
+  }
+  throw new Error("Nie udało się wczytać shiver.json");
+}
+
+wczytajKsiege().then((dane) => {
+  ksiega = dane;
+  const zapis = wczytajZapis();
+  if (zapis && ksiega[zapis.akapit]) stan = zapis;
+  rysuj();
+}).catch((e) => {
+  document.getElementById("akapit").innerHTML = '<p class="uwaga">Nie udało się wczytać księgi. Odśwież stronę.</p>';
+});
+</script>
