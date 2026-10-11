@@ -51,3 +51,9 @@ przeżyjesz wiele niezapomnianych przygód.
 + paragraf 69: UPIÓR (drugi) na OBLEC 
 + paragraf 98: HERSZT GOBLINÓW na GROBOK
 + paragrafy 170, 255, 244, 361 STRAŻNIK TAJEMNICY na BLACKTHORNE 
+  - [63] sieć odsyła do 337, powinno być 377 (walka siecią z WILKOŁAKIEM)
+  - [166] „za złoto” odsyła do 320, powinno być 353 (targ z KRASNALEM)
+  - [172] przy drugiej przeprawie przez jezioro: 266 zamiast 15
+    (266 opisuje przeprawę i i tak prowadzi do 15)
+
+  Poprawione w przejściach (edges) w shiver.json; tekst paragrafów bez zmian.

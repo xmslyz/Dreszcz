@@ -921,7 +921,7 @@
       },
       {
         "label": "Użyj: sieć",
-        "target": "337",
+        "target": "377",
         "condition": "has_item:sieć"
       },
       {
@@ -2334,7 +2334,7 @@
         "target": 202
       },
       {
-        "target": 320
+        "target": "353"
       }
     ],
     "effects": [
@@ -2425,7 +2425,7 @@
     "text": "Czy przepłynąłeś jezioro po raz drugi? Jeśli tak - patrz 15, jeśli przepłynąłeś je więcej niż dwa razy - patrz 365.",
     "edges": [
       {
-        "target": 15
+        "target": "266"
       },
       {
         "target": 365
