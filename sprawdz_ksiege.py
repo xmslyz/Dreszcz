@@ -38,6 +38,15 @@ def next_paragraphs(edge: dict) -> list[str]:
     return targets
 
 
+def all_edges(paragraph: dict) -> list[dict]:
+    """Przejścia paragrafu razem z ucieczką z walki (combat.escape)."""
+    edges = list(paragraph.get("edges", []))
+    escape = paragraph.get("combat", {}).get("escape")
+    if escape:
+        edges.append(escape)
+    return edges
+
+
 def check_book(book: dict, start: str = "1") -> dict:
     """Zwraca słownik problemów; pusty słownik = książka spójna."""
     problems = {}
@@ -47,7 +56,7 @@ def check_book(book: dict, start: str = "1") -> dict:
         problems["bez_przejsc"] = no_edges
 
     missing = [(k, t) for k, p in book.items()
-               for e in p.get("edges", []) for t in next_paragraphs(e)
+               for e in all_edges(p) for t in next_paragraphs(e)
                if t not in book]
     if missing:
         problems["brakujace_cele"] = missing
@@ -57,7 +66,7 @@ def check_book(book: dict, start: str = "1") -> dict:
     queue = deque([start])
     while queue:
         current = queue.popleft()
-        for edge in book[current].get("edges", []):
+        for edge in all_edges(book[current]):
             for target in next_paragraphs(edge):
                 if target in book and target not in seen:
                     seen.add(target)
