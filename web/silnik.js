@@ -320,6 +320,47 @@ function zjedzPosilek(stan) {
   return { ...stan, bohater, zmiany: opisy, posilki: [...(stan.posilki ?? []), stan.akapit] };
 }
 
+// ---------------------------------------------------------------- mapa
+
+/** Numery paragrafów, do których prowadzą wyjścia (bez celów specjalnych). */
+function wyjscia(akapit) {
+  const wszystkie = [...(akapit?.edges ?? [])];
+  if (akapit?.combat?.escape) wszystkie.push(akapit.combat.escape);
+  return [...new Set(wszystkie.map((e) => String(e.target)).filter((t) => /^\d+$/.test(t)))];
+}
+
+/**
+ * Graf wędrówki z historii ruchów:
+ *   węzły – odwiedzone paragrafy (ile razy, czy bieżący, ile niezbadanych wyjść),
+ *   krawędzie – przejścia, które gracz naprawdę wykonał (bez powtórzeń).
+ * Niczego nie zdradza: o niezbadanych wyjściach mówi tylko, ile ich jest.
+ */
+function grafWedrowki(stan, ksiega) {
+  const odwiedziny = new Map();          // Map ≈ dict z zachowaną kolejnością
+  for (const nr of stan.historia) odwiedziny.set(nr, (odwiedziny.get(nr) ?? 0) + 1);
+
+  const krawedzie = new Map();
+  for (let i = 1; i < stan.historia.length; i++) {
+    const [a, b] = [stan.historia[i - 1], stan.historia[i]];
+    if (a !== b) krawedzie.set(`${a}>${b}`, [a, b]);
+  }
+
+  const wezly = [...odwiedziny].map(([id, ile]) => ({
+    id,
+    odwiedzin: ile,
+    biezacy: id === stan.akapit,
+    niezbadane: wyjscia(ksiega[id]).filter((t) => !odwiedziny.has(t)).length,
+  }));
+  return { wezly, krawedzie: [...krawedzie.values()] };
+}
+
+/** Pierwsze zdanie paragrafu – do podpisu na mapie. */
+function pierwszeZdanie(akapit) {
+  const tekst = (akapit?.text ?? "").split("|")[0].trim();
+  const koniec = tekst.search(/[.!?](\s|$)/);
+  return koniec === -1 ? tekst : tekst.slice(0, koniec + 1);
+}
+
 /** Etykieta przycisku – gdy w danych brak "label", pokazujemy „Patrz N”. */
 function etykieta(przejscie) {
   if (przejscie.label) return przejscie.label;
@@ -333,6 +374,7 @@ if (typeof module !== "undefined") {
     START, k6, rzut2k, nowyBohater, sss, nowaGra, wykonajPrzejscie,
     rozpocznijWalke, biezacyPotwor, rundaWalki, moznaUciec, ucieczka,
     dostepnePrzejscia, tekstAkapitu, etykieta,
+    wyjscia, grafWedrowki, pierwszeZdanie,
     zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,
   };
 }

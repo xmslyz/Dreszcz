@@ -131,6 +131,34 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
   .numer, .tekst { animation: odslon .35s ease-out both; }
   @keyframes odslon { from { opacity: .4; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 }
+
+/* Mapa wędrówki: pełny ekran nad grą. */
+.przyciski { display: flex; gap: 8px; }
+.mapa {
+  position: fixed; inset: 0; z-index: 10; background: var(--tlo);
+  display: grid; grid-template-rows: auto 1fr auto;
+  padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+}
+.mapa-naglowek { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--linia); }
+.mapa-naglowek h2 { font: 700 1.5rem/1 var(--f-tytul); margin: 0; }
+.mapa-plotno { position: relative; overflow: hidden; touch-action: none; min-height: 0; }
+.mapa-plotno svg { width: 100%; height: 100%; display: block; cursor: grab; }
+.mapa-zoom { position: absolute; right: 16px; bottom: 16px; display: grid; gap: 8px; }
+.mapa-zoom button { width: 44px; height: 44px; font: 600 1.3rem/1 var(--f-cyfry); border-radius: 50%; border: 1px solid var(--linia); background: var(--karta); color: var(--atrament); cursor: pointer; }
+.mapa-podpis { padding: 12px 16px; border-top: 1px solid var(--linia); min-height: 3.2em; font-size: 1rem; }
+.mapa-podpis b { font: 700 1.2rem var(--f-tytul); color: var(--akcent); margin-right: 6px; }
+.mapa-legenda { font: 500 .72rem/1.5 var(--f-cyfry); color: var(--przygaszony); padding: 0 16px 10px; }
+.wezel { outline: none; cursor: pointer; }
+.wezel:focus-visible circle { stroke: var(--akcent); stroke-width: 3; }
+.wezel circle { fill: var(--karta); stroke: var(--przygaszony); stroke-width: 1.5; }
+.wezel.wielokrotny circle { stroke: var(--atrament); stroke-width: 3; }
+.wezel.biezacy circle { fill: var(--akcent); stroke: var(--akcent); }
+.wezel.wybrany circle { stroke: var(--akcent); stroke-width: 3; }
+.wezel text { font: 500 10px var(--f-cyfry); fill: var(--atrament); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+.wezel.biezacy text { fill: var(--tlo); }
+.droga { stroke: var(--przygaszony); stroke-width: 1.3; fill: none; }
+.kikut { stroke: var(--akcent); stroke-width: 1.5; stroke-dasharray: 2 3; }
+.grot { fill: var(--przygaszony); }
 </style>
 
 <main class="strona">
@@ -144,9 +172,31 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
   </section>
   <footer>
     <span class="licznik" id="stos"></span>
-    <button class="przycisk cichy" id="nowa" type="button">Nowa gra</button>
+    <div class="przyciski">
+      <button class="przycisk cichy" id="pokaz-mape" type="button">Mapa</button>
+      <button class="przycisk cichy" id="nowa" type="button">Nowa gra</button>
+    </div>
   </footer>
 </main>
+
+<div class="mapa" id="mapa" hidden role="dialog" aria-label="Mapa wędrówki">
+  <div class="mapa-naglowek">
+    <h2>Mapa wędrówki</h2>
+    <button class="przycisk cichy" id="zamknij-mape" type="button">Wróć do gry</button>
+  </div>
+  <div class="mapa-plotno" id="plotno">
+    <svg id="mapa-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="mapa-zoom">
+      <button type="button" id="zoom-plus" aria-label="Przybliż">+</button>
+      <button type="button" id="zoom-minus" aria-label="Oddal">−</button>
+      <button type="button" id="zoom-tu" aria-label="Pokaż, gdzie jestem">◎</button>
+    </div>
+  </div>
+  <div>
+    <p class="mapa-podpis" id="mapa-podpis">Dotknij punktu, by przypomnieć sobie to miejsce.</p>
+    <p class="mapa-legenda">● tu jesteś · gruby pierścień = byłeś kilka razy · przerywane kreski = niezbadane wyjścia</p>
+  </div>
+</div>
 
 <script src="silnik.js"></script>
 <script>
@@ -452,7 +502,182 @@ function poleKluczy(przejscie) {
   return f;
 }
 
-document.getElementById("nowa").addEventListener("click", () => zmien(nowaGra()));
+document.getElementById("nowa").addEventListener("click", () => { pozycje.clear(); zmien(nowaGra()); });
+
+// ---------------------------------------------------------------- mapa
+// Układ „siłowy”: punkty odpychają się jak magnesy, drogi ściągają je
+// jak sprężyny. Po kilkuset krokach obraz się uspokaja.
+const SVG = "http://www.w3.org/2000/svg";
+const pozycje = new Map();   // id paragrafu → {x, y}; zostają między otwarciami mapy
+let widok = null;            // {x, y, w, h} – fragment mapy widoczny na ekranie
+
+function svgEl(tag, atrybuty = {}) {
+  const e = document.createElementNS(SVG, tag);
+  for (const [k, v] of Object.entries(atrybuty)) e.setAttribute(k, v);
+  return e;
+}
+
+/** Nowy punkt startuje obok paragrafu, z którego do niego przyszliśmy. */
+function zasiej(graf) {
+  const historia = stan.historia;
+  for (let i = 0; i < historia.length; i++) {
+    const id = historia[i];
+    if (pozycje.has(id)) continue;
+    const rodzic = pozycje.get(historia[i - 1]) ?? { x: 0, y: 0 };
+    const kat = (Number(id) * 2.399) % (2 * Math.PI);   // „złoty kąt” – rozrzut bez losowania
+    pozycje.set(id, { x: rodzic.x + Math.cos(kat) * 70, y: rodzic.y + Math.sin(kat) * 70 });
+  }
+}
+
+function rozmiesc(graf, krokow = 300) {
+  const ids = graf.wezly.map((w) => w.id);
+  const DLUGOSC = 70;
+  for (let krok = 0; krok < krokow; krok++) {
+    const temp = 8 * (1 - krok / krokow) + 0.5;   // „stygnięcie”: ruchy coraz mniejsze
+    const sila = new Map(ids.map((id) => [id, { x: 0, y: 0 }]));
+    for (let i = 0; i < ids.length; i++) {
+      for (let j = i + 1; j < ids.length; j++) {
+        const a = pozycje.get(ids[i]), b = pozycje.get(ids[j]);
+        let dx = a.x - b.x, dy = a.y - b.y;
+        const d2 = Math.max(dx * dx + dy * dy, 1);
+        const f = (DLUGOSC * DLUGOSC) / d2;          // odpychanie
+        sila.get(ids[i]).x += dx * f / 10; sila.get(ids[i]).y += dy * f / 10;
+        sila.get(ids[j]).x -= dx * f / 10; sila.get(ids[j]).y -= dy * f / 10;
+      }
+    }
+    for (const [u, v] of graf.krawedzie) {
+      const a = pozycje.get(u), b = pozycje.get(v);
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const d = Math.hypot(dx, dy) || 1;
+      const f = (d - DLUGOSC) / d * 0.2;            // sprężyna
+      sila.get(u).x += dx * f; sila.get(u).y += dy * f;
+      sila.get(v).x -= dx * f; sila.get(v).y -= dy * f;
+    }
+    for (const id of ids) {
+      const p = pozycje.get(id), s = sila.get(id);
+      const d = Math.hypot(s.x, s.y) || 1;
+      const ruch = Math.min(d, temp);
+      p.x += s.x / d * ruch; p.y += s.y / d * ruch;
+    }
+  }
+}
+
+function ustawWidok() {
+  const svg = document.getElementById("mapa-svg");
+  svg.setAttribute("viewBox", `${widok.x} ${widok.y} ${widok.w} ${widok.h}`);
+}
+
+function dopasujWidok(ids) {
+  const pkt = ids.map((id) => pozycje.get(id));
+  const xs = pkt.map((p) => p.x), ys = pkt.map((p) => p.y);
+  const pole = document.getElementById("plotno").getBoundingClientRect();
+  const proporcja = pole.width / Math.max(pole.height, 1);
+  let w = Math.max(...xs) - Math.min(...xs) + 120, h = Math.max(...ys) - Math.min(...ys) + 120;
+  if (w / h < proporcja) w = h * proporcja; else h = w / proporcja;
+  const cx = (Math.max(...xs) + Math.min(...xs)) / 2, cy = (Math.max(...ys) + Math.min(...ys)) / 2;
+  widok = { x: cx - w / 2, y: cy - h / 2, w, h };
+  ustawWidok();
+}
+
+function powieksz(czynnik, srodek = null) {
+  const c = srodek ?? { x: widok.x + widok.w / 2, y: widok.y + widok.h / 2 };
+  widok = { x: c.x - (c.x - widok.x) * czynnik, y: c.y - (c.y - widok.y) * czynnik, w: widok.w * czynnik, h: widok.h * czynnik };
+  ustawWidok();
+}
+
+function rysujMape() {
+  const graf = grafWedrowki(stan, ksiega);
+  zasiej(graf);
+  rozmiesc(graf);
+  const svg = document.getElementById("mapa-svg");
+  svg.replaceChildren();
+
+  const defs = svgEl("defs");
+  const grot = svgEl("marker", { id: "grot", viewBox: "0 0 10 10", refX: "10", refY: "5", markerWidth: "7", markerHeight: "7", orient: "auto-start-reverse" });
+  grot.append(svgEl("path", { d: "M0,0 L10,5 L0,10 z", class: "grot" }));
+  defs.append(grot);
+  svg.append(defs);
+
+  const R = 14;
+  for (const [u, v] of graf.krawedzie) {
+    const a = pozycje.get(u), b = pozycje.get(v);
+    const d = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+    const ux = (b.x - a.x) / d, uy = (b.y - a.y) / d;
+    svg.append(svgEl("line", {
+      class: "droga", "marker-end": "url(#grot)",
+      x1: a.x + ux * R, y1: a.y + uy * R, x2: b.x - ux * (R + 2), y2: b.y - uy * (R + 2),
+    }));
+  }
+
+  for (const w of graf.wezly) {
+    const p = pozycje.get(w.id);
+    const g = svgEl("g", { class: "wezel" + (w.biezacy ? " biezacy" : "") + (w.odwiedzin > 1 ? " wielokrotny" : ""), tabindex: "0", role: "button" });
+    // kikuty niezbadanych wyjść – skierowane od środka mapy na zewnątrz
+    for (let k = 0; k < Math.min(w.niezbadane, 4); k++) {
+      const kat = Math.atan2(p.y, p.x) + (k - (Math.min(w.niezbadane, 4) - 1) / 2) * 0.6;
+      g.append(svgEl("line", { class: "kikut", x1: p.x + Math.cos(kat) * R, y1: p.y + Math.sin(kat) * R, x2: p.x + Math.cos(kat) * (R + 12), y2: p.y + Math.sin(kat) * (R + 12) }));
+    }
+    g.append(svgEl("circle", { cx: p.x, cy: p.y, r: R }));
+    const t = svgEl("text", { x: p.x, y: p.y });
+    t.textContent = w.id;
+    g.append(t);
+    const pokaz = () => {
+      svg.querySelectorAll(".wybrany").forEach((x) => x.classList.remove("wybrany"));
+      g.classList.add("wybrany");
+      const podpis = document.getElementById("mapa-podpis");
+      podpis.replaceChildren(el("b", "", w.id), document.createTextNode(pierwszeZdanie(ksiega[w.id])));
+      if (w.odwiedzin > 1) podpis.append(el("span", "uwaga", ` (byłeś tu ${w.odwiedzin} razy)`));
+    };
+    g.addEventListener("click", pokaz);
+    g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") pokaz(); });
+    svg.append(g);
+  }
+  return graf;
+}
+
+function otworzMape() {
+  document.getElementById("mapa").hidden = false;
+  const graf = rysujMape();
+  dopasujWidok(graf.wezly.map((w) => w.id));
+  // Duża mapa: zamiast mikroskopijnych kółek pokaż okolicę miejsca, w którym jesteś
+  // (mniej więcej 1 jednostka mapy = 1 piksel ekranu).
+  const pole = document.getElementById("plotno").getBoundingClientRect();
+  if (widok.w > pole.width * 1.3) {
+    const p = pozycje.get(stan.akapit);
+    const w = pole.width * 1.1, h = w * pole.height / pole.width;
+    widok = { x: p.x - w / 2, y: p.y - h / 2, w, h };
+    ustawWidok();
+  }
+}
+
+document.getElementById("pokaz-mape").addEventListener("click", otworzMape);
+document.getElementById("zamknij-mape").addEventListener("click", () => { document.getElementById("mapa").hidden = true; });
+document.getElementById("zoom-plus").addEventListener("click", () => powieksz(0.7));
+document.getElementById("zoom-minus").addEventListener("click", () => powieksz(1 / 0.7));
+document.getElementById("zoom-tu").addEventListener("click", () => {
+  const p = pozycje.get(stan.akapit);
+  widok = { ...widok, x: p.x - widok.w / 2, y: p.y - widok.h / 2 };
+  ustawWidok();
+});
+
+// Przesuwanie mapy palcem (pointer events działają dla myszy i dotyku).
+(() => {
+  const svg = document.getElementById("mapa-svg");
+  let start = null;
+  svg.addEventListener("pointerdown", (e) => {
+    if (e.target.closest(".wezel")) return;
+    start = { x: e.clientX, y: e.clientY, widok: { ...widok } };
+    svg.setPointerCapture(e.pointerId);
+  });
+  svg.addEventListener("pointermove", (e) => {
+    if (!start) return;
+    const skala = widok.w / svg.getBoundingClientRect().width;
+    widok = { ...start.widok, x: start.widok.x - (e.clientX - start.x) * skala, y: start.widok.y - (e.clientY - start.y) * skala };
+    ustawWidok();
+  });
+  svg.addEventListener("pointerup", () => { start = null; });
+  svg.addEventListener("pointercancel", () => { start = null; });
+})();
 
 async function wczytajKsiege() {
   // W artefakcie plik leży obok strony, w repo – katalog wyżej.

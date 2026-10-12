@@ -174,3 +174,20 @@ test("złoto do wzięcia jest opcją, a posiłek daje +4 W", () => {
 test("połowa Wytrzymałości (paragraf 110)", () => {
   assert.strictEqual(s.zmienCechy(bohaterTestowy(), { W: "pol" }).bohater.W, 7);
 });
+
+// ---------------------------------------------------------------- mapa
+test("graf wędrówki: odwiedziny, pętle i niezbadane wyjścia", () => {
+  const ksiega = {
+    "1": { text: "Start. Dalej.", edges: [{ target: "25" }] },
+    "25": { text: "Skrzyżowanie T. Idź.", edges: [{ target: "64" }, { target: "90" }, { target: "END" }] },
+    "64": { text: "Korytarz.", edges: [{ target: "25" }] },
+  };
+  const stan = { ...s.nowaGra(), historia: ["1", "25", "64", "25", "64"], akapit: "64" };
+  const g = s.grafWedrowki(stan, ksiega);
+  const w = Object.fromEntries(g.wezly.map((x) => [x.id, x]));
+  assert.strictEqual(w["64"].odwiedzin, 2);
+  assert.strictEqual(w["64"].biezacy, true);
+  assert.strictEqual(w["25"].niezbadane, 1);           // tylko 90; END się nie liczy
+  assert.strictEqual(g.krawedzie.length, 3);           // 1>25, 25>64, 64>25 – bez powtórek
+  assert.strictEqual(s.pierwszeZdanie(ksiega["25"]), "Skrzyżowanie T.");
+});
