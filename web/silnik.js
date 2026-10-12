@@ -309,7 +309,10 @@ function warunkiPozwalaja(stan, e) {
     if (suma < e.suma[0] || suma > e.suma[1]) return false;
   }
   // Przedmiot i złoto: "ma": "lina z hakiem", "zloto_min": 10
-  if (e.ma && !(stan.bohater?.ekwipunek ?? []).includes(e.ma)) return false;
+  const rzeczy = stan.bohater?.ekwipunek ?? [];
+  const lista = (x) => (Array.isArray(x) ? x : [x]);         // "lina" albo ["napój", "woda"]
+  if (e.ma && !lista(e.ma).some((r) => rzeczy.includes(r))) return false;
+  if (e.nie_ma && lista(e.nie_ma).some((r) => rzeczy.includes(r))) return false;
   if (e.zloto_min && (stan.bohater?.zloto ?? 0) < e.zloto_min) return false;
   if (e.cecha_min && stan.bohater && stan.bohater[e.cecha_min[0]] < e.cecha_min[1]) return false;
   if (e.cecha_ponizej && stan.bohater && stan.bohater[e.cecha_ponizej[0]] >= e.cecha_ponizej[1]) return false;
@@ -393,8 +396,11 @@ function zmienCechy(bohater, efekt) {
     b.zloto = Math.max(b.zloto + efekt.zloto, 0);
     opisy.push(`${efekt.zloto >= 0 ? "+" : "−"}${Math.abs(efekt.zloto)} złota`);
   }
-  if (efekt.dodaj || efekt.usun) {
+  if (efekt.dodaj || efekt.usun || efekt.zuzyj) {
     let rzeczy = [...(b.ekwipunek ?? [])];
+    // "zuzyj": [a, b] – zużywa pierwszą z tych rzeczy, którą masz (np. jeden z napojów)
+    const pierwsza = (efekt.zuzyj ?? []).find((r) => rzeczy.includes(r));
+    if (pierwsza) { rzeczy.splice(rzeczy.indexOf(pierwsza), 1); opisy.push(`− ${pierwsza}`); }
     for (const r of efekt.usun ?? []) {
       const i = rzeczy.indexOf(r);
       if (i !== -1) { rzeczy.splice(i, 1); opisy.push(`− ${r}`); }   // splice ≈ del lista[i]

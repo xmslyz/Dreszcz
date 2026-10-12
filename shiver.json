@@ -1302,15 +1302,24 @@
     "edges": [
       {
         "label": "Odmowa",
-        "target": 124
+        "target": "124"
       },
       {
         "label": "Pijesz",
-        "target": 217
+        "target": "217"
       },
       {
-        "label": "Przelewasz do naczynia",
-        "target": 171
+        "label": "Przelewasz napój do pustej flaszy",
+        "target": "171",
+        "ma": "pusta omszała flasza",
+        "efekt": {
+          "usun": [
+            "pusta omszała flasza"
+          ],
+          "dodaj": [
+            "flasza z napojem niewidzialności"
+          ]
+        }
       }
     ]
   },
@@ -2532,17 +2541,21 @@
     "text": "Czy masz ze sobą jakiś napój lub wodę (byle nie zaczarowaną)? Jeśli tak - patrz 236, jeśli nie - patrz 90.",
     "edges": [
       {
-        "target": 236
+        "label": "Masz napój lub wodę",
+        "target": "236",
+        "ma": [
+          "flasza z napojem niewidzialności",
+          "eliksir niewidzialności",
+          "flasza z wodą z jeziora"
+        ]
       },
       {
-        "target": 90
-      }
-    ],
-    "requirements": [
-      {
-        "any_of": [
-          "napój",
-          "woda"
+        "label": "Nie masz nic do picia",
+        "target": "90",
+        "nie_ma": [
+          "flasza z napojem niewidzialności",
+          "eliksir niewidzialności",
+          "flasza z wodą z jeziora"
         ]
       }
     ]
@@ -3514,6 +3527,18 @@
     "edges": [
       {
         "target": 132
+      }
+    ],
+    "efekty": [
+      {
+        "usun": [
+          "pusta omszała flasza"
+        ],
+        "dodaj": [
+          "flasza z wodą z jeziora"
+        ],
+        "opcja": "Nabierz wody z jeziora do pustej flaszy",
+        "wymaga": "pusta omszała flasza"
       }
     ]
   },
@@ -5097,10 +5122,26 @@
     "text": "Zaczepiłeś linę i już \"idziesz\" po niej. Wtem z wnętrza rozpadliny bucha jęzor ognia. Jeśli masz przy sobie napój niewidzialności - wypij go. Ogień nie czyni ci krzywdy. Ale napój przestaje działać zanim docierasz do drugiego brzegu - patrz 343. Jeśli nie masz napoju, jęzory ognia strącają cię z liny. Co z tobą? - patrz 162.",
     "edges": [
       {
-        "target": 343
+        "label": "Wypijasz napój niewidzialności",
+        "target": "343",
+        "ma": [
+          "flasza z napojem niewidzialności",
+          "eliksir niewidzialności"
+        ],
+        "efekt": {
+          "zuzyj": [
+            "flasza z napojem niewidzialności",
+            "eliksir niewidzialności"
+          ]
+        }
       },
       {
-        "target": 162
+        "label": "Nie masz napoju",
+        "target": "162",
+        "nie_ma": [
+          "flasza z napojem niewidzialności",
+          "eliksir niewidzialności"
+        ]
       }
     ]
   },

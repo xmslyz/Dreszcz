@@ -333,3 +333,14 @@ test("207: lina tylko z liną, smok tylko za 10 złota, woda tylko z naczyniem",
   assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["35", "269", "74"]);
   assert.strictEqual(s.dostepneOpcje(st, akapit).length, 1);
 });
+
+test("napoje: 167 pyta o picie, 358 zużywa napój niewidzialności", () => {
+  const napoje = ["flasza z napojem niewidzialności", "eliksir niewidzialności"];
+  const a358 = { edges: [{ target: "343", ma: napoje, efekt: { zuzyj: napoje } }, { target: "162", nie_ma: napoje }] };
+  let st = { ...s.nowaGra({ ...bohaterTestowy(), ekwipunek: ["miecz"] }), akapit: "358" };
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, a358).map((e) => e.target), ["162"]);
+  st = { ...st, bohater: { ...st.bohater, ekwipunek: ["miecz", "eliksir niewidzialności"] } };
+  const [przejscie] = s.dostepnePrzejscia(st, a358);
+  assert.strictEqual(przejscie.target, "343");
+  assert.deepStrictEqual(s.wykonajPrzejscie(st, przejscie).bohater.ekwipunek, ["miecz"]);
+});
