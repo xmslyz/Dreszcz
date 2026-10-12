@@ -185,6 +185,11 @@
         "label": "Atakuj wilkołaka",
         "target": "126"
       }
+    ],
+    "efekty": [
+      {
+        "W": -2
+      }
     ]
   },
   "14": {
@@ -223,6 +228,11 @@
       {
         "label": "Idź dalej korytarzem",
         "target": "80"
+      }
+    ],
+    "efekty": [
+      {
+        "posilek": true
       }
     ]
   },
@@ -267,6 +277,12 @@
       {
         "label": "Wyjdź wschodnimi drzwiami",
         "target": "141"
+      }
+    ],
+    "efekty": [
+      {
+        "S": 2,
+        "prowiant": 1
       }
     ]
   },
@@ -382,6 +398,11 @@
         "target": "238",
         "return_to": "316"
       }
+    ],
+    "efekty": [
+      {
+        "posilek": true
+      }
     ]
   },
   "28": {
@@ -437,6 +458,12 @@
         "label": "Opuszczasz komnatę",
         "target": "102"
       }
+    ],
+    "efekty": [
+      {
+        "zloto": 5,
+        "opcja": "Weź 5 sztuk złota"
+      }
     ]
   },
   "32": {
@@ -457,6 +484,11 @@
       {
         "label": "Zwycięstwo",
         "target": "275"
+      }
+    ],
+    "efekty": [
+      {
+        "posilek": true
       }
     ]
   },
@@ -502,6 +534,11 @@
         "label": "Nie masz S",
         "target": "158",
         "condition": "not has_S"
+      }
+    ],
+    "efekty": [
+      {
+        "zloto": -10
       }
     ]
   },
@@ -643,6 +680,11 @@
         "label": "Kontynuuj",
         "target": "251"
       }
+    ],
+    "efekty": [
+      {
+        "S": 2
+      }
     ]
   },
   "46": {
@@ -663,6 +705,11 @@
       {
         "label": "Idź na północ",
         "target": "191"
+      }
+    ],
+    "efekty": [
+      {
+        "posilek": true
       }
     ]
   },
@@ -787,6 +834,11 @@
         "label": "Kontynuuj",
         "target": 75
       }
+    ],
+    "efekty": [
+      {
+        "W": -1
+      }
     ]
   },
   "57": {
@@ -853,6 +905,11 @@
       {
         "label": "Otwierasz drzwi",
         "target": 42
+      }
+    ],
+    "efekty": [
+      {
+        "posilek": true
       }
     ]
   },
@@ -981,6 +1038,11 @@
       {
         "label": "Kontynuuj",
         "target": 212
+      }
+    ],
+    "efekty": [
+      {
+        "posilek": true
       }
     ]
   },
@@ -1171,6 +1233,12 @@
         "label": "Odpoczynek",
         "target": 121
       }
+    ],
+    "efekty": [
+      {
+        "W": 2,
+        "Z": 1
+      }
     ]
   },
   "82": {
@@ -1254,6 +1322,11 @@
         "label": "Po uratowaniu się",
         "target": 195
       }
+    ],
+    "efekty": [
+      {
+        "W": -2
+      }
     ]
   },
   "89": {
@@ -1262,6 +1335,15 @@
       {
         "label": "Wychodzisz z pokoju",
         "target": 120
+      }
+    ],
+    "efekty": [
+      {
+        "zloto": 3,
+        "opcja": "Weź 3 sztuki złota"
+      },
+      {
+        "S": 2
       }
     ]
   },
@@ -1359,6 +1441,11 @@
       {
         "label": "Z kluczem",
         "target": 253
+      }
+    ],
+    "efekty": [
+      {
+        "S": 2
       }
     ]
   },
@@ -1488,10 +1575,9 @@
         "label": "zrezygnuj"
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": -1
+        "W": -1
       }
     ]
   },
@@ -1592,17 +1678,16 @@
         "luck": 9
       }
     ],
-    "effects": [
+    "requires_test": "d6",
+    "efekty": [
       {
-        "attr": "luck",
-        "change": -3
+        "Z": -3,
+        "W": "pol"
       },
       {
-        "attr": "stamina",
-        "change": "/2"
+        "posilek": true
       }
-    ],
-    "requires_test": "d6"
+    ]
   },
   "111": {
     "text": "Wracasz. Podziemna kaplica jest już zupełnie pusta. Przechodzisz przez nią i opuszczasz ją zachodnimi drzwiami. Patrz 194.",
@@ -1655,14 +1740,9 @@
         "target": 276
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "food",
-        "change": -1
-      },
-      {
-        "attr": "stamina",
-        "change": "+X"
+        "posilek": true
       }
     ]
   },
@@ -1788,10 +1868,9 @@
         "target": 286
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "luck",
-        "change": "+2"
+        "Z": 2
       }
     ]
   },
@@ -1956,6 +2035,11 @@
       {
         "target": 13
       }
+    ],
+    "efekty": [
+      {
+        "posilek": true
+      }
     ]
   },
   "138": {
@@ -2003,10 +2087,9 @@
         "target": 357
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "food",
-        "action": "consume"
+        "posilek": true
       }
     ]
   },
@@ -2038,10 +2121,12 @@
         "target": 84
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "luck",
-        "change": "+1"
+        "posilek": true
+      },
+      {
+        "S": 1
       }
     ]
   },
@@ -2149,14 +2234,9 @@
         "target": 115
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "luck",
-        "change": "+1"
-      },
-      {
-        "attr": "attack_bonus",
-        "change": "+1"
+        "S": 1
       }
     ]
   },
@@ -2271,18 +2351,9 @@
       }
     ],
     "requires_test": "sss",
-    "effects": [
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": "+5"
-      },
-      {
-        "attr": "agility",
-        "change": "+2"
-      },
-      {
-        "attr": "luck",
-        "change": "+3"
+        "W": -1
       }
     ]
   },
@@ -2293,10 +2364,9 @@
         "target": 197
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "luck",
-        "change": "+1"
+        "S": 1
       }
     ]
   },
@@ -2349,14 +2419,10 @@
         "target": "353"
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": "+3"
-      },
-      {
-        "attr": "agility",
-        "change": "+2"
+        "W": 3,
+        "Z": 2
       }
     ]
   },
@@ -2495,10 +2561,9 @@
     "items": [
       "ognista kula"
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "luck",
-        "change": "+3"
+        "S": 3
       }
     ]
   },
@@ -2691,18 +2756,10 @@
         "target": 51
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "agility",
-        "change": "+2"
-      },
-      {
-        "attr": "luck",
-        "change": "+2"
-      },
-      {
-        "attr": "gold",
-        "change": "+5"
+        "Z": 2,
+        "S": 2
       }
     ]
   },
@@ -2751,10 +2808,9 @@
         "target": 138
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": -1
+        "W": -1
       }
     ]
   },
@@ -2765,10 +2821,9 @@
         "target": 385
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "gold",
-        "change": "+20"
+        "zloto": 20
       }
     ]
   },
@@ -2981,13 +3036,7 @@
           "W": 6
         }
       ]
-    },
-    "effects": [
-      {
-        "attr": "enemy_agility",
-        "change": -2
-      }
-    ]
+    }
   },
   "217": {
     "text": "Spoglądasz na grubasy siedzące za stołem. Znowu niektóre znikają, inne pojawiają się. Na dobre zniknął gospodarz. Oj, już wiesz w czym rzecz. To jest eliksir niewidzialności. Masz teraz przewagę: grubasy nie widzą cię. Możesz skutecznie wymierzać ciosy mieczem. Postępujesz podobnie jak poprzednio, ale dwukrotnie rzucasz kostką dla jednego grubasa. Masz podwójną szansę wylosowania odpowiedniej liczby. Zajmujesz się dwoma grubasami. Gdy skończyłeś - patrz 26.",
@@ -3100,10 +3149,9 @@
         "condition": "not has_S"
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "gold",
-        "change": -10
+        "zloto": -10
       }
     ]
   },
@@ -3344,10 +3392,9 @@
         "target": 63
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": -1
+        "W": -1
       }
     ]
   },
@@ -3358,10 +3405,9 @@
         "target": 108
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": -1
+        "W": -1
       }
     ]
   },
@@ -3400,6 +3446,11 @@
     "edges": [
       {
         "target": 207
+      }
+    ],
+    "efekty": [
+      {
+        "posilek": true
       }
     ]
   },
@@ -3464,10 +3515,9 @@
         "target": 385
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "gold",
-        "change": "+10"
+        "zloto": 10
       }
     ]
   },
@@ -3562,10 +3612,9 @@
         "target": 326
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": -2
+        "W": -2
       }
     ]
   },
@@ -3644,10 +3693,12 @@
         "target": 358
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": -2
+        "W": -2
+      },
+      {
+        "posilek": true
       }
     ]
   },
@@ -3676,10 +3727,9 @@
         "label": "nie wymieniasz"
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": -1
+        "W": -1
       }
     ]
   },
@@ -3707,6 +3757,11 @@
         "label": "Walcz z potworami",
         "target": "238",
         "return_to": "103"
+      }
+    ],
+    "efekty": [
+      {
+        "posilek": true
       }
     ]
   },
@@ -3925,10 +3980,9 @@
         "target": 330
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": -2
+        "W": -2
       }
     ]
   },
@@ -3946,6 +4000,11 @@
       {
         "target": 207
       }
+    ],
+    "efekty": [
+      {
+        "posilek": true
+      }
     ]
   },
   "294": {
@@ -3958,10 +4017,9 @@
     "items_found": [
       "eliksir niewidzialności"
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "luck",
-        "change": "+2"
+        "S": 2
       }
     ]
   },
@@ -3983,6 +4041,11 @@
     "edges": [
       {
         "target": 39
+      }
+    ],
+    "efekty": [
+      {
+        "posilek": true
       }
     ]
   },
@@ -4104,10 +4167,9 @@
         "target": 109
       }
     ],
-    "effects": [
+    "efekty": [
       {
-        "attr": "luck",
-        "change": "+2"
+        "S": 2
       }
     ]
   },
@@ -4123,12 +4185,6 @@
       ],
       "hero_Z_bonus": -2
     },
-    "effects": [
-      {
-        "attr": "agility",
-        "change": -2
-      }
-    ],
     "edges": [
       {
         "target": "214"
@@ -4138,6 +4194,11 @@
       {
         "attr": "luck",
         "change": "+2"
+      }
+    ],
+    "efekty": [
+      {
+        "S": 2
       }
     ]
   },
@@ -4308,19 +4369,15 @@
   },
   "318": {
     "text": "Wyciągasz miecz. Bierzesz szeroki zamach. Nagle z przeraźliwym łoskotem rozchyla się sklepienie pieczary. Pokój zalewa niezwykła jasność. To tylko dzienne światło. Które zapewne potrzebne jest sałacie, ale ciebie oślepia tak, że wycofujesz się z pokoju drzwiami, którymi wszedłeś. Tracisz 3W i 2Z. Patrz 90.",
-    "effects": [
-      {
-        "attr": "stamina",
-        "change": -3
-      },
-      {
-        "attr": "agility",
-        "change": -2
-      }
-    ],
     "edges": [
       {
         "target": 90
+      }
+    ],
+    "efekty": [
+      {
+        "W": -3,
+        "Z": -2
       }
     ]
   },
@@ -4401,15 +4458,17 @@
   },
   "326": {
     "text": "Teraz dobierasz się do rozsypanego złota. Jest tego aż 30 sztuk! Dostajesz +3S. Ruszasz ku wyjściu - patrz 385.",
-    "effects": [
-      {
-        "attr": "luck",
-        "change": "+3"
-      }
-    ],
     "edges": [
       {
         "target": 385
+      }
+    ],
+    "efekty": [
+      {
+        "zloto": 30
+      },
+      {
+        "S": 3
       }
     ]
   },
@@ -4473,15 +4532,15 @@
         }
       ]
     },
-    "effects": [
-      {
-        "attr": "luck",
-        "change": "+1"
-      }
-    ],
     "edges": [
       {
         "target": "6"
+      }
+    ],
+    "efekty": [
+      {
+        "W": -2,
+        "S": 1
       }
     ]
   },
@@ -4569,6 +4628,11 @@
       {
         "target": 33
       }
+    ],
+    "efekty": [
+      {
+        "posilek": true
+      }
     ]
   },
   "340": {
@@ -4590,15 +4654,14 @@
         }
       ]
     },
-    "effects": [
-      {
-        "attr": "luck",
-        "change": 1
-      }
-    ],
     "edges": [
       {
         "target": "195"
+      }
+    ],
+    "efekty": [
+      {
+        "Z": 1
       }
     ]
   },
@@ -4658,15 +4721,14 @@
   },
   "346": {
     "text": "W jednej z potyczek między trollami a goblinami, ci pierwsi zdobyli imponujący młot wojenny. Znalazłeś go w zbrojowni. Spróbuj zrobić z niego użytek. Chwytasz za trzon, robisz półobrót i... traach. Łamie się drewniane stylisko: -1W. Co prędzej ratuj się Ucieczką - patrz 275.",
-    "effects": [
-      {
-        "attr": "stamina",
-        "change": -1
-      }
-    ],
     "edges": [
       {
         "target": 275
+      }
+    ],
+    "efekty": [
+      {
+        "W": -1
       }
     ]
   },
@@ -4705,18 +4767,17 @@
   },
   "350": {
     "text": "Jeśli jesteś w tej komnacie po raz pierwszy, dolicz sobie +2S i patrz 71, jeśli nie - patrz 286.",
-    "effects": [
-      {
-        "attr": "luck",
-        "change": 2
-      }
-    ],
     "edges": [
       {
         "target": 71
       },
       {
         "target": 286
+      }
+    ],
+    "efekty": [
+      {
+        "S": 2
       }
     ]
   },
@@ -4730,12 +4791,6 @@
   },
   "352": {
     "text": "Ziemia drży ponownie, rozstępuje się. Wali się strop. Wpadasz w szczelinę. To koniec.",
-    "effects": [
-      {
-        "attr": "end",
-        "change": true
-      }
-    ],
     "edges": [
       {
         "label": "Koniec przygody",
@@ -4937,12 +4992,6 @@
   },
   "370": {
     "text": "To już koniec twojej przygody. Pochłania cię czerwona otchłań.",
-    "effects": [
-      {
-        "attr": "end",
-        "change": true
-      }
-    ],
     "edges": [
       {
         "label": "Koniec przygody",
@@ -4974,12 +5023,6 @@
   },
   "373": {
     "text": "To nieodpowiedni zestaw kluczy. Jeśli wykorzystałeś już wszystkie kombinacje, nie odnajdując właściwej - to już koniec!",
-    "effects": [
-      {
-        "attr": "end",
-        "change": true
-      }
-    ],
     "edges": [
       {
         "label": "Spróbuj innej kombinacji kluczy",
@@ -4999,6 +5042,11 @@
       {
         "target": 178
       }
+    ],
+    "efekty": [
+      {
+        "posilek": true
+      }
     ]
   },
   "375": {
@@ -5017,19 +5065,15 @@
   },
   "376": {
     "text": "Drzwi same się otwierają - patrz 16. Otrzymujesz +1Z i +2S.",
-    "effects": [
-      {
-        "attr": "willpower",
-        "change": 1
-      },
-      {
-        "attr": "luck",
-        "change": 2
-      }
-    ],
     "edges": [
       {
         "target": 16
+      }
+    ],
+    "efekty": [
+      {
+        "Z": 1,
+        "S": 2
       }
     ]
   },
@@ -5068,18 +5112,17 @@
   },
   "380": {
     "text": "Czy chcesz przeszukać pokój? Jeśli tak - patrz 118, jeśli nie - patrz 372. Za odwagę otrzymujesz +1Z.",
-    "effects": [
-      {
-        "attr": "willpower",
-        "change": 1
-      }
-    ],
     "edges": [
       {
         "target": 118
       },
       {
         "target": 372
+      }
+    ],
+    "efekty": [
+      {
+        "Z": 1
       }
     ]
   },
@@ -5099,6 +5142,11 @@
     "edges": [
       {
         "target": 134
+      }
+    ],
+    "efekty": [
+      {
+        "posilek": true
       }
     ]
   },
