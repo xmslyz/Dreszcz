@@ -100,10 +100,6 @@
   },
   "7": {
     "text": "Może ma Pan na składzie coś, co mógłbym ofiarować w prezencie?\" - mówisz. \"Jak mógłbym nie mieć? Jestem zawsze przygotowany na takie zachcianki. Mam uroczy drewniany pal i słój żrącego pyłu. Zapakować ze wstążeczką?\". Patrz 219.",
-    "items": [
-      "drewniany pal",
-      "słój żrącego pyłu"
-    ],
     "edges": [
       {
         "label": "Wybierz prezent",
@@ -168,13 +164,17 @@
   },
   "12": {
     "text": "Wyjmujesz zaczarowany szmaragd. Ból rozrywa ci plecy, pęka skórzana kurtka. Z pleców wyrastają ci szerokie, sinoszare skrzydła. Unosisz się. Lądujesz na wymarzonym brzegu przepaści. Czar pryska - patrz 288.",
-    "items_out": [
-      "szmaragd"
-    ],
     "edges": [
       {
         "label": "Lądujesz na drugim brzegu",
         "target": "288"
+      }
+    ],
+    "efekty": [
+      {
+        "usun": [
+          "szmaragd"
+        ]
       }
     ]
   },
@@ -265,11 +265,6 @@
   },
   "19": {
     "text": "KRASNOLUDY żegnają cię serdecznie i wręczają na drogę dwie główki sałaty. Wystarczą na 1 Posiłek. Odprowadzają cię do wschodnich drzwi. Doliczasz sobie +2S. Patrz 141.",
-    "items_in": [
-      {
-        "Posilek": 1
-      }
-    ],
     "stat_changes": {
       "luck": 2
     },
@@ -377,9 +372,6 @@
   },
   "26": {
     "text": "Za celne trafienie każdego grubasa dostajesz 5 sztuk złota. Patrz 171.",
-    "rewards": [
-      "gold"
-    ],
     "edges": [
       {
         "label": "Kontynuuj",
@@ -446,9 +438,6 @@
   },
   "31": {
     "text": "Poświeć latarnią niżej. Rozgarnij mieczem to padło. A widzisz - znalazłeś 5 sztuk złota! Jeśli to ci nie wystarcza - patrz 119. Jeśli chcesz opuścić komnatę - patrz 102.",
-    "rewards": [
-      "5 złota"
-    ],
     "edges": [
       {
         "label": "Chcesz więcej",
@@ -560,18 +549,33 @@
   },
   "37": {
     "text": "Jaką tarczę wybierasz: metalową, paradną, czy skórzaną? Wpisz swój wybór na \"Listę ekwipunku\" - patrz 324.",
-    "choices": [
-      "metalowa",
-      "paradna",
-      "skórzana"
-    ],
-    "add_to_inventory": "tarcza",
     "edges": [
       {
         "label": "Wybierz tarczę",
         "target": "324"
       }
-    ]
+    ],
+    "efekty": [
+      {
+        "dodaj": [
+          "metalowa tarcza"
+        ],
+        "opcja": "Weź: metalowa tarcza"
+      },
+      {
+        "dodaj": [
+          "paradna tarcza"
+        ],
+        "opcja": "Weź: paradna tarcza"
+      },
+      {
+        "dodaj": [
+          "skórzana tarcza"
+        ],
+        "opcja": "Weź: skórzana tarcza"
+      }
+    ],
+    "limit_opcji": 1
   },
   "38": {
     "text": "Korytarz prowadzi najpierw na północ, a później łagodnym łukiem skręca ku wschodowi. Rozszerza się nieco i kończy schodami biegnącymi w dół. Stajesz przed drzwiami pokrytymi wyszukanymi ozdobami. Czy byłeś już za tymi drzwiami? Jeśli tak - patrz 167, jeśli nie - patrz 328.",
@@ -672,10 +676,6 @@
   },
   "45": {
     "text": "Kierujesz się w stronę fontanny. Nabierasz wody. Jest zaczarowana. Chowasz naczynie do plecaka. Spostrzegasz, że fontanna jest już pusta. Dostajesz +2S. Patrz 251.",
-    "rewards": [
-      "magic_water",
-      "+2 Stamina"
-    ],
     "edges": [
       {
         "label": "Kontynuuj",
@@ -685,6 +685,11 @@
     "efekty": [
       {
         "S": 2
+      },
+      {
+        "dodaj": [
+          "naczynie z zaczarowaną wodą"
+        ]
       }
     ]
   },
@@ -729,17 +734,18 @@
   },
   "49": {
     "text": "Możesz wziąć tę księgę ze sobą (wpisz na \"Listę ekwipunku\") albo ją zostawić. Patrz 286.",
-    "choices": [
-      "Zabrać księgę",
-      "Zostawić księgę"
-    ],
-    "inventory_add_optional": [
-      "Księga"
-    ],
     "edges": [
       {
         "label": "Dalej",
         "target": "286"
+      }
+    ],
+    "efekty": [
+      {
+        "dodaj": [
+          "księga czarów"
+        ],
+        "opcja": "Weź: księga czarów"
       }
     ]
   },
@@ -817,15 +823,26 @@
   },
   "55": {
     "text": "Dajesz złoto, bierzesz pal, słój albo jedno i drugie - patrz 196.",
-    "choices": [
-      "pal",
-      "słój",
-      "oba"
-    ],
     "edges": [
       {
         "label": "Po zakupie",
         "target": 196
+      }
+    ],
+    "efekty": [
+      {
+        "dodaj": [
+          "drewniany pal"
+        ],
+        "opcja": "Kup: drewniany pal (15 zł)",
+        "zloto": -15
+      },
+      {
+        "dodaj": [
+          "słój żrącego pyłu"
+        ],
+        "opcja": "Kup: słój żrącego pyłu (10 zł)",
+        "zloto": -10
       }
     ]
   },
@@ -893,7 +910,13 @@
     "edges": [
       {
         "label": "Tak",
-        "target": 262
+        "target": "262",
+        "efekt": {
+          "zloto": 20,
+          "usun": [
+            "blaszany motyl"
+          ]
+        }
       },
       {
         "label": "Nie",
@@ -1451,6 +1474,11 @@
     "efekty": [
       {
         "S": 2
+      },
+      {
+        "dodaj": [
+          "klucz 12"
+        ]
       }
     ]
   },
@@ -1507,10 +1535,6 @@
       {
         "target": 249
       }
-    ],
-    "items": [
-      "drewniany pal",
-      "słój żrącego pyłu"
     ]
   },
   "101": {
@@ -1561,13 +1585,6 @@
       {
         "target": 121
       }
-    ],
-    "items_in": [
-      "złoto",
-      "smoczek"
-    ],
-    "items_out": [
-      "motyl"
     ]
   },
   "105": {
@@ -1757,40 +1774,44 @@
     "text": "Wybierasz: ·miecz - patrz 232, ·kościany kordelas - patrz 324, ·rękawice - patrz 95, ·tarczę - patrz 37, ·hełm - patrz 298, ·młot - patrz 324.",
     "edges": [
       {
-        "target": 232,
+        "target": "232",
         "label": "miecz"
       },
       {
-        "target": 324,
-        "label": "kościany kordelas"
+        "target": "324",
+        "label": "kościany kordelas",
+        "efekt": {
+          "dodaj": [
+            "kościany kordelas"
+          ]
+        }
       },
       {
-        "target": 95,
-        "label": "rękawice"
+        "target": "95",
+        "label": "rękawice",
+        "efekt": {
+          "dodaj": [
+            "rękawice"
+          ]
+        }
       },
       {
-        "target": 37,
+        "target": "37",
         "label": "tarcza"
       },
       {
-        "target": 298,
+        "target": "298",
         "label": "hełm"
       },
       {
-        "target": 324,
-        "label": "młot"
+        "target": "324",
+        "label": "młot",
+        "efekt": {
+          "dodaj": [
+            "młot"
+          ]
+        }
       }
-    ],
-    "items": [
-      "miecz",
-      "kościany kordelas",
-      "rękawice",
-      "tarcza",
-      "hełm",
-      "młot"
-    ],
-    "items_flags": [
-      "max_items=2"
     ]
   },
   "116": {
@@ -1843,14 +1864,27 @@
         "label": "opuszczasz komnatę"
       }
     ],
-    "items": [
-      "lina z hakiem",
-      "pusta flasza",
-      "skalp Wilkołaka"
+    "efekty": [
+      {
+        "dodaj": [
+          "lina z hakiem"
+        ],
+        "opcja": "Weź: lina z hakiem"
+      },
+      {
+        "dodaj": [
+          "pusta omszała flasza"
+        ],
+        "opcja": "Weź: pusta omszała flasza"
+      },
+      {
+        "dodaj": [
+          "skalp WILKOŁAKA"
+        ],
+        "opcja": "Weź: skalp WILKOŁAKA"
+      }
     ],
-    "items_flags": [
-      "max_items=2"
-    ]
+    "limit_opcji": 2
   },
   "120": {
     "text": "Idziesz na zachód. Korytarz łagodnie skręca w prawo i teraz prowadzi już na północ. Widzisz przed sobą skrzyżowanie - patrz 64.",
@@ -1946,8 +1980,13 @@
         "target": 108
       }
     ],
-    "items": [
-      "pęk kluczy"
+    "efekty": [
+      {
+        "dodaj": [
+          "pęk kluczy"
+        ],
+        "opcja": "Weź: pęk kluczy"
+      }
     ]
   },
   "129": {
@@ -2109,8 +2148,13 @@
         "target": 320
       }
     ],
-    "items": [
-      "klucz 93"
+    "efekty": [
+      {
+        "dodaj": [
+          "klucz 93"
+        ],
+        "opcja": "Weź: klucz 93"
+      }
     ]
   },
   "143": {
@@ -2168,9 +2212,13 @@
         "target": 196
       }
     ],
-    "items": [
-      "drewniany pal",
-      "słoik żrącego pyłu"
+    "efekty": [
+      {
+        "dodaj": [
+          "drewniany pal",
+          "słój żrącego pyłu"
+        ]
+      }
     ]
   },
   "148": {
@@ -2573,12 +2621,15 @@
         "target": 330
       }
     ],
-    "items": [
-      "ognista kula"
-    ],
     "efekty": [
       {
         "S": 3
+      },
+      {
+        "dodaj": [
+          "ognista kula"
+        ],
+        "opcja": "Weź: ognista kula"
       }
     ]
   },
@@ -2605,8 +2656,13 @@
         "target": 120
       }
     ],
-    "items": [
-      "klucz 45"
+    "efekty": [
+      {
+        "dodaj": [
+          "klucz 45"
+        ],
+        "opcja": "Weź: klucz 45"
+      }
     ]
   },
   "181": {
@@ -2620,9 +2676,6 @@
         "target": 32,
         "condition": "not has_rope"
       }
-    ],
-    "items_lost": [
-      "pęk kluczy"
     ]
   },
   "182": {
@@ -2756,13 +2809,39 @@
         "condition": "has_container"
       }
     ],
-    "items_found": [
-      "kość potwora",
-      "słoik z wszystkożerami",
-      "motyl",
-      "włócznia",
-      "kluczyk"
-    ]
+    "efekty": [
+      {
+        "dodaj": [
+          "kość potwora"
+        ],
+        "opcja": "Weź: kość potwora"
+      },
+      {
+        "dodaj": [
+          "słój z wszystkożerami"
+        ],
+        "opcja": "Weź: słój z wszystkożerami"
+      },
+      {
+        "dodaj": [
+          "blaszany motyl"
+        ],
+        "opcja": "Weź: blaszany motyl"
+      },
+      {
+        "dodaj": [
+          "włócznia"
+        ],
+        "opcja": "Weź: włócznia"
+      },
+      {
+        "dodaj": [
+          "błyszczący kluczyk"
+        ],
+        "opcja": "Weź: błyszczący kluczyk"
+      }
+    ],
+    "limit_opcji": 1
   },
   "193": {
     "text": "Za jednego pokonanego potwora dostajesz 5 sztuk złota. Za odwagę dostajesz +2Z, a za szczęście +2S. Patrz 51.",
@@ -3244,12 +3323,22 @@
     "text": "Jeśli miecz jest pierwsza wybraną przez ciebie bronią - patrz 271, a jeśli drugą - patrz 68.",
     "edges": [
       {
-        "target": 271,
-        "condition": "first_weapon"
+        "target": "271",
+        "condition": "first_weapon",
+        "wizyty": [
+          "115",
+          1
+        ],
+        "label": "To pierwsza wybrana rzecz"
       },
       {
-        "target": 68,
-        "condition": "second_weapon"
+        "target": "68",
+        "condition": "second_weapon",
+        "wizyty": [
+          "115",
+          2
+        ],
+        "label": "To druga wybrana rzecz"
       }
     ]
   },
@@ -3432,12 +3521,26 @@
     "text": "Nic z tego. Ale KRASNAL inaczej formułuje swą ofertę: albo 20 sztuk złota, albo smoczek. Co wolisz! Złoto - patrz 289, smoczek - patrz 369. Wycofujesz się z transakcji - patrz 81.",
     "edges": [
       {
-        "target": 289,
-        "label": "płacisz złoto"
+        "target": "289",
+        "label": "płacisz złoto",
+        "efekt": {
+          "zloto": 20,
+          "usun": [
+            "drewniany pal"
+          ]
+        }
       },
       {
-        "target": 369,
-        "label": "dajesz smoczek"
+        "target": "369",
+        "label": "dajesz smoczek",
+        "efekt": {
+          "usun": [
+            "drewniany pal"
+          ],
+          "dodaj": [
+            "smoczek"
+          ]
+        }
       },
       {
         "target": 81,
@@ -3477,10 +3580,6 @@
       {
         "target": 7
       }
-    ],
-    "items_found": [
-      "drewniany pal",
-      "słoik żrącego pyłu"
     ]
   },
   "250": {
@@ -3851,8 +3950,15 @@
         "target": 109
       }
     ],
-    "items_found": [
-      "klucz 122"
+    "efekty": [
+      {
+        "usun": [
+          "błyszczący kluczyk"
+        ],
+        "dodaj": [
+          "klucz 122"
+        ]
+      }
     ]
   },
   "279": {
@@ -4031,12 +4137,15 @@
         "target": 171
       }
     ],
-    "items_found": [
-      "eliksir niewidzialności"
-    ],
     "efekty": [
       {
         "S": 2
+      },
+      {
+        "dodaj": [
+          "eliksir niewidzialności"
+        ],
+        "opcja": "Weź: eliksir niewidzialności"
       }
     ]
   },
@@ -4088,6 +4197,13 @@
     "edges": [
       {
         "target": 324
+      }
+    ],
+    "efekty": [
+      {
+        "dodaj": [
+          "hełm"
+        ]
       }
     ]
   },
@@ -4189,6 +4305,11 @@
     "efekty": [
       {
         "S": 2
+      },
+      {
+        "dodaj": [
+          "naczynie z zaczarowaną wodą"
+        ]
       }
     ]
   },
@@ -4207,12 +4328,6 @@
     "edges": [
       {
         "target": "214"
-      }
-    ],
-    "reward": [
-      {
-        "attr": "luck",
-        "change": "+2"
       }
     ],
     "efekty": [
@@ -4464,10 +4579,20 @@
     "text": "Jeśli jest pierwszą wybraną przez ciebie rzeczą - patrz 115, jeśli drugą - patrz 68.",
     "edges": [
       {
-        "target": 115
+        "target": "115",
+        "wizyty": [
+          "115",
+          1
+        ],
+        "label": "To pierwsza wybrana rzecz"
       },
       {
-        "target": 68
+        "target": "68",
+        "wizyty": [
+          "115",
+          2
+        ],
+        "label": "To druga wybrana rzecz"
       }
     ]
   },
@@ -4516,12 +4641,16 @@
   },
   "329": {
     "text": "Opuszczasz się na dno szczeliny. Zabierasz klucze. Na jednym z nich dostrzegasz wygrawerowany numer - 70. Wdrapujesz się na górę. Lina osuwa się w przepaść - patrz 32.",
-    "items_found": [
-      "klucz 70"
-    ],
     "edges": [
       {
         "target": 32
+      }
+    ],
+    "efekty": [
+      {
+        "dodaj": [
+          "klucz 70"
+        ]
       }
     ]
   },
@@ -4642,7 +4771,16 @@
     "text": "KRASNAL oferuje ci 30 sztuk złota i smoczek. Akceptujesz? Tak - patrz 104, nie - patrz 300.",
     "edges": [
       {
-        "target": 104
+        "target": "104",
+        "efekt": {
+          "zloto": 30,
+          "usun": [
+            "blaszany motyl"
+          ],
+          "dodaj": [
+            "smoczek"
+          ]
+        }
       },
       {
         "target": 300
@@ -4833,7 +4971,13 @@
     "text": "KRASNAL oferuje ci za motyla 10 sztuk złota, akceptujesz cenę? Tak - patrz 262, nie - patrz 60.",
     "edges": [
       {
-        "target": 262
+        "target": "262",
+        "efekt": {
+          "zloto": 10,
+          "usun": [
+            "blaszany motyl"
+          ]
+        }
       },
       {
         "target": 60
@@ -5232,6 +5376,13 @@
         "label": "Zwycięstwo!",
         "target": "END",
         "ending": "victory"
+      }
+    ],
+    "efekty": [
+      {
+        "dodaj": [
+          "opis labiryntu"
+        ]
       }
     ]
   }
