@@ -36,7 +36,7 @@ function nowyBohater(kostka = k6) {
   const W = rzuty.W[0] + rzuty.W[1] + 12;
   const S = rzuty.S[0] + 6;
   // rzuty zachowujemy tylko po to, by pokazać kości na ekranie startowym
-  return { Z, W, S, start: { Z, W, S }, prowiant: 8, rzuty };
+  return { Z, W, S, start: { Z, W, S }, prowiant: 8, zloto: 0, rzuty };
 }
 
 /**
@@ -60,6 +60,10 @@ function nowaGra(bohater = null) {
     koniec: null,    // null = gra trwa; "porazka" albo "zwyciestwo"
     bohater,
     walka: null,     // trwająca walka albo null
+    zastosowane: [], // paragrafy, których efekty już działały (raz na grę)
+    wybrane: [],     // wzięte efekty opcjonalne, np. "89:0"
+    posilki: [],     // paragrafy, w których zjedzono posiłek
+    zmiany: [],      // opis ostatnich zmian do pokazania na ekranie
   };
 }
 
@@ -87,7 +91,7 @@ function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null) {
   }
 
   const walka = ksiega ? rozpocznijWalke(ksiega[cel]) : null;
-  return { ...stan, akapit: cel, stos, historia: [...stan.historia, cel], walka };
+  return { ...stan, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany: [] };
 }
 
 // ---------------------------------------------------------------- walka
@@ -231,6 +235,91 @@ function tekstAkapitu(stan, akapit) {
   return `${przed} ${po}`;
 }
 
+// ---------------------------------------------------------------- efekty
+
+const CECHY = ["Z", "W", "S"];
+
+/**
+ * Zmienia cechy bohatera według jednego efektu, np. {"S": 2, "zloto": 3}.
+ * Cechy nie przekraczają poziomu początkowego i nie spadają poniżej 0
+ * (zasady V). "W": "pol" oznacza połowę Wytrzymałości (paragraf 110).
+ * Zwraca nowego bohatera i listę opisów zmian.
+ */
+function zmienCechy(bohater, efekt) {
+  const b = { ...bohater, zloto: bohater.zloto ?? 0 };
+  const opisy = [];
+  for (const cecha of CECHY) {
+    if (!(cecha in efekt)) continue;
+    const przed = b[cecha];
+    const zmiana = efekt[cecha] === "pol" ? -Math.ceil(przed / 2) : efekt[cecha];
+    b[cecha] = Math.min(Math.max(przed + zmiana, 0), b.start[cecha]);
+    const naprawde = b[cecha] - przed;  // po przycięciu do poziomu początkowego
+    if (naprawde !== 0) opisy.push(`${naprawde > 0 ? "+" : "−"}${Math.abs(naprawde)} ${cecha}`);
+  }
+  if ("zloto" in efekt) {
+    b.zloto = Math.max(b.zloto + efekt.zloto, 0);
+    opisy.push(`${efekt.zloto >= 0 ? "+" : "−"}${Math.abs(efekt.zloto)} złota`);
+  }
+  if ("prowiant" in efekt) {
+    b.prowiant = Math.max(b.prowiant + efekt.prowiant, 0);
+    opisy.push(`${efekt.prowiant >= 0 ? "+" : "−"}${Math.abs(efekt.prowiant)} posiłek`);
+  }
+  return { bohater: b, opisy };
+}
+
+/** Efekty działają dopiero, gdy nie trwa walka (po walce – po zwycięstwie). */
+function efektyGotowe(stan) {
+  if (stan.koniec) return false;
+  return !stan.walka || stan.walka.zakonczona;
+}
+
+const czyAutomatyczny = (e) => !e.opcja && !e.posilek;
+
+/**
+ * Stosuje efekty automatyczne bieżącego paragrafu – raz na grę.
+ * Wywołujemy po każdym ruchu; gdy nie ma czego robić, zwraca ten sam stan.
+ */
+function zastosujEfekty(stan, akapit) {
+  const efekty = akapit?.efekty ?? [];
+  const zastosowane = stan.zastosowane ?? [];
+  if (!efekty.length || zastosowane.includes(stan.akapit) || !efektyGotowe(stan)) return stan;
+  let bohater = stan.bohater;
+  const zmiany = [];
+  for (const e of efekty.filter(czyAutomatyczny)) {
+    const wynik = zmienCechy(bohater, e);
+    bohater = wynik.bohater;
+    zmiany.push(...wynik.opisy);
+  }
+  const nowy = { ...stan, bohater, zmiany, zastosowane: [...zastosowane, stan.akapit] };
+  return bohater.W <= 0 ? { ...nowy, koniec: "porazka" } : nowy;
+}
+
+/** Efekty do wyboru („Możesz je wziąć”), jeszcze niewzięte. */
+function dostepneOpcje(stan, akapit) {
+  if (!efektyGotowe(stan)) return [];
+  return (akapit?.efekty ?? [])
+    .map((efekt, i) => ({ efekt, klucz: `${stan.akapit}:${i}` }))
+    .filter(({ efekt, klucz }) => efekt.opcja && !(stan.wybrane ?? []).includes(klucz));
+}
+
+function wezOpcje(stan, opcja) {
+  const { bohater, opisy } = zmienCechy(stan.bohater, opcja.efekt);
+  return { ...stan, bohater, zmiany: opisy, wybrane: [...(stan.wybrane ?? []), opcja.klucz] };
+}
+
+/** Posiłek tylko tam, gdzie tekst pozwala (zasady VI): +4 W, −1 Prowiant. */
+function moznaJesc(stan, akapit) {
+  return efektyGotowe(stan)
+    && (akapit?.efekty ?? []).some((e) => e.posilek)
+    && stan.bohater.prowiant > 0
+    && !(stan.posilki ?? []).includes(stan.akapit);
+}
+
+function zjedzPosilek(stan) {
+  const { bohater, opisy } = zmienCechy(stan.bohater, { W: 4, prowiant: -1 });
+  return { ...stan, bohater, zmiany: opisy, posilki: [...(stan.posilki ?? []), stan.akapit] };
+}
+
 /** Etykieta przycisku – gdy w danych brak "label", pokazujemy „Patrz N”. */
 function etykieta(przejscie) {
   if (przejscie.label) return przejscie.label;
@@ -244,5 +333,6 @@ if (typeof module !== "undefined") {
     START, k6, rzut2k, nowyBohater, sss, nowaGra, wykonajPrzejscie,
     rozpocznijWalke, biezacyPotwor, rundaWalki, moznaUciec, ucieczka,
     dostepnePrzejscia, tekstAkapitu, etykieta,
+    zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,
   };
 }

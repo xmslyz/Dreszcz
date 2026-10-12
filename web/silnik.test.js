@@ -132,3 +132,45 @@ test("tekst po „|” widać dopiero po walce", () => {
   st = s.rundaWalki(st, akapit.combat, false, kostka(1, 1, 6, 6));
   assert.strictEqual(s.tekstAkapitu(st, akapit), "ORK naciera. ORK Z:6 W:4 Rozglądasz się.");
 });
+
+// ---------------------------------------------------------------- efekty
+const bohaterTestowy = () => ({ Z: 8, W: 15, S: 7, start: { Z: 9, W: 20, S: 9 }, prowiant: 8, zloto: 0 });
+
+test("efekt nie przekracza poziomu początkowego", () => {
+  const { bohater, opisy } = s.zmienCechy(bohaterTestowy(), { S: 5, zloto: 3 });
+  assert.strictEqual(bohater.S, 9);
+  assert.strictEqual(bohater.zloto, 3);
+  assert.deepStrictEqual(opisy, ["+2 S", "+3 złota"]);  // przycięte do 9
+});
+
+test("efekty automatyczne działają raz na grę", () => {
+  const akapit = { efekty: [{ S: 2 }] };
+  let st = { ...s.nowaGra(bohaterTestowy()), akapit: "89" };
+  st = s.zastosujEfekty(st, akapit);
+  assert.strictEqual(st.bohater.S, 9);
+  st = { ...st, bohater: { ...st.bohater, S: 5 } };
+  assert.strictEqual(s.zastosujEfekty(st, akapit).bohater.S, 5);
+});
+
+test("efekty czekają na koniec walki", () => {
+  const akapit = { efekty: [{ S: 1 }], combat: { monsters: [{ name: "TROLL", Z: 8, W: 8 }] } };
+  const st = { ...s.nowaGra(bohaterTestowy()), walka: s.rozpocznijWalke(akapit) };
+  assert.strictEqual(s.zastosujEfekty(st, akapit).bohater.S, 7);
+});
+
+test("złoto do wzięcia jest opcją, a posiłek daje +4 W", () => {
+  const akapit = { efekty: [{ zloto: 3, opcja: "Weź" }, { posilek: true }] };
+  let st = { ...s.nowaGra(bohaterTestowy()), akapit: "89" };
+  const [opcja] = s.dostepneOpcje(st, akapit);
+  st = s.wezOpcje(st, opcja);
+  assert.strictEqual(st.bohater.zloto, 3);
+  assert.deepStrictEqual(s.dostepneOpcje(st, akapit), []);
+  assert.strictEqual(s.moznaJesc(st, akapit), true);
+  st = s.zjedzPosilek(st);
+  assert.deepStrictEqual([st.bohater.W, st.bohater.prowiant], [19, 7]);
+  assert.strictEqual(s.moznaJesc(st, akapit), false);
+});
+
+test("połowa Wytrzymałości (paragraf 110)", () => {
+  assert.strictEqual(s.zmienCechy(bohaterTestowy(), { W: "pol" }).bohater.W, 7);
+});

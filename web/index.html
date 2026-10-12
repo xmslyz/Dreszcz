@@ -40,6 +40,10 @@ h1 { font: 700 2rem/1 var(--f-tytul); margin: 0; letter-spacing: .02em; }
 .numer { font: 700 3.5rem/1 var(--f-tytul); color: var(--akcent); margin: 0; }
 .tekst { margin: 0; max-width: 65ch; hyphens: auto; }
 #akapit { display: grid; gap: 18px; }
+.zmiany { display: flex; flex-wrap: wrap; gap: 8px; }
+.zmiany span { font: 500 .85rem/1 var(--f-cyfry); padding: 6px 10px; border-radius: 999px; border: 1px solid var(--akcent); color: var(--akcent); }
+.zmiany span.strata { border-style: dashed; }
+.wybory .przycisk.cichy { justify-self: start; color: var(--atrament); }
 .wybory { display: grid; gap: 10px; }
 .wybor {
   display: flex; gap: 12px; align-items: baseline; text-align: left; width: 100%;
@@ -62,7 +66,7 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 /* Karta Wyprawy: cechy bohatera „aktualne / początkowe”, jak na papierowej karcie. */
 .karta-wyprawy {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2;
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px;
   background: var(--tlo); border-bottom: 1px solid var(--linia); padding-block: 8px;
 }
 .cecha { display: grid; gap: 2px; justify-items: center; }
@@ -169,7 +173,8 @@ function el(tag, klasa = "", tekst = "") {
 }
 
 function zmien(nowyStan, przewin = true) {
-  stan = nowyStan;
+  // Po każdym ruchu: efekty paragrafu (złoto, cechy) – silnik pilnuje, by raz.
+  stan = zastosujEfekty(nowyStan, ksiega[nowyStan.akapit]);
   zapisz();
   rysuj();
   if (przewin) window.scrollTo({ top: 0 });
@@ -198,7 +203,10 @@ function rysujKarte() {
   const p = el("div", "cecha");
   p.title = "Prowiant";
   p.append(el("b", "", "P"), el("span", "", String(b.prowiant)), el("small", "", "prowiant"));
-  karta.append(p);
+  const z = el("div", "cecha");
+  z.title = "Złoto";
+  z.append(el("b", "", "Zł"), el("span", "", String(b.zloto ?? 0)), el("small", "", "złoto"));
+  karta.append(p, z);
 }
 
 function rysuj() {
@@ -222,8 +230,25 @@ function rysuj() {
   box.append(el("p", "numer", stan.akapit));
   box.append(el("p", "tekst", p ? tekstAkapitu(stan, p) : `Brak paragrafu ${stan.akapit} w księdze.`));
   if (stan.walka) box.append(rysujWalke(p));
+  if (stan.zmiany?.length) {
+    const z = el("div", "zmiany");
+    stan.zmiany.forEach((opis) => z.append(el("span", opis.startsWith("−") ? "strata" : "", opis)));
+    box.append(z);
+  }
 
   const wybory = el("div", "wybory");
+  for (const opcja of dostepneOpcje(stan, p)) {
+    const b = el("button", "przycisk cichy", opcja.efekt.opcja);
+    b.type = "button";
+    b.addEventListener("click", () => zmien(wezOpcje(stan, opcja), false));
+    wybory.append(b);
+  }
+  if (moznaJesc(stan, p)) {
+    const b = el("button", "przycisk cichy", `Zjedz posiłek (+4 W, zostanie ${stan.bohater.prowiant - 1})`);
+    b.type = "button";
+    b.addEventListener("click", () => zmien(zjedzPosilek(stan), false));
+    wybory.append(b);
+  }
   for (const przejscie of dostepnePrzejscia(stan, p)) {
     if (przejscie.target === "KEYS_SUM") { wybory.append(poleKluczy(przejscie)); continue; }
     const b = el("button", "wybor");
