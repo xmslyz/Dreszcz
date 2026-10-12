@@ -313,6 +313,7 @@ function warunkiPozwalaja(stan, e) {
   const lista = (x) => (Array.isArray(x) ? x : [x]);         // "lina" albo ["napój", "woda"]
   if (e.ma && !lista(e.ma).some((r) => rzeczy.includes(r))) return false;
   if (e.nie_ma && lista(e.nie_ma).some((r) => rzeczy.includes(r))) return false;
+  if (e.ma_wszystkie && !e.ma_wszystkie.every((r) => rzeczy.includes(r))) return false;
   if (e.zloto_min && (stan.bohater?.zloto ?? 0) < e.zloto_min) return false;
   if (e.cecha_min && stan.bohater && stan.bohater[e.cecha_min[0]] < e.cecha_min[1]) return false;
   if (e.cecha_ponizej && stan.bohater && stan.bohater[e.cecha_ponizej[0]] >= e.cecha_ponizej[1]) return false;
@@ -321,10 +322,14 @@ function warunkiPozwalaja(stan, e) {
 
 function dostepnePrzejscia(stan, akapit) {
   if (czekaNaSSS(stan, akapit) || czekaNaKosci(stan, akapit)) return [];
-  const wszystkie = (akapit?.edges ?? [])
+  const doWyboru = (akapit?.edges ?? [])
     .filter((e) => pamiecPozwala(stan, e))
-    .filter((e) => e.sss === undefined || e.sss === stan.testSSS?.szczescie)
-    .filter((e) => warunkiPozwalaja(stan, e));
+    .filter((e) => e.sss === undefined || e.sss === stan.testSSS?.szczescie);
+  const spelnione = doWyboru.filter((e) => warunkiPozwalaja(stan, e));
+  // Zabezpieczenie przed „ślepą uliczką”: gdyby warunki przedmiotów odrzuciły
+  // wszystko (np. brak przedmiotu, którego zdobycia gra jeszcze nie obsługuje),
+  // pokaż przejścia bez tych warunków, zamiast zostawić gracza bez wyjścia.
+  const wszystkie = spelnione.length ? spelnione : doWyboru;
   const w = stan.walka;
   if (!w) return wszystkie;
   if (!w.zakonczona) return [];

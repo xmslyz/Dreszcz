@@ -344,3 +344,20 @@ test("napoje: 167 pyta o picie, 358 zużywa napój niewidzialności", () => {
   assert.strictEqual(przejscie.target, "343");
   assert.deepStrictEqual(s.wykonajPrzejscie(st, przejscie).bohater.ekwipunek, ["miecz"]);
 });
+
+test("63: tylko broń, którą masz; użyta broń znika z plecaka", () => {
+  const ksiega = JSON.parse(require("node:fs").readFileSync(require("node:path").join(__dirname, "..", "shiver.json"), "utf8"));
+  let st = { ...s.nowaGra({ ...bohaterTestowy(), ekwipunek: ["miecz", "metalowa tarcza"] }), akapit: "63" };
+  const wybory = s.dostepnePrzejscia(st, ksiega["63"]);
+  assert.deepStrictEqual(wybory.map((e) => e.target), ["216"]);
+  st = s.wykonajPrzejscie(st, wybory[0]);
+  assert.deepStrictEqual(st.bohater.ekwipunek, ["miecz"]);
+  st = { ...st, akapit: "63" };
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, ksiega["63"]).map((e) => e.target), ["275"]);
+});
+
+test("zabezpieczenie: gdy warunki odrzucą wszystko, gracz nie zostaje bez wyjścia", () => {
+  const akapit = { edges: [{ target: "321", ma: "motyl" }, { target: "9", ma: "pal" }] };
+  const st = { ...s.nowaGra({ ...bohaterTestowy(), ekwipunek: [] }), akapit: "22" };
+  assert.strictEqual(s.dostepnePrzejscia(st, akapit).length, 2);
+});
