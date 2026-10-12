@@ -191,3 +191,20 @@ test("graf wędrówki: odwiedziny, pętle i niezbadane wyjścia", () => {
   assert.strictEqual(g.krawedzie.length, 3);           // 1>25, 25>64, 64>25 – bez powtórek
   assert.strictEqual(s.pierwszeZdanie(ksiega["25"]), "Skrzyżowanie T.");
 });
+
+test("„czy już tu byłeś?” rozstrzyga historia (paragraf 331)", () => {
+  const akapit = { edges: [{ target: "59", byl_w: "11" }, { target: "11", nie_byl_w: "11" }] };
+  let st = { ...s.nowaGra(), historia: ["1", "331"], akapit: "331" };
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["11"]);
+  assert.strictEqual(s.pamiecRozstrzyga(st, akapit), true);
+  st = { ...st, historia: ["1", "331", "11", "40", "331"] };
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["59"]);
+});
+
+test("pierwsza wizyta w paragrafie (214, 350)", () => {
+  const akapit = { edges: [{ target: "65", pierwsza_wizyta: true }, { target: "172", pierwsza_wizyta: false }] };
+  let st = { ...s.nowaGra(), historia: ["1", "214"], akapit: "214" };
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["65"]);
+  st = { ...st, historia: ["1", "214", "65", "214"] };
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["172"]);
+});

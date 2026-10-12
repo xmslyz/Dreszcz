@@ -575,15 +575,16 @@
   },
   "38": {
     "text": "Korytarz prowadzi najpierw na północ, a później łagodnym łukiem skręca ku wschodowi. Rozszerza się nieco i kończy schodami biegnącymi w dół. Stajesz przed drzwiami pokrytymi wyszukanymi ozdobami. Czy byłeś już za tymi drzwiami? Jeśli tak - patrz 167, jeśli nie - patrz 328.",
-    "requires_memory": true,
     "edges": [
       {
         "label": "Już tu byłeś",
-        "target": "167"
+        "target": "167",
+        "byl_w": "328"
       },
       {
         "label": "Pierwszy raz",
-        "target": "328"
+        "target": "328",
+        "nie_byl_w": "328"
       }
     ]
   },
@@ -794,11 +795,13 @@
     "edges": [
       {
         "label": "Byłeś tu",
-        "target": 322
+        "target": "322",
+        "byl_w": "299"
       },
       {
         "label": "Nie byłeś tu",
-        "target": 299
+        "target": "299",
+        "nie_byl_w": "299"
       }
     ]
   },
@@ -1486,11 +1489,13 @@
     "edges": [
       {
         "label": "Byłeś tu",
-        "target": 259
+        "target": "259",
+        "byl_w": "182"
       },
       {
         "label": "Nie byłeś tu",
-        "target": 182
+        "target": "182",
+        "nie_byl_w": "182"
       }
     ]
   },
@@ -1899,12 +1904,14 @@
     "text": "Czy byłeś już w tej komnacie? Jeśli tak - patrz 261, jeśli nie - patrz 231.",
     "edges": [
       {
-        "target": 261,
-        "label": "byłeś"
+        "target": "261",
+        "label": "byłeś",
+        "byl_w": "231"
       },
       {
-        "target": 231,
-        "label": "nie byłeś"
+        "target": "231",
+        "label": "nie byłeś",
+        "nie_byl_w": "231"
       }
     ]
   },
@@ -2374,13 +2381,19 @@
     "text": "Korytarz prowadzi na wschód, potem skręca na północ i znowu na wschód. Po przejściu kilkunastu kroków widzisz przed sobą schody kończące się drzwiami. Prowadzą w dół. Podchodzisz do drzwi. Czy byłeś już tutaj?. Jeśli tak - patrz 290. Jeśli nie, zastanów się czy chcesz zobaczyć co kryje się za drzwiami. Chcesz - patrz 302, nie chcesz - patrz 253.",
     "edges": [
       {
-        "target": 290
+        "target": "290",
+        "byl_w": "302",
+        "label": "Byłeś już tutaj"
       },
       {
-        "target": 302
+        "target": "302",
+        "nie_byl_w": "302",
+        "label": "Chcesz zobaczyć, co jest za drzwiami"
       },
       {
-        "target": 253
+        "target": "253",
+        "nie_byl_w": "302",
+        "label": "Nie chcesz"
       }
     ]
   },
@@ -3003,12 +3016,14 @@
     "text": "Czy pierwszy raz przepłynąłeś z jednego brzegu na drugi? Jeśli tak - patrz 65, jeśli nie - patrz 172.",
     "edges": [
       {
-        "target": 65,
-        "condition": "first_time"
+        "target": "65",
+        "pierwsza_wizyta": true,
+        "label": "Pierwsza przeprawa przez jezioro"
       },
       {
-        "target": 172,
-        "condition": "not_first_time"
+        "target": "172",
+        "pierwsza_wizyta": false,
+        "label": "Kolejna przeprawa"
       }
     ]
   },
@@ -4138,12 +4153,14 @@
     "text": "Po pewnym czasie tunel zakręca na południe. Jeszcze parę kroków i we wschodniej ścianie korytarza dostrzegasz wąski otwór. Zapewne to wejście do pieczary. Czy już tam byłeś? Tak - patrz 203, nie - patrz 243.",
     "edges": [
       {
-        "target": 203,
-        "condition": "already_been"
+        "target": "203",
+        "byl_w": "243",
+        "label": "Byłeś już tutaj"
       },
       {
-        "target": 243,
-        "condition": "not_yet_been"
+        "target": "243",
+        "nie_byl_w": "243",
+        "label": "Jesteś tu pierwszy raz"
       }
     ]
   },
@@ -4243,12 +4260,14 @@
     "text": "Tylko dziesięć kroków dzieli cię od zmurszałych, drewnianych drzwi. Czy byłeś już za nimi? Jeśli tak - patrz 67, jeśli nie - patrz 17.",
     "edges": [
       {
-        "target": 67,
-        "condition": "already_been"
+        "target": "67",
+        "byl_w": "17",
+        "label": "Byłeś już tutaj"
       },
       {
-        "target": 17,
-        "condition": "not_yet_been"
+        "target": "17",
+        "nie_byl_w": "17",
+        "label": "Jesteś tu pierwszy raz"
       }
     ]
   },
@@ -4296,12 +4315,14 @@
     "text": "Wchodzisz do komnaty. Jeśli grałeś już z potworami - patrz 97, jeśli nie grałeś - patrz 18.",
     "edges": [
       {
-        "target": 97,
-        "condition": "already_played"
+        "target": "97",
+        "byl_w": "211",
+        "label": "Grałeś już z potworami"
       },
       {
-        "target": 18,
-        "condition": "not_played"
+        "target": "18",
+        "nie_byl_w": "211",
+        "label": "Nie grałeś jeszcze"
       }
     ]
   },
@@ -4514,10 +4535,14 @@
     "text": "Króciutki tunel prowadzi do jakiegoś pomieszczenia. Jeśli już w nim byłeś - patrz 59, jeśli nie - patrz 11.",
     "edges": [
       {
-        "target": 59
+        "target": "59",
+        "byl_w": "11",
+        "label": "Byłeś już tutaj"
       },
       {
-        "target": 11
+        "target": "11",
+        "nie_byl_w": "11",
+        "label": "Jesteś tu pierwszy raz"
       }
     ]
   },
@@ -4769,10 +4794,14 @@
     "text": "Jeśli jesteś w tej komnacie po raz pierwszy, dolicz sobie +2S i patrz 71, jeśli nie - patrz 286.",
     "edges": [
       {
-        "target": 71
+        "target": "71",
+        "pierwsza_wizyta": true,
+        "label": "Jesteś tu pierwszy raz"
       },
       {
-        "target": 286
+        "target": "286",
+        "pierwsza_wizyta": false,
+        "label": "Byłeś tu już wcześniej"
       }
     ],
     "efekty": [

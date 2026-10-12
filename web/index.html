@@ -311,6 +311,9 @@ function rysuj() {
     wybory.append(b);
   }
   box.append(wybory);
+  if (pamiecRozstrzyga(stan, p)) {
+    box.append(el("p", "uwaga", "Gra pamięta za Ciebie, gdzie już byłeś – pokazuję tylko prawdziwą odpowiedź."));
+  }
 }
 
 // ---------------------------------------------------------------- kości

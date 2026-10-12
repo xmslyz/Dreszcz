@@ -206,8 +206,30 @@ function ucieczka(stan, opis, uzyjSSS = false, kostka = k6, ksiega = null) {
  * Które przejścia pokazać? W czasie walki – żadne.
  * Po walce na określoną liczbę rund – według wyniku ostatniej rundy.
  */
+/**
+ * Pytania „czy już tu byłeś?” rozstrzyga gra – zna historię wędrówki.
+ *   byl_w / nie_byl_w: "11"  – czy paragraf 11 jest w historii,
+ *   pierwsza_wizyta: true/false – czy jesteśmy w tym paragrafie pierwszy raz.
+ * Przejścia bez takich pól zawsze przechodzą.
+ */
+function pamiecPozwala(stan, przejscie) {
+  const byl = (nr) => stan.historia.includes(String(nr));
+  if (przejscie.byl_w !== undefined && !byl(przejscie.byl_w)) return false;
+  if (przejscie.nie_byl_w !== undefined && byl(przejscie.nie_byl_w)) return false;
+  if (przejscie.pierwsza_wizyta !== undefined) {
+    const ileRazy = stan.historia.filter((nr) => nr === stan.akapit).length;
+    if (przejscie.pierwsza_wizyta !== (ileRazy === 1)) return false;
+  }
+  return true;
+}
+
+/** Czy gra ukryła jakąś odpowiedź, bo pamięta, gdzie byłeś? (do komentarza) */
+function pamiecRozstrzyga(stan, akapit) {
+  return (akapit?.edges ?? []).some((e) => !pamiecPozwala(stan, e));
+}
+
 function dostepnePrzejscia(stan, akapit) {
-  const wszystkie = akapit?.edges ?? [];
+  const wszystkie = (akapit?.edges ?? []).filter((e) => pamiecPozwala(stan, e));
   const w = stan.walka;
   if (!w) return wszystkie;
   if (!w.zakonczona) return [];
@@ -374,7 +396,7 @@ if (typeof module !== "undefined") {
     START, k6, rzut2k, nowyBohater, sss, nowaGra, wykonajPrzejscie,
     rozpocznijWalke, biezacyPotwor, rundaWalki, moznaUciec, ucieczka,
     dostepnePrzejscia, tekstAkapitu, etykieta,
-    wyjscia, grafWedrowki, pierwszeZdanie,
+    wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,
     zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,
   };
 }
