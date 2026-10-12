@@ -44,6 +44,7 @@ h1 { font: 700 2rem/1 var(--f-tytul); margin: 0; letter-spacing: .02em; }
 .ekwipunek summary { font: 500 .8rem/1 var(--f-cyfry); color: var(--przygaszony); letter-spacing: .06em; text-transform: uppercase; cursor: pointer; padding-block: 8px; }
 .ekwipunek ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
 .ekwipunek li { font-size: .95rem; padding: 4px 10px; border: 1px solid var(--linia); border-radius: 999px; background: var(--karta); }
+.ekwipunek li.kartka { border-style: dashed; font-family: var(--f-cyfry); font-size: .85rem; }
 .ekwipunek li.klucz { border-color: var(--akcent); font-family: var(--f-cyfry); font-size: .85rem; }
 .zmiany { display: flex; flex-wrap: wrap; gap: 8px; }
 .zmiany span { font: 500 .85rem/1 var(--f-cyfry); padding: 6px 10px; border-radius: 999px; border: 1px solid var(--akcent); color: var(--akcent); }
@@ -274,6 +275,8 @@ function rysujKarte() {
   szczegoly.querySelector("summary").textContent = `Ekwipunek (${rzeczy.length})`;
   const lista = document.getElementById("lista-rzeczy");
   lista.replaceChildren(...rzeczy.map((r) => el("li", r.startsWith("klucz ") ? "klucz" : "", r)));
+  // „Zapisz ten numer” – gra pamięta sama (stos powrotów); tu tylko pokazujemy kartkę.
+  for (const nr of stan.stos) lista.append(el("li", "kartka", `kartka: zapisany numer ${nr}`));
 }
 
 function rysuj() {
