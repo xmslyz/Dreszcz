@@ -121,6 +121,17 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 .kosc i { border-radius: 50%; background: transparent; margin: 1px; }
 .kosc i.on { background: var(--kosc-oczko); }
 .kosc.maly { --bok: 1.8rem; padding: 4px; }
+.kosc.pusta {
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  font: 600 1.1rem/1 var(--f-cyfry); color: var(--przygaszony);
+  border-style: dashed; box-shadow: none; background: transparent;
+}
+.kosc.pusta:not(:disabled) { border-color: var(--akcent); color: var(--akcent); }
+.kosc.pusta:disabled { opacity: .45; cursor: default; }
+.rzut-kosci { display: grid; gap: 10px; }
+.rzut-kosci .para { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.rzut-kosci .suma { font: 500 1.1rem/1 var(--f-cyfry); font-variant-numeric: tabular-nums; }
+.rzut-kosci .kosc { --bok: 3rem; padding: 6px; }
 .kosc.toczy { animation: toczy .45s cubic-bezier(.3,.7,.4,1); }
 @keyframes toczy {
   0% { transform: translateY(-10px) rotate(-200deg) scale(.85); }
@@ -329,6 +340,8 @@ function rysuj() {
     box.append(tacka);
   }
 
+  if (p?.rzut_kosci && !stan.walka) box.append(rysujRzutKosci(p));
+
   const wybory = el("div", "wybory");
   for (const opcja of dostepneOpcje(stan, p)) {
     const b = el("button", "przycisk cichy", opcja.efekt.opcja);
@@ -505,7 +518,37 @@ function rysujWalke(akapit) {
 }
 
 let animujRzut = false;
-let animujSSS = false;   // true tylko zaraz po kliknięciu „Sprawdź Swoje Szczęście”  // true tylko zaraz po kliknięciu „Atakuj”
+let animujSSS = false;
+let animujKosc = -1;     // numer kości, która właśnie została rzucona
+
+/**
+ * Rzut kośćmi w paragrafie (np. 112: cztery kości, suma ≥ 18).
+ * Każdą kość rzuca się osobno – dotknięciem pustej ścianki.
+ */
+function rysujRzutKosci(akapit) {
+  const { ile, opis } = akapit.rzut_kosci;
+  const oczka = oczkaTutaj(stan);
+  const sekcja = el("div", "rzut-kosci");
+  sekcja.append(el("p", "uwaga", opis));
+  const rzad = el("div", "para");
+  for (let i = 0; i < ile; i++) {
+    if (i < oczka.length) {
+      rzad.append(kosc(oczka[i], i === animujKosc));
+    } else {
+      const b = el("button", "kosc pusta", "?");
+      b.type = "button";
+      b.setAttribute("aria-label", `Rzuć kością ${i + 1}`);
+      b.disabled = i !== oczka.length;          // po kolei: najpierw pierwsza
+      b.addEventListener("click", () => { animujKosc = i; zmien(rzucKoscia(stan), false); });
+      rzad.append(b);
+    }
+  }
+  animujKosc = -1;
+  const suma = oczka.reduce((a, b) => a + b, 0);
+  rzad.append(el("span", "suma", oczka.length ? `= ${suma}` : ""));
+  sekcja.append(rzad);
+  return sekcja;
+}   // true tylko zaraz po kliknięciu „Sprawdź Swoje Szczęście”  // true tylko zaraz po kliknięciu „Atakuj”
 
 /** Kości ostatniej rundy: Ty, potwór i – jeśli było – SSS. */
 function tackaWalki(r, opis, animuj) {

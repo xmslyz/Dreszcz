@@ -285,3 +285,20 @@ test("efekt zależny od SSS (284: bez S −2 W)", () => {
   assert.strictEqual(st.bohater.W, 13);
   assert.strictEqual(s.zastosujEfekty(st, akapit).bohater.W, 13);   // tylko raz
 });
+
+// ---------------------------------------------------------------- rzuty kością w paragrafie
+test("cztery kości rzucane osobno (112): przejście po sumie", () => {
+  const akapit = { rzut_kosci: { ile: 4 }, edges: [{ target: "28", suma: [18, 24] }, { target: "291", suma: [4, 17] }] };
+  let st = { ...s.nowaGra(bohaterTestowy()), akapit: "112" };
+  for (const v of [6, 5, 4]) st = s.rzucKoscia(st, () => v);
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit), []);        // jeszcze jedna kość
+  st = s.rzucKoscia(st, () => 3);                                     // 6+5+4+3 = 18
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["28"]);
+  assert.strictEqual(s.wykonajPrzejscie(st, { target: "28" }).kosci, null);
+});
+
+test("warunek cechy (28: co najmniej 18 W)", () => {
+  const akapit = { edges: [{ target: "177", cecha_min: ["W", 18] }, { target: "330", cecha_ponizej: ["W", 18] }] };
+  const st = { ...s.nowaGra(bohaterTestowy()), akapit: "28" };       // W = 15
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["330"]);
+});

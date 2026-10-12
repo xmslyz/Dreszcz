@@ -98,7 +98,7 @@ function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null) {
   if (przejscie.efekt && bohater) ({ bohater, opisy: zmiany } = zmienCechy(bohater, przejscie.efekt));
 
   const walka = ksiega ? rozpocznijWalke(ksiega[cel]) : null;
-  return { ...stan, bohater, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany, testSSS: null };
+  return { ...stan, bohater, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany, testSSS: null, kosci: null };
 }
 
 // ---------------------------------------------------------------- walka
@@ -257,11 +257,40 @@ function testSzczescia(stan, kostka = k6) {
   };
 }
 
+// ---------------------------------------------------------------- rzuty kością w paragrafie
+
+/** Oczka rzucone w bieżącym paragrafie (każda kość rzucana osobno). */
+function oczkaTutaj(stan) {
+  return stan.kosci?.akapit === stan.akapit ? stan.kosci.oczka : [];
+}
+
+/** "rzut_kosci": {"ile": 4} – czy zostały jeszcze kości do rzucenia? */
+function czekaNaKosci(stan, akapit) {
+  const ile = akapit?.rzut_kosci?.ile ?? 0;
+  return oczkaTutaj(stan).length < ile;
+}
+
+function rzucKoscia(stan, kostka = k6) {
+  return { ...stan, kosci: { akapit: stan.akapit, oczka: [...oczkaTutaj(stan), kostka()] } };
+}
+
+/** Warunki na przejściu: suma oczek w przedziale, cecha co najmniej / poniżej. */
+function warunkiPozwalaja(stan, e) {
+  if (e.suma) {
+    const suma = oczkaTutaj(stan).reduce((a, b) => a + b, 0);   // reduce ≈ sum()
+    if (suma < e.suma[0] || suma > e.suma[1]) return false;
+  }
+  if (e.cecha_min && stan.bohater && stan.bohater[e.cecha_min[0]] < e.cecha_min[1]) return false;
+  if (e.cecha_ponizej && stan.bohater && stan.bohater[e.cecha_ponizej[0]] >= e.cecha_ponizej[1]) return false;
+  return true;
+}
+
 function dostepnePrzejscia(stan, akapit) {
-  if (czekaNaSSS(stan, akapit)) return [];
+  if (czekaNaSSS(stan, akapit) || czekaNaKosci(stan, akapit)) return [];
   const wszystkie = (akapit?.edges ?? [])
     .filter((e) => pamiecPozwala(stan, e))
-    .filter((e) => e.sss === undefined || e.sss === stan.testSSS?.szczescie);
+    .filter((e) => e.sss === undefined || e.sss === stan.testSSS?.szczescie)
+    .filter((e) => warunkiPozwalaja(stan, e));
   const w = stan.walka;
   if (!w) return wszystkie;
   if (!w.zakonczona) return [];
@@ -469,6 +498,7 @@ if (typeof module !== "undefined") {
     START, k6, rzut2k, nowyBohater, sss, nowaGra, wykonajPrzejscie,
     rozpocznijWalke, biezacyPotwor, rundaWalki, moznaUciec, ucieczka, wskrzes,
     dostepnePrzejscia, tekstAkapitu, etykieta, czekaNaSSS, testSzczescia,
+    oczkaTutaj, czekaNaKosci, rzucKoscia,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,
     zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,
   };
