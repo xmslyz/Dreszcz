@@ -211,6 +211,23 @@ function dostepnePrzejscia(stan, akapit) {
   });
 }
 
+/**
+ * Tekst paragrafu do pokazania. Znak "|" dzieli tekst na część przed walką
+ * i część po walce – drugą pokazujemy dopiero, gdy walka się zakończy.
+ * W Pythonie: przed, _, po = tekst.partition("|")
+ */
+function tekstAkapitu(stan, akapit) {
+  const tekst = akapit?.text ?? "";
+  const i = tekst.indexOf("|");
+  if (i === -1) return tekst;
+  const przed = tekst.slice(0, i).trim();
+  const po = tekst.slice(i + 1).trim();
+  const walkaTrwa = stan.walka && !stan.walka.zakonczona;
+  const przegrana = stan.koniec === "porazka";
+  if (walkaTrwa || przegrana || !po) return przed;
+  return `${przed} ${po}`;
+}
+
 /** Etykieta przycisku – gdy w danych brak "label", pokazujemy „Patrz N”. */
 function etykieta(przejscie) {
   if (przejscie.label) return przejscie.label;
@@ -223,6 +240,6 @@ if (typeof module !== "undefined") {
   module.exports = {
     START, k6, rzut2k, nowyBohater, sss, nowaGra, wykonajPrzejscie,
     rozpocznijWalke, biezacyPotwor, rundaWalki, moznaUciec, ucieczka,
-    dostepnePrzejscia, etykieta,
+    dostepnePrzejscia, tekstAkapitu, etykieta,
   };
 }

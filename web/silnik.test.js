@@ -124,3 +124,11 @@ test("walka na jedną rundę: przejście zależy od wyniku (paragraf 109)", () =
   const st = s.rundaWalki(stanWalki(opis), opis, false, kostka(1, 1, 6, 6));
   assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["77"]);
 });
+
+test("tekst po „|” widać dopiero po walce", () => {
+  const akapit = { text: "ORK naciera. ORK Z:6 W:4 | Rozglądasz się.", combat: { monsters: [{ name: "ORK", Z: 6, W: 2 }] } };
+  let st = { ...s.nowaGra({ Z: 8, W: 20, S: 9, start: { Z: 8, W: 20, S: 9 }, prowiant: 8 }), walka: s.rozpocznijWalke(akapit) };
+  assert.strictEqual(s.tekstAkapitu(st, akapit), "ORK naciera. ORK Z:6 W:4");
+  st = s.rundaWalki(st, akapit.combat, false, kostka(1, 1, 6, 6));
+  assert.strictEqual(s.tekstAkapitu(st, akapit), "ORK naciera. ORK Z:6 W:4 Rozglądasz się.");
+});

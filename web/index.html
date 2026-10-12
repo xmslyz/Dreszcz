@@ -188,7 +188,7 @@ function rysuj() {
   }
 
   box.append(el("p", "numer", stan.akapit));
-  box.append(el("p", "tekst", p ? p.text : `Brak paragrafu ${stan.akapit} w księdze.`));
+  box.append(el("p", "tekst", p ? tekstAkapitu(stan, p) : `Brak paragrafu ${stan.akapit} w księdze.`));
   if (stan.walka) box.append(rysujWalke(p));
 
   const wybory = el("div", "wybory");
@@ -257,6 +257,12 @@ function rysujWalke(akapit) {
         zmien(ucieczka(stan, opis, sss, k6, ksiega));
       });
       akcje.append(uciekaj);
+    }
+
+    // Zasady ucieczki z części tekstu „po walce” – pokazujemy je już w trakcie.
+    if (opis.escape && !moznaUciec(w, opis)) {
+      const kiedy = opis.escape.after_kill ? "po pokonaniu potwora" : `po ${opis.escape.from_round}. rundzie`;
+      akcje.append(el("span", "uwaga", `Ucieczka możliwa ${kiedy}.`));
     }
 
     const etykietaSSS = el("label", "sss");

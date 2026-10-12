@@ -9,7 +9,7 @@
     ]
   },
   "2": {
-    "text": "Kopnij drzwi. Otwierają się i uderzają o skałę. Wchodzisz do środka z mieczem gotowym do zadania ciosu. Na pewno potwór nigdzie się nie ukrywa. Czuje się zbyt potężny. Tak, widzisz go przed sobą. Stoi na szeroko rozstawionych nogach. On też ma miecz. Czub wbił się w piasek. Opiera dłonie na rękojeści. Czeka. Ty nie czekaj! Jeśli masz hełm, załóż go koniecznie, zapewni ci +3W na czas trwania tej walki. GARAZAN Z:10 W:10 Po każdej rundzie możesz się ratować Ucieczką - patrz 372. Jeśli zwyciężyłeś - patrz 380.",
+    "text": "Kopnij drzwi. Otwierają się i uderzają o skałę. Wchodzisz do środka z mieczem gotowym do zadania ciosu. Na pewno potwór nigdzie się nie ukrywa. Czuje się zbyt potężny. Tak, widzisz go przed sobą. Stoi na szeroko rozstawionych nogach. On też ma miecz. Czub wbił się w piasek. Opiera dłonie na rękojeści. Czeka. Ty nie czekaj! Jeśli masz hełm, załóż go koniecznie, zapewni ci +3W na czas trwania tej walki. GARAZAN Z:10 W:10 | Po każdej rundzie możesz się ratować Ucieczką - patrz 372. Jeśli zwyciężyłeś - patrz 380.",
     "combat": {
       "monsters": [
         {
@@ -440,7 +440,7 @@
     ]
   },
   "32": {
-    "text": "Wyczerpany siadasz pod skałą. Możesz zjeść coś z Prowiantu. Ledwie skończyłeś posiłek, gdy do pieczary wpadają WILKOLUDY, znacznie słabsze od WILKOŁAKA, ale za to są trzy. Traktujesz je jako jednego potwora i walczysz. WILKOLUDY Z:8 W:7 Jeśli zwyciężyłeś - patrz 275.",
+    "text": "Wyczerpany siadasz pod skałą. Możesz zjeść coś z Prowiantu. Ledwie skończyłeś posiłek, gdy do pieczary wpadają WILKOLUDY, znacznie słabsze od WILKOŁAKA, ale za to są trzy. Traktujesz je jako jednego potwora i walczysz. WILKOLUDY Z:8 W:7 | Jeśli zwyciężyłeś - patrz 275.",
     "combat": {
       "monsters": [
         {
@@ -985,7 +985,7 @@
     ]
   },
   "69": {
-    "text": "Sam tego chciałeś. Pod ścianą komnaty siedzą dwa koszmarne stwory. Takie spotkanie może zakończyć się tylko walką, najpierw z jednym, a później z drugim potworem. UPIÓR Z:5 W:3 STRZYGA Z:5 W:4 Jeśli pokonałeś je, możesz przeszukać komnatę. Robisz to - patrz 305, nie - patrz 291.",
+    "text": "Sam tego chciałeś. Pod ścianą komnaty siedzą dwa koszmarne stwory. Takie spotkanie może zakończyć się tylko walką, najpierw z jednym, a później z drugim potworem. UPIÓR Z:5 W:3 STRZYGA Z:5 W:4 | Jeśli pokonałeś je, możesz przeszukać komnatę. Robisz to - patrz 305, nie - patrz 291.",
     "combat": {
       "monsters": [
         {
@@ -1296,7 +1296,7 @@
     ]
   },
   "92": {
-    "text": "Czeka cię prawdziwa jatka. Zaczynasz od MINOTAURA. MINOTAUR Z:10 W:10 Jeśli walka źle ci się układa, możesz ratować się Ucieczką, ale dopiero po rozprawieniu się z MINOTAUREM - patrz 193. Jeśli pozostajesz na polu walki - patrz 277.",
+    "text": "Czeka cię prawdziwa jatka. Zaczynasz od MINOTAURA. MINOTAUR Z:10 W:10 | Jeśli walka źle ci się układa, możesz ratować się Ucieczką, ale dopiero po rozprawieniu się z MINOTAUREM - patrz 193. Jeśli pozostajesz na polu walki - patrz 277.",
     "edges": [
       {
         "label": "Ucieczka po walce",
@@ -1376,7 +1376,7 @@
     ]
   },
   "98": {
-    "text": "Gobliny zorientowały się, że będziecie walczyć solidarnie. Czmychają w popłochu. Zostaje tylko herszt goblinów - GROBOK KRWAWY! Zręczność (Z) goblina - twojego sojusznika wynosi 3. Dodajesz ją do swojej, obliczając siłę ataku. Ewentualne rany będziesz, niestety, odnosił tylko ty. GROBOK Z:9 W:8 Jeśli pokonaliście potwora - patrz 250.",
+    "text": "Gobliny zorientowały się, że będziecie walczyć solidarnie. Czmychają w popłochu. Zostaje tylko herszt goblinów - GROBOK KRWAWY! Zręczność (Z) goblina - twojego sojusznika wynosi 3. Dodajesz ją do swojej, obliczając siłę ataku. Ewentualne rany będziesz, niestety, odnosił tylko ty. GROBOK Z:9 W:8 | Jeśli pokonaliście potwora - patrz 250.",
     "edges": [
       {
         "label": "Po zwycięstwie",
@@ -1517,7 +1517,7 @@
     ]
   },
   "107": {
-    "text": "Przystępujesz do walki mieczem. BLACKTHORN Z:10 W:14 Jeśli wygrałeś - patrz 23.",
+    "text": "Przystępujesz do walki mieczem. BLACKTHORN Z:10 W:14 | Jeśli wygrałeś - patrz 23.",
     "edges": [
       {
         "target": "23",
@@ -1548,7 +1548,7 @@
     ]
   },
   "109": {
-    "text": "Ni stąd, ni zowąd pojawia się w komnacie obrzydliwy potwór. To KROMAA. Nie masz innego wyjścia: musisz walczyć. KROMAA Z:7 W:8 Jeśli wygrałeś pierwszą rundę - patrz 77, jeśli nie - patrz 163.",
+    "text": "Ni stąd, ni zowąd pojawia się w komnacie obrzydliwy potwór. To KROMAA. Nie masz innego wyjścia: musisz walczyć. KROMAA Z:7 W:8 | Jeśli wygrałeś pierwszą rundę - patrz 77, jeśli nie - patrz 163.",
     "edges": [
       {
         "label": "Wygrałeś pierwszą rundę",
@@ -2193,7 +2193,7 @@
     ]
   },
   "157": {
-    "text": "O, tak, ta kość jest twarda jak stal. Wspaniale nadaje się do walki. WILKOŁAK Z:9 W:6 Jeśli w walce WILKOŁAK jest górą, po pierwszej rundzie możesz ratować się Ucieczką - patrz 275. Gdy nie korzystasz z tej szansy, walczysz dalej i jeśli zwyciężyłeś - patrz 32.",
+    "text": "O, tak, ta kość jest twarda jak stal. Wspaniale nadaje się do walki. WILKOŁAK Z:9 W:6 | Jeśli w walce WILKOŁAK jest górą, po pierwszej rundzie możesz ratować się Ucieczką - patrz 275. Gdy nie korzystasz z tej szansy, walczysz dalej i jeśli zwyciężyłeś - patrz 32.",
     "edges": [
       {
         "label": "Zwyciężyłeś",
@@ -2391,7 +2391,7 @@
     ]
   },
   "169": {
-    "text": "Pierwszy DEMON zrywa się do lotu i rusza w twoją stronę. Będziesz walczył. DEMON Z:8 W:5 Jeśli walka ma niekorzystny przebieg, po pierwszej rundzie możesz ratować się Ucieczką - patrz 385. Jeśli zwyciężyłeś potwora - patrz 297.",
+    "text": "Pierwszy DEMON zrywa się do lotu i rusza w twoją stronę. Będziesz walczył. DEMON Z:8 W:5 | Jeśli walka ma niekorzystny przebieg, po pierwszej rundzie możesz ratować się Ucieczką - patrz 385. Jeśli zwyciężyłeś potwora - patrz 297.",
     "edges": [
       {
         "label": "Zwyciężyłeś",
@@ -2572,7 +2572,7 @@
     ]
   },
   "184": {
-    "text": "Wycierasz zakrwawiony miecz o skóry leżące pod twymi nogami. Nacierasz. DEMON Z:7 W:6 Już po pierwszej rundzie możesz ratować się Ucieczką - patrz 385. Nie chcesz? - patrz 226.",
+    "text": "Wycierasz zakrwawiony miecz o skóry leżące pod twymi nogami. Nacierasz. DEMON Z:7 W:6 | Już po pierwszej rundzie możesz ratować się Ucieczką - patrz 385. Nie chcesz? - patrz 226.",
     "edges": [
       {
         "label": "Walczysz dalej",
@@ -2927,7 +2927,7 @@
     ]
   },
   "213": {
-    "text": "Wszystkie ROBALE traktujesz jako jednego potwora, bo kto by je policzył. ROBALE Z:7 W:8 Jeśli zwyciężyłeś - patrz 320.",
+    "text": "Wszystkie ROBALE traktujesz jako jednego potwora, bo kto by je policzył. ROBALE Z:7 W:8 | Jeśli zwyciężyłeś - patrz 320.",
     "edges": [
       {
         "target": "320",
@@ -2966,7 +2966,7 @@
     ]
   },
   "216": {
-    "text": "Z całych sił miotasz tarczą o strop. Skalne odłamki walą się na łeb potwora. Odejmujesz 2 od jego Z i walczysz. WILKOŁAK Z:7 W:6 Jeśli zwyciężyłeś - patrz 32.",
+    "text": "Z całych sił miotasz tarczą o strop. Skalne odłamki walą się na łeb potwora. Odejmujesz 2 od jego Z i walczysz. WILKOŁAK Z:7 W:6 | Jeśli zwyciężyłeś - patrz 32.",
     "edges": [
       {
         "target": "32",
@@ -3472,7 +3472,7 @@
     ]
   },
   "255": {
-    "text": "Pozostał ci tylko miecz. Sięgasz po niego i ruszasz w stronę wroga. BLACKTHORN Z:10 W:16 Jeśli wygrałeś - patrz 23.",
+    "text": "Pozostał ci tylko miecz. Sięgasz po niego i ruszasz w stronę wroga. BLACKTHORN Z:10 W:16 | Jeśli wygrałeś - patrz 23.",
     "edges": [
       {
         "target": "23",
@@ -3746,7 +3746,7 @@
     ]
   },
   "277": {
-    "text": "No, to do dzieła. Najpierw WAMPIR, później ORK. WAMPIR Z:9 W:7 ORK Z:7 W:7 Pamiętaj, że w trakcie walki nie możesz ratować się Ucieczką. Dopiero po rozprawieniu się z ORKIEM lub WAMPIREM. Jeśli korzystasz z tej możliwości - patrz 193. Po pokonaniu ORKA patrz 312.",
+    "text": "No, to do dzieła. Najpierw WAMPIR, później ORK. WAMPIR Z:9 W:7 ORK Z:7 W:7 | Pamiętaj, że w trakcie walki nie możesz ratować się Ucieczką. Dopiero po rozprawieniu się z ORKIEM lub WAMPIREM. Jeśli korzystasz z tej możliwości - patrz 193. Po pokonaniu ORKA patrz 312.",
     "combat": {
       "monsters": [
         {
@@ -3881,7 +3881,7 @@
     ]
   },
   "288": {
-    "text": "Ledwie żywy leżysz na skalnej gładzi, gdy znienacka atakuje cię NIETOPERZ. NIETOPERZ Z:7 W:6 Jeśli zwyciężyłeś - patrz 186.",
+    "text": "Ledwie żywy leżysz na skalnej gładzi, gdy znienacka atakuje cię NIETOPERZ. NIETOPERZ Z:7 W:6 | Jeśli zwyciężyłeś - patrz 186.",
     "combat": {
       "monsters": [
         {
@@ -4112,7 +4112,7 @@
     ]
   },
   "307": {
-    "text": "Dziwne zaburzenia powierzchni wody nie ustają, a nawet... zbliżają się. Z trudem odpinasz rzemienie, którymi jest przytroczony miecz. Nad lustrem wody dostrzegasz trzy pary żółtych ślepi. Są już zbyt blisko, byś mógł uciec. Atakujesz. Jednak woda ogranicza twe ruchy. Z trudem wyprowadzasz ciosy: -2Z. Przed tobą trzy ZIELONE JASZCZURY. Traktujesz je jako jednego potwora. JASZCZURY Z:7 W:6 Udało ci się. Dopływasz do przeciwległego brzegu. Dostajesz +2S. Patrz 214.",
+    "text": "Dziwne zaburzenia powierzchni wody nie ustają, a nawet... zbliżają się. Z trudem odpinasz rzemienie, którymi jest przytroczony miecz. Nad lustrem wody dostrzegasz trzy pary żółtych ślepi. Są już zbyt blisko, byś mógł uciec. Atakujesz. Jednak woda ogranicza twe ruchy. Z trudem wyprowadzasz ciosy: -2Z. Przed tobą trzy ZIELONE JASZCZURY. Traktujesz je jako jednego potwora. JASZCZURY Z:7 W:6 | Udało ci się. Dopływasz do przeciwległego brzegu. Dostajesz +2S. Patrz 214.",
     "combat": {
       "monsters": [
         {
@@ -4155,7 +4155,7 @@
     ]
   },
   "309": {
-    "text": "WILKOŁAK Z:9 W:6 Po pierwszej rundzie okazuje się, że twoje ciosy są nieskuteczne. Potwór nie odnosi żadnych ran. Możesz albo ratować się Ucieczką - patrz 275, albo walczyć inną bronią - patrz 63.",
+    "text": "WILKOŁAK Z:9 W:6 | Po pierwszej rundzie okazuje się, że twoje ciosy są nieskuteczne. Potwór nie odnosi żadnych ran. Możesz albo ratować się Ucieczką - patrz 275, albo walczyć inną bronią - patrz 63.",
     "combat": {
       "monsters": [
         {
@@ -4200,7 +4200,7 @@
     ]
   },
   "312": {
-    "text": "LUDOJAD, ZOMBI i SZKIELET czekają na ciebie. Walczysz z nimi w podanej kolejności. LUDOJAD Z:7 W:5 ZOMBI Z:6 W:5 SZKIELET Z:5 W:4 Możesz ratować się Ucieczką, ale dopiero po zwycięstwie nad LUDOJADEM lub ZOMBI - patrz 193. Gdy pokonasz SZKIELETA - patrz 193.",
+    "text": "LUDOJAD, ZOMBI i SZKIELET czekają na ciebie. Walczysz z nimi w podanej kolejności. LUDOJAD Z:7 W:5 ZOMBI Z:6 W:5 SZKIELET Z:5 W:4 | Możesz ratować się Ucieczką, ale dopiero po zwycięstwie nad LUDOJADEM lub ZOMBI - patrz 193. Gdy pokonasz SZKIELETA - patrz 193.",
     "combat": {
       "monsters": [
         {
@@ -4287,7 +4287,7 @@
     ]
   },
   "317": {
-    "text": "Drzwi ustępują. Bucha spoza nich przeraźliwy smród. W nikłym świetle oliwnej lampy stojącej na ławie porozrzucane po całym pomieszczeniu jakieś szczątki. Przyglądasz się bliżej. To kości! Odwracasz z obrzydzeniem twarz. A czego tu się spodziewałeś? Wonnych kwiatów? Tańczących elfów? Melancholijnej muzyki? To są, bracie podziemia - królestwo zła. I dlatego tu jesteś. Masz wydrzeć ich tajemnicę. Śmiało - rozgarnij te gnaty! Teraz szaaa... Słyszysz te ciche kroki? Są coraz głośniejsze... O, królu Almanhagorze, ten hałas rozwala mi łeb! Już nie słychać kroków, tylko przeraźliwy syk powietrza przelatującego przez nozdrza. W drzwiach stoi OGRE. Błyskawicznie wyciągasz miecz. Zapierasz się o ścianę. OGRE wbiega do pieczary. Ale nie rusza na ciebie. Dopada przeciwległej ściany i rozkłada ramiona. Jakby coś ukrywał za plecami. Szczerzy zęby, wymachuje porwaną z klepiska długą kością. W jego oczach widzisz przerażenie. Teraz twój ruch. Powoli, rozgarniając nogami wszelkie paskudztwa, podchodzisz do potwora. OGRE Z:8 W:10 OGRE leży u twych stóp. Ciągle jeszcze się brzydzisz? Jeśli tak, rozejrzyj się chociaż po ścianach - patrz 119, jeśli nie - patrz 31.",
+    "text": "Drzwi ustępują. Bucha spoza nich przeraźliwy smród. W nikłym świetle oliwnej lampy stojącej na ławie porozrzucane po całym pomieszczeniu jakieś szczątki. Przyglądasz się bliżej. To kości! Odwracasz z obrzydzeniem twarz. A czego tu się spodziewałeś? Wonnych kwiatów? Tańczących elfów? Melancholijnej muzyki? To są, bracie podziemia - królestwo zła. I dlatego tu jesteś. Masz wydrzeć ich tajemnicę. Śmiało - rozgarnij te gnaty! Teraz szaaa... Słyszysz te ciche kroki? Są coraz głośniejsze... O, królu Almanhagorze, ten hałas rozwala mi łeb! Już nie słychać kroków, tylko przeraźliwy syk powietrza przelatującego przez nozdrza. W drzwiach stoi OGRE. Błyskawicznie wyciągasz miecz. Zapierasz się o ścianę. OGRE wbiega do pieczary. Ale nie rusza na ciebie. Dopada przeciwległej ściany i rozkłada ramiona. Jakby coś ukrywał za plecami. Szczerzy zęby, wymachuje porwaną z klepiska długą kością. W jego oczach widzisz przerażenie. Teraz twój ruch. Powoli, rozgarniając nogami wszelkie paskudztwa, podchodzisz do potwora. OGRE Z:8 W:10 | OGRE leży u twych stóp. Ciągle jeszcze się brzydzisz? Jeśli tak, rozejrzyj się chociaż po ścianach - patrz 119, jeśli nie - patrz 31.",
     "combat": {
       "monsters": [
         {
@@ -4463,7 +4463,7 @@
     ]
   },
   "332": {
-    "text": "Wrota obite są grubą metalową blachą. Ukośnie przebiegają wąskie metalowe pasy, w miejscach przecięcia nabite żelaznymi guzami. Zapierasz się plecami. Stopy ślizgają się po grząskim gruncie. Wrota ustępują. Przeraźliwie skrzypią. Słyszysz dobiegający z komnaty pospieszny szmer. Wciskasz się do szpary i opierając się plecami o skałę z całą mocą odpychasz wrota. Opornie otwierają się na całą szerokość. To był szalony wysiłek: -2W. Podnosisz latarnię na wysokość oczu i... serce podchodzi ci do gardła. Schowany za ścianą stoi TROLL. Ciało ma wygięte w pałąk. Wysoko za głową oburącz trzyma miecz. Wypina do przodu owłosiony brzuch. Szalone oczy nabiegły mu krwią. Szczerzy zaciśnięte zęby. Jeszcze chwila i ogromny miecz przetnie powietrze. Sięgasz po swój miecz. W okamgnieniu TROLL wyprowadza cios. Udaje ci się odskoczyć. To będzie walka na śmierć i życie. TROLL Z:8 W:8 Jeśli zwyciężyłeś - patrz 6. Dolicz sobie +1S.",
+    "text": "Wrota obite są grubą metalową blachą. Ukośnie przebiegają wąskie metalowe pasy, w miejscach przecięcia nabite żelaznymi guzami. Zapierasz się plecami. Stopy ślizgają się po grząskim gruncie. Wrota ustępują. Przeraźliwie skrzypią. Słyszysz dobiegający z komnaty pospieszny szmer. Wciskasz się do szpary i opierając się plecami o skałę z całą mocą odpychasz wrota. Opornie otwierają się na całą szerokość. To był szalony wysiłek: -2W. Podnosisz latarnię na wysokość oczu i... serce podchodzi ci do gardła. Schowany za ścianą stoi TROLL. Ciało ma wygięte w pałąk. Wysoko za głową oburącz trzyma miecz. Wypina do przodu owłosiony brzuch. Szalone oczy nabiegły mu krwią. Szczerzy zaciśnięte zęby. Jeszcze chwila i ogromny miecz przetnie powietrze. Sięgasz po swój miecz. W okamgnieniu TROLL wyprowadza cios. Udaje ci się odskoczyć. To będzie walka na śmierć i życie. TROLL Z:8 W:8 | Jeśli zwyciężyłeś - patrz 6. Dolicz sobie +1S.",
     "combat": {
       "monsters": [
         {
@@ -4580,7 +4580,7 @@
     ]
   },
   "341": {
-    "text": "Stwory podpływają bliżej. Atakujesz. JASZCZURY Z:7 W:6 W szalonej walce tniesz mieczem jaszczury, ale przecinasz również sieć. Gdy, pokonawszy bestie, wychodzisz na brzeg, okazuje się, że z sieci pozostały tylko strzępy. Odrzucasz je precz. Dolicz sobie +1Z. Patrz 195.",
+    "text": "Stwory podpływają bliżej. Atakujesz. JASZCZURY Z:7 W:6 | W szalonej walce tniesz mieczem jaszczury, ale przecinasz również sieć. Gdy, pokonawszy bestie, wychodzisz na brzeg, okazuje się, że z sieci pozostały tylko strzępy. Odrzucasz je precz. Dolicz sobie +1Z. Patrz 195.",
     "combat": {
       "monsters": [
         {
@@ -4619,7 +4619,7 @@
     ]
   },
   "344": {
-    "text": "Ognista kula jest znakomitą bronią przeciw STRAŻNIKOWI TAJEMNICY. Jest bardzo skuteczna i szybka. Wraca do twojej ręki po każdym rzucie. Daje ci to następujące korzyści podczas walki: *możesz dodać 2 do liczby uzyskanej na kostkach przy określaniu siły ataku, *każdy atak powoduje nie 2 lecz 3 rany, *gdy STRAŻNIK zrani cię, rzuć kostką: jeśli uzyskasz liczbę nieparzystą, zadaje ci - jak normalnie - 2 rany; jeśli wyrzucisz 2 lub 4 otrzymujesz 1 ranę; jeśli masz 6, nie trafia cię w ogóle. BLACKTHORN Z:10 W:16 Jeśli wygrałeś - patrz 23.",
+    "text": "Ognista kula jest znakomitą bronią przeciw STRAŻNIKOWI TAJEMNICY. Jest bardzo skuteczna i szybka. Wraca do twojej ręki po każdym rzucie. Daje ci to następujące korzyści podczas walki: *możesz dodać 2 do liczby uzyskanej na kostkach przy określaniu siły ataku, *każdy atak powoduje nie 2 lecz 3 rany, *gdy STRAŻNIK zrani cię, rzuć kostką: jeśli uzyskasz liczbę nieparzystą, zadaje ci - jak normalnie - 2 rany; jeśli wyrzucisz 2 lub 4 otrzymujesz 1 ranę; jeśli masz 6, nie trafia cię w ogóle. BLACKTHORN Z:10 W:16 | Jeśli wygrałeś - patrz 23.",
     "combat": {
       "monsters": [
         {
@@ -4766,7 +4766,7 @@
     ]
   },
   "355": {
-    "text": "Ledwo udaje ci się przecisnąć przez wąski otwór w skale. Stajesz na nogi. Na równe nogi! Przed tobą GIGANT. Łbem zahacza o strop. O, bracie, teraz nie ma odwrotu. To będzie walka na śmierć i życie. GIGANT Z:10 W:12 Po pierwszej wygranej przez siebie rundzie - patrz 379.",
+    "text": "Ledwo udaje ci się przecisnąć przez wąski otwór w skale. Stajesz na nogi. Na równe nogi! Przed tobą GIGANT. Łbem zahacza o strop. O, bracie, teraz nie ma odwrotu. To będzie walka na śmierć i życie. GIGANT Z:10 W:12 | Po pierwszej wygranej przez siebie rundzie - patrz 379.",
     "combat": {
       "monsters": [
         {
@@ -4831,7 +4831,7 @@
     ]
   },
   "361": {
-    "text": "Cios jest bardzo groźny. Okazuje się, że właśnie smoczek był źródłem wytrzymałości i sprawności STRAŻNIKA. Opada on z sił. Wyjmujesz miecz i nacierasz. BLACKTHORN Z:8 W:12 Jeśli wygrałeś - patrz 23.",
+    "text": "Cios jest bardzo groźny. Okazuje się, że właśnie smoczek był źródłem wytrzymałości i sprawności STRAŻNIKA. Opada on z sił. Wyjmujesz miecz i nacierasz. BLACKTHORN Z:8 W:12 | Jeśli wygrałeś - patrz 23.",
     "combat": {
       "monsters": [
         {
@@ -4900,7 +4900,7 @@
     ]
   },
   "367": {
-    "text": "ZŁEGO ogarnia szał radości. Atakujesz go. ZŁY Z:6 W:6 Patrz 189.",
+    "text": "ZŁEGO ogarnia szał radości. Atakujesz go. ZŁY Z:6 W:6 | Patrz 189.",
     "combat": {
       "monsters": [
         {
