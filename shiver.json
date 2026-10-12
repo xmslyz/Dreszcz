@@ -424,17 +424,19 @@
   },
   "30": {
     "text": "SSS. Jeśli masz S - patrz 159. Jeśli nie masz S - patrz 342.",
-    "requires_test": "sss",
     "edges": [
       {
         "label": "Masz Szczęście",
-        "target": "159"
+        "target": "159",
+        "sss": true
       },
       {
         "label": "Nie masz Szczęścia",
-        "target": "342"
+        "target": "342",
+        "sss": false
       }
-    ]
+    ],
+    "test_sss": true
   },
   "31": {
     "text": "Poświeć latarnią niżej. Rozgarnij mieczem to padło. A widzisz - znalazłeś 5 sztuk złota! Jeśli to ci nie wystarcza - patrz 119. Jeśli chcesz opuścić komnatę - patrz 102.",
@@ -512,40 +514,40 @@
     "cost": {
       "gold": 10
     },
-    "requires_test": "sss",
     "edges": [
       {
-        "label": "Masz S",
+        "label": "Masz SZCZĘŚCIE",
         "target": "186",
-        "condition": "has_S"
+        "sss": true
       },
       {
-        "label": "Nie masz S",
+        "label": "Nie masz SZCZĘŚCIA",
         "target": "158",
-        "condition": "not has_S"
+        "sss": false
       }
     ],
     "efekty": [
       {
         "zloto": -10
       }
-    ]
+    ],
+    "test_sss": true
   },
   "36": {
     "text": "SSS. Jeśli masz S - patrz 152. Jeśli nie masz S - patrz 176.",
-    "requires_test": "sss",
     "edges": [
       {
-        "label": "Masz S",
+        "label": "Masz SZCZĘŚCIE",
         "target": "152",
-        "condition": "has_S"
+        "sss": true
       },
       {
-        "label": "Nie masz S",
+        "label": "Nie masz SZCZĘŚCIA",
         "target": "176",
-        "condition": "not has_S"
+        "sss": false
       }
-    ]
+    ],
+    "test_sss": true
   },
   "37": {
     "text": "Jaką tarczę wybierasz: metalową, paradną, czy skórzaną? Wpisz swój wybór na \"Listę ekwipunku\" - patrz 324.",
@@ -624,19 +626,19 @@
   },
   "41": {
     "text": "Udało ci się zrobić tylko parę kroków a tu korytarz zupełnie zatarasowany masą kamieni i piasku. Spróbuj tupnąć nogą. Stare gremliny mówią, że to jest sposób na takie zawalidrogi. SSS. Jeśli masz S - góra skał wpada gdzieś w przepaść, możesz iść dalej - patrz 348. Jeśli nie masz S - musisz wrócić - patrz 221.",
-    "requires_test": "sss",
     "edges": [
       {
-        "label": "Masz S",
+        "label": "Masz SZCZĘŚCIE",
         "target": "348",
-        "condition": "has_S"
+        "sss": true
       },
       {
-        "label": "Nie masz S",
+        "label": "Nie masz SZCZĘŚCIA",
         "target": "221",
-        "condition": "not has_S"
+        "sss": false
       }
-    ]
+    ],
+    "test_sss": true
   },
   "42": {
     "text": "Mówią o nim BARBARZYŃCA. Czy słusznie? Kto wie? Gdy tak siedzi na ławie z wyciągniętymi nogami i rękami założonymi na piersiach, nie wygląda groźnie. Cicho chrapie. Walisz mieczem w ścianę. \"Co jest?\" - ocknął się. Wchodzisz teraz do komnaty i pokazujesz drzwi po przeciwnej, zachodniej stronie. \"Otwieraj szybko tamte drzwi\" - pokazujesz mu końcem miecza. \"Sam sobie otwórz\" - rechoce - \"Klucz jest w zamku\". Istotnie. Podchodzisz do drzwi. Obawiając się zasadzki, nie dotykasz ręką klucza, lecz wsadzasz czub miecza i próbujesz przekręcić. Nic z tego. \"Nic z tego\" - ryczy BARBARZYŃCA - \"Zaklęcie znasz? Jeśli nie znasz, to się stąd wynoś!\" No, właśnie. Pamiętasz zaklęcie ze starej księgi gremlinów? Zaraz, a może ty wcale nie widziałeś tej księgi? Tak czy owak, jeżeli nie znasz zaklęcia to koniec z tobą, bratku. Spróbuj jeszcze raz, od samego początku. Jeśli wydaje ci się, że pamiętasz zaklęcie, powtórz je. Teraz zajrzyj do paragrafu 122. Jeśli zapamiętałeś prawidłowo - patrz 376. Jeżeli zrobiłeś choćby najmniejszy błąd, kończysz przygodę. Jej dalsze prowadzenie w takiej sytuacji nie jest godne prawdziwego Śmiałka.",
@@ -943,19 +945,19 @@
   },
   "62": {
     "text": "SSS. Jeśli masz S - patrz 201. Jeśli nie masz S - patrz 145.",
-    "requires_test": "sss",
     "edges": [
       {
-        "label": "Masz S",
+        "label": "Masz SZCZĘŚCIE",
         "target": "201",
-        "condition": "has_S"
+        "sss": true
       },
       {
-        "label": "Nie masz S",
+        "label": "Nie masz SZCZĘŚCIA",
         "target": "145",
-        "condition": "not has_S"
+        "sss": false
       }
-    ]
+    ],
+    "test_sss": true
   },
   "63": {
     "text": "Miecz nie jest skuteczną bronią przeciw WILKOŁAKOWI. Jeśli masz któryś z wymienionych przedmiotów, możesz użyć go do walki: ·kość ze szkieletu przedwiecznego potwora - patrz 157, ·młot goblinów - patrz 346, ·metalowa tarcza - patrz 216, ·sieć - patrz 337, ·pęk kluczy - patrz 181. Jeśli nie masz żadnego z tych przedmiotów, pozostaje ci tylko Ucieczka - patrz 275.",
@@ -1461,7 +1463,8 @@
         "label": "Druga rzecz",
         "target": 68
       }
-    ]
+    ],
+    "test_sss": true
   },
   "96": {
     "text": "Znajdujesz klucz. Ma numer 12. Dostajesz +2S - patrz 253.",
@@ -1955,15 +1958,17 @@
     "text": "Atakujesz go mieczem. SSS. Jeśli masz S, rozpoczyna się walka - patrz 309. Jeśli nie masz S - patrz 244.",
     "edges": [
       {
-        "target": 309,
-        "label": "SUKCES SSS"
+        "target": "309",
+        "label": "Masz SZCZĘŚCIE",
+        "sss": true
       },
       {
-        "target": 244,
-        "label": "PORAŻKA SSS"
+        "target": "244",
+        "label": "Nie masz SZCZĘŚCIA",
+        "sss": false
       }
     ],
-    "requires_test": "sss"
+    "test_sss": true
   },
   "127": {
     "text": "Patrz 373.",
@@ -2094,18 +2099,20 @@
     "text": "Twój atak wypadł bardzo mizernie. Zaglądasz do plecaka. Jeśli masz smoczek, ciskasz nim w STRAŻNIKA. SSS. Jeśli masz S - patrz 361. Jeśli nie masz S - patrz 255.",
     "edges": [
       {
-        "target": 361,
-        "label": "SUKCES SSS"
+        "target": "361",
+        "label": "Masz SZCZĘŚCIE",
+        "sss": true
       },
       {
-        "target": 255,
-        "label": "PORAŻKA SSS"
+        "target": "255",
+        "label": "Nie masz SZCZĘŚCIA",
+        "sss": false
       }
     ],
-    "requires_test": "sss",
     "items_required": [
       "smoczek"
-    ]
+    ],
+    "test_sss": true
   },
   "139": {
     "text": "Dopływasz bez kłopotów do północnego brzegu jeziora - patrz 195.",
@@ -2238,15 +2245,17 @@
     "text": "Ledwie podniosłeś miecz do góry, a tu ziemia osuwa ci się spod nóg. Walisz się jak długi. SSS. Jeśli masz S - patrz 76. Jeśli nie masz S - patrz 352.",
     "edges": [
       {
-        "target": 76,
-        "label": "SUKCES"
+        "target": "76",
+        "label": "Masz SZCZĘŚCIE",
+        "sss": true
       },
       {
-        "target": 352,
-        "label": "PORAŻKA"
+        "target": "352",
+        "label": "Nie masz SZCZĘŚCIA",
+        "sss": false
       }
     ],
-    "requires_test": "sss"
+    "test_sss": true
   },
   "150": {
     "text": "Patrz 373.",
@@ -2401,10 +2410,19 @@
     "text": "Tracisz 1W. SSS. Jeśli masz S, NIETOPERZ przechwytuje cię w locie, ale - ścierwo - żąda złota za ratunek. Jeśli obiecasz mu 10 sztuk złota, zaniesie cię na brzeg, z którego wyruszyłeś - patrz 57. Jeśli obiecasz mu 20 sztuk złota, zaniesie cię na drugi brzeg - patrz 57. Musisz obiecać mu jedno lub drugie. Jeśli nie masz S, spadasz w otchłań, zaczepiając o występy skalne przeciwległej krawędzi szczeliny. Gdy przez chwilę zawisnąłeś na jednym z nich, dostrzegasz wylot jakiegoś tunelu. Udaje ci się wpełznąć do tego wylotu. Jesteś piekielnie - to dobre słowo - zmęczony. Powinieneś zjeść Prowiant. Tym razem daje ci on +5W, a za wyczyn dostajesz +2Z. Na dokładkę za diabelskie - to tez dobre słowo! - szczęście +3S. Wstajesz. Korytarz jest przestronny i widny, kończy się okrągłą salką. Z góry zwisa lina. Podciągasz się na niej. Na szczycie \"komina\" wychodzisz do identycznej salki jak na dole. Widzisz przed sobą jakieś drzwi. Popychasz je. Okazuje się, że to drzwi obrotowe. Lądujesz w jakimś korytarzu, a drzwi szczelnie się zamykają. Nie sposób poznać, że tu istnieją. Trafiłeś akurat na zakręt tunelu, który biegnie z północy na wschód. Idziesz w kierunku wschodnim. Dochodzisz do grubych drzwi. Otwierasz je. Patrz 13.",
     "edges": [
       {
-        "target": 57
+        "label": "Obiecujesz NIETOPERZOWI 10 sztuk złota (twój brzeg)",
+        "target": "57",
+        "sss": true
       },
       {
-        "target": 13
+        "label": "Obiecujesz NIETOPERZOWI 20 sztuk złota (drugi brzeg)",
+        "target": "57",
+        "sss": true
+      },
+      {
+        "label": "Spadasz w otchłań",
+        "target": "13",
+        "sss": false
       }
     ],
     "requires_test": "sss",
@@ -2412,7 +2430,8 @@
       {
         "W": -1
       }
-    ]
+    ],
+    "test_sss": true
   },
   "163": {
     "text": "Walczysz do końca. Gdy pokonasz potwora, okazuje się, że fontanna jest już pusta. Dokładnie oglądasz ściany jaskini. Po północnej stronie odkrywasz zawalony głazem otwór. To jest wyjście. Otrzymujesz +1S. Patrz 197.",
@@ -3237,19 +3256,22 @@
     "text": "Płacisz następne 10 sztuk złota. Smok robi rozkrok i... znowu się zaczyna. SSS. Jeśli masz S, przechodzisz na drugi brzeg - patrz 186. Jeśli nie masz S, Smok zrzuca cię z powrotem - patrz 3.",
     "edges": [
       {
-        "target": 186,
-        "condition": "has_S"
+        "target": "186",
+        "sss": true,
+        "label": "Masz SZCZĘŚCIE"
       },
       {
-        "target": 3,
-        "condition": "not has_S"
+        "target": "3",
+        "sss": false,
+        "label": "Nie masz SZCZĘŚCIA"
       }
     ],
     "efekty": [
       {
         "zloto": -10
       }
-    ]
+    ],
+    "test_sss": true
   },
   "226": {
     "text": "Walka trwa dalej. Po drugiej rundzie znów możesz Uciec - patrz 385. Na pewno chcesz walczyć dalej? Jeśli tak - patrz 101.",
@@ -3284,14 +3306,17 @@
     "text": "SSS. Jeśli masz S - patrz 66. Jeśli nie masz S - patrz 383.",
     "edges": [
       {
-        "target": 66,
-        "condition": "has_S"
+        "target": "66",
+        "sss": true,
+        "label": "Masz SZCZĘŚCIE"
       },
       {
-        "target": 383,
-        "condition": "not has_S"
+        "target": "383",
+        "sss": false,
+        "label": "Nie masz SZCZĘŚCIA"
       }
-    ]
+    ],
+    "test_sss": true
   },
   "230": {
     "text": "Po kilku zaledwie krokach korytarz się kończy. Czy chcesz szukać sekretnych przejść? Jeśli tak - patrz 36, jeśli nie - patrz 176.",
@@ -3469,14 +3494,17 @@
     "text": "Robisz kilkadziesiąt kroków i... skalna ściana przegradza chodnik. SSS. Jeśli masz S - patrz 233. Jeśli nie masz S - patrz 111.",
     "edges": [
       {
-        "target": 233,
-        "condition": "has_S"
+        "target": "233",
+        "sss": true,
+        "label": "Masz SZCZĘŚCIE"
       },
       {
-        "target": 111,
-        "condition": "not has_S"
+        "target": "111",
+        "sss": false,
+        "label": "Nie masz SZCZĘŚCIA"
       }
-    ]
+    ],
+    "test_sss": true
   },
   "243": {
     "text": "A czy chcesz wejść? Tak - patrz 355, nie - patrz 129.",
@@ -3885,14 +3913,17 @@
     "text": "Nagle czujesz jak faluje powietrze. Zaczynasz tracić równowagę. Powiewy miotają tobą jak liściem. SSS. Jeśli masz S - patrz 210. Jeśli nie masz S - patrz 174.",
     "edges": [
       {
-        "target": 210,
-        "condition": "has_S"
+        "target": "210",
+        "sss": true,
+        "label": "Masz SZCZĘŚCIE"
       },
       {
-        "target": 174,
-        "condition": "not has_S"
+        "target": "174",
+        "sss": false,
+        "label": "Nie masz SZCZĘŚCIA"
       }
-    ]
+    ],
+    "test_sss": true
   },
   "275": {
     "text": "Wybiegasz z tej komnaty przez drzwi znajdujące się we wschodniej ścianie - patrz 279.",
@@ -4018,14 +4049,14 @@
     "text": "Korytarz jest coraz węższy. Ze sklepienia zwisają długie kamienne brody. Mogą lada chwila urwać się. SSS. Jeśli masz S - wszystko w porządku. Jeśli nie masz S - minus 2W. Patrz 50.",
     "edges": [
       {
-        "target": 50
+        "target": "50"
       }
     ],
-    "effects": [
+    "test_sss": true,
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": -2,
-        "condition": "not has_S"
+        "W": -2,
+        "gdy_sss": false
       }
     ]
   },
@@ -4286,12 +4317,12 @@
     "text": "W tej komnacie ukryte jest coś bardzo wartościowego. Żeby to znaleźć musisz albo uzyskać przynajmniej 18, rzucając cztery razy kostką - patrz 112, albo zastosować SSS - patrz 381.",
     "edges": [
       {
-        "target": 112,
-        "condition": "dice>=18"
+        "target": "112",
+        "label": "Rzucasz cztery razy kostką"
       },
       {
-        "target": 381,
-        "condition": "has_S"
+        "target": "381",
+        "label": "Stosujesz SSS"
       }
     ]
   },
