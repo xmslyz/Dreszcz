@@ -342,20 +342,28 @@
   },
   "24": {
     "text": "Rzuć raz kostką. Jeśli wylosujesz 1, 2, 3 - twoja broń okaże się skutecznym narzędziem w walce z ROBALAMI - patrz 58. Jeśli wylosujesz 4, 5, 6, nic z tego - patrz 168.",
-    "requires_test": true,
-    "test_type": "1d6",
     "edges": [
       {
         "label": "Wyrzuciłeś 1–3: broń skuteczna",
         "target": "58",
-        "condition": "roll:1-3"
+        "suma": [
+          1,
+          3
+        ]
       },
       {
         "label": "Wyrzuciłeś 4–6",
         "target": "168",
-        "condition": "roll:4-6"
+        "suma": [
+          4,
+          6
+        ]
       }
-    ]
+    ],
+    "rzut_kosci": {
+      "ile": 1,
+      "opis": "Rzuć kostką: 1–3 broń skuteczna, 4–6 nic z tego"
+    }
   },
   "25": {
     "text": "Na kamieniu siedzi stary człowiek. Radzi ci iść na zachód, a później na kilku najbliższych skrzyżowaniach skręcać w prawo. Jeśli idziesz na zachód - patrz 200, jeśli wybierasz drogę prowadzącą na wschód - patrz 44.",
@@ -399,17 +407,22 @@
   },
   "28": {
     "text": "Podnieś wielki kamień leżący przy ścianie. Żeby go podnieść, musisz mieć przynajmniej 18W. Jeśli masz - patrz 177, jeśli nie - patrz 330.",
-    "requires_attribute": {
-      "stamina": 18
-    },
     "edges": [
       {
         "label": "Masz wystarczająco siły",
-        "target": "177"
+        "target": "177",
+        "cecha_min": [
+          "W",
+          18
+        ]
       },
       {
         "label": "Nie masz dość siły",
-        "target": "330"
+        "target": "330",
+        "cecha_ponizej": [
+          "W",
+          18
+        ]
       }
     ]
   },
@@ -1728,21 +1741,26 @@
     "text": "Po prostu rzucaj kostką. Jeśli masz przynajmniej 18 punktów - patrz 28. Jeśli nie - patrz 291.",
     "edges": [
       {
-        "target": 28,
-        "label": ">=18"
+        "label": "Masz co najmniej 18",
+        "target": "28",
+        "suma": [
+          18,
+          24
+        ]
       },
       {
-        "target": 291,
-        "label": "<18"
+        "label": "Masz mniej niż 18",
+        "target": "291",
+        "suma": [
+          4,
+          17
+        ]
       }
     ],
-    "requires_test": "d6+stats",
-    "requirements": [
-      {
-        "attr": "unknown_points",
-        "min": 18
-      }
-    ]
+    "rzut_kosci": {
+      "ile": 4,
+      "opis": "Rzuć cztery razy kostką – potrzebujesz co najmniej 18"
+    }
   },
   "113": {
     "text": "Krok za krokiem wchodzisz do wody. Nogi zapadają się w cuchnące błoto. No, nareszcie możesz płynąć. W pewnej chwili słyszysz dziwne odgłosy. Jakby ktoś wrzucał deski do wody: klap, klap, klap!. Przyspieszasz. Za kępą zarośli dostrzegasz zagadkowe ruchy wody. \"To na pewno nic dobrego\" - myślisz. Jeśli decydujesz się płynąć dalej - patrz 307. Jeżeli chcesz się wycofać, zajrzyj do paragrafu, którego numer zapisałeś.",
@@ -5336,12 +5354,17 @@
     "text": "Jeśli masz S - patrz 28, jeśli nie masz S - patrz 291.",
     "edges": [
       {
-        "target": 28
+        "label": "Masz SZCZĘŚCIE",
+        "target": "28",
+        "sss": true
       },
       {
-        "target": 291
+        "label": "Nie masz SZCZĘŚCIA",
+        "target": "291",
+        "sss": false
       }
-    ]
+    ],
+    "test_sss": true
   },
   "382": {
     "text": "Po pewnym czasie korytarz skręca na północ. Na zakręcie możesz zjeść Prowiant - patrz 134.",
