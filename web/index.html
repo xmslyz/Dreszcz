@@ -287,13 +287,21 @@ function rysuj() {
   if (!stan.bohater) { rysujStart(box); return; }
 
   const p = ksiega[stan.akapit];
-  document.getElementById("licznik").textContent = `krok ${stan.historia.length} · paragraf ${stan.akapit}`;
+  document.getElementById("licznik").textContent = `krok ${stan.historia.length} · paragraf ${stan.akapit}`
+    + (stan.wskrzeszenia ? ` · wskrzeszeń ${stan.wskrzeszenia}` : "");
   document.getElementById("stos").textContent = stan.stos.length ? `zapisany numer: ${stan.stos.at(-1)}` : "";
 
   if (stan.koniec) {
     box.append(el("p", "koniec", stan.koniec === "zwyciestwo" ? "Zwycięstwo!" : "Koniec przygody"));
     if (stan.walka && stan.koniec === "porazka") box.append(rysujWalke(p));
     box.append(el("p", "uwaga", `Odwiedzone paragrafy: ${stan.historia.length}. Zacznij od nowa przyciskiem poniżej.`));
+    if (stan.koniec === "porazka" && stan.bohater) {
+      // Tryb testowy – do sprawdzania dalszych paragrafów bez zaczynania od nowa.
+      const b = el("button", "przycisk cichy", "Tryb testowy: wróć tu jako zwycięzca");
+      b.type = "button";
+      b.addEventListener("click", () => zmien(wskrzes(stan)));
+      box.append(b);
+    }
     return;
   }
 

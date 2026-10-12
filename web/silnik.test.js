@@ -249,3 +249,16 @@ test("zbrojownia: pierwsza czy druga rzecz (wizyty w 115)", () => {
   st = { ...st, historia: ["1", "115", "298", "324", "115", "37", "324"] };
   assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["68"]);
 });
+
+test("tryb testowy: wskrzeszenie jako zwycięzca", () => {
+  const akapit = { combat: { monsters: [{ name: "DEMON", Z: 8, W: 5 }] }, edges: [{ target: "297" }] };
+  const b = { ...bohaterTestowy(), W: 2 };
+  let st = { ...s.nowaGra(b), walka: s.rozpocznijWalke(akapit) };
+  st = s.rundaWalki(st, akapit.combat, false, kostka(6, 6, 1, 1));
+  assert.strictEqual(st.koniec, "porazka");
+  st = s.wskrzes(st);
+  assert.strictEqual(st.koniec, null);
+  assert.strictEqual(st.bohater.W, 20);
+  assert.strictEqual(st.wskrzeszenia, 1);
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["297"]);
+});

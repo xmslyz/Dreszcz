@@ -269,6 +269,24 @@ function tekstAkapitu(stan, akapit) {
   return `${przed} ${po}`;
 }
 
+/**
+ * TRYB TESTOWY: po śmierci wracasz w to samo miejsce jako zwycięzca.
+ * Potwory leżą pokonane, W wraca do poziomu początkowego, gra trwa dalej.
+ * Licznik wskrzeszeń zostaje w stanie – uczciwie widać, ile razy oszukiwałeś.
+ */
+function wskrzes(stan) {
+  const bohater = { ...stan.bohater, W: stan.bohater.start.W };
+  let walka = stan.walka;
+  if (walka) {
+    walka = structuredClone(walka);
+    walka.potwory.forEach((m) => { m.W = 0; });
+    walka.indeks = walka.potwory.length;
+    walka.zakonczona = true;
+    walka.ostatniaWygrana = true;
+  }
+  return { ...stan, bohater, walka, koniec: null, wskrzeszenia: (stan.wskrzeszenia ?? 0) + 1 };
+}
+
 // ---------------------------------------------------------------- efekty
 
 const CECHY = ["Z", "W", "S"];
@@ -421,7 +439,7 @@ function etykieta(przejscie) {
 if (typeof module !== "undefined") {
   module.exports = {
     START, k6, rzut2k, nowyBohater, sss, nowaGra, wykonajPrzejscie,
-    rozpocznijWalke, biezacyPotwor, rundaWalki, moznaUciec, ucieczka,
+    rozpocznijWalke, biezacyPotwor, rundaWalki, moznaUciec, ucieczka, wskrzes,
     dostepnePrzejscia, tekstAkapitu, etykieta,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,
     zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,
