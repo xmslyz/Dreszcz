@@ -320,3 +320,16 @@ test("stary zapis: pokonani odtworzeni z historii", () => {
   const st = s.uzupelnijPokonanych({ ...s.nowaGra(), historia: ["1", "69", "305", "2", "372"] }, ksiega);
   assert.deepStrictEqual(st.pokonani, ["69"]);   // z 2 uciekłeś do 372
 });
+
+test("207: lina tylko z liną, smok tylko za 10 złota, woda tylko z naczyniem", () => {
+  const akapit = {
+    efekty: [{ W: 3, opcja: "Wypij", wymaga: "naczynie z zaczarowaną wodą" }],
+    edges: [{ target: "35", zloto_min: 10 }, { target: "269", ma: "lina z hakiem" }, { target: "74" }],
+  };
+  let st = { ...s.nowaGra({ ...bohaterTestowy(), ekwipunek: ["miecz"], zloto: 5 }), akapit: "207" };
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["74"]);
+  assert.deepStrictEqual(s.dostepneOpcje(st, akapit), []);
+  st = { ...st, bohater: { ...st.bohater, zloto: 10, ekwipunek: ["miecz", "lina z hakiem", "naczynie z zaczarowaną wodą"] } };
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["35", "269", "74"]);
+  assert.strictEqual(s.dostepneOpcje(st, akapit).length, 1);
+});

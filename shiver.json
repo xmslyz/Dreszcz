@@ -251,11 +251,11 @@
   },
   "18": {
     "text": "Wchodzisz do małej pieczary, przylegającej do komnaty. Za tobą trzy ZŁE. Staruszek został w pokoju. Za wyłomem skalnym widzisz przykutego do skały gremlina. Biedaczysko ledwie zipie. ZŁY bierze cię za ramię i odprowadza na odległość dziesięciu kroków od gremlina. Daje ci w garść sześć strzałek. ZŁY też ma sześć. Pokazuje palcem w stronę zakutego gremlina. To w niego należy celować! Chcesz grać? Jeśli tak, pamiętaj że musisz mieć przynajmniej 5 sztuk złota - patrz 211. Wycofujesz się - patrz 286.",
-    "requires_gold": 5,
     "edges": [
       {
         "label": "Zagraj w grę (musisz mieć 5 sztuk złota)",
-        "target": "211"
+        "target": "211",
+        "zloto_min": 5
       },
       {
         "label": "Wycofaj się",
@@ -1404,19 +1404,20 @@
     "edges": [
       {
         "label": "Opcja 1",
-        "target": 35
+        "target": "35",
+        "zloto_min": 10
       },
       {
         "label": "Opcja 2",
-        "target": 74
+        "target": "74"
       },
       {
         "label": "Opcja 3",
-        "target": 110
+        "target": "110"
       },
       {
         "label": "Na drugim brzegu",
-        "target": 288
+        "target": "288"
       }
     ]
   },
@@ -2382,21 +2383,22 @@
     "text": "Nie masz dosyć? Jeśli chcesz jeszcze raz spróbować ze Smokiem, musisz mieć choć 10 sztuk złota - patrz 225. Jeśli nie chcesz - patrz 269, 74 lub 110.",
     "edges": [
       {
-        "target": 225
+        "target": "225",
+        "label": "Jeszcze raz ze Smokiem (10 sztuk złota)",
+        "zloto_min": 10
       },
       {
-        "target": 269
+        "target": "269",
+        "label": "Przerzucasz linę z hakiem",
+        "ma": "lina z hakiem"
       },
       {
-        "target": 74
+        "target": "74",
+        "label": "Spacer przez most"
       },
       {
-        "target": 110
-      }
-    ],
-    "requirements": [
-      {
-        "gold": 10
+        "target": "110",
+        "label": "Gigantyczny skok"
       }
     ]
   },
@@ -3034,24 +3036,31 @@
     "text": "Jedna noga, druga, teraz głęboki wdech, głowa i już z wąskiego, skalnego gardła wpadasz na płaską, kamienną posadzkę, a na głowę leci ci cały oręż i ekwipunek, który zgromadziłeś. O, wielki Almanhagorze, gdybyś to widział! W tej jaskini zmieściłby się cały twój zamek. Razem w wieżami! Wszystko wokół jest purpurowe i połyskliwe. Ze sklepienia zwisają skalne jęzory. Ich cienie odbijają się w błyszczącej tafli kamiennej posadzki. Czujesz się jak mrówka, którą przygniata jeż wygrzewający swój brzuch. Ja to wszystko widzę... Dlaczego ja to widzę? Moja latarnia może oświetlić tylko niewielkie pieczary. Na miłość Zarganny, mojej boginki, tam jest ogień piekielny! Lustrzana podłoga rozdarta jest pośrodku głębokim rowem. To z jego wnętrza wyziera czerwona jasność. Pełzniesz w ciszy, podciągając się wilgotnymi ze strachu dłońmi. Przesłaniasz ręką oczy, zaglądasz w otchłań. Ziemia płonie. Haruum, ojcze, jaki byłem naiwny, gdy myślałem że wystarczy rzemieniem przywiązać do pasa miecz, zapakować suchary, a później ruszyć przez korytarze by wydrzeć Podziemiom ich tajemnicę... Wracasz pod ścianę jaskini. Łyk zaczarowanej wody (jeśli ją masz): +3W, +3Z. Rozglądasz się po jaskini. Musisz przeprawić się przez tę piekielną rozpadlinę. To jedyna droga. W przeciwległym końcu pieczary widzisz jakiś mostek. Och, już jest nadzieja... Przeglądasz swój ekwipunek. Jeśli masz linę z hakiem, twoje szanse rosną. To dodaje ci odwagi. Wstajesz. Jeszcze raz zbliżasz się do jamy. Teraz, gdy stoisz, wydaje ci się nie tak szeroka jak przedtem. I ogień jakby zelżał. To zastanawiające: taki ogrom, taka jasność i... taka cisza. Ale nie. Czy to śpiew? Gdzieś z końca pieczary słychać coraz donioślejszy, niski głos. Zza skał wylania się grube cielsko w zielono-żółte paski, z czerwonym grzebieniem wzdłuż całego grzbietu. To Smok! Czy słyszałeś opowieści o zwariowanym smoku, które snują niektórzy mieszkańcy podziemi? To właśnie on. Odważnie podchodzisz do smoka. Właśnie przybija do skały tablicę. Na niej napis: \"Smok ROZKROK. Transport przez dziurę. Miła obsługa - jeśli masz 10 sztuk złota\". Przygląda ci się jakby cię tu codziennie widywał. Masz cztery wyjścia. Możesz: · skorzystać ze smoczego transportu - patrz 35, · spróbować przerzucić linę na drugi brzeg i przejść po niej (jeśli ją masz) - patrz 269, · zaryzykować spacer przez most - patrz 74, · zrobić gigantyczny skok kosztem prawie całej swojej siły - patrz 110.",
     "edges": [
       {
-        "target": 35,
-        "label": "smok"
+        "target": "35",
+        "label": "Smoczy transport (10 sztuk złota)",
+        "zloto_min": 10
       },
       {
-        "target": 269,
-        "label": "lina"
+        "target": "269",
+        "label": "Przerzucasz linę z hakiem na drugi brzeg",
+        "ma": "lina z hakiem"
       },
       {
-        "target": 74,
-        "label": "most"
+        "target": "74",
+        "label": "Ryzykujesz spacer przez most"
       },
       {
-        "target": 110,
-        "label": "skok"
+        "target": "110",
+        "label": "Gigantyczny skok (kosztem prawie całej siły)"
       }
     ],
-    "items_required": [
-      "rope (optional)"
+    "efekty": [
+      {
+        "W": 3,
+        "Z": 3,
+        "opcja": "Wypij łyk zaczarowanej wody (+3 W, +3 Z)",
+        "wymaga": "naczynie z zaczarowaną wodą"
+      }
     ]
   },
   "208": {
@@ -3843,16 +3852,17 @@
     "text": "Wyciągasz z plecaka linę. Jest ognioodporna i zakończona hakiem. Podchodzisz do krawędzi. Szerokim zamachem rzucasz hak między skały na przeciwnym brzegu. Zaczepił się. Przywiązujesz drugi koniec liny. Będziesz \"szedł\" wisząc na rękach. Opuszczasz się. Nagle... trach! Hak puścił. Wdrapujesz się z powrotem. Tracisz 2W. Możesz wybrać inny sposób pokonania szczeliny - patrz 35, 74 lub 110, albo ponowić próbę z liną - patrz 358. Pamiętaj, ze lina pozostanie już nad szczeliną, niezależnie od tego czy przejdziesz, czy też nie. Przedtem możesz zjeść Prowiant.",
     "edges": [
       {
-        "target": 35
+        "target": "35",
+        "zloto_min": 10
       },
       {
-        "target": 74
+        "target": "74"
       },
       {
-        "target": 110
+        "target": "110"
       },
       {
-        "target": 358
+        "target": "358"
       }
     ],
     "efekty": [
@@ -4781,16 +4791,17 @@
     "text": "Zgadza się. Jeśli jesteś na brzegu, z którego wyruszyłeś, spróbuj innego sposobu - patrz 35, 74 lub 110. Jeśli jesteś na drugim brzegu - patrz 186.",
     "edges": [
       {
-        "target": 35
+        "target": "35",
+        "zloto_min": 10
       },
       {
-        "target": 74
+        "target": "74"
       },
       {
-        "target": 110
+        "target": "110"
       },
       {
-        "target": 186
+        "target": "186"
       }
     ]
   },

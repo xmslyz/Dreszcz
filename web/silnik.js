@@ -308,6 +308,9 @@ function warunkiPozwalaja(stan, e) {
     const suma = oczkaTutaj(stan).reduce((a, b) => a + b, 0);   // reduce ≈ sum()
     if (suma < e.suma[0] || suma > e.suma[1]) return false;
   }
+  // Przedmiot i złoto: "ma": "lina z hakiem", "zloto_min": 10
+  if (e.ma && !(stan.bohater?.ekwipunek ?? []).includes(e.ma)) return false;
+  if (e.zloto_min && (stan.bohater?.zloto ?? 0) < e.zloto_min) return false;
   if (e.cecha_min && stan.bohater && stan.bohater[e.cecha_min[0]] < e.cecha_min[1]) return false;
   if (e.cecha_ponizej && stan.bohater && stan.bohater[e.cecha_ponizej[0]] >= e.cecha_ponizej[1]) return false;
   return true;
@@ -452,7 +455,8 @@ function dostepneOpcje(stan, akapit) {
   return (akapit?.efekty ?? [])
     .map((efekt, i) => ({ efekt, klucz: `${stan.akapit}:${i}` }))
     .filter(({ efekt, klucz }) => efekt.opcja && !wybrane.includes(klucz))
-    .filter(({ efekt }) => !(efekt.zloto < 0 && zloto < -efekt.zloto));   // nie stać cię
+    .filter(({ efekt }) => !(efekt.zloto < 0 && zloto < -efekt.zloto))    // nie stać cię
+    .filter(({ efekt }) => !efekt.wymaga || (stan.bohater.ekwipunek ?? []).includes(efekt.wymaga));
 }
 
 function wezOpcje(stan, opcja) {
