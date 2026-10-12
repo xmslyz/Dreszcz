@@ -877,12 +877,14 @@
     "text": "Wchodzisz, ale niczego tu nie znajdujesz. Czy znasz inne wyjście z tej komnaty niż to, którym właśnie wszedłeś? Jeśli tak - patrz 14, jeśli nie - patrz 70.",
     "edges": [
       {
-        "label": "Znasz wyjście",
-        "target": 14
+        "label": "Znasz inne wyjście (odkryłeś je za fontanną)",
+        "target": "14",
+        "byl_w": "163"
       },
       {
-        "label": "Nie znasz wyjścia",
-        "target": 70
+        "label": "Nie znasz innego wyjścia",
+        "target": "70",
+        "nie_byl_w": "163"
       }
     ]
   },
