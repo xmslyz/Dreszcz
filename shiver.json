@@ -306,23 +306,21 @@
   },
   "22": {
     "text": "To chyba już kres twej wędrówki. Tak ślicznej komnaty jeszcze nie widziałeś. Wszędzie jasno, unosi się zielonkawa mgiełka. Posadzka jeszcze gładsza niż nad przepaścią. Na podłodze siedzi jakiś ludek. Ach, to prawdziwy KRASNAL bawi się smoczkiem, nakręcanym, z ruchomymi nogami i czerwonym językiem, który mu się co chwila wysuwa. Jeśli masz blaszanego motyla, możesz odpocząć i pobawić się z KRASNALEM - patrz 321. Jeśli masz szmaragd, możesz pokazać go KRASNALOWI - patrz 187. Tylko wtedy gdy masz drewniany pal, możesz spróbować postraszyć, albo nawet zaatakować KRASNALA - patrz 9. Jeżeli masz więcej niż jedną z wymienionych rzeczy, musisz wybrać tylko jedną możliwość.",
-    "requires_item": [
-      "motyl",
-      "szmaragd",
-      "pal"
-    ],
     "edges": [
       {
-        "label": "Masz blaszanego motyla",
-        "target": "321"
+        "label": "Bawisz się z KRASNALEM blaszanym motylem",
+        "target": "321",
+        "ma": "blaszany motyl"
       },
       {
-        "label": "Masz szmaragd",
-        "target": "187"
+        "label": "Pokazujesz KRASNALOWI szmaragd",
+        "target": "187",
+        "ma": "szmaragd"
       },
       {
-        "label": "Masz drewniany pal",
-        "target": "9"
+        "label": "Straszysz KRASNALA drewnianym palem",
+        "target": "9",
+        "ma": "drewniany pal"
       }
     ]
   },
@@ -796,17 +794,28 @@
   },
   "52": {
     "text": "Z otworu w ścianie wystrzeliwuje strumień gryzącego gazu. Jeśli masz hełm \"garnkowy\", nie dzieje ci się krzywda, choć hełm ulega zniszczeniu. Jeśli nie masz takiego hełmu - patrz najpierw 315, a potem 274 (zapisz ten numer).",
-    "requires_item": "hełm garnkowy",
     "edges": [
       {
-        "label": "Masz hełm garnkowy (hełm się niszczy)",
+        "label": "Masz hełm – chroni cię, ale się niszczy",
         "target": "274",
-        "condition": "has_item:hełm garnkowy"
+        "ma": [
+          "hełm",
+          "hełm garnkowy"
+        ],
+        "efekt": {
+          "zuzyj": [
+            "hełm",
+            "hełm garnkowy"
+          ]
+        }
       },
       {
         "label": "Nie masz hełmu",
         "target": "315",
-        "condition": "no_item:hełm garnkowy",
+        "nie_ma": [
+          "hełm",
+          "hełm garnkowy"
+        ],
         "return_to": "274"
       }
     ]
@@ -974,43 +983,67 @@
   },
   "63": {
     "text": "Miecz nie jest skuteczną bronią przeciw WILKOŁAKOWI. Jeśli masz któryś z wymienionych przedmiotów, możesz użyć go do walki: ·kość ze szkieletu przedwiecznego potwora - patrz 157, ·młot goblinów - patrz 346, ·metalowa tarcza - patrz 216, ·sieć - patrz 337, ·pęk kluczy - patrz 181. Jeśli nie masz żadnego z tych przedmiotów, pozostaje ci tylko Ucieczka - patrz 275.",
-    "requires_item": [
-      "kość",
-      "młot",
-      "metalowa tarcza",
-      "sieć",
-      "pęk kluczy"
-    ],
     "edges": [
       {
-        "label": "Użyj: kość ze szkieletu",
+        "label": "Walczysz kością potwora",
         "target": "157",
-        "condition": "has_item:kość"
+        "ma": "kość potwora",
+        "efekt": {
+          "zuzyj": [
+            "kość potwora"
+          ]
+        }
       },
       {
-        "label": "Użyj: młot goblinów",
+        "label": "Walczysz młotem",
         "target": "346",
-        "condition": "has_item:młot"
+        "ma": "młot",
+        "efekt": {
+          "zuzyj": [
+            "młot"
+          ]
+        }
       },
       {
-        "label": "Użyj: metalowa tarcza",
+        "label": "Miotasz metalową tarczą",
         "target": "216",
-        "condition": "has_item:metalowa tarcza"
+        "ma": "metalowa tarcza",
+        "efekt": {
+          "zuzyj": [
+            "metalowa tarcza"
+          ]
+        }
       },
       {
-        "label": "Użyj: sieć",
+        "label": "Zarzucasz sieć",
         "target": "377",
-        "condition": "has_item:sieć"
+        "ma": "sieć",
+        "efekt": {
+          "zuzyj": [
+            "sieć"
+          ]
+        }
       },
       {
-        "label": "Użyj: pęk kluczy",
+        "label": "Rzucasz pękiem kluczy",
         "target": "181",
-        "condition": "has_item:pęk kluczy"
+        "ma": "pęk kluczy",
+        "efekt": {
+          "zuzyj": [
+            "pęk kluczy"
+          ]
+        }
       },
       {
-        "label": "Nie masz żadnego – ucieczka",
+        "label": "Nie masz żadnej z tych rzeczy – ratujesz się Ucieczką",
         "target": "275",
-        "condition": "no_item"
+        "nie_ma": [
+          "kość potwora",
+          "młot",
+          "metalowa tarcza",
+          "pęk kluczy",
+          "sieć"
+        ]
       }
     ]
   },
@@ -1378,6 +1411,11 @@
     "efekty": [
       {
         "W": -2
+      },
+      {
+        "dodaj": [
+          "sieć"
+        ]
       }
     ]
   },
@@ -1635,21 +1673,25 @@
     "text": "Tuż za drzwiami widzisz drewniane, wyszczerbione schody prowadzące w dół. W centralnej części pieczary znajduje się kwadratowe zagłębienie, coś jakby basen, ale pusty. Schody prowadzą właśnie na dno basenu. Posadzka wysypana jest miałkim piaskiem. Wszędzie piasek, żadnych sprzętów, kamieni, ani istot... Hejże, a co to za zgięta pała sterczy w rogu basenu? Pewnie jakiś korzeń. Nie możesz odmówić sobie tej przyjemności: dajesz mu solidnego kopa. To, co się teraz dzieje, przekracza wyobrażenia. Jeśli przetrwasz i będziesz komuś opowiadał o swojej przygodzie, na pewno nie uwierzy. Basen przypomina teraz garnek, w którymś ktoś miesza gruby makaron. Ty jesteś małym ziarnkiem miotanym we wszystkie strony. To ROBALE, najobrzydliwsze stwory podziemnego świata. Chcą rozetrzeć cię na proszek. Wiją swe śliskie cielska. To wyrzucają cię na powierzchnię, to znowu przyciskają cię do dna. Możesz bronić się mieczem - patrz 213. Możesz też zastosować inną broń, czyli.. No właśnie: niektórzy mówią, że skuteczną bronią przeciw ROBALOM jest żrący płyn, inni że wszystkożery (wieczne głodne skorupiaki). Jeśli masz jedno albo drugie - patrz 24, jeśli jedno i drugie - patrz 292.",
     "edges": [
       {
-        "target": 213,
-        "label": "miecz"
+        "label": "Bronisz się mieczem",
+        "target": "213"
       },
       {
-        "target": 24,
-        "label": "jedno z narzędzi specjalnych"
+        "label": "Używasz słoja (żrący pył albo wszystkożery)",
+        "target": "24",
+        "ma": [
+          "słój żrącego pyłu",
+          "słój z wszystkożerami"
+        ]
       },
       {
-        "target": 292,
-        "label": "oba narzędzia"
+        "label": "Używasz obu słojów",
+        "target": "292",
+        "ma_wszystkie": [
+          "słój żrącego pyłu",
+          "słój z wszystkożerami"
+        ]
       }
-    ],
-    "requirements": [
-      "żrący płyn",
-      "wszystkożery"
     ]
   },
   "107": {
@@ -2084,19 +2126,20 @@
     "text": "Nie wchodź do tego pokoju, jeśli nie masz choć jednego z tych przedmiotów: blaszanego motyla, drewnianego pala lub szmaragdu, który zapewnia Dar Skrzydeł. Co, nie masz? A, to szkoda - patrz 43. Jeśli masz - patrz 22.",
     "edges": [
       {
-        "target": 22,
-        "label": "masz przedmiot"
+        "label": "Masz motyla, pal lub szmaragd – wchodzisz",
+        "target": "22",
+        "ma": [
+          "blaszany motyl",
+          "drewniany pal",
+          "szmaragd"
+        ]
       },
       {
-        "target": 43,
-        "label": "nie masz"
-      }
-    ],
-    "requirements": [
-      {
-        "any_of": [
-          "motyl",
-          "pal",
+        "label": "Nie masz żadnej z tych rzeczy",
+        "target": "43",
+        "nie_ma": [
+          "blaszany motyl",
+          "drewniany pal",
           "szmaragd"
         ]
       }
@@ -2728,12 +2771,14 @@
     "text": "Ciskasz w potwora pękiem kluczy, który znalazłeś w jednej z odwiedzonych komnat. Rzut jest celny, ale niegroźny. WILKOŁAK przechwytuje pęk i ucieka. Ruszasz w pogoń. WILKOŁAK wpada do wąskiej, ale głębokiej rozpadliny znajdującej się w rogu pieczary. Spada na dno i ginie. Przyświecasz sobie latarnią. Widzisz w głębi zwaliste cielsko potwora, a obok niego pobłyskują klucze. Jeśli masz przy sobie linę - patrz 329. Jeśli nie masz liny - patrz 32.",
     "edges": [
       {
-        "target": 329,
-        "condition": "has_rope"
+        "label": "Masz linę – schodzisz po klucze",
+        "target": "329",
+        "ma": "lina z hakiem"
       },
       {
-        "target": 32,
-        "condition": "not has_rope"
+        "label": "Nie masz liny",
+        "target": "32",
+        "nie_ma": "lina z hakiem"
       }
     ]
   },
@@ -3244,12 +3289,14 @@
     "text": "Jeśli wybrałeś kość potwora, słój z wszystkożernymi skorupiakami, blaszanego motyla lub włócznię - patrz 109, a jeśli klucz - patrz 366.",
     "edges": [
       {
-        "target": 366,
-        "label": "klucz"
+        "label": "Wybrałeś kluczyk",
+        "target": "366",
+        "ma": "błyszczący kluczyk"
       },
       {
-        "target": 109,
-        "label": "pozostałe"
+        "label": "Wybrałeś inną rzecz",
+        "target": "109",
+        "nie_ma": "błyszczący kluczyk"
       }
     ]
   },
@@ -4538,12 +4585,14 @@
     "text": "Lecisz w dół. Jedynym twoim ratunkiem jest Dar Skrzydeł. Jeśli go masz, skorzystaj - patrz 12. Jeśli nie masz - patrz 370.",
     "edges": [
       {
-        "target": 12,
-        "condition": "has_wings"
+        "label": "Korzystasz z Daru Skrzydeł (szmaragd)",
+        "target": "12",
+        "ma": "szmaragd"
       },
       {
-        "target": 370,
-        "condition": "no_wings"
+        "label": "Nie masz Daru Skrzydeł",
+        "target": "370",
+        "nie_ma": "szmaragd"
       }
     ]
   },
@@ -5364,13 +5413,36 @@
     "text": "Błyskawicznie wyjmujesz z plecaka sieć. Kręcisz nią nad głową i rzucasz w stronę potwora. Udało ci się - potwór miota się w sieci. Jeśli masz drewniany pal, rzucasz nim w WILKOŁAKA. Natychmiast ginie - patrz 32. Jeśli nie masz pala, potwór za chwilę przegryzie sieć i uwolni się. O, już biegnie w twoją stronę. Możesz skorzystać z innej broni: miecz i sieć okazały się nieskuteczne - patrz 63. Jeśli nie masz już żadnej broni, którą mógłbyś zaatakować WILKOŁAKA (kość potwora, młot goblinów, metalowa tarcza, pęk kluczy), ratujesz się Ucieczką - patrz 275.",
     "edges": [
       {
-        "target": 32
+        "label": "Rzucasz drewnianym palem",
+        "target": "32",
+        "ma": "drewniany pal",
+        "efekt": {
+          "zuzyj": [
+            "drewniany pal"
+          ]
+        }
       },
       {
-        "target": 63
+        "label": "Sięgasz po inną broń",
+        "target": "63",
+        "nie_ma": "drewniany pal",
+        "ma": [
+          "kość potwora",
+          "młot",
+          "metalowa tarcza",
+          "pęk kluczy"
+        ]
       },
       {
-        "target": 275
+        "label": "Nie masz już broni – ratujesz się Ucieczką",
+        "target": "275",
+        "nie_ma": [
+          "kość potwora",
+          "młot",
+          "metalowa tarcza",
+          "pęk kluczy",
+          "drewniany pal"
+        ]
       }
     ]
   },
