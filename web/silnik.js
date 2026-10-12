@@ -97,7 +97,9 @@ function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null) {
   let zmiany = [];
   if (przejscie.efekt && bohater) ({ bohater, opisy: zmiany } = zmienCechy(bohater, przejscie.efekt));
 
-  const walka = ksiega ? rozpocznijWalke(ksiega[cel]) : null;
+  // Potwory pokonane raz już nie wstają (np. pętla 170 → 319 → 69 → … → 330 → 170).
+  const juzPokonani = (stan.pokonani ?? []).includes(cel);
+  const walka = ksiega && !juzPokonani ? rozpocznijWalke(ksiega[cel]) : null;
   return { ...stan, bohater, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany, testSSS: null, kosci: null };
 }
 
@@ -180,11 +182,37 @@ function rundaWalki(stan, opis, uzyjSSS = false, kostka = k6) {
     walka.indeks += 1;
     walka.rundaPotwora = 0;
   }
-  if (!biezacyPotwor(walka)) walka.zakonczona = true;
+  let pokonani = stan.pokonani ?? [];
+  if (!biezacyPotwor(walka)) {
+    walka.zakonczona = true;
+    pokonani = [...pokonani, stan.akapit];      // wszyscy potwory tego paragrafu nie żyją
+  }
   if (opis.rounds && walka.rundy >= opis.rounds) walka.zakonczona = true;
   if (opis.until_round_won && wygrana) walka.zakonczona = true;
 
-  return { ...stan, bohater, walka };
+  return { ...stan, bohater, walka, pokonani };
+}
+
+/**
+ * Zapisy sprzed tej zmiany nie mają listy "pokonani". Odtwarzamy ją z historii:
+ * jeśli po paragrafie z walką poszedłeś dalej (nie drogą ucieczki), to wygrałeś.
+ */
+function uzupelnijPokonanych(stan, ksiega) {
+  if (stan.pokonani) return stan;
+  const pokonani = [];
+  stan.historia.forEach((nr, i) => {
+    const dalej = stan.historia[i + 1];
+    const opis = ksiega[nr]?.combat;
+    if (!opis || dalej === undefined || pokonani.includes(nr)) return;
+    if (opis.escape && String(opis.escape.target) === dalej) return;
+    pokonani.push(nr);
+  });
+  return { ...stan, pokonani };
+}
+
+/** Czy w tym paragrafie potwory zostały już kiedyś pokonane? */
+function potworyPokonane(stan, akapit) {
+  return Boolean(akapit?.combat) && !stan.walka && (stan.pokonani ?? []).includes(stan.akapit);
 }
 
 /** Czy teraz wolno uciec? (zasady III + reguły paragrafu) */
@@ -333,7 +361,8 @@ function wskrzes(stan) {
     walka.zakonczona = true;
     walka.ostatniaWygrana = true;
   }
-  return { ...stan, bohater, walka, koniec: null, wskrzeszenia: (stan.wskrzeszenia ?? 0) + 1 };
+  const pokonani = walka ? [...(stan.pokonani ?? []), stan.akapit] : stan.pokonani;
+  return { ...stan, bohater, walka, pokonani, koniec: null, wskrzeszenia: (stan.wskrzeszenia ?? 0) + 1 };
 }
 
 // ---------------------------------------------------------------- efekty
@@ -496,7 +525,7 @@ function etykieta(przejscie) {
 if (typeof module !== "undefined") {
   module.exports = {
     START, k6, rzut2k, nowyBohater, sss, nowaGra, wykonajPrzejscie,
-    rozpocznijWalke, biezacyPotwor, rundaWalki, moznaUciec, ucieczka, wskrzes,
+    rozpocznijWalke, biezacyPotwor, rundaWalki, moznaUciec, ucieczka, wskrzes, potworyPokonane, uzupelnijPokonanych,
     dostepnePrzejscia, tekstAkapitu, etykieta, czekaNaSSS, testSzczescia,
     oczkaTutaj, czekaNaKosci, rzucKoscia,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,

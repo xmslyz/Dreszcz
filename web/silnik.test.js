@@ -302,3 +302,21 @@ test("warunek cechy (28: co najmniej 18 W)", () => {
   const st = { ...s.nowaGra(bohaterTestowy()), akapit: "28" };       // W = 15
   assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["330"]);
 });
+
+test("pokonane potwory nie wstają po powrocie (pętla przez 69)", () => {
+  const ksiega = { "69": { combat: { monsters: [{ name: "UPIÓR", Z: 5, W: 2 }] }, edges: [{ target: "291" }] } };
+  let st = s.wykonajPrzejscie({ ...s.nowaGra(bohaterTestowy()), akapit: "319" }, { target: "69" }, null, ksiega);
+  assert.ok(st.walka);
+  st = s.rundaWalki(st, ksiega["69"].combat, false, kostka(1, 1, 6, 6));
+  assert.deepStrictEqual(st.pokonani, ["69"]);
+  st = s.wykonajPrzejscie({ ...st, akapit: "319" }, { target: "69" }, null, ksiega);
+  assert.strictEqual(st.walka, null);
+  assert.strictEqual(s.potworyPokonane(st, ksiega["69"]), true);
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, ksiega["69"]).map((e) => e.target), ["291"]);
+});
+
+test("stary zapis: pokonani odtworzeni z historii", () => {
+  const ksiega = { "69": { combat: { monsters: [] } }, "2": { combat: { monsters: [], escape: { target: "372" } } } };
+  const st = s.uzupelnijPokonanych({ ...s.nowaGra(), historia: ["1", "69", "305", "2", "372"] }, ksiega);
+  assert.deepStrictEqual(st.pokonani, ["69"]);   // z 2 uciekłeś do 372
+});

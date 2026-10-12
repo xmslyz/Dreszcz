@@ -319,6 +319,7 @@ function rysuj() {
   box.append(el("p", "numer", stan.akapit));
   box.append(el("p", "tekst", p ? tekstAkapitu(stan, p) : `Brak paragrafu ${stan.akapit} w księdze.`));
   if (stan.walka) box.append(rysujWalke(p));
+  if (potworyPokonane(stan, p)) box.append(el("p", "uwaga", "Potwory, które tu pokonałeś, wciąż leżą na ziemi – nie musisz walczyć drugi raz."));
   if (stan.zmiany?.length) {
     const z = el("div", "zmiany");
     stan.zmiany.forEach((opis) => z.append(el("span", opis.startsWith("−") ? "strata" : "", opis)));
@@ -784,7 +785,7 @@ wczytajKsiege().then((dane) => {
   ksiega = dane;
   const zapis = wczytajZapis();
   // Zapisy sprzed wprowadzenia walki nie mają bohatera – zaczynamy od nowa.
-  stan = zapis && zapis.bohater && ksiega[zapis.akapit] ? zapis : nowaGra();
+  stan = zapis && zapis.bohater && ksiega[zapis.akapit] ? uzupelnijPokonanych(zapis, ksiega) : nowaGra();
   rysuj();
 }).catch(() => {
   document.getElementById("akapit").innerHTML = '<p class="uwaga">Nie udało się wczytać księgi. Odśwież stronę.</p>';
