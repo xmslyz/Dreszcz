@@ -2449,7 +2449,7 @@
         "sss": true
       },
       {
-        "label": "Spadasz w otchłań",
+        "label": "Spadasz, wpełzasz do tunelu… i otwierasz grube drzwi",
         "target": "13",
         "sss": false
       }
@@ -2458,6 +2458,13 @@
     "efekty": [
       {
         "W": -1
+      },
+      {
+        "prowiant": -1,
+        "W": 5,
+        "Z": 2,
+        "S": 3,
+        "gdy_sss": false
       }
     ],
     "test_sss": true
