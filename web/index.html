@@ -13,16 +13,19 @@
   --f-tytul: "Grenze Gotisch", "UnifrakturMaguntia", Georgia, serif;
   --f-tekst: "Alegreya", Georgia, "Times New Roman", serif;
   --f-cyfry: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --kosc-tlo: #fbfaf5;    /* kość z kości słoniowej */
+  --kosc-ramka: #b9bdb4;
+  --kosc-oczko: #1d2420;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --tlo: #111513; --karta: #181d1a; --atrament: #dcd9cc; --przygaszony: #8f978f;
-    --akcent: #d6a24a; --linia: #2b322e; color-scheme: dark;
+    --akcent: #d6a24a; --linia: #2b322e; --kosc-tlo: #e8e2cf; --kosc-ramka: #8c8571; --kosc-oczko: #6e1717; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --tlo: #111513; --karta: #181d1a; --atrament: #dcd9cc; --przygaszony: #8f978f;
-  --akcent: #d6a24a; --linia: #2b322e; color-scheme: dark;
+  --akcent: #d6a24a; --linia: #2b322e; --kosc-tlo: #e8e2cf; --kosc-ramka: #8c8571; --kosc-oczko: #6e1717; color-scheme: dark;
 }
 html, body { min-height: 100%; }
 body {
@@ -36,6 +39,7 @@ h1 { font: 700 2rem/1 var(--f-tytul); margin: 0; letter-spacing: .02em; }
 .licznik { font: 500 .75rem/1 var(--f-cyfry); color: var(--przygaszony); letter-spacing: .06em; text-transform: uppercase; }
 .numer { font: 700 3.5rem/1 var(--f-tytul); color: var(--akcent); margin: 0; }
 .tekst { margin: 0; max-width: 65ch; hyphens: auto; }
+#akapit { display: grid; gap: 18px; }
 .wybory { display: grid; gap: 10px; }
 .wybor {
   display: flex; gap: 12px; align-items: baseline; text-align: left; width: 100%;
@@ -90,6 +94,34 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 .rzuty div { display: grid; grid-template-columns: 9rem 1fr; gap: 8px; align-items: baseline; }
 .rzuty dt { font: 700 1.1rem var(--f-tytul); }
 .rzuty dd { margin: 0; font: 500 .95rem var(--f-cyfry); font-variant-numeric: tabular-nums; }
+
+/* Kości: ścianka 3×3, oczka zapalane według wartości (data-v). */
+.tacka { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+.rzut { display: grid; gap: 6px; justify-items: start; }
+.rzut .kto { font: 500 .7rem/1 var(--f-cyfry); color: var(--przygaszony); letter-spacing: .06em; text-transform: uppercase; }
+.rzut .para { display: flex; gap: 8px; align-items: center; }
+.rzut .suma { font: 500 .9rem/1 var(--f-cyfry); font-variant-numeric: tabular-nums; }
+.kosc {
+  --bok: 2.4rem;
+  width: var(--bok); height: var(--bok); padding: 5px; box-sizing: border-box;
+  display: grid; grid-template: repeat(3, 1fr) / repeat(3, 1fr); gap: 2px;
+  background: var(--kosc-tlo); border: 1px solid var(--kosc-ramka); border-radius: 22%;
+  box-shadow: inset 0 -3px 0 var(--kosc-ramka);
+}
+.kosc i { border-radius: 50%; background: transparent; margin: 1px; }
+.kosc i.on { background: var(--kosc-oczko); }
+.kosc.maly { --bok: 1.8rem; padding: 4px; }
+.kosc.toczy { animation: toczy .45s cubic-bezier(.3,.7,.4,1); }
+@keyframes toczy {
+  0% { transform: translateY(-10px) rotate(-200deg) scale(.85); }
+  70% { transform: translateY(2px) rotate(12deg); }
+  100% { transform: none; }
+}
+.dziennik li.nowy { animation: pojaw .2s .45s both; }
+@keyframes pojaw { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .kosc.toczy, .dziennik li.nowy { animation: none; }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .numer, .tekst { animation: odslon .35s ease-out both; }
@@ -206,16 +238,73 @@ function rysuj() {
   box.append(wybory);
 }
 
+// ---------------------------------------------------------------- kości
+
+// Które pola siatki 3×3 (numerowane 0–8) mają oczko dla danej wartości.
+const OCZKA = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8] };
+const ruchDozwolony = () => !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function ustawOczka(kosc, wartosc) {
+  kosc.querySelectorAll("i").forEach((oczko, i) => oczko.classList.toggle("on", OCZKA[wartosc].includes(i)));
+  kosc.setAttribute("aria-label", `kość: ${wartosc}`);
+}
+
+/**
+ * Jedna kość. Gdy animuj = true, przez chwilę „miga” losowymi ściankami,
+ * a potem zatrzymuje się na prawdziwym wyniku (wynik jest już znany –
+ * animacja tylko go pokazuje).
+ */
+function kosc(wartosc, animuj = false, maly = false) {
+  const k = el("span", "kosc" + (maly ? " maly" : ""));
+  k.setAttribute("role", "img");
+  for (let i = 0; i < 9; i++) k.append(el("i"));
+  if (!animuj || !ruchDozwolony()) { ustawOczka(k, wartosc); return k; }
+  k.classList.add("toczy");
+  const migotanie = setInterval(() => ustawOczka(k, 1 + Math.floor(Math.random() * 6)), 70);
+  ustawOczka(k, 1 + Math.floor(Math.random() * 6));
+  setTimeout(() => { clearInterval(migotanie); ustawOczka(k, wartosc); }, 420);
+  return k;
+}
+
+/** Grupa: podpis, kości i opis wyniku, np. „Ty · ⚃⚄ · +Z 9 = 18”. */
+function rzut(kto, oczka, opis, animuj, maly = false) {
+  const r = el("div", "rzut");
+  const para = el("div", "para");
+  oczka.forEach((v) => para.append(kosc(v, animuj, maly)));
+  para.append(el("span", "suma", opis));
+  r.append(el("span", "kto", kto), para);
+  return r;
+}
+
+// ---------------------------------------------------------------- start
+
+let kandydat = null;  // wylosowany bohater, zanim wejdzie do podziemi
+
 function rysujStart(box) {
   document.getElementById("licznik").textContent = "nowa wyprawa";
   document.getElementById("stos").textContent = "";
   const s = el("div", "start");
   s.append(el("h2", "", "Hej, Śmiałku!"));
   s.append(el("p", "tekst", "Przed zejściem do podziemi rzucasz kośćmi, by ustalić swoje cechy: ZRĘCZNOŚĆ to 1K+6, WYTRZYMAŁOŚĆ 2K+12, SZCZĘŚCIE 1K+6. W plecaku masz Prowiant na 8 posiłków."));
-  const b = el("button", "przycisk", "Rzuć kośćmi i wyrusz");
-  b.type = "button";
-  b.addEventListener("click", () => zmien(nowaGra(nowyBohater())));
-  s.append(b);
+
+  if (!kandydat) {
+    const b = el("button", "przycisk", "Rzuć kośćmi");
+    b.type = "button";
+    b.addEventListener("click", () => { kandydat = nowyBohater(); rysuj(); });
+    s.append(b);
+  } else {
+    const tacka = el("div", "tacka");
+    tacka.append(
+      rzut("Zręczność", kandydat.rzuty.Z, `+6 = ${kandydat.Z}`, true),
+      rzut("Wytrzymałość", kandydat.rzuty.W, `+12 = ${kandydat.W}`, true),
+      rzut("Szczęście", kandydat.rzuty.S, `+6 = ${kandydat.S}`, true),
+    );
+    s.append(tacka);
+    const b = el("button", "przycisk", "Wejdź do podziemi");
+    b.type = "button";
+    b.addEventListener("click", () => { const h = kandydat; kandydat = null; zmien(nowaGra(h)); });
+    s.append(b);
+  }
   box.append(s);
 }
 
@@ -244,6 +333,7 @@ function rysujWalke(akapit) {
     atak.addEventListener("click", () => {
       const sss = uzyjSSS;
       uzyjSSS = false;
+      animujRzut = true;
       zmien(rundaWalki(stan, opis, sss), false);
     });
     akcje.append(atak);
@@ -278,12 +368,36 @@ function rysujWalke(akapit) {
   }
 
   if (w.dziennik.length) {
+    const animuj = animujRzut;
+    animujRzut = false;
+    sekcja.append(tackaWalki(w.dziennik.at(-1), opis, animuj));
     const lista = el("ol", "dziennik");
     lista.setAttribute("reversed", "");
-    for (const r of w.dziennik.slice(-5).reverse()) lista.append(wpisDziennika(r, opis));
+    w.dziennik.slice(-5).reverse().forEach((r, i) => {
+      const wpis = wpisDziennika(r, opis);
+      if (i === 0 && animuj) wpis.classList.add("nowy");  // wynik pojawia się, gdy kości staną
+      lista.append(wpis);
+    });
     sekcja.append(lista);
   }
   return sekcja;
+}
+
+let animujRzut = false;  // true tylko zaraz po kliknięciu „Atakuj”
+
+/** Kości ostatniej rundy: Ty, potwór i – jeśli było – SSS. */
+function tackaWalki(r, opis, animuj) {
+  const premia = (opis.hero_Z_bonus ?? 0) + (opis.hero_attack_bonus ?? 0);
+  const plus = premia ? ` ${premia > 0 ? "+" : "−"} ${Math.abs(premia)}` : "";
+  const tacka = el("div", "tacka");
+  tacka.append(
+    rzut("Ty", r.b.oczka, `+ Z${plus} = ${r.silaBohatera}`, animuj),
+    rzut(r.potwor, r.a.oczka, `+ Z = ${r.silaPotwora}`, animuj),
+  );
+  if (r.sssRzut) {
+    tacka.append(rzut("SSS", r.sssRzut.oczka, r.sss ? "szczęście" : "pech", animuj, true));
+  }
+  return tacka;
 }
 
 function wpisDziennika(r, opis) {

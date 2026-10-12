@@ -31,10 +31,12 @@ function rzut2k(kostka) {
 
 /** Zasady I: Z = 1K+6, W = 2K+12, S = 1K+6, Prowiant na 8 posiłków. */
 function nowyBohater(kostka = k6) {
-  const Z = kostka() + 6;
-  const W = kostka() + kostka() + 12;
-  const S = kostka() + 6;
-  return { Z, W, S, start: { Z, W, S }, prowiant: 8 };
+  const rzuty = { Z: [kostka()], W: [kostka(), kostka()], S: [kostka()] };
+  const Z = rzuty.Z[0] + 6;
+  const W = rzuty.W[0] + rzuty.W[1] + 12;
+  const S = rzuty.S[0] + 6;
+  // rzuty zachowujemy tylko po to, by pokazać kości na ekranie startowym
+  return { Z, W, S, start: { Z, W, S }, prowiant: 8, rzuty };
 }
 
 /**
@@ -145,6 +147,7 @@ function rundaWalki(stan, opis, uzyjSSS = false, kostka = k6) {
     const proba = sss(bohater, kostka);
     bohater = proba.bohater;
     wpis.sss = proba.szczescie;
+    wpis.sssRzut = proba.rzut;
     if (wygrana) rana = proba.szczescie ? rana + 2 : rana - 1;
     else rana = proba.szczescie ? rana - 1 : rana + 1;
   }
