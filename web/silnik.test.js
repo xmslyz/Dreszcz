@@ -208,3 +208,44 @@ test("pierwsza wizyta w paragrafie (214, 350)", () => {
   st = { ...st, historia: ["1", "214", "65", "214"] };
   assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["172"]);
 });
+
+// ---------------------------------------------------------------- ekwipunek
+const zEkwipunkiem = () => ({ ...bohaterTestowy(), ekwipunek: ["miecz", "tarcza"] });
+
+test("łupy do wyboru z limitem (paragraf 119: najwyżej dwie rzeczy)", () => {
+  const akapit = {
+    limit_opcji: 2,
+    efekty: ["lina", "flasza", "skalp"].map((r) => ({ dodaj: [r], opcja: `Weź: ${r}` })),
+  };
+  let st = { ...s.nowaGra(zEkwipunkiem()), akapit: "119" };
+  st = s.wezOpcje(st, s.dostepneOpcje(st, akapit)[0]);
+  st = s.wezOpcje(st, s.dostepneOpcje(st, akapit)[0]);
+  assert.deepStrictEqual(st.bohater.ekwipunek, ["miecz", "tarcza", "lina", "flasza"]);
+  assert.deepStrictEqual(s.dostepneOpcje(st, akapit), []);
+});
+
+test("zakup tylko wtedy, gdy stać cię na niego (paragraf 55)", () => {
+  const akapit = { efekty: [{ dodaj: ["pal"], zloto: -15, opcja: "Kup" }] };
+  let st = { ...s.nowaGra({ ...zEkwipunkiem(), zloto: 10 }), akapit: "55" };
+  assert.strictEqual(s.dostepneOpcje(st, akapit).length, 0);
+  st = { ...st, bohater: { ...st.bohater, zloto: 20 } };
+  st = s.wezOpcje(st, s.dostepneOpcje(st, akapit)[0]);
+  assert.strictEqual(st.bohater.zloto, 5);
+  assert.ok(st.bohater.ekwipunek.includes("pal"));
+});
+
+test("wymiana na przejściu: motyl za złoto (353 → 262)", () => {
+  const st0 = s.nowaGra({ ...zEkwipunkiem(), ekwipunek: ["miecz", "blaszany motyl"] });
+  const st = s.wykonajPrzejscie(st0, { target: "262", efekt: { zloto: 10, usun: ["blaszany motyl"] } });
+  assert.deepStrictEqual(st.bohater.ekwipunek, ["miecz"]);
+  assert.strictEqual(st.bohater.zloto, 10);
+  assert.deepStrictEqual(st.zmiany, ["+10 złota", "− blaszany motyl"]);
+});
+
+test("zbrojownia: pierwsza czy druga rzecz (wizyty w 115)", () => {
+  const akapit = { edges: [{ target: "115", wizyty: ["115", 1] }, { target: "68", wizyty: ["115", 2] }] };
+  let st = { ...s.nowaGra(), historia: ["1", "115", "298", "324"], akapit: "324" };
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["115"]);
+  st = { ...st, historia: ["1", "115", "298", "324", "115", "37", "324"] };
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["68"]);
+});

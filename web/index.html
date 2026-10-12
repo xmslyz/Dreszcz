@@ -40,6 +40,11 @@ h1 { font: 700 2rem/1 var(--f-tytul); margin: 0; letter-spacing: .02em; }
 .numer { font: 700 3.5rem/1 var(--f-tytul); color: var(--akcent); margin: 0; }
 .tekst { margin: 0; max-width: 65ch; hyphens: auto; }
 #akapit { display: grid; gap: 18px; }
+.ekwipunek { margin-top: -14px; }
+.ekwipunek summary { font: 500 .8rem/1 var(--f-cyfry); color: var(--przygaszony); letter-spacing: .06em; text-transform: uppercase; cursor: pointer; padding-block: 8px; }
+.ekwipunek ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+.ekwipunek li { font-size: .95rem; padding: 4px 10px; border: 1px solid var(--linia); border-radius: 999px; background: var(--karta); }
+.ekwipunek li.klucz { border-color: var(--akcent); font-family: var(--f-cyfry); font-size: .85rem; }
 .zmiany { display: flex; flex-wrap: wrap; gap: 8px; }
 .zmiany span { font: 500 .85rem/1 var(--f-cyfry); padding: 6px 10px; border-radius: 999px; border: 1px solid var(--akcent); color: var(--akcent); }
 .zmiany span.strata { border-style: dashed; }
@@ -167,6 +172,10 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
     <span class="licznik" id="licznik">wczytywanie…</span>
   </header>
   <div class="karta-wyprawy" id="karta" hidden></div>
+  <details class="ekwipunek" id="ekwipunek" hidden>
+    <summary>Ekwipunek</summary>
+    <ul id="lista-rzeczy"></ul>
+  </details>
   <section id="akapit" aria-live="polite">
     <p class="uwaga">Wczytuję księgę…</p>
   </section>
@@ -241,6 +250,7 @@ function rysujKarte() {
   const karta = document.getElementById("karta");
   const b = stan?.bohater;
   karta.hidden = !b;
+  document.getElementById("ekwipunek").hidden = !b;
   if (!b) return;
   karta.replaceChildren();
   const cechy = [["Z", "Zręczność"], ["W", "Wytrzymałość"], ["S", "Szczęście"]];
@@ -257,6 +267,13 @@ function rysujKarte() {
   z.title = "Złoto";
   z.append(el("b", "", "Zł"), el("span", "", String(b.zloto ?? 0)), el("small", "", "złoto"));
   karta.append(p, z);
+
+  const rzeczy = b.ekwipunek ?? [];
+  const szczegoly = document.getElementById("ekwipunek");
+  szczegoly.hidden = false;
+  szczegoly.querySelector("summary").textContent = `Ekwipunek (${rzeczy.length})`;
+  const lista = document.getElementById("lista-rzeczy");
+  lista.replaceChildren(...rzeczy.map((r) => el("li", r.startsWith("klucz ") ? "klucz" : "", r)));
 }
 
 function rysuj() {

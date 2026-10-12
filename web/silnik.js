@@ -36,7 +36,9 @@ function nowyBohater(kostka = k6) {
   const W = rzuty.W[0] + rzuty.W[1] + 12;
   const S = rzuty.S[0] + 6;
   // rzuty zachowujemy tylko po to, by pokazać kości na ekranie startowym
-  return { Z, W, S, start: { Z, W, S }, prowiant: 8, zloto: 0, rzuty };
+  // Zasady I: na start miecz, tarcza, plecak na Prowiant i latarnia.
+  const ekwipunek = ["miecz", "tarcza", "plecak", "latarnia"];
+  return { Z, W, S, start: { Z, W, S }, prowiant: 8, zloto: 0, ekwipunek, rzuty };
 }
 
 /**
@@ -90,8 +92,13 @@ function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null) {
     return { ...stan, stos, koniec, walka: null };
   }
 
+  // Przejście może samo coś zmienić, np. wymiana z KRASNALEM: motyl za złoto.
+  let bohater = stan.bohater;
+  let zmiany = [];
+  if (przejscie.efekt && bohater) ({ bohater, opisy: zmiany } = zmienCechy(bohater, przejscie.efekt));
+
   const walka = ksiega ? rozpocznijWalke(ksiega[cel]) : null;
-  return { ...stan, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany: [] };
+  return { ...stan, bohater, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany };
 }
 
 // ---------------------------------------------------------------- walka
@@ -216,6 +223,11 @@ function pamiecPozwala(stan, przejscie) {
   const byl = (nr) => stan.historia.includes(String(nr));
   if (przejscie.byl_w !== undefined && !byl(przejscie.byl_w)) return false;
   if (przejscie.nie_byl_w !== undefined && byl(przejscie.nie_byl_w)) return false;
+  if (przejscie.wizyty) {
+    // "wizyty": ["115", 1] – paragraf 115 odwiedzony dokładnie raz (zbrojownia)
+    const [nr, ile] = przejscie.wizyty;
+    if (stan.historia.filter((x) => x === String(nr)).length !== ile) return false;
+  }
   if (przejscie.pierwsza_wizyta !== undefined) {
     const ileRazy = stan.historia.filter((nr) => nr === stan.akapit).length;
     if (przejscie.pierwsza_wizyta !== (ileRazy === 1)) return false;
@@ -282,6 +294,15 @@ function zmienCechy(bohater, efekt) {
     b.zloto = Math.max(b.zloto + efekt.zloto, 0);
     opisy.push(`${efekt.zloto >= 0 ? "+" : "−"}${Math.abs(efekt.zloto)} złota`);
   }
+  if (efekt.dodaj || efekt.usun) {
+    let rzeczy = [...(b.ekwipunek ?? [])];
+    for (const r of efekt.usun ?? []) {
+      const i = rzeczy.indexOf(r);
+      if (i !== -1) { rzeczy.splice(i, 1); opisy.push(`− ${r}`); }   // splice ≈ del lista[i]
+    }
+    for (const r of efekt.dodaj ?? []) { rzeczy.push(r); opisy.push(`+ ${r}`); }
+    b.ekwipunek = rzeczy;
+  }
   if ("prowiant" in efekt) {
     b.prowiant = Math.max(b.prowiant + efekt.prowiant, 0);
     opisy.push(`${efekt.prowiant >= 0 ? "+" : "−"}${Math.abs(efekt.prowiant)} posiłek`);
@@ -312,16 +333,22 @@ function zastosujEfekty(stan, akapit) {
     bohater = wynik.bohater;
     zmiany.push(...wynik.opisy);
   }
-  const nowy = { ...stan, bohater, zmiany, zastosowane: [...zastosowane, stan.akapit] };
+  const nowy = { ...stan, bohater, zmiany: [...(stan.zmiany ?? []), ...zmiany], zastosowane: [...zastosowane, stan.akapit] };
   return bohater.W <= 0 ? { ...nowy, koniec: "porazka" } : nowy;
 }
 
 /** Efekty do wyboru („Możesz je wziąć”), jeszcze niewzięte. */
 function dostepneOpcje(stan, akapit) {
   if (!efektyGotowe(stan)) return [];
+  const wybrane = stan.wybrane ?? [];
+  // "limit_opcji": 2 – „możesz wziąć najwyżej dwie z tych rzeczy” (np. 119)
+  const wzieteTutaj = wybrane.filter((k) => k.startsWith(`${stan.akapit}:`)).length;
+  if (akapit?.limit_opcji && wzieteTutaj >= akapit.limit_opcji) return [];
+  const zloto = stan.bohater.zloto ?? 0;
   return (akapit?.efekty ?? [])
     .map((efekt, i) => ({ efekt, klucz: `${stan.akapit}:${i}` }))
-    .filter(({ efekt, klucz }) => efekt.opcja && !(stan.wybrane ?? []).includes(klucz));
+    .filter(({ efekt, klucz }) => efekt.opcja && !wybrane.includes(klucz))
+    .filter(({ efekt }) => !(efekt.zloto < 0 && zloto < -efekt.zloto));   // nie stać cię
 }
 
 function wezOpcje(stan, opcja) {
