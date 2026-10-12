@@ -98,7 +98,7 @@ function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null) {
   if (przejscie.efekt && bohater) ({ bohater, opisy: zmiany } = zmienCechy(bohater, przejscie.efekt));
 
   const walka = ksiega ? rozpocznijWalke(ksiega[cel]) : null;
-  return { ...stan, bohater, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany };
+  return { ...stan, bohater, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany, testSSS: null };
 }
 
 // ---------------------------------------------------------------- walka
@@ -240,8 +240,28 @@ function pamiecRozstrzyga(stan, akapit) {
   return (akapit?.edges ?? []).some((e) => !pamiecPozwala(stan, e));
 }
 
+// ---------------------------------------------------------------- SSS poza walką
+
+/** Paragraf każe zrobić SSS, a test jeszcze się nie odbył. */
+function czekaNaSSS(stan, akapit) {
+  return Boolean(akapit?.test_sss) && stan.testSSS?.akapit !== stan.akapit;
+}
+
+/** Test szczęścia w paragrafie (zasady IV): wynik zostaje do wyjścia z paragrafu. */
+function testSzczescia(stan, kostka = k6) {
+  const proba = sss(stan.bohater, kostka);
+  return {
+    ...stan,
+    bohater: proba.bohater,
+    testSSS: { akapit: stan.akapit, szczescie: proba.szczescie, rzut: proba.rzut, poziom: stan.bohater.S },
+  };
+}
+
 function dostepnePrzejscia(stan, akapit) {
-  const wszystkie = (akapit?.edges ?? []).filter((e) => pamiecPozwala(stan, e));
+  if (czekaNaSSS(stan, akapit)) return [];
+  const wszystkie = (akapit?.edges ?? [])
+    .filter((e) => pamiecPozwala(stan, e))
+    .filter((e) => e.sss === undefined || e.sss === stan.testSSS?.szczescie);
   const w = stan.walka;
   if (!w) return wszystkie;
   if (!w.zakonczona) return [];
@@ -341,9 +361,17 @@ const czyAutomatyczny = (e) => !e.opcja && !e.posilek;
  * Wywołujemy po każdym ruchu; gdy nie ma czego robić, zwraca ten sam stan.
  */
 function zastosujEfekty(stan, akapit) {
-  const efekty = akapit?.efekty ?? [];
+  // Efekty zależne od SSS ("gdy_sss") działają osobno – dopiero po teście.
+  const poTescie = !czekaNaSSS(stan, akapit) && stan.testSSS?.akapit === stan.akapit;
+  if (poTescie) stan = zastosujGrupe(stan, akapit, `${stan.akapit}:sss`,
+    (e) => e.gdy_sss === stan.testSSS.szczescie);
+  return zastosujGrupe(stan, akapit, stan.akapit, (e) => e.gdy_sss === undefined);
+}
+
+function zastosujGrupe(stan, akapit, klucz, pasuje) {
+  const efekty = (akapit?.efekty ?? []).filter(pasuje);
   const zastosowane = stan.zastosowane ?? [];
-  if (!efekty.length || zastosowane.includes(stan.akapit) || !efektyGotowe(stan)) return stan;
+  if (!efekty.length || zastosowane.includes(klucz) || !efektyGotowe(stan)) return stan;
   let bohater = stan.bohater;
   const zmiany = [];
   for (const e of efekty.filter(czyAutomatyczny)) {
@@ -351,7 +379,7 @@ function zastosujEfekty(stan, akapit) {
     bohater = wynik.bohater;
     zmiany.push(...wynik.opisy);
   }
-  const nowy = { ...stan, bohater, zmiany: [...(stan.zmiany ?? []), ...zmiany], zastosowane: [...zastosowane, stan.akapit] };
+  const nowy = { ...stan, bohater, zmiany: [...(stan.zmiany ?? []), ...zmiany], zastosowane: [...zastosowane, klucz] };
   return bohater.W <= 0 ? { ...nowy, koniec: "porazka" } : nowy;
 }
 
@@ -440,7 +468,7 @@ if (typeof module !== "undefined") {
   module.exports = {
     START, k6, rzut2k, nowyBohater, sss, nowaGra, wykonajPrzejscie,
     rozpocznijWalke, biezacyPotwor, rundaWalki, moznaUciec, ucieczka, wskrzes,
-    dostepnePrzejscia, tekstAkapitu, etykieta,
+    dostepnePrzejscia, tekstAkapitu, etykieta, czekaNaSSS, testSzczescia,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,
     zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,
   };

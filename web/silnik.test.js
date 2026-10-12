@@ -262,3 +262,26 @@ test("tryb testowy: wskrzeszenie jako zwycięzca", () => {
   assert.strictEqual(st.wskrzeszenia, 1);
   assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["297"]);
 });
+
+// ---------------------------------------------------------------- SSS poza walką
+test("SSS w paragrafie (242): najpierw test, potem tylko pasujące przejście", () => {
+  const akapit = { test_sss: true, edges: [{ target: "233", sss: true }, { target: "111", sss: false }] };
+  let st = { ...s.nowaGra(bohaterTestowy()), akapit: "242" };   // S = 7
+  assert.strictEqual(s.czekaNaSSS(st, akapit), true);
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit), []);
+  st = s.testSzczescia(st, kostka(3, 3));                        // 6 ≤ 7 → szczęście
+  assert.strictEqual(st.bohater.S, 6);
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, akapit).map((e) => e.target), ["233"]);
+  st = s.wykonajPrzejscie(st, { target: "233" });
+  assert.strictEqual(st.testSSS, null);                          // nowy paragraf – nowy test
+});
+
+test("efekt zależny od SSS (284: bez S −2 W)", () => {
+  const akapit = { test_sss: true, efekty: [{ W: -2, gdy_sss: false }], edges: [{ target: "50" }] };
+  let st = { ...s.nowaGra(bohaterTestowy()), akapit: "284" };
+  assert.strictEqual(s.zastosujEfekty(st, akapit).bohater.W, 15);   // przed testem nic
+  st = s.testSzczescia(st, kostka(6, 6));                          // 12 > 7 → pech
+  st = s.zastosujEfekty(st, akapit);
+  assert.strictEqual(st.bohater.W, 13);
+  assert.strictEqual(s.zastosujEfekty(st, akapit).bohater.W, 13);   // tylko raz
+});

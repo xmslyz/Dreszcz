@@ -314,6 +314,21 @@ function rysuj() {
     box.append(z);
   }
 
+  // SSS poza walką: przycisk testu, a po teście kości i wynik.
+  if (czekaNaSSS(stan, p) && !stan.walka) {
+    const b = el("button", "przycisk", `Sprawdź Swoje Szczęście (SSS, masz S ${stan.bohater.S})`);
+    b.type = "button";
+    b.addEventListener("click", () => { animujSSS = true; zmien(testSzczescia(stan), false); });
+    box.append(b);
+  } else if (stan.testSSS?.akapit === stan.akapit) {
+    const t = stan.testSSS;
+    const tacka = el("div", "tacka");
+    tacka.append(rzut("SSS", t.rzut.oczka,
+      `= ${t.rzut.suma} ${t.szczescie ? "≤" : ">"} ${t.poziom} · ${t.szczescie ? "masz SZCZĘŚCIE" : "nie masz SZCZĘŚCIA"}`, animujSSS));
+    animujSSS = false;
+    box.append(tacka);
+  }
+
   const wybory = el("div", "wybory");
   for (const opcja of dostepneOpcje(stan, p)) {
     const b = el("button", "przycisk cichy", opcja.efekt.opcja);
@@ -489,7 +504,8 @@ function rysujWalke(akapit) {
   return sekcja;
 }
 
-let animujRzut = false;  // true tylko zaraz po kliknięciu „Atakuj”
+let animujRzut = false;
+let animujSSS = false;   // true tylko zaraz po kliknięciu „Sprawdź Swoje Szczęście”  // true tylko zaraz po kliknięciu „Atakuj”
 
 /** Kości ostatniej rundy: Ty, potwór i – jeśli było – SSS. */
 function tackaWalki(r, opis, animuj) {
