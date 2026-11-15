@@ -2727,7 +2727,7 @@
       {
         "label": "Sprawdź, czy żar cię zranił",
         "target": "315",
-        "return_to": "200"
+        "return_to": "210"
       }
     ]
   },

@@ -122,7 +122,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: „README pod grę na telefon” (15.11.2026).
+Ostatni commit z kodem: „Errata: 174 wraca do 210” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -136,9 +136,8 @@ Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **10**.
+Bieżący: **11**.
 
-- 10\. Sprawdzić 174 → 200
 - 11\. `ToDo.md`: „zapisz numer” rozwiązany — uaktualnić
 - 14\. Eliksir
 - 16\. Tryb tajemny (losowe numery paragrafów)
@@ -152,7 +151,7 @@ Bieżący: **10**.
 - 25\. Przejrzeć etykiety przycisków przy długich paragrafach
 - 26\. Licencja kodu: stare README mówiło „MIT”, ale pliku `LICENSE` nie ma — zdecydować
 
-Zamknięte: 1–9, 12, 13, 15, 19.
+Zamknięte: 1–10, 12, 13, 15, 19.
 
 ## 8. Otwarte ustalenia projektowe
 

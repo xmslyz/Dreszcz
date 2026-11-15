@@ -74,6 +74,7 @@ Poprawione odnośniki (prawdopodobne błędy druku; szczegóły w `ToDo.md`):
 - 63: sieć prowadzi do 377 zamiast 337
 - 166: „za złoto” prowadzi do 353 zamiast 320
 - 172: druga przeprawa prowadzi do 266 zamiast 15
+- 174: po pułapce 315 wracasz do 210 zamiast 200
 
 ## Autorzy i prawa
 

@@ -7,7 +7,8 @@
   - 20 -> 316,
   
 * Błędy w scenariuszu (prawdopodobnie)
-  - [174] odsyła do 200!
+  - [174] „patrz 315, a potem 200”: powinno być 210 (jedyne wyjście z komnaty;
+    200 to korytarz przy starcu, 15 kroków wcześniej, i nie da się stamtąd wrócić)
   - [63] sieć odsyła do 337, powinno być 377 (walka siecią z WILKOŁAKIEM)
   - [166] „za złoto” odsyła do 320, powinno być 353 (targ z KRASNALEM)
   - [172] przy drugiej przeprawie przez jezioro: 266 zamiast 15
