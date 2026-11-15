@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (52)
+node --test web/silnik.test.js      # testy silnika (56)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
 python3 web/zbuduj.py               # buduje _site/
@@ -106,6 +106,10 @@ Efekty zależne od rzutu: `efekty: [{"gdy_suma": [od, do], ...}]` razem z
 Wartości z rzutu dla `W` i `zloto`: `"kosc"` = plus oczka, `"-kosc"` = minus oczka;
 `"zostaw_W": 1` = nie mniej niż 1 W (240). Złoto nie spada poniżej 0.
 
+Liczniki (`stan.liczniki`, np. `{"jatka": 3}`): rosną przez `combat.licznik`
+(każdy zabity potwór) albo `rzut_kosci: {"trafienie": 5, "na_probe": 2, "licznik": ...}`
+(udane próby). Wypłata: efekt `{"zloto_za": {"licznik": nazwa, "po": 5}}`.
+
 Zasady, których się trzymamy:
 - Cechy, złoto, posiłki i przedmioty idą **jednym zapisem** `efekty`
   i jedną funkcją `zmienCechy()`. Nie tworzymy osobnych mechanizmów.
@@ -117,13 +121,13 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: „Hazard u KRASNOLUDÓW: 145, 201, 334” (15.11.2026).
+Ostatni commit z kodem: „Nagrody za potwory i grubasy: 193, 26” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
 rzuty kością w paragrafach, przejścia zależne od przedmiotów i złota,
 osłona na czas walki (hełm w 2), efekty zależne od rzutu (74, 240, 315),
-hazard (145, 201, 334), tryb testowy (tymczasowy).
+hazard (145, 201, 334), liczniki i nagrody (193, 26), tryb testowy (tymczasowy).
 
 Znane usterki:
 - `test_game_mechanics.py` (stary Python): 5 z 11 testów nie przechodzi → wątek 7.
@@ -131,10 +135,8 @@ Znane usterki:
 
 ## 7. Lista wątków
 
-Bieżący: **13**.
+Bieżący: **5**.
 
-- 13\. **Efekty paragrafów** — zostało:
-  złoto za potwory (193, 26)
 - 5\. Funkcje mobilne — punkt 3: potrząśnięcie telefonem = rzut
 - 7\. Naprawa 5 testów (`test_game_mechanics.py`)
 - 8\. Poprawka README (`main.py`)
@@ -151,7 +153,7 @@ Bieżący: **13**.
 - 24\. Pętle w książce: powtarzalne przeszukanie 305
 - 25\. Przejrzeć etykiety przycisków przy długich paragrafach
 
-Zamknięte: 1–4, 6, 9, 12, 15, 19.
+Zamknięte: 1–4, 6, 9, 12, 13, 15, 19.
 
 ## 8. Otwarte ustalenia projektowe
 

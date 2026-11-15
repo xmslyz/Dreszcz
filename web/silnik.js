@@ -137,6 +137,14 @@ function przyjmijRane(bohater, walka, rana) {
   return [{ ...bohater, W: Math.max(bohater.W - (rana - zOslony), 0) }, zOslony];
 }
 
+/**
+ * Liczniki to słownik {nazwa: liczba} w stanie gry, np. {"jatka": 3, "grubasy": 1}.
+ * Zwraca NOWY słownik – starego nie zmieniamy (jak dict(stary, **{nazwa: n}) w Pythonie).
+ */
+function doliczDoLicznika(liczniki, nazwa, ile) {
+  return { ...liczniki, [nazwa]: (liczniki[nazwa] ?? 0) + ile };
+}
+
 /** Bieżący potwór albo null, gdy wszyscy pokonani. */
 function biezacyPotwor(walka) {
   return walka.potwory[walka.indeks] ?? null;
@@ -195,9 +203,12 @@ function rundaWalki(stan, opis, uzyjSSS = false, kostka = k6) {
   if (bohater.W <= 0) {
     return { ...stan, bohater, walka: { ...walka, zakonczona: true }, koniec: "porazka" };
   }
+  let liczniki = stan.liczniki ?? {};
   if (potwor.W <= 0) {
     walka.indeks += 1;
     walka.rundaPotwora = 0;
+    // "licznik": "jatka" – każdy zabity potwór liczy się do nagrody (193)
+    if (opis.licznik) liczniki = doliczDoLicznika(liczniki, opis.licznik, 1);
   }
   let pokonani = stan.pokonani ?? [];
   if (!biezacyPotwor(walka)) {
@@ -207,7 +218,7 @@ function rundaWalki(stan, opis, uzyjSSS = false, kostka = k6) {
   if (opis.rounds && walka.rundy >= opis.rounds) walka.zakonczona = true;
   if (opis.until_round_won && wygrana) walka.zakonczona = true;
 
-  return { ...stan, bohater, walka, pokonani };
+  return { ...stan, bohater, walka, pokonani, liczniki };
 }
 
 /**
@@ -461,13 +472,52 @@ function zastosujEfekty(stan, akapit) {
   // są rzucone. Klucz zawiera długość historii, więc przy każdej wizycie liczą się
   // od nowa (315 to pułapka, do której trafia się z kilku miejsc).
   if (akapit?.rzut_kosci && !czekaNaKosci(stan, akapit)) {
+    stan = policzTrafienia(stan, akapit);
     const suma = oczkaTutaj(stan).reduce((a, b) => a + b, 0);
     stan = zastosujGrupe(stan, akapit, `${stan.akapit}:kosci:${stan.historia.length}`,
       (e) => e.gdy_suma && suma >= e.gdy_suma[0] && suma <= e.gdy_suma[1]
         && (e.gdy_parzysta === undefined || e.gdy_parzysta === (suma % 2 === 0)),
       (e) => zRzutu(e, suma, stan.bohater));
   }
-  return zastosujGrupe(stan, akapit, stan.akapit, (e) => e.gdy_sss === undefined && !e.gdy_suma);
+  return zastosujGrupe(stan, akapit, stan.akapit, (e) => e.gdy_sss === undefined && !e.gdy_suma,
+    (e) => zLicznika(e, stan.liczniki ?? {}));
+}
+
+/**
+ * Próby na kościach (grubasy w 265, 359, 217):
+ *   "rzut_kosci": {"ile": 4, "na_probe": 2, "trafienie": 5, "licznik": "grubasy"}
+ * Kości dzielimy na próby po "na_probe" sztuk (domyślnie 1); próba jest udana,
+ * gdy choć jedna kość pokazuje "trafienie". Udane próby dopisujemy do licznika.
+ */
+function ileTrafien(oczka, rzut) {
+  const naProbe = rzut.na_probe ?? 1;
+  let trafienia = 0;
+  for (let i = 0; i < oczka.length; i += naProbe) {
+    if (oczka.slice(i, i + naProbe).includes(rzut.trafienie)) trafienia += 1;   // slice ≈ oczka[i:i+n]
+  }
+  return trafienia;
+}
+
+function policzTrafienia(stan, akapit) {
+  const rzut = akapit.rzut_kosci;
+  const klucz = `${stan.akapit}:trafienia:${stan.historia.length}`;
+  const zastosowane = stan.zastosowane ?? [];
+  if (!rzut.licznik || zastosowane.includes(klucz)) return stan;
+  const n = ileTrafien(oczkaTutaj(stan), rzut);
+  return {
+    ...stan,
+    liczniki: doliczDoLicznika(stan.liczniki ?? {}, rzut.licznik, n),
+    zmiany: [...(stan.zmiany ?? []), n ? `trafienia: ${n}` : "pudło"],
+    zastosowane: [...zastosowane, klucz],
+  };
+}
+
+/** {"zloto_za": {"licznik": "jatka", "po": 5}} → {"zloto": 5 × licznik} (nagroda w 193 i 26). */
+function zLicznika(efekt, liczniki) {
+  if (!efekt.zloto_za) return efekt;
+  const { zloto_za: z, ...reszta } = efekt;          // reszta = efekt bez pola zloto_za
+  const nagroda = (liczniki[z.licznik] ?? 0) * z.po;
+  return nagroda ? { ...reszta, zloto: nagroda } : reszta;
 }
 
 /**
@@ -591,7 +641,7 @@ if (typeof module !== "undefined") {
     START, k6, rzut2k, nowyBohater, sss, nowaGra, wykonajPrzejscie,
     rozpocznijWalke, przyjmijRane, biezacyPotwor, rundaWalki, moznaUciec, ucieczka, wskrzes, potworyPokonane, uzupelnijPokonanych,
     dostepnePrzejscia, tekstAkapitu, etykieta, czekaNaSSS, testSzczescia,
-    oczkaTutaj, czekaNaKosci, rzucKoscia,
+    oczkaTutaj, czekaNaKosci, rzucKoscia, ileTrafien,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,
     zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,
   };

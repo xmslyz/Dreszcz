@@ -459,3 +459,45 @@ test("hazard: 334 – „grasz jeszcze raz” daje nowy rzut i nowy wynik", () =
   st = s.zastosujEfekty(rzuc2(st, 1, 2), karty);
   assert.strictEqual(st.bohater.zloto, 20);
 });
+
+// ---------------------------------------------------------------- nagrody za potwory i grubasy (193, 26)
+test("licznik: każdy zabity potwór z \"licznik\" jest liczony", () => {
+  const opis = { licznik: "jatka", monsters: [{ name: "A", Z: 1, W: 2 }, { name: "B", Z: 1, W: 2 }] };
+  let st = stanWalki(opis);
+  st = s.rundaWalki(st, opis, false, kostka(1, 1, 6, 6));
+  assert.strictEqual(st.liczniki.jatka, 1);
+  st = s.rundaWalki(st, opis, false, kostka(1, 1, 6, 6));
+  assert.strictEqual(st.liczniki.jatka, 2);
+});
+
+test("193: 5 sztuk złota za każdego pokonanego potwora, razem z +2 Z i +2 S", () => {
+  const nagroda = { text: "", efekty: [{ Z: 2, S: 2 }, { zloto_za: { licznik: "jatka", po: 5 } }], edges: [{ target: "51" }] };
+  const b = { Z: 6, W: 20, S: 5, start: { Z: 8, W: 20, S: 9 }, prowiant: 8, zloto: 1 };
+  const st = s.zastosujEfekty({ ...s.nowaGra(b), akapit: "193", historia: ["1", "193"], liczniki: { jatka: 3 } }, nagroda);
+  assert.deepStrictEqual([st.bohater.zloto, st.bohater.Z, st.bohater.S], [16, 8, 7]);
+  const bez = s.zastosujEfekty({ ...s.nowaGra(b), akapit: "193", historia: ["1", "193"] }, nagroda);
+  assert.strictEqual(bez.bohater.zloto, 1);
+});
+
+test("grubasy: trafia tylko 5; w 217 liczy się para kości", () => {
+  assert.strictEqual(s.ileTrafien([5, 2, 5], { trafienie: 5 }), 2);
+  assert.strictEqual(s.ileTrafien([1, 2, 3], { trafienie: 5 }), 0);
+  assert.strictEqual(s.ileTrafien([5, 5, 1, 5], { trafienie: 5, na_probe: 2 }), 2);
+  assert.strictEqual(s.ileTrafien([5, 5, 1, 2], { trafienie: 5, na_probe: 2 }), 1);
+});
+
+test("grubasy: trafienia z 265 i 359 sumują się, a 26 płaci po 5", () => {
+  const sala = (ile) => ({ text: "", rzut_kosci: { ile, trafienie: 5, licznik: "grubasy" }, edges: [{ target: "26" }] });
+  let st = { ...przyStole(0, "265") };
+  for (const k of [5, 1, 5]) st = s.rzucKoscia(st, kostka(k));
+  st = s.zastosujEfekty(st, sala(3));
+  st = s.zastosujEfekty(st, sala(3));                       // drugi raz nic nie dolicza
+  assert.strictEqual(st.liczniki.grubasy, 2);
+  st = wykonajPrzejscie(st, { target: "359" });
+  for (const k of [2, 5]) st = s.rzucKoscia(st, kostka(k));
+  st = s.zastosujEfekty(st, sala(2));
+  assert.strictEqual(st.liczniki.grubasy, 3);
+  st = wykonajPrzejscie(st, { target: "26" });
+  st = s.zastosujEfekty(st, { text: "", efekty: [{ zloto_za: { licznik: "grubasy", po: 5 } }], edges: [] });
+  assert.strictEqual(st.bohater.zloto, 15);
+});

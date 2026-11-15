@@ -379,6 +379,14 @@
         "label": "Kontynuuj",
         "target": "171"
       }
+    ],
+    "efekty": [
+      {
+        "zloto_za": {
+          "licznik": "grubasy",
+          "po": 5
+        }
+      }
     ]
   },
   "27": {
@@ -1500,7 +1508,8 @@
           "Z": 10,
           "W": 10
         }
-      ]
+      ],
+      "licznik": "jatka"
     }
   },
   "93": {
@@ -2983,6 +2992,12 @@
       {
         "Z": 2,
         "S": 2
+      },
+      {
+        "zloto_za": {
+          "licznik": "jatka",
+          "po": 5
+        }
       }
     ]
   },
@@ -3284,12 +3299,13 @@
         "target": 26
       }
     ],
-    "effects": [
-      {
-        "attr": "invisibility",
-        "duration": "temporary"
-      }
-    ]
+    "rzut_kosci": {
+      "ile": 4,
+      "na_probe": 2,
+      "trafienie": 5,
+      "licznik": "grubasy",
+      "opis": "Dwa grubasy, na każdego dwa rzuty: trafiasz, gdy w parze wypadnie choć jedna 5"
+    }
   },
   "218": {
     "text": "Zbliżasz się do skrzyżowania. Możesz pójść na: · zachód - patrz 61, · północ - patrz 333.",
@@ -3926,7 +3942,13 @@
         "target": 359,
         "label": "nie słuchasz"
       }
-    ]
+    ],
+    "rzut_kosci": {
+      "ile": 3,
+      "trafienie": 5,
+      "licznik": "grubasy",
+      "opis": "Trzy próby, każda to jeden rzut: trafiasz grubasa, gdy wypadnie 5"
+    }
   },
   "266": {
     "text": "Dopływasz bez kłopotów do południowego brzegu jeziora - patrz 15.",
@@ -4111,7 +4133,8 @@
       "escape": {
         "target": "193",
         "after_kill": true
-      }
+      },
+      "licznik": "jatka"
     },
     "edges": [
       {
@@ -4596,7 +4619,8 @@
       "escape": {
         "target": "193",
         "after_kill": true
-      }
+      },
+      "licznik": "jatka"
     },
     "edges": [
       {
@@ -5272,7 +5296,13 @@
       {
         "target": 26
       }
-    ]
+    ],
+    "rzut_kosci": {
+      "ile": 2,
+      "trafienie": 5,
+      "licznik": "grubasy",
+      "opis": "Jeszcze dwie próby: trafiasz, gdy wypadnie 5"
+    }
   },
   "360": {
     "text": "Krótki korytarz prowadzi do drzwi - patrz 135.",
