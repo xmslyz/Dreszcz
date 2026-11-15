@@ -14,3 +14,12 @@
   - [172] przy drugiej przeprawie przez jezioro: 266 zamiast 15
     (266 opisuje przeprawę i i tak prowadzi do 15)
   Poprawione w przejściach (edges) w shiver.json; tekst bez zmian.
+
+* Errata w internecie (sprawdzone 15.11.2026)
+  - Oficjalna errata: tygodnik „Razem” nr 40/1987 (gra wyszła w nr 33 i 34).
+    Jej treści nie ma w sieci – trzeba by zdobyć skan numeru.
+  - Znany błąd wydań „Razem” i Ultima: paragraf 119 bez odnośnika, brakowało
+    „patrz 102”. U nas tekst 119 już ma 102 – nic do poprawienia.
+  - Skargi na „Szalone Pola” (20, 27 → 238 → 316 → 176): wraca się w kółko.
+    U nas 176 ma też wyjście na wschód (230), więc pułapki nie ma.
+  - Naszych poprawek (63, 166, 172, 174) nikt w sieci nie opisał – to nasze wnioski.
