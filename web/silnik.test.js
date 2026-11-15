@@ -361,3 +361,35 @@ test("zabezpieczenie: gdy warunki odrzucą wszystko, gracz nie zostaje bez wyjś
   const st = { ...s.nowaGra({ ...bohaterTestowy(), ekwipunek: [] }), akapit: "22" };
   assert.strictEqual(s.dostepnePrzejscia(st, akapit).length, 2);
 });
+
+// ---------------------------------------------------------------- osłona (hełm w 2)
+const GARAZAN = { combat: { monsters: [{ name: "GARAZAN", Z: 10, W: 10 }], escape: { target: "372", from_round: 1 },
+  oslona: { ma: ["hełm", "hełm garnkowy"], W: 3 } } };
+const zHelmem = (W = 20) => ({ Z: 8, W, S: 9, start: { Z: 8, W: 20, S: 9 }, prowiant: 8, ekwipunek: ["hełm"] });
+
+test("osłona: bez hełmu nie ma zapasu, z hełmem są 3 punkty", () => {
+  assert.strictEqual(s.rozpocznijWalke(GARAZAN, { ekwipunek: [] }).oslona, 0);
+  assert.strictEqual(s.rozpocznijWalke(GARAZAN, zHelmem()).oslona, 3);
+});
+
+test("osłona: rany idą najpierw w hełm, potem w W", () => {
+  let st = { ...s.nowaGra(zHelmem()), walka: s.rozpocznijWalke(GARAZAN, zHelmem()) };
+  st = s.rundaWalki(st, GARAZAN.combat, false, kostka(6, 6, 1, 1));   // rana 2: cała w hełm
+  assert.deepStrictEqual([st.bohater.W, st.walka.oslona], [20, 1]);
+  st = s.rundaWalki(st, GARAZAN.combat, false, kostka(6, 6, 1, 1));   // rana 2: 1 w hełm, 1 w W
+  assert.deepStrictEqual([st.bohater.W, st.walka.oslona], [19, 0]);
+  st = s.rundaWalki(st, GARAZAN.combat, false, kostka(6, 6, 1, 1));   // hełm wyczerpany
+  assert.strictEqual(st.bohater.W, 17);
+});
+
+test("osłona: działa też przy pełnej W i ratuje przy W=2", () => {
+  const b = zHelmem(2);
+  const st = s.rundaWalki({ ...s.nowaGra(b), walka: s.rozpocznijWalke(GARAZAN, b) }, GARAZAN.combat, false, kostka(6, 6, 1, 1));
+  assert.strictEqual(st.bohater.W, 2);
+  assert.notStrictEqual(st.koniec, "porazka");
+});
+
+test("osłona: wejście do paragrafu 2 z hełmem włącza ją samo", () => {
+  const st = wykonajPrzejscie({ ...nowaGra(zHelmem()) }, { target: "2" }, null, { 2: GARAZAN });
+  assert.strictEqual(st.walka.oslona, 3);
+});

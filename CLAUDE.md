@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (40)
+node --test web/silnik.test.js      # testy silnika (44)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
 python3 web/zbuduj.py               # buduje _site/
@@ -97,6 +97,10 @@ Przejście (`edges[]`): `target`, `label` i opcjonalne warunki:
 | `efekt` | efekt przy wyborze tej drogi (zakup, wymiana) |
 | `return_to` | powrót pod zapisany numer |
 
+Walka (`combat`): `monsters`, `escape` oraz opcjonalnie
+`oslona: {"ma": [rzeczy], "W": n}` — zapas punktów na czas tej walki,
+przyjmuje rany przed Wytrzymałością (hełm w 2).
+
 Zasady, których się trzymamy:
 - Cechy, złoto, posiłki i przedmioty idą **jednym zapisem** `efekty`
   i jedną funkcją `zmienCechy()`. Nie tworzymy osobnych mechanizmów.
@@ -108,12 +112,12 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: `dafc06a` (11.10.2026).
+Ostatni commit z kodem: „Hełm w walce z GARAZANEM” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
 rzuty kością w paragrafach, przejścia zależne od przedmiotów i złota,
-tryb testowy (tymczasowy).
+osłona na czas walki (hełm w 2), tryb testowy (tymczasowy).
 
 Znane usterki:
 - `test_game_mechanics.py` (stary Python): 5 z 11 testów nie przechodzi → wątek 7.
@@ -123,7 +127,7 @@ Znane usterki:
 
 Bieżący: **13**.
 
-- 13\. **Efekty paragrafów** — zostało: hełm w walce (2, „+3 W na czas walki”),
+- 13\. **Efekty paragrafów** — zostało:
   rzuty w 74, 240, 315, hazard (145, 201, 334), złoto za potwory (193, 26)
 - 5\. Funkcje mobilne — punkt 3: potrząśnięcie telefonem = rzut
 - 7\. Naprawa 5 testów (`test_game_mechanics.py`)
@@ -145,7 +149,6 @@ Zamknięte: 1–4, 6, 9, 12, 15, 19.
 
 ## 8. Otwarte ustalenia projektowe
 
-- Hełm: pula punktów ponad aktualną Wytrzymałość, pochłania obrażenia przed nią.
 - Miecz zaczarowany: nierozstrzygnięte, czy premia dotyczy całej Zręczności,
   czy tylko ataku w walce.
 - Czujniki telefonu (żyroskop, kroki): tylko jako opcja w wybranych momentach,

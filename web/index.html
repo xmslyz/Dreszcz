@@ -83,6 +83,7 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 
 /* Walka */
 .walka { display: grid; gap: 14px; border: 1px solid var(--akcent); border-radius: 8px; padding: 14px; background: var(--karta); }
+.walka .oslona { margin: 0; font-size: .9rem; opacity: .85; }
 .walka h2 { font: 700 1.5rem/1 var(--f-tytul); color: var(--akcent); margin: 0; }
 .potwor { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: baseline; }
 .potwor.martwy { opacity: .45; text-decoration: line-through; }
@@ -461,6 +462,13 @@ function rysujWalke(akapit) {
     sekcja.append(wiersz);
   });
 
+  // Osłona (np. hełm w 2) – zapas, który przyjmuje rany przed Wytrzymałością.
+  if (w.oslonaZ && !w.zakonczona) {
+    sekcja.append(el("p", "oslona", w.oslona > 0
+      ? `Twój ${w.oslonaZ} przyjmie jeszcze ${w.oslona} W ran.`
+      : `Twój ${w.oslonaZ} już cię nie chroni.`));
+  }
+
   if (!w.zakonczona && !stan.koniec) {
     const akcje = el("div", "akcje");
     const atak = el("button", "przycisk", "Atakuj");
@@ -572,7 +580,8 @@ function wpisDziennika(r, opis) {
   const on = `${r.potwor} ${r.a.oczka.join("+")}+Z=${r.silaPotwora}`;
   let wynik = "remis, powtórka";
   if (r.wynik === "trafiasz") wynik = `trafiasz: −${r.rana} W`;
-  if (r.wynik === "obrywasz") wynik = `obrywasz: −${r.rana} W`;
+  if (r.wynik === "obrywasz") wynik = `obrywasz: −${r.rana - (r.oslona ?? 0)} W`;
+  if (r.oslona) wynik += ` (osłona przyjęła ${r.oslona})`;
   if (r.sss !== undefined) wynik += r.sss ? " (masz SZCZĘŚCIE)" : " (bez SZCZĘŚCIA)";
   return el("li", r.wynik === "obrywasz" ? "zle" : "", `${ty} · ${on} → ${wynik}`);
 }

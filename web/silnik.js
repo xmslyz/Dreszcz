@@ -99,17 +99,24 @@ function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null) {
 
   // Potwory pokonane raz już nie wstają (np. pętla 170 → 319 → 69 → … → 330 → 170).
   const juzPokonani = (stan.pokonani ?? []).includes(cel);
-  const walka = ksiega && !juzPokonani ? rozpocznijWalke(ksiega[cel]) : null;
+  const walka = ksiega && !juzPokonani ? rozpocznijWalke(ksiega[cel], bohater) : null;
   return { ...stan, bohater, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany, testSSS: null, kosci: null };
 }
 
 // ---------------------------------------------------------------- walka
 
-/** Tworzy stan walki dla paragrafu z polem "combat" (albo null). */
-function rozpocznijWalke(akapit) {
+/**
+ * Tworzy stan walki dla paragrafu z polem "combat" (albo null).
+ * "oslona": {"ma": ["hełm"], "W": 3} – jeśli bohater ma którąś z tych rzeczy,
+ * dostaje na czas tej walki zapas punktów, który przyjmuje rany przed W.
+ */
+function rozpocznijWalke(akapit, bohater = null) {
   const opis = akapit?.combat;
   if (!opis?.monsters?.length) return null;
+  const rzecz = (opis.oslona?.ma ?? []).find((r) => (bohater?.ekwipunek ?? []).includes(r));
   return {
+    oslona: rzecz ? opis.oslona.W : 0,   // ile ran jeszcze przyjmie osłona
+    oslonaZ: rzecz ?? null,              // z czego jest (do pokazania na ekranie)
     potwory: structuredClone(opis.monsters), // kopia – nie psujemy księgi
     indeks: 0,              // z którym potworem walczymy (walka po kolei)
     rundaPotwora: 0,        // rundy z bieżącym potworem
@@ -118,6 +125,16 @@ function rozpocznijWalke(akapit) {
     zakonczona: false,
     dziennik: [],           // opis rund do pokazania na ekranie
   };
+}
+
+/**
+ * Rana bohatera w walce: najpierw topnieje osłona, reszta idzie w W.
+ * Zmienia podaną walkę i zwraca [nowy bohater, ile przyjęła osłona].
+ */
+function przyjmijRane(bohater, walka, rana) {
+  const zOslony = Math.min(walka?.oslona ?? 0, rana);
+  if (walka) walka.oslona = (walka.oslona ?? 0) - zOslony;
+  return [{ ...bohater, W: Math.max(bohater.W - (rana - zOslony), 0) }, zOslony];
 }
 
 /** Bieżący potwór albo null, gdy wszyscy pokonani. */
@@ -166,7 +183,7 @@ function rundaWalki(stan, opis, uzyjSSS = false, kostka = k6) {
   }
 
   if (wygrana) potwor.W = Math.max(potwor.W - rana, 0);
-  else bohater.W = Math.max(bohater.W - rana, 0);
+  else [bohater, wpis.oslona] = przyjmijRane(bohater, walka, rana);
 
   wpis.wynik = wygrana ? "trafiasz" : "obrywasz";
   wpis.rana = rana;
@@ -232,7 +249,7 @@ function ucieczka(stan, opis, uzyjSSS = false, kostka = k6, ksiega = null) {
     bohater = proba.bohater;
     rana = proba.szczescie ? 1 : 3;
   }
-  bohater.W = Math.max(bohater.W - rana, 0);
+  [bohater] = przyjmijRane(bohater, structuredClone(stan.walka), rana);
   if (bohater.W <= 0) return { ...stan, bohater, koniec: "porazka" };
   return wykonajPrzejscie({ ...stan, bohater, walka: null }, opis.escape, null, ksiega);
 }
@@ -540,7 +557,7 @@ function etykieta(przejscie) {
 if (typeof module !== "undefined") {
   module.exports = {
     START, k6, rzut2k, nowyBohater, sss, nowaGra, wykonajPrzejscie,
-    rozpocznijWalke, biezacyPotwor, rundaWalki, moznaUciec, ucieczka, wskrzes, potworyPokonane, uzupelnijPokonanych,
+    rozpocznijWalke, przyjmijRane, biezacyPotwor, rundaWalki, moznaUciec, ucieczka, wskrzes, potworyPokonane, uzupelnijPokonanych,
     dostepnePrzejscia, tekstAkapitu, etykieta, czekaNaSSS, testSzczescia,
     oczkaTutaj, czekaNaKosci, rzucKoscia,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,

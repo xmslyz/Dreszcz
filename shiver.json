@@ -21,19 +21,15 @@
       "escape": {
         "target": "372",
         "from_round": 1
+      },
+      "oslona": {
+        "ma": [
+          "hełm",
+          "hełm garnkowy"
+        ],
+        "W": 3
       }
     },
-    "effects": [
-      {
-        "condition": {
-          "in_inventory": {
-            "hełm": true
-          }
-        },
-        "attr": "stamina",
-        "change": "+3"
-      }
-    ],
     "edges": [
       {
         "label": "Zwyciężyłeś",
