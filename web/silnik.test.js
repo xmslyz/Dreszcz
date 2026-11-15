@@ -530,3 +530,43 @@ test("potrząśnięcie: brak danych z czujnika niczego nie psuje", () => {
   assert.strictEqual(wykryj(null, 0), false);
   assert.strictEqual(wykryj({ x: null, y: null, z: null }, 10), false);
 });
+
+// ---------------------------------------------------------------- eliksir
+const zEliksirem = (cecha, cechy) => {
+  const b = s.wybierzEliksir({ Z: 8, W: 20, S: 9, start: { Z: 8, W: 20, S: 9 }, prowiant: 8, ...cechy }, cecha);
+  return s.nowaGra(b);
+};
+
+test("eliksir WYTRZYMAŁOŚCI przywraca poziom początkowy i ubywa łyk", () => {
+  const st = s.wypijEliksir(zEliksirem("W", { W: 3 }));
+  assert.strictEqual(st.bohater.W, 20);
+  assert.strictEqual(st.bohater.eliksir.lyki, 1);
+  assert.deepStrictEqual(st.zmiany, ["eliksir WYTRZYMAŁOŚCI: +17 W"]);
+});
+
+test("eliksir ZRĘCZNOŚCI przywraca Z i nie rusza innych cech", () => {
+  const st = s.wypijEliksir(zEliksirem("Z", { Z: 5, W: 3 }));
+  assert.deepStrictEqual([st.bohater.Z, st.bohater.W], [8, 3]);
+});
+
+test("eliksir SZCZĘŚCIA przywraca S i podnosi poziom początkowy o 1", () => {
+  let st = s.wypijEliksir(zEliksirem("S", { S: 4 }));
+  assert.deepStrictEqual([st.bohater.S, st.bohater.start.S], [10, 10]);
+  st = s.wypijEliksir(st);
+  assert.deepStrictEqual([st.bohater.S, st.bohater.start.S], [11, 11]);
+});
+
+test("eliksir: tylko dwa łyki, a po śmierci nie pomaga", () => {
+  let st = zEliksirem("W", { W: 3 });
+  st = s.wypijEliksir(s.wypijEliksir(st));
+  assert.strictEqual(s.moznaPicEliksir(st), false);
+  const trzeci = s.wypijEliksir({ ...st, bohater: { ...st.bohater, W: 1 } });
+  assert.strictEqual(trzeci.bohater.W, 1);
+  assert.strictEqual(s.moznaPicEliksir({ ...zEliksirem("W"), koniec: "porazka" }), false);
+});
+
+test("eliksir: bohater bez butelki nie pije, nieznany eliksir to błąd", () => {
+  const bez = s.nowaGra({ Z: 8, W: 3, S: 9, start: { Z: 8, W: 20, S: 9 }, prowiant: 8 });
+  assert.strictEqual(s.moznaPicEliksir(bez), false);
+  assert.throws(() => s.wybierzEliksir(bez.bohater, "X"));
+});

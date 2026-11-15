@@ -100,6 +100,11 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 
 /* Ekran startowy */
 .start { display: grid; gap: 16px; }
+.eliksir { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: .9rem; color: var(--przygaszony); }
+.eliksir .przycisk { padding: 6px 12px; font-size: .9rem; }
+.wybor-eliksiru { display: grid; gap: 8px; }
+.start > .przycisk:disabled { opacity: .45; cursor: default; }
+.wybor-eliksiru .przycisk[aria-pressed="true"] { background: var(--akcent); color: var(--tlo); border-color: var(--akcent); }
 .start h2 { font: 700 1.8rem/1.1 var(--f-tytul); margin: 0; }
 .rzuty { display: grid; gap: 8px; margin: 0; }
 .rzuty div { display: grid; grid-template-columns: 9rem 1fr; gap: 8px; align-items: baseline; }
@@ -186,6 +191,7 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
     <span class="licznik" id="licznik">wczytywanie…</span>
   </header>
   <div class="karta-wyprawy" id="karta" hidden></div>
+  <div class="eliksir" id="eliksir" hidden></div>
   <details class="ekwipunek" id="ekwipunek" hidden>
     <summary>Ekwipunek</summary>
     <ul id="lista-rzeczy"></ul>
@@ -261,10 +267,52 @@ function idz(przejscie, numer) {
 
 // ---------------------------------------------------------------- rysowanie
 
+const OPIS_ELIKSIRU = {
+  Z: "przywraca Zręczność do poziomu początkowego",
+  W: "przywraca Wytrzymałość do poziomu początkowego",
+  S: "przywraca Szczęście i podnosi jego poziom początkowy o 1",
+};
+
+/** Trzy przyciski wyboru eliksiru; "wybrany" podświetla aktualny wybór. */
+function przyciskiEliksirow(wybrany, poWyborze) {
+  const pole = el("div", "wybor-eliksiru");
+  for (const cecha of ["Z", "W", "S"]) {
+    const b = el("button", "przycisk cichy", `Eliksir ${ELIKSIRY[cecha]} – ${OPIS_ELIKSIRU[cecha]}`);
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(wybrany === cecha));
+    b.addEventListener("click", () => poWyborze(cecha));
+    pole.append(b);
+  }
+  return pole;
+}
+
+/** Pasek pod kartą: ile łyków zostało i przycisk „Wypij”. Pić wolno w każdej chwili. */
+function rysujEliksir(b) {
+  const pasek = document.getElementById("eliksir");
+  pasek.replaceChildren();
+  pasek.hidden = false;
+  if (!b.eliksir) {
+    // Zapis sprzed wprowadzenia eliksirów – pozwól wybrać butelkę teraz.
+    if (stan.koniec) { pasek.hidden = true; return; }
+    pasek.append(el("span", "", "Nie masz jeszcze eliksiru. Wybierz jedną butelkę:"),
+      przyciskiEliksirow(null, (cecha) => zmien({ ...stan, bohater: wybierzEliksir(stan.bohater, cecha) }, false)));
+    return;
+  }
+  const { cecha, lyki } = b.eliksir;
+  pasek.append(el("span", "", `Eliksir ${ELIKSIRY[cecha]}: ${lyki === 0 ? "butelka pusta" : `zostało łyków: ${lyki}`}`));
+  if (moznaPicEliksir(stan)) {
+    const pij = el("button", "przycisk cichy", "Wypij");
+    pij.type = "button";
+    pij.addEventListener("click", () => zmien(wypijEliksir(stan), false));
+    pasek.append(pij);
+  }
+}
+
 function rysujKarte() {
   const karta = document.getElementById("karta");
   const b = stan?.bohater;
   karta.hidden = !b;
+  document.getElementById("eliksir").hidden = true;
   document.getElementById("ekwipunek").hidden = !b;
   if (!b) return;
   karta.replaceChildren();
@@ -282,6 +330,8 @@ function rysujKarte() {
   z.title = "Złoto";
   z.append(el("b", "", "Zł"), el("span", "", String(b.zloto ?? 0)), el("small", "", "złoto"));
   karta.append(p, z);
+
+  rysujEliksir(b);
 
   const rzeczy = b.ekwipunek ?? [];
   const szczegoly = document.getElementById("ekwipunek");
@@ -440,8 +490,11 @@ function rysujStart(box) {
       rzut("Szczęście", kandydat.rzuty.S, `+6 = ${kandydat.S}`, true),
     );
     s.append(tacka);
-    const b = el("button", "przycisk", "Wejdź do podziemi");
+    s.append(el("p", "tekst", "Możesz zabrać jedną butelkę eliksiru. Wypijesz go w dowolnej chwili, ale tylko dwa razy podczas całej przygody."));
+    s.append(przyciskiEliksirow(kandydat.eliksir?.cecha, (cecha) => { kandydat = wybierzEliksir(kandydat, cecha); rysuj(); }));
+    const b = el("button", "przycisk", kandydat.eliksir ? "Wejdź do podziemi" : "Najpierw wybierz eliksir");
     b.type = "button";
+    b.disabled = !kandydat.eliksir;
     b.addEventListener("click", () => { const h = kandydat; kandydat = null; zmien(nowaGra(h)); });
     s.append(b);
   }

@@ -20,6 +20,8 @@ drugim uruchomieniu po aktualizacji.
 
 - Na początku losujesz bohatera: **Zręczność** (1K+6), **Wytrzymałość** (2K+12)
   i **Szczęście** (1K+6). W plecaku masz Prowiant na 8 posiłków.
+- Zabierasz jedną butelkę **eliksiru** (Zręczności, Wytrzymałości albo Szczęścia).
+  Przywraca cechę do poziomu początkowego; możesz wypić go dwa razy, w dowolnej chwili.
 - Czytasz paragraf i wybierasz drogę przyciskiem. Gra sama pilnuje cech, złota,
   ekwipunku, kluczy i tego, gdzie już byłeś.
 - **Walka:** w każdej rundzie Ty i potwór rzucacie dwiema kośćmi i dodajecie

@@ -587,6 +587,37 @@ function zjedzPosilek(stan) {
   return { ...stan, bohater, zmiany: opisy, posilki: [...(stan.posilki ?? []), stan.akapit] };
 }
 
+// ---------------------------------------------------------------- eliksir (zasady I i V)
+
+const ELIKSIRY = { Z: "ZRĘCZNOŚCI", W: "WYTRZYMAŁOŚCI", S: "SZCZĘŚCIA" };
+
+/** Jedna butelka na wyprawę; wystarcza na dwa łyki. Zwraca nowego bohatera. */
+function wybierzEliksir(bohater, cecha) {
+  if (!(cecha in ELIKSIRY)) throw new Error(`Nie ma eliksiru: ${cecha}`);
+  return { ...bohater, eliksir: { cecha, lyki: 2 } };
+}
+
+function moznaPicEliksir(stan) {
+  return Boolean(stan.bohater) && !stan.koniec && (stan.bohater.eliksir?.lyki ?? 0) > 0;
+}
+
+/**
+ * Łyk eliksiru: cecha wraca do poziomu początkowego.
+ * Eliksir SZCZĘŚCIA dodatkowo podnosi poziom początkowy o 1 – to jedyny
+ * przypadek, gdy cecha może przekroczyć to, co wylosowałeś na starcie.
+ */
+function wypijEliksir(stan) {
+  if (!moznaPicEliksir(stan)) return stan;
+  const b = stan.bohater;
+  const { cecha, lyki } = b.eliksir;
+  const start = { ...b.start };
+  if (cecha === "S") start.S += 1;
+  const bohater = { ...b, start, [cecha]: start[cecha], eliksir: { cecha, lyki: lyki - 1 } };
+  const zysk = bohater[cecha] - b[cecha];
+  const opis = `eliksir ${ELIKSIRY[cecha]}: ${zysk > 0 ? `+${zysk} ${cecha}` : "bez zmian"}`;
+  return { ...stan, bohater, zmiany: [...(stan.zmiany ?? []), opis] };
+}
+
 // ---------------------------------------------------------------- mapa
 
 /** Numery paragrafów, do których prowadzą wyjścia (bez celów specjalnych). */
@@ -674,6 +705,7 @@ if (typeof module !== "undefined") {
     dostepnePrzejscia, tekstAkapitu, etykieta, czekaNaSSS, testSzczescia,
     oczkaTutaj, czekaNaKosci, rzucKoscia, ileTrafien, wykrywaczPotrzasniecia,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,
+    ELIKSIRY, wybierzEliksir, moznaPicEliksir, wypijEliksir,
     zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,
   };
 }
