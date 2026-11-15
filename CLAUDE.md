@@ -122,7 +122,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: „Naprawa testów starej wersji Pythonowej” (15.11.2026).
+Ostatni commit z kodem: „README pod grę na telefon” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -132,14 +132,12 @@ hazard (145, 201, 334), liczniki i nagrody (193, 26),
 rzut potrząśnięciem (przycisk „Potrząśnij” w stopce, domyślnie wyłączony;
 sprawdzony przez Macieja na telefonie), tryb testowy (tymczasowy).
 
-Znane usterki:
-- `README.md` opisuje nieistniejący `main.py` i wersję konsolową → wątek 8.
+Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **8**.
+Bieżący: **10**.
 
-- 8\. Poprawka README (`main.py`)
 - 10\. Sprawdzić 174 → 200
 - 11\. `ToDo.md`: „zapisz numer” rozwiązany — uaktualnić
 - 14\. Eliksir
@@ -152,8 +150,9 @@ Bieżący: **8**.
 - 23\. 95: kara −1 Z w najbliższej walce
 - 24\. Pętle w książce: powtarzalne przeszukanie 305
 - 25\. Przejrzeć etykiety przycisków przy długich paragrafach
+- 26\. Licencja kodu: stare README mówiło „MIT”, ale pliku `LICENSE` nie ma — zdecydować
 
-Zamknięte: 1–7, 9, 12, 13, 15, 19.
+Zamknięte: 1–9, 12, 13, 15, 19.
 
 ## 8. Otwarte ustalenia projektowe
 

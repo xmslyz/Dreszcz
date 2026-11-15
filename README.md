@@ -1,53 +1,83 @@
-# Dreszcz - Gra Paragrafowa (w przyotowaniu)
-Autor: Jacek Ciesielski.
+# Dreszcz — gra paragrafowa
 
-## Opis Główny
-"Dreszcz" to tekstowa gra paragrafowa, która przeniesie Cię w świat mrocznych tajemnic i niebezpieczeństw. Czekają Cię niezwykłe przygody, a każde Twoje działanie będzie miało wpływ na przebieg historii.
+Cyfrowa wersja gry paragrafowej „Dreszcz” Jacka Ciesielskiego: 387 paragrafów,
+walki, kości i ekwipunek. Działa w przeglądarce, na telefonie i bez internetu.
 
-## Wymagania Systemowe
-Gra "Dreszcz" została napisana w języku Python 3 i korzysta z prostego interfejsu tekstowego. 
+**Zagraj: https://xmslyz.github.io/Dreszcz/**
 
-Aby ją uruchomić, będziesz potrzebować:
-Python 3.10 zainstalowanego na Twoim komputerze i dostępu do konsoli lub terminala.
+## Instalacja na telefonie
 
-## Instrukcje Uruchomienia
-- Pobierz repozytorium gry na swój komputer.
+Gra jest aplikacją PWA: instalujesz ją prosto ze strony, bez sklepu.
 
-```git clone https://github.com/xmslyz/Dreszcz.git```
+- **iPhone:** otwórz adres w Safari → Udostępnij → „Do ekranu początkowego”.
+- **Android:** otwórz adres w Chrome → menu ⋮ → „Zainstaluj aplikację”
+  (albo „Dodaj do ekranu głównego”).
 
-- Przejdź do katalogu z grą.
+Po pierwszym uruchomieniu gra działa offline. Nowa wersja pojawia się przy
+drugim uruchomieniu po aktualizacji.
 
-```cd Dreszcz```
+## Jak się gra
 
-- Uruchom grę, wpisując następujące polecenie w konsoli:
+- Na początku losujesz bohatera: **Zręczność** (1K+6), **Wytrzymałość** (2K+12)
+  i **Szczęście** (1K+6). W plecaku masz Prowiant na 8 posiłków.
+- Czytasz paragraf i wybierasz drogę przyciskiem. Gra sama pilnuje cech, złota,
+  ekwipunku, kluczy i tego, gdzie już byłeś.
+- **Walka:** w każdej rundzie Ty i potwór rzucacie dwiema kośćmi i dodajecie
+  Zręczność. Kto ma mniej, traci 2 punkty Wytrzymałości.
+- **SSS (Sprawdź Swoje Szczęście):** rzut dwiema kośćmi przeciw Szczęściu.
+  Każda próba kosztuje 1 punkt Szczęścia.
+- **Kości:** rzucasz dotknięciem albo — po włączeniu „Potrząśnij” w stopce —
+  potrząśnięciem telefonu.
+- **Mapa** pokazuje odwiedzone paragrafy i niezbadane wyjścia.
+- Postęp zapisuje się sam na urządzeniu. „Nowa gra” zaczyna od początku.
 
-```python main.py```
+## Dla programisty
 
-- Teraz rozpocznij przygodę w świecie "Dreszcz"!
+```
+git clone https://github.com/xmslyz/Dreszcz.git
+cd Dreszcz
+node --test web/silnik.test.js      # testy silnika gry
+python3 -m unittest -v test_ksiega  # testy spójności książki
+python3 sprawdz_ksiege.py           # walidator danych
+python3 web/zbuduj.py               # buduje stronę w _site/
+```
 
-## Instrukcje i Zasady Gry
-Gra jest oparta na wyborach. Po przeczytaniu opisu sytuacji, będziesz musiał/a wybrać jedną z dostępnych opcji, wpisując jej numer lub odpowiednią komendę.
+Podgląd lokalny: `cd _site && python3 -m http.server`, potem
+http://localhost:8000 w przeglądarce.
 
-Twoje wybory wpłyną na rozwój historii i mogą mieć różne konsekwencje. Bądź ostrożny/a!
-Aby zakończyć grę, wpisz "quit" lub "q" w dowolnym momencie.
+| Plik | Rola |
+|---|---|
+| `shiver.json` | Cała książka jako graf: tekst, przejścia, walki, efekty |
+| `web/silnik.js` | Zasady gry (czyste funkcje, bez ekranu) |
+| `web/index.html` | Ekran gry |
+| `web/sw.js`, `web/manifest.webmanifest` | Instalacja i działanie offline |
+| `web/zbuduj.py` | Budowa strony publikowanej na GitHub Pages |
 
-## Przykład Rozgrywki
-...
+Każdy push na gałąź `master` uruchamia testy i publikuje grę
+(`.github/workflows/strona.yml`). Zasady pracy nad projektem i opis zapisu
+danych są w `CLAUDE.md`.
 
-## Autor programu
-Wersja gry na komputer "Dreszcz" została stworzona przez Macieja Słyża. 
-Jeśli masz pytania, sugestie lub chcesz zgłosić błąd, skontaktuj się ze mną 
-pod adresem xmslyz@gmail.com.
+Pliki `*.py` w katalogu głównym (`game.py`, `menu.py`, `game_mechanics.py`
+i pozostałe) to wcześniejsza, niedokończona wersja konsolowa w Pythonie.
+Zostają jako archiwum i nie są rozwijane.
 
-## Licencja
-Ta gra jest dostępna na licencji **MIT License**. Szczegółowe informacje 
-znajdziesz w pliku LICENSE.
+## Zmiany względem książki
 
-## Dziękujemy
-Dziękuję, że zdecydowałeś/aś się zagrać w "Dreszcz"! Mam nadzieję, że 
-przeżyjesz wiele niezapomnianych przygód.
+Imiona potworów:
 
-## Zmiany w tekście orginalnym
-+ paragraf 69: UPIÓR (drugi) na OBLEC 
-+ paragraf 98: HERSZT GOBLINÓW na GROBOK
-+ paragrafy 170, 255, 244, 361 STRAŻNIK TAJEMNICY na BLACKTHORNE 
+- paragraf 69: UPIÓR (drugi) → OBLEC
+- paragraf 98: HERSZT GOBLINÓW → GROBOK
+- paragrafy 170, 255, 244, 361: STRAŻNIK TAJEMNICY → BLACKTHORNE
+
+Poprawione odnośniki (prawdopodobne błędy druku; szczegóły w `ToDo.md`):
+
+- 63: sieć prowadzi do 377 zamiast 337
+- 166: „za złoto” prowadzi do 353 zamiast 320
+- 172: druga przeprawa prowadzi do 266 zamiast 15
+
+## Autorzy i prawa
+
+- Książka „Dreszcz”: **Jacek Ciesielski**. Tekst paragrafów należy do autora
+  i wydawcy; ta wersja powstała do użytku prywatnego.
+- Program: **Maciej Słyż**. Pytania, uwagi i błędy: xmslyz@gmail.com albo
+  zgłoszenie (Issue) w tym repozytorium.
