@@ -151,7 +151,8 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 }
 
 /* Mapa wędrówki: pełny ekran nad grą. */
-.przyciski { display: flex; gap: 8px; }
+.przyciski { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+#potrzasanie[aria-pressed="true"] { color: var(--akcent); border-color: var(--akcent); }
 .mapa {
   position: fixed; inset: 0; z-index: 10; background: var(--tlo);
   display: grid; grid-template-rows: auto 1fr auto;
@@ -195,6 +196,7 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
   <footer>
     <span class="licznik" id="stos"></span>
     <div class="przyciski">
+      <button class="przycisk cichy" id="potrzasanie" type="button" hidden aria-pressed="false">Potrząśnij: wył.</button>
       <button class="przycisk cichy" id="pokaz-mape" type="button">Mapa</button>
       <button class="przycisk cichy" id="nowa" type="button">Nowa gra</button>
     </div>
@@ -331,6 +333,7 @@ function rysuj() {
   if (czekaNaSSS(stan, p) && !stan.walka) {
     const b = el("button", "przycisk", `Sprawdź Swoje Szczęście (SSS, masz S ${stan.bohater.S})`);
     b.type = "button";
+    b.dataset.rzut = "";   // data-rzut: ten przycisk „naciska” potrząśnięcie telefonem
     b.addEventListener("click", () => { animujSSS = true; zmien(testSzczescia(stan), false); });
     box.append(b);
   } else if (stan.testSSS?.akapit === stan.akapit) {
@@ -426,6 +429,7 @@ function rysujStart(box) {
   if (!kandydat) {
     const b = el("button", "przycisk", "Rzuć kośćmi");
     b.type = "button";
+    b.dataset.rzut = "";
     b.addEventListener("click", () => { kandydat = nowyBohater(); rysuj(); });
     s.append(b);
   } else {
@@ -473,6 +477,7 @@ function rysujWalke(akapit) {
     const akcje = el("div", "akcje");
     const atak = el("button", "przycisk", "Atakuj");
     atak.type = "button";
+    atak.dataset.rzut = "";
     atak.addEventListener("click", () => {
       const sss = uzyjSSS;
       uzyjSSS = false;
@@ -548,6 +553,7 @@ function rysujRzutKosci(akapit) {
       b.type = "button";
       b.setAttribute("aria-label", `Rzuć kością ${i + 1}`);
       b.disabled = i !== oczka.length;          // po kolei: najpierw pierwsza
+      b.dataset.rzut = "";
       b.addEventListener("click", () => { animujKosc = i; zmien(rzucKoscia(stan), false); });
       rzad.append(b);
     }
@@ -777,6 +783,57 @@ document.getElementById("zoom-tu").addEventListener("click", () => {
   });
   svg.addEventListener("pointerup", () => { start = null; });
   svg.addEventListener("pointercancel", () => { start = null; });
+})();
+
+// ---------------------------------------------------------------- rzut potrząśnięciem
+// Potrząśnięcie „naciska” pierwszy widoczny przycisk rzutu (data-rzut).
+// Dotykanie kości działa zawsze – to tylko dodatek, domyślnie wyłączony.
+const KLUCZ_POTRZASANIA = "dreszcz-potrzasanie";
+const wykryjPotrzasniecie = wykrywaczPotrzasniecia();
+let potrzasanieWlaczone = false;
+
+function poRuchu(e) {
+  if (!potrzasanieWlaczone || !document.getElementById("mapa").hidden) return;
+  if (!wykryjPotrzasniecie(e.accelerationIncludingGravity, e.timeStamp)) return;
+  const przycisk = document.querySelector("[data-rzut]:not([disabled])");
+  if (!przycisk) return;
+  navigator.vibrate?.(40);          // krótkie drgnięcie (Android; iPhone tego nie obsługuje)
+  przycisk.click();
+}
+
+/** iPhone wymaga zgody na czujnik ruchu, o którą wolno prosić tylko po dotknięciu ekranu. */
+async function poprosOZgode() {
+  if (typeof DeviceMotionEvent?.requestPermission !== "function") return true;   // Android: bez pytania
+  try { return (await DeviceMotionEvent.requestPermission()) === "granted"; } catch (e) { return false; }
+}
+
+async function ustawPotrzasanie(wlacz) {
+  const b = document.getElementById("potrzasanie");
+  let odmowa = false;
+  if (wlacz && !(await poprosOZgode())) { wlacz = false; odmowa = true; }
+  potrzasanieWlaczone = wlacz;
+  window.removeEventListener("devicemotion", poRuchu);
+  if (wlacz) window.addEventListener("devicemotion", poRuchu);
+  b.textContent = odmowa ? "Potrząśnij: brak zgody" : `Potrząśnij: ${wlacz ? "wł." : "wył."}`;
+  b.setAttribute("aria-pressed", String(wlacz));
+  try { localStorage.setItem(KLUCZ_POTRZASANIA, wlacz ? "1" : "0"); } catch (e) { /* bez pamięci też działa */ }
+}
+
+(function przygotujPotrzasanie() {
+  // Przycisk tylko na urządzeniach dotykowych z czujnikiem ruchu.
+  if (!("DeviceMotionEvent" in window) || !window.matchMedia("(pointer: coarse)").matches) return;
+  const b = document.getElementById("potrzasanie");
+  b.hidden = false;
+  b.addEventListener("click", () => ustawPotrzasanie(!potrzasanieWlaczone));
+  let zapamietane = null;
+  try { zapamietane = localStorage.getItem(KLUCZ_POTRZASANIA); } catch (e) { /* nic */ }
+  if (zapamietane !== "1") return;
+  // Było włączone: na iPhonie zgodę trzeba odnowić przy pierwszym dotknięciu po otwarciu gry.
+  if (typeof DeviceMotionEvent.requestPermission === "function") {
+    document.addEventListener("click", (e) => { if (e.target !== b) ustawPotrzasanie(true); }, { once: true });
+  } else {
+    ustawPotrzasanie(true);
+  }
 })();
 
 async function wczytajKsiege() {

@@ -52,7 +52,7 @@ Po każdym zamkniętym wątku aktualizuj sekcje „Stan” i „Lista wątków�
 |---|---|
 | `shiver.json` | **Źródło prawdy**: 387 paragrafów jako graf (tekst + przejścia + efekty) |
 | `web/silnik.js` | Silnik gry: czyste funkcje bez ekranu (stan, walka, efekty, warunki) |
-| `web/index.html` | Interfejs: „wnętrze” strony bez `<head>` |
+| `web/index.html` | Interfejs: „wnętrze” strony bez `<head>`. Przyciski rzutu mają `data-rzut` — to je „naciska” potrząśnięcie |
 | `web/silnik.test.js` | Testy silnika (`node --test`) |
 | `web/sw.js`, `manifest.webmanifest`, `ikona-*.png` | Część PWA: offline i instalacja |
 | `web/zbuduj.py` | Buduje `_site/`; wpisuje do `sw.js` wersję = skrót zawartości plików |
@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (56)
+node --test web/silnik.test.js      # testy silnika (59)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
 python3 web/zbuduj.py               # buduje _site/
@@ -121,13 +121,14 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: „Nagrody za potwory i grubasy: 193, 26” (15.11.2026).
+Ostatni commit z kodem: „Rzut potrząśnięciem telefonu” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
 rzuty kością w paragrafach, przejścia zależne od przedmiotów i złota,
 osłona na czas walki (hełm w 2), efekty zależne od rzutu (74, 240, 315),
-hazard (145, 201, 334), liczniki i nagrody (193, 26), tryb testowy (tymczasowy).
+hazard (145, 201, 334), liczniki i nagrody (193, 26),
+rzut potrząśnięciem (przycisk „Potrząśnij” w stopce, domyślnie wyłączony), tryb testowy (tymczasowy).
 
 Znane usterki:
 - `test_game_mechanics.py` (stary Python): 5 z 11 testów nie przechodzi → wątek 7.
@@ -137,7 +138,8 @@ Znane usterki:
 
 Bieżący: **5**.
 
-- 5\. Funkcje mobilne — punkt 3: potrząśnięcie telefonem = rzut
+- 5\. **Funkcje mobilne** — potrząśnięcie zrobione; czeka na próbę Macieja
+  na prawdziwym telefonie (czułość: `prog` w `wykrywaczPotrzasniecia`)
 - 7\. Naprawa 5 testów (`test_game_mechanics.py`)
 - 8\. Poprawka README (`main.py`)
 - 10\. Sprawdzić 174 → 200

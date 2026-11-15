@@ -634,6 +634,37 @@ function etykieta(przejscie) {
   return `Patrz ${przejscie.target}`;
 }
 
+// ---------------------------------------------------------------- potrząśnięcie telefonem
+
+/**
+ * Wykrywa potrząśnięcie na podstawie kolejnych odczytów czujnika ruchu.
+ * Zwraca funkcję, która pamięta poprzedni odczyt (domknięcie – jak funkcja
+ * wewnętrzna z "nonlocal" w Pythonie). Wywołujemy ją dla każdego odczytu:
+ *   wykryj({x, y, z}, czasMs) → true, gdy właśnie rozpoznano potrząśnięcie.
+ * Zasada: dwa mocne szarpnięcia (zmiana przyspieszenia ≥ prog) w ciągu "okno" ms.
+ * Po rozpoznaniu przez "przerwa" ms nic nie zgłaszamy – jeden gest = jeden rzut.
+ */
+function wykrywaczPotrzasniecia({ prog = 15, okno = 600, przerwa = 1000 } = {}) {
+  let poprzedni = null;       // ostatni odczyt
+  let szarpniecie = -Infinity; // czas ostatniego mocnego szarpnięcia
+  let ostatnie = -Infinity;    // czas ostatniego rozpoznanego potrząśnięcia
+  return (odczyt, czas) => {
+    if (!odczyt || odczyt.x == null) return false;
+    const p = poprzedni;
+    poprzedni = odczyt;
+    if (!p || czas - ostatnie < przerwa) return false;
+    const zmiana = Math.abs(odczyt.x - p.x) + Math.abs(odczyt.y - p.y) + Math.abs(odczyt.z - p.z);
+    if (zmiana < prog) return false;
+    if (czas - szarpniecie <= okno) {
+      ostatnie = czas;
+      szarpniecie = -Infinity;
+      return true;
+    }
+    szarpniecie = czas;
+    return false;
+  };
+}
+
 // W Node.js (testy) udostępniamy funkcje przez module.exports,
 // w przeglądarce są po prostu globalne.
 if (typeof module !== "undefined") {
@@ -641,7 +672,7 @@ if (typeof module !== "undefined") {
     START, k6, rzut2k, nowyBohater, sss, nowaGra, wykonajPrzejscie,
     rozpocznijWalke, przyjmijRane, biezacyPotwor, rundaWalki, moznaUciec, ucieczka, wskrzes, potworyPokonane, uzupelnijPokonanych,
     dostepnePrzejscia, tekstAkapitu, etykieta, czekaNaSSS, testSzczescia,
-    oczkaTutaj, czekaNaKosci, rzucKoscia, ileTrafien,
+    oczkaTutaj, czekaNaKosci, rzucKoscia, ileTrafien, wykrywaczPotrzasniecia,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,
     zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,
   };

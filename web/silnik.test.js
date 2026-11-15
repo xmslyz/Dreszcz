@@ -501,3 +501,32 @@ test("grubasy: trafienia z 265 i 359 sumują się, a 26 płaci po 5", () => {
   st = s.zastosujEfekty(st, { text: "", efekty: [{ zloto_za: { licznik: "grubasy", po: 5 } }], edges: [] });
   assert.strictEqual(st.bohater.zloto, 15);
 });
+
+// ---------------------------------------------------------------- potrząśnięcie telefonem
+const spokoj = { x: 0, y: 9.8, z: 0 };
+const szarp = { x: 12, y: 0, z: 9 };
+
+test("potrząśnięcie: leżący telefon i pojedyncze szarpnięcie to nie rzut", () => {
+  const wykryj = s.wykrywaczPotrzasniecia();
+  assert.strictEqual(wykryj(spokoj, 0), false);
+  assert.strictEqual(wykryj(spokoj, 16), false);
+  assert.strictEqual(wykryj(szarp, 32), false);      // pierwsze szarpnięcie – jeszcze nic
+  assert.strictEqual(wykryj(szarp, 2000), false);    // bez ruchu, i za późno
+});
+
+test("potrząśnięcie: dwa szarpnięcia w krótkim czasie to rzut, ale tylko jeden", () => {
+  const wykryj = s.wykrywaczPotrzasniecia();
+  wykryj(spokoj, 0);
+  assert.strictEqual(wykryj(szarp, 20), false);
+  assert.strictEqual(wykryj(spokoj, 120), true);
+  assert.strictEqual(wykryj(szarp, 200), false);     // przerwa po rzucie
+  assert.strictEqual(wykryj(spokoj, 300), false);
+  wykryj(szarp, 1300);
+  assert.strictEqual(wykryj(spokoj, 1400), true);    // po przerwie znowu działa
+});
+
+test("potrząśnięcie: brak danych z czujnika niczego nie psuje", () => {
+  const wykryj = s.wykrywaczPotrzasniecia();
+  assert.strictEqual(wykryj(null, 0), false);
+  assert.strictEqual(wykryj({ x: null, y: null, z: null }, 10), false);
+});
