@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (44)
+node --test web/silnik.test.js      # testy silnika (48)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
 python3 web/zbuduj.py               # buduje _site/
@@ -101,6 +101,10 @@ Walka (`combat`): `monsters`, `escape` oraz opcjonalnie
 `oslona: {"ma": [rzeczy], "W": n}` — zapas punktów na czas tej walki,
 przyjmuje rany przed Wytrzymałością (hełm w 2).
 
+Efekty zależne od rzutu: `efekty: [{"gdy_suma": [od, do], ...}]` razem z
+`rzut_kosci`; działają przy każdej wizycie. `"W": "kosc"` = strata równa
+wyrzuconym oczkom, `"zostaw_W": 1` = nie mniej niż 1 W (240).
+
 Zasady, których się trzymamy:
 - Cechy, złoto, posiłki i przedmioty idą **jednym zapisem** `efekty`
   i jedną funkcją `zmienCechy()`. Nie tworzymy osobnych mechanizmów.
@@ -112,12 +116,12 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: „Hełm w walce z GARAZANEM” (15.11.2026).
+Ostatni commit z kodem: „Rzuty kością z efektem: 74, 240, 315” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
 rzuty kością w paragrafach, przejścia zależne od przedmiotów i złota,
-osłona na czas walki (hełm w 2), tryb testowy (tymczasowy).
+osłona na czas walki (hełm w 2), efekty zależne od rzutu (74, 240, 315), tryb testowy (tymczasowy).
 
 Znane usterki:
 - `test_game_mechanics.py` (stary Python): 5 z 11 testów nie przechodzi → wątek 7.
@@ -128,7 +132,7 @@ Znane usterki:
 Bieżący: **13**.
 
 - 13\. **Efekty paragrafów** — zostało:
-  rzuty w 74, 240, 315, hazard (145, 201, 334), złoto za potwory (193, 26)
+  hazard (145, 201, 334), złoto za potwory (193, 26)
 - 5\. Funkcje mobilne — punkt 3: potrząśnięcie telefonem = rzut
 - 7\. Naprawa 5 testów (`test_game_mechanics.py`)
 - 8\. Poprawka README (`main.py`)

@@ -1190,19 +1190,36 @@
     "edges": [
       {
         "label": "Masz sieć",
-        "target": 240
+        "target": 240,
+        "ma": "sieć"
       },
       {
         "label": "Ucieczka 1",
-        "target": 35
+        "target": 35,
+        "nie_ma": "sieć"
       },
       {
         "label": "Ucieczka 2",
-        "target": 269
+        "target": 269,
+        "nie_ma": "sieć"
       },
       {
         "label": "Ucieczka 3",
-        "target": 110
+        "target": 110,
+        "nie_ma": "sieć"
+      }
+    ],
+    "rzut_kosci": {
+      "ile": 1,
+      "opis": "Rzuć kostką: przy 1 lub 2 tracisz 1 W"
+    },
+    "efekty": [
+      {
+        "gdy_suma": [
+          1,
+          2
+        ],
+        "W": -1
       }
     ]
   },
@@ -3564,11 +3581,18 @@
         "target": 288
       }
     ],
-    "effects": [
+    "rzut_kosci": {
+      "ile": 1,
+      "opis": "Rzuć kostką: tracisz tyle W, ile wyrzucisz (zostaje ci co najmniej 1)"
+    },
+    "efekty": [
       {
-        "attr": "stamina",
-        "change": "-1d6",
-        "min_remaining": 1
+        "gdy_suma": [
+          1,
+          6
+        ],
+        "W": "kosc",
+        "zostaw_W": 1
       }
     ]
   },
@@ -4594,22 +4618,24 @@
   },
   "315": {
     "text": "Rzuć raz kostką. Jeśli wylosujesz 1, 2, 3 - wychodzisz bez szwanku, jeśli zaś 4, 5, 6 - tracisz 3W i 1Z.",
-    "effects": [
-      {
-        "condition": "roll=4-6",
-        "attr": "stamina",
-        "change": -3
-      },
-      {
-        "condition": "roll=4-6",
-        "attr": "agility",
-        "change": -1
-      }
-    ],
     "edges": [
       {
         "label": "Wróć do zapisanego paragrafu",
         "target": "RETURN"
+      }
+    ],
+    "rzut_kosci": {
+      "ile": 1,
+      "opis": "Rzuć kostką: 1–3 bez szwanku, 4–6 tracisz 3 W i 1 Z"
+    },
+    "efekty": [
+      {
+        "gdy_suma": [
+          4,
+          6
+        ],
+        "W": -3,
+        "Z": -1
       }
     ]
   },

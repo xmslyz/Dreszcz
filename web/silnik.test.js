@@ -393,3 +393,35 @@ test("osłona: wejście do paragrafu 2 z hełmem włącza ją samo", () => {
   const st = wykonajPrzejscie({ ...nowaGra(zHelmem()) }, { target: "2" }, null, { 2: GARAZAN });
   assert.strictEqual(st.walka.oslona, 3);
 });
+
+// ---------------------------------------------------------------- efekty zależne od rzutu
+const PULAPKA = { text: "", rzut_kosci: { ile: 1 }, efekty: [{ gdy_suma: [4, 6], W: -3, Z: -1 }], edges: [{ target: "RETURN" }] };
+const wPulapce = (W = 20) => ({ ...s.nowaGra({ Z: 8, W, S: 9, start: { Z: 8, W: 20, S: 9 }, prowiant: 8 }), akapit: "315", historia: ["1", "315"] });
+
+test("rzut: przed rzutem efekt nie działa", () => {
+  assert.strictEqual(s.zastosujEfekty(wPulapce(), PULAPKA).bohater.W, 20);
+});
+
+test("rzut: 315 – przy 1–3 nic, przy 4–6 −3 W i −1 Z", () => {
+  const dobrze = s.zastosujEfekty(s.rzucKoscia(wPulapce(), kostka(3)), PULAPKA);
+  assert.deepStrictEqual([dobrze.bohater.W, dobrze.bohater.Z], [20, 8]);
+  const zle = s.zastosujEfekty(s.rzucKoscia(wPulapce(), kostka(4)), PULAPKA);
+  assert.deepStrictEqual([zle.bohater.W, zle.bohater.Z], [17, 7]);
+  // drugie wywołanie w tej samej wizycie niczego nie dolicza
+  assert.strictEqual(s.zastosujEfekty(zle, PULAPKA).bohater.W, 17);
+});
+
+test("rzut: przy następnej wizycie pułapka działa od nowa", () => {
+  let st = s.zastosujEfekty(s.rzucKoscia(wPulapce(), kostka(6)), PULAPKA);
+  st = { ...st, historia: [...st.historia, "52", "315"], kosci: null };
+  st = s.zastosujEfekty(s.rzucKoscia(st, kostka(5)), PULAPKA);
+  assert.strictEqual(st.bohater.W, 14);
+});
+
+test("rzut: 240 – tracisz tyle W, ile wypadło, ale zostaje co najmniej 1", () => {
+  const most = { text: "", rzut_kosci: { ile: 1 }, efekty: [{ gdy_suma: [1, 6], W: "kosc", zostaw_W: 1 }], edges: [{ target: "288" }] };
+  assert.strictEqual(s.zastosujEfekty(s.rzucKoscia(wPulapce(), kostka(5)), most).bohater.W, 15);
+  const slaby = s.zastosujEfekty(s.rzucKoscia(wPulapce(3), kostka(6)), most);
+  assert.strictEqual(slaby.bohater.W, 1);
+  assert.notStrictEqual(slaby.koniec, "porazka");
+});

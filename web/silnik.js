@@ -454,17 +454,36 @@ function zastosujEfekty(stan, akapit) {
   const poTescie = !czekaNaSSS(stan, akapit) && stan.testSSS?.akapit === stan.akapit;
   if (poTescie) stan = zastosujGrupe(stan, akapit, `${stan.akapit}:sss`,
     (e) => e.gdy_sss === stan.testSSS.szczescie);
-  return zastosujGrupe(stan, akapit, stan.akapit, (e) => e.gdy_sss === undefined);
+  // Efekty zależne od rzutu ("gdy_suma": [od, do]) – dopiero gdy wszystkie kości
+  // są rzucone. Klucz zawiera długość historii, więc przy każdej wizycie liczą się
+  // od nowa (315 to pułapka, do której trafia się z kilku miejsc).
+  if (akapit?.rzut_kosci && !czekaNaKosci(stan, akapit)) {
+    const suma = oczkaTutaj(stan).reduce((a, b) => a + b, 0);
+    stan = zastosujGrupe(stan, akapit, `${stan.akapit}:kosci:${stan.historia.length}`,
+      (e) => e.gdy_suma && suma >= e.gdy_suma[0] && suma <= e.gdy_suma[1],
+      (e) => zRzutu(e, suma, stan.bohater));
+  }
+  return zastosujGrupe(stan, akapit, stan.akapit, (e) => e.gdy_sss === undefined && !e.gdy_suma);
 }
 
-function zastosujGrupe(stan, akapit, klucz, pasuje) {
+/**
+ * "W": "kosc" – tracisz tyle W, ile wypadło; "zostaw_W": 1 – ale nie mniej niż 1
+ * (paragraf 240). Zwraca zwykły efekt z liczbą, który rozumie zmienCechy().
+ */
+function zRzutu(efekt, suma, bohater) {
+  if (efekt.W !== "kosc") return efekt;
+  const najwyzej = Math.max(bohater.W - (efekt.zostaw_W ?? 0), 0);
+  return { ...efekt, W: -Math.min(suma, najwyzej) };
+}
+
+function zastosujGrupe(stan, akapit, klucz, pasuje, przelicz = (e) => e) {
   const efekty = (akapit?.efekty ?? []).filter(pasuje);
   const zastosowane = stan.zastosowane ?? [];
   if (!efekty.length || zastosowane.includes(klucz) || !efektyGotowe(stan)) return stan;
   let bohater = stan.bohater;
   const zmiany = [];
   for (const e of efekty.filter(czyAutomatyczny)) {
-    const wynik = zmienCechy(bohater, e);
+    const wynik = zmienCechy(bohater, przelicz(e));
     bohater = wynik.bohater;
     zmiany.push(...wynik.opisy);
   }
