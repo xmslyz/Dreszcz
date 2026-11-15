@@ -419,9 +419,43 @@ test("rzut: przy następnej wizycie pułapka działa od nowa", () => {
 });
 
 test("rzut: 240 – tracisz tyle W, ile wypadło, ale zostaje co najmniej 1", () => {
-  const most = { text: "", rzut_kosci: { ile: 1 }, efekty: [{ gdy_suma: [1, 6], W: "kosc", zostaw_W: 1 }], edges: [{ target: "288" }] };
+  const most = { text: "", rzut_kosci: { ile: 1 }, efekty: [{ gdy_suma: [1, 6], W: "-kosc", zostaw_W: 1 }], edges: [{ target: "288" }] };
   assert.strictEqual(s.zastosujEfekty(s.rzucKoscia(wPulapce(), kostka(5)), most).bohater.W, 15);
   const slaby = s.zastosujEfekty(s.rzucKoscia(wPulapce(3), kostka(6)), most);
   assert.strictEqual(slaby.bohater.W, 1);
   assert.notStrictEqual(slaby.koniec, "porazka");
+});
+
+// ---------------------------------------------------------------- hazard (145, 201, 334)
+const przyStole = (zloto, nr = "334") => ({ ...s.nowaGra({ Z: 8, W: 20, S: 9, start: { Z: 8, W: 20, S: 9 }, prowiant: 8, zloto }), akapit: nr, historia: ["1", nr] });
+const rzuc2 = (st, a, b) => s.rzucKoscia(s.rzucKoscia(st, kostka(a)), kostka(b));
+const gra = (...efekty) => ({ text: "", rzut_kosci: { ile: 2 }, efekty, edges: [{ target: "19" }] });
+
+test("hazard: 201 – wygrywasz tyle złota, ile oczek", () => {
+  const st = s.zastosujEfekty(rzuc2(przyStole(5), 3, 4), gra({ gdy_suma: [2, 12], zloto: "kosc" }));
+  assert.strictEqual(st.bohater.zloto, 12);
+});
+
+test("hazard: 145 – przegrywasz oczka, najwyżej wszystko", () => {
+  const przegrana = gra({ gdy_suma: [2, 12], zloto: "-kosc" });
+  assert.strictEqual(s.zastosujEfekty(rzuc2(przyStole(20), 3, 4), przegrana).bohater.zloto, 13);
+  const bankrut = s.zastosujEfekty(rzuc2(przyStole(4), 6, 6), przegrana);
+  assert.strictEqual(bankrut.bohater.zloto, 0);
+  assert.deepStrictEqual(bankrut.zmiany, ["−4 złota"]);
+});
+
+test("hazard: 334 – parzysta przegrywa, nieparzysta wygrywa; po jednej kości nic", () => {
+  const karty = gra({ gdy_suma: [2, 12], gdy_parzysta: true, zloto: "-kosc" }, { gdy_suma: [2, 12], gdy_parzysta: false, zloto: "kosc" });
+  assert.strictEqual(s.zastosujEfekty(s.rzucKoscia(przyStole(10), kostka(3)), karty).bohater.zloto, 10);
+  assert.strictEqual(s.zastosujEfekty(rzuc2(przyStole(10), 2, 4), karty).bohater.zloto, 4);
+  assert.strictEqual(s.zastosujEfekty(rzuc2(przyStole(10), 2, 5), karty).bohater.zloto, 17);
+});
+
+test("hazard: 334 – „grasz jeszcze raz” daje nowy rzut i nowy wynik", () => {
+  const karty = gra({ gdy_suma: [2, 12], gdy_parzysta: false, zloto: "kosc" });
+  let st = s.zastosujEfekty(rzuc2(przyStole(10), 2, 5), karty);
+  st = wykonajPrzejscie(st, { target: "334" }, null, { 334: karty });
+  assert.deepStrictEqual(s.oczkaTutaj(st), []);
+  st = s.zastosujEfekty(rzuc2(st, 1, 2), karty);
+  assert.strictEqual(st.bohater.zloto, 20);
 });

@@ -415,8 +415,11 @@ function zmienCechy(bohater, efekt) {
     if (naprawde !== 0) opisy.push(`${naprawde > 0 ? "+" : "−"}${Math.abs(naprawde)} ${cecha}`);
   }
   if ("zloto" in efekt) {
-    b.zloto = Math.max(b.zloto + efekt.zloto, 0);
-    opisy.push(`${efekt.zloto >= 0 ? "+" : "−"}${Math.abs(efekt.zloto)} złota`);
+    const przed = b.zloto;
+    b.zloto = Math.max(przed + efekt.zloto, 0);
+    const naprawde = b.zloto - przed;   // przegrać można najwyżej tyle, ile się ma
+    opisy.push(naprawde === 0 && efekt.zloto < 0 ? "nie masz złota"
+      : `${naprawde >= 0 ? "+" : "−"}${Math.abs(naprawde)} złota`);
   }
   if (efekt.dodaj || efekt.usun || efekt.zuzyj) {
     let rzeczy = [...(b.ekwipunek ?? [])];
@@ -460,20 +463,30 @@ function zastosujEfekty(stan, akapit) {
   if (akapit?.rzut_kosci && !czekaNaKosci(stan, akapit)) {
     const suma = oczkaTutaj(stan).reduce((a, b) => a + b, 0);
     stan = zastosujGrupe(stan, akapit, `${stan.akapit}:kosci:${stan.historia.length}`,
-      (e) => e.gdy_suma && suma >= e.gdy_suma[0] && suma <= e.gdy_suma[1],
+      (e) => e.gdy_suma && suma >= e.gdy_suma[0] && suma <= e.gdy_suma[1]
+        && (e.gdy_parzysta === undefined || e.gdy_parzysta === (suma % 2 === 0)),
       (e) => zRzutu(e, suma, stan.bohater));
   }
   return zastosujGrupe(stan, akapit, stan.akapit, (e) => e.gdy_sss === undefined && !e.gdy_suma);
 }
 
 /**
- * "W": "kosc" – tracisz tyle W, ile wypadło; "zostaw_W": 1 – ale nie mniej niż 1
- * (paragraf 240). Zwraca zwykły efekt z liczbą, który rozumie zmienCechy().
+ * Wartość zależna od rzutu: "kosc" = tyle, ile wypadło; "-kosc" = minus tyle.
+ *   {"zloto": "kosc"}  – wygrywasz tyle złota (201)
+ *   {"zloto": "-kosc"} – przegrywasz tyle złota, najwyżej wszystko (145)
+ *   {"W": "-kosc", "zostaw_W": 1} – tracisz tyle W, ale zostaje co najmniej 1 (240)
+ * Zwraca zwykły efekt z liczbami, który rozumie zmienCechy().
  */
 function zRzutu(efekt, suma, bohater) {
-  if (efekt.W !== "kosc") return efekt;
-  const najwyzej = Math.max(bohater.W - (efekt.zostaw_W ?? 0), 0);
-  return { ...efekt, W: -Math.min(suma, najwyzej) };
+  const wynik = { ...efekt };
+  for (const pole of ["W", "zloto"]) {
+    if (efekt[pole] === "kosc") wynik[pole] = suma;
+    if (efekt[pole] === "-kosc") wynik[pole] = -suma;
+  }
+  if ("zostaw_W" in efekt && wynik.W < 0) {
+    wynik.W = -Math.min(-wynik.W, Math.max(bohater.W - efekt.zostaw_W, 0));
+  }
+  return wynik;
 }
 
 function zastosujGrupe(stan, akapit, klucz, pasuje, przelicz = (e) => e) {

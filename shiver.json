@@ -2286,7 +2286,19 @@
         "label": "rezygnuję"
       }
     ],
-    "requires_test": "2d6"
+    "rzut_kosci": {
+      "ile": 2,
+      "opis": "Rzuć dwiema kostkami: tyle sztuk złota przegrywasz"
+    },
+    "efekty": [
+      {
+        "gdy_suma": [
+          2,
+          12
+        ],
+        "zloto": "-kosc"
+      }
+    ]
   },
   "146": {
     "text": "Korytarz biegnie na południe i skręca na wschód. Przed sobą widzisz skrzyżowanie - patrz 64.",
@@ -3063,10 +3075,17 @@
         "label": "kończysz grę"
       }
     ],
-    "effects": [
+    "rzut_kosci": {
+      "ile": 2,
+      "opis": "Rzuć dwiema kostkami: tyle sztuk złota wygrywasz"
+    },
+    "efekty": [
       {
-        "attr": "gold",
-        "change": "2d6"
+        "gdy_suma": [
+          2,
+          12
+        ],
+        "zloto": "kosc"
       }
     ]
   },
@@ -3591,7 +3610,7 @@
           1,
           6
         ],
-        "W": "kosc",
+        "W": "-kosc",
         "zostaw_W": 1
       }
     ]
@@ -4883,10 +4902,34 @@
     "text": "Rzucasz dwiema kostkami. Jeśli wylosowałeś liczbę parzystą, przegrywasz tyle sztuk złota, ile oczek pokazała kostka. Jeśli masz liczbę nieparzystą, tyle właśnie sztuk złota wygrywasz. Możesz grać dowolną liczbę razy. Gdy postanawiasz skończyć grę - patrz 19.",
     "edges": [
       {
-        "target": 40
+        "target": "334",
+        "label": "Grasz jeszcze raz"
       },
       {
-        "target": 19
+        "target": "19",
+        "label": "Kończysz grę"
+      }
+    ],
+    "rzut_kosci": {
+      "ile": 2,
+      "opis": "Rzuć dwiema kostkami: parzysta – przegrywasz tyle złota, nieparzysta – wygrywasz"
+    },
+    "efekty": [
+      {
+        "gdy_suma": [
+          2,
+          12
+        ],
+        "gdy_parzysta": true,
+        "zloto": "-kosc"
+      },
+      {
+        "gdy_suma": [
+          2,
+          12
+        ],
+        "gdy_parzysta": false,
+        "zloto": "kosc"
       }
     ]
   },
