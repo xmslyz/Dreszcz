@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (64)
+node --test web/silnik.test.js      # testy silnika (69)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 -m unittest test_game_mechanics  # stara wersja Pythonowa (11), poza workflow
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
@@ -114,6 +114,11 @@ Liczniki (`stan.liczniki`, np. `{"jatka": 3}`): rosną przez `combat.licznik`
 Bohater: `Z`, `W`, `S`, `start: {Z, W, S}`, `prowiant`, `zloto`, `ekwipunek`,
 `eliksir: {cecha, lyki}`. Eliksir S podnosi też `start.S` o 1 (zasady V).
 
+Tryb tajemny: `stan.tajny` = ziarno losowania (liczba) albo brak. Stan gry, dane
+i silnik zawsze używają prawdziwych numerów; zamiana jest tylko przy rysowaniu:
+`nr()` w `index.html` i `przepiszNumery()` dla tekstu. Każde nowe miejsce, które
+pokazuje numer paragrafu, musi przejść przez `nr()`.
+
 Zasady, których się trzymamy:
 - Cechy, złoto, posiłki i przedmioty idą **jednym zapisem** `efekty`
   i jedną funkcją `zmienCechy()`. Nie tworzymy osobnych mechanizmów.
@@ -125,7 +130,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: „Eliksir na start” (15.11.2026).
+Ostatni commit z kodem: „Tryb tajemny” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -134,15 +139,14 @@ osłona na czas walki (hełm w 2), efekty zależne od rzutu (74, 240, 315),
 hazard (145, 201, 334), liczniki i nagrody (193, 26),
 rzut potrząśnięciem (przycisk „Potrząśnij” w stopce, domyślnie wyłączony;
 sprawdzony przez Macieja na telefonie), eliksir (wybór na starcie, dwa łyki,
-pasek pod kartą wyprawy), tryb testowy (tymczasowy).
+pasek pod kartą wyprawy), tryb tajemny (przetasowane numery), tryb testowy (tymczasowy).
 
 Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **16**.
+Bieżący: **17**.
 
-- 16\. Tryb tajemny (losowe numery paragrafów)
 - 17\. Losowe spotkania z potworami
 - 18\. Workflow: podbić wersje akcji (Node 20 przestarzały)
 - 20\. Pamięć „z warunkiem”: 97, 189, 261, 290
@@ -154,7 +158,7 @@ Bieżący: **16**.
 - 26\. Licencja kodu: stare README mówiło „MIT”, ale pliku `LICENSE` nie ma — zdecydować
 - 27\. Zdobyć oficjalną erratę („Razem” nr 40/1987) i porównać z naszymi poprawkami
 
-Zamknięte: 1–15, 19.
+Zamknięte: 1–16, 19.
 
 ## 8. Otwarte ustalenia projektowe
 

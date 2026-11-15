@@ -31,6 +31,8 @@ drugim uruchomieniu po aktualizacji.
 - **Kości:** rzucasz dotknięciem albo — po włączeniu „Potrząśnij” w stopce —
   potrząśnięciem telefonu.
 - **Mapa** pokazuje odwiedzone paragrafy i niezbadane wyjścia.
+- **Tryb tajemny** (do zaznaczenia na starcie) tasuje numery paragrafów, żeby
+  książka i pamięć z poprzednich gier nie podpowiadały drogi.
 - Postęp zapisuje się sam na urządzeniu. „Nowa gra” zaczyna od początku.
 
 ## Dla programisty

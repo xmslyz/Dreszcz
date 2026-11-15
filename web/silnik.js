@@ -665,6 +665,50 @@ function etykieta(przejscie) {
   return `Patrz ${przejscie.target}`;
 }
 
+// ---------------------------------------------------------------- tryb tajemny
+
+/**
+ * Generator liczb losowych z ziarnem (algorytm mulberry32). To samo ziarno daje
+ * zawsze ten sam ciąg – jak random.Random(ziarno) w Pythonie. Math.random()
+ * ziarna nie ma, a my musimy odtworzyć tę samą numerację po wczytaniu zapisu.
+ */
+function losowaZZiarnem(ziarno) {
+  let a = ziarno >>> 0;
+  return () => {
+    a = (a + 0x6D2B79F5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * Tajna numeracja: słownik {prawdziwy numer: numer na ekranie}. Numery są te same
+ * (1…387), tylko przetasowane, więc książka i pamięć z poprzednich gier nie pomogą.
+ * Tasowanie Fishera–Yatesa: idziemy od końca i zamieniamy z losowym wcześniejszym.
+ */
+function tajnaNumeracja(ziarno, numery) {
+  const losuj = losowaZZiarnem(ziarno);
+  const tajne = [...numery];
+  for (let i = tajne.length - 1; i > 0; i--) {
+    const j = Math.floor(losuj() * (i + 1));
+    [tajne[i], tajne[j]] = [tajne[j], tajne[i]];     // zamiana miejscami, jak a, b = b, a
+  }
+  return Object.fromEntries(numery.map((nr, i) => [nr, tajne[i]]));
+}
+
+// Miejsca w tekście, gdzie stoi numer paragrafu: „patrz 35, 269 lub 110”,
+// „patrz najpierw 315, a potem 274”, „Patrz - 15”, „do paragrafu 122”, „docierasz do 102”.
+const ODSYLACZ = /(patrz(?:\s+najpierw)?(?:\s+-)?\s+|paragraf\p{L}*\s+|docierasz\s+do\s+|przeciskasz\s+się\s+do\s+)(\d+(?:(?:\s*,\s*|\s+lub\s+|\s+albo\s+|\s+i\s+|,?\s+a\s+potem\s+(?:patrz\s+)?)\d+)*)/giu;
+
+/** Podmienia numery paragrafów w tekście na tajne. Inne liczby (cechy, złoto) zostają. */
+function przepiszNumery(tekst, numeracja) {
+  if (!numeracja) return tekst;
+  return tekst.replace(ODSYLACZ, (_, wstep, lista) =>
+    wstep + lista.replace(/\d+/g, (nr) => numeracja[nr] ?? nr));
+}
+
 // ---------------------------------------------------------------- potrząśnięcie telefonem
 
 /**
@@ -704,6 +748,7 @@ if (typeof module !== "undefined") {
     rozpocznijWalke, przyjmijRane, biezacyPotwor, rundaWalki, moznaUciec, ucieczka, wskrzes, potworyPokonane, uzupelnijPokonanych,
     dostepnePrzejscia, tekstAkapitu, etykieta, czekaNaSSS, testSzczescia,
     oczkaTutaj, czekaNaKosci, rzucKoscia, ileTrafien, wykrywaczPotrzasniecia,
+    losowaZZiarnem, tajnaNumeracja, przepiszNumery,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,
     ELIKSIRY, wybierzEliksir, moznaPicEliksir, wypijEliksir,
     zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,

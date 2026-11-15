@@ -103,6 +103,8 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 .eliksir { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: .9rem; color: var(--przygaszony); }
 .eliksir .przycisk { padding: 6px 12px; font-size: .9rem; }
 .wybor-eliksiru { display: grid; gap: 8px; }
+.przelacznik { display: flex; gap: 10px; align-items: flex-start; font-size: .95rem; color: var(--przygaszony); }
+.przelacznik input { margin-top: 4px; width: 18px; height: 18px; flex: none; accent-color: var(--akcent); }
 .start > .przycisk:disabled { opacity: .45; cursor: default; }
 .wybor-eliksiru .przycisk[aria-pressed="true"] { background: var(--akcent); color: var(--tlo); border-color: var(--akcent); }
 .start h2 { font: 700 1.8rem/1.1 var(--f-tytul); margin: 0; }
@@ -252,6 +254,18 @@ function el(tag, klasa = "", tekst = "") {
   return e;
 }
 
+// Tryb tajemny: stan.tajny to ziarno losowania. Numerację liczymy raz na ziarno.
+let numeracja = null;
+let ziarnoNumeracji = null;
+function odswiezNumeracje() {
+  const ziarno = stan?.tajny ?? null;
+  if (ziarno === ziarnoNumeracji) return;
+  ziarnoNumeracji = ziarno;
+  numeracja = ziarno === null ? null : tajnaNumeracja(ziarno, Object.keys(ksiega));
+}
+/** Numer paragrafu tak, jak ma go widzieć gracz. */
+const nr = (prawdziwy) => numeracja?.[prawdziwy] ?? prawdziwy;
+
 function zmien(nowyStan, przewin = true) {
   // Po każdym ruchu: efekty paragrafu (złoto, cechy) – silnik pilnuje, by raz.
   stan = zastosujEfekty(nowyStan, ksiega[nowyStan.akapit]);
@@ -340,10 +354,11 @@ function rysujKarte() {
   const lista = document.getElementById("lista-rzeczy");
   lista.replaceChildren(...rzeczy.map((r) => el("li", r.startsWith("klucz ") ? "klucz" : "", r)));
   // „Zapisz ten numer” – gra pamięta sama (stos powrotów); tu tylko pokazujemy kartkę.
-  for (const nr of stan.stos) lista.append(el("li", "kartka", `kartka: zapisany numer ${nr}`));
+  for (const numer of stan.stos) lista.append(el("li", "kartka", `kartka: zapisany numer ${nr(numer)}`));
 }
 
 function rysuj() {
+  odswiezNumeracje();
   const box = document.getElementById("akapit");
   box.replaceChildren();
   rysujKarte();
@@ -351,9 +366,9 @@ function rysuj() {
   if (!stan.bohater) { rysujStart(box); return; }
 
   const p = ksiega[stan.akapit];
-  document.getElementById("licznik").textContent = `krok ${stan.historia.length} · paragraf ${stan.akapit}`
+  document.getElementById("licznik").textContent = `krok ${stan.historia.length} · paragraf ${nr(stan.akapit)}${stan.tajny != null ? " · tryb tajemny" : ""}`
     + (stan.wskrzeszenia ? ` · wskrzeszeń ${stan.wskrzeszenia}` : "");
-  document.getElementById("stos").textContent = stan.stos.length ? `zapisany numer: ${stan.stos.at(-1)}` : "";
+  document.getElementById("stos").textContent = stan.stos.length ? `zapisany numer: ${nr(stan.stos.at(-1))}` : "";
 
   if (stan.koniec) {
     box.append(el("p", "koniec", stan.koniec === "zwyciestwo" ? "Zwycięstwo!" : "Koniec przygody"));
@@ -369,8 +384,8 @@ function rysuj() {
     return;
   }
 
-  box.append(el("p", "numer", stan.akapit));
-  box.append(el("p", "tekst", p ? tekstAkapitu(stan, p) : `Brak paragrafu ${stan.akapit} w księdze.`));
+  box.append(el("p", "numer", nr(stan.akapit)));
+  box.append(el("p", "tekst", p ? przepiszNumery(tekstAkapitu(stan, p), numeracja) : `Brak paragrafu ${stan.akapit} w księdze.`));
   if (stan.walka) box.append(rysujWalke(p));
   if (potworyPokonane(stan, p)) box.append(el("p", "uwaga", "Potwory, które tu pokonałeś, wciąż leżą na ziemi – nie musisz walczyć drugi raz."));
   if (stan.zmiany?.length) {
@@ -415,8 +430,8 @@ function rysuj() {
     const b = el("button", "wybor");
     b.type = "button";
     b.append(
-      el("span", "cel", /^\d+$/.test(String(przejscie.target)) ? przejscie.target : "→"),
-      el("span", "opis", etykieta(przejscie)),
+      el("span", "cel", /^\d+$/.test(String(przejscie.target)) ? nr(przejscie.target) : "→"),
+      el("span", "opis", przejscie.label ? etykieta(przejscie) : `Patrz ${nr(przejscie.target)}`),
     );
     b.addEventListener("click", () => idz(przejscie));
     wybory.append(b);
@@ -492,10 +507,23 @@ function rysujStart(box) {
     s.append(tacka);
     s.append(el("p", "tekst", "Możesz zabrać jedną butelkę eliksiru. Wypijesz go w dowolnej chwili, ale tylko dwa razy podczas całej przygody."));
     s.append(przyciskiEliksirow(kandydat.eliksir?.cecha, (cecha) => { kandydat = wybierzEliksir(kandydat, cecha); rysuj(); }));
+    const tajny = el("label", "przelacznik");
+    const pole = el("input");
+    pole.type = "checkbox";
+    pole.checked = Boolean(kandydat.tajny);
+    pole.addEventListener("change", () => { kandydat = { ...kandydat, tajny: pole.checked }; });
+    tajny.append(pole, el("span", "", "Tryb tajemny: paragrafy dostają przetasowane numery, więc książka i pamięć z poprzednich gier nie podpowiedzą drogi."));
+    s.append(tajny);
     const b = el("button", "przycisk", kandydat.eliksir ? "Wejdź do podziemi" : "Najpierw wybierz eliksir");
     b.type = "button";
     b.disabled = !kandydat.eliksir;
-    b.addEventListener("click", () => { const h = kandydat; kandydat = null; zmien(nowaGra(h)); });
+    b.addEventListener("click", () => {
+      const { tajny: chceTajny, ...h } = kandydat;       // tajny to ustawienie gry, nie cecha bohatera
+      kandydat = null;
+      const gra = nowaGra(h);
+      // Ziarno losujemy raz i zapisujemy w stanie – po wczytaniu zapisu numeracja będzie ta sama.
+      zmien(chceTajny ? { ...gra, tajny: Math.floor(Math.random() * 2 ** 32) } : gra);
+    });
     s.append(b);
   }
   box.append(s);
@@ -778,13 +806,13 @@ function rysujMape() {
     }
     g.append(svgEl("circle", { cx: p.x, cy: p.y, r: R }));
     const t = svgEl("text", { x: p.x, y: p.y });
-    t.textContent = w.id;
+    t.textContent = nr(w.id);
     g.append(t);
     const pokaz = () => {
       svg.querySelectorAll(".wybrany").forEach((x) => x.classList.remove("wybrany"));
       g.classList.add("wybrany");
       const podpis = document.getElementById("mapa-podpis");
-      podpis.replaceChildren(el("b", "", w.id), document.createTextNode(pierwszeZdanie(ksiega[w.id])));
+      podpis.replaceChildren(el("b", "", nr(w.id)), document.createTextNode(przepiszNumery(pierwszeZdanie(ksiega[w.id]), numeracja)));
       if (w.odwiedzin > 1) podpis.append(el("span", "uwaga", ` (byłeś tu ${w.odwiedzin} razy)`));
     };
     g.addEventListener("click", pokaz);

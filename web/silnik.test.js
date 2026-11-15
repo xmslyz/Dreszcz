@@ -570,3 +570,37 @@ test("eliksir: bohater bez butelki nie pije, nieznany eliksir to błąd", () => 
   assert.strictEqual(s.moznaPicEliksir(bez), false);
   assert.throws(() => s.wybierzEliksir(bez.bohater, "X"));
 });
+
+// ---------------------------------------------------------------- tryb tajemny
+const NUMERY = Array.from({ length: 387 }, (_, i) => String(i + 1));
+
+test("tajna numeracja: to samo ziarno daje to samo, inne ziarno co innego", () => {
+  assert.deepStrictEqual(s.tajnaNumeracja(7, NUMERY), s.tajnaNumeracja(7, NUMERY));
+  assert.notDeepStrictEqual(s.tajnaNumeracja(7, NUMERY), s.tajnaNumeracja(8, NUMERY));
+});
+
+test("tajna numeracja: każdy numer 1–387 występuje dokładnie raz", () => {
+  const tajne = Object.values(s.tajnaNumeracja(2026, NUMERY));
+  assert.strictEqual(new Set(tajne).size, 387);
+  assert.deepStrictEqual([...tajne].sort((a, b) => a - b), NUMERY);
+});
+
+test("tajna numeracja: prawie wszystkie paragrafy zmieniają numer", () => {
+  const n = s.tajnaNumeracja(2026, NUMERY);
+  const bezZmiany = NUMERY.filter((nr) => n[nr] === nr).length;
+  assert.ok(bezZmiany < 10, `bez zmiany: ${bezZmiany}`);
+});
+
+test("przepisz numery: odsyłacze tak, cechy i złoto nie", () => {
+  const n = { 35: "101", 269: "102", 110: "103", 315: "104", 274: "105", 15: "106", 122: "107", 380: "108", 372: "109" };
+  assert.strictEqual(s.przepiszNumery("Ucieczka - patrz 35, 269 lub 110.", n), "Ucieczka - patrz 101, 102 lub 103.");
+  assert.strictEqual(s.przepiszNumery("patrz najpierw 315, a potem 274 (zapisz ten numer)", n), "patrz najpierw 104, a potem 105 (zapisz ten numer)");
+  assert.strictEqual(s.przepiszNumery("Patrz - 15. Zajrzyj do paragrafu 122.", n), "Patrz - 106. Zajrzyj do paragrafu 107.");
+  assert.strictEqual(
+    s.przepiszNumery("GARAZAN Z:10 W:10, +3W, 15 sztuk złota, numer 122 - patrz 372. Jeśli zwyciężyłeś - patrz 380.", n),
+    "GARAZAN Z:10 W:10, +3W, 15 sztuk złota, numer 122 - patrz 109. Jeśli zwyciężyłeś - patrz 108.");
+});
+
+test("przepisz numery: bez numeracji tekst zostaje nietknięty", () => {
+  assert.strictEqual(s.przepiszNumery("patrz 25", null), "patrz 25");
+});
