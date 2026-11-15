@@ -1,11 +1,20 @@
-* problem z paragrafami, które polecają zapisać/zapamiętać numer. jeśli 
-  włączę blokadę, nie będzie możliwe przeniesienie się do tej lokalizacji.
-  - 52 -> 274,  
-  - 195 -> 113, 
-  - 273 -> 103,
-  - 15 -> 113,
-  - 20 -> 316,
-  
+# Errata i notatki o książce
+
+Zadania do zrobienia są w `CLAUDE.md` (lista wątków). Tu zostaje wiedza o książce.
+
+* „Zapisz ten numer” — ROZWIĄZANE
+  Gra pamięta numer sama: przejście ma pole `return_to`, a cel `RETURN`
+  wraca pod zapisany numer (stos powrotów, jak wywołanie funkcji i `return`).
+  Zapisany numer widać w Ekwipunku jako kartkę.
+  - 15 → 113, powrót do 15 (przeprawa przez jezioro)
+  - 195 → 113, powrót do 195
+  - 20 → 238, powrót do 316 (Szalone Pola)
+  - 27 → 238, powrót do 316
+  - 273 → 238, powrót do 103
+  - 143 → 315, powrót do 52
+  - 52 → 315, powrót do 274
+  - 174 → 315, powrót do 210 (errata, niżej)
+
 * Błędy w scenariuszu (prawdopodobnie)
   - [174] „patrz 315, a potem 200”: powinno być 210 (jedyne wyjście z komnaty;
     200 to korytarz przy starcu, 15 kroków wcześniej, i nie da się stamtąd wrócić)

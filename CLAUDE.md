@@ -58,7 +58,7 @@ Po każdym zamkniętym wątku aktualizuj sekcje „Stan” i „Lista wątków�
 | `web/zbuduj.py` | Buduje `_site/`; wpisuje do `sw.js` wersję = skrót zawartości plików |
 | `sprawdz_ksiege.py`, `test_ksiega.py` | Walidator spójności książki i jego testy |
 | `.github/workflows/strona.yml` | Testy + budowa + publikacja przy każdym pushu |
-| `ToDo.md` | Errata książki i stare notatki |
+| `ToDo.md` | Errata i notatki o książce (zadania są tutaj, w sekcji 7) |
 | `book/` | Surowy tekst książki |
 | `*.py` w katalogu głównym, `shiver_old.json`, `dreszcz.json`, `SAVE/` | Stara wersja konsolowa w Pythonie — nierozwijana |
 
@@ -136,9 +136,8 @@ Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **11**.
+Bieżący: **14**.
 
-- 11\. `ToDo.md`: „zapisz numer” rozwiązany — uaktualnić
 - 14\. Eliksir
 - 16\. Tryb tajemny (losowe numery paragrafów)
 - 17\. Losowe spotkania z potworami
@@ -152,7 +151,7 @@ Bieżący: **11**.
 - 26\. Licencja kodu: stare README mówiło „MIT”, ale pliku `LICENSE` nie ma — zdecydować
 - 27\. Zdobyć oficjalną erratę („Razem” nr 40/1987) i porównać z naszymi poprawkami
 
-Zamknięte: 1–10, 12, 13, 15, 19.
+Zamknięte: 1–13, 15, 19.
 
 ## 8. Otwarte ustalenia projektowe
 
