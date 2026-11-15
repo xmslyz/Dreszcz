@@ -70,6 +70,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ```
 node --test web/silnik.test.js      # testy silnika (59)
 python3 -m unittest -v test_ksiega  # testy książki (2)
+python3 -m unittest test_game_mechanics  # stara wersja Pythonowa (11), poza workflow
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
 python3 web/zbuduj.py               # buduje _site/
 ```
@@ -121,26 +122,23 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: „Rzut potrząśnięciem telefonu” (15.11.2026).
+Ostatni commit z kodem: „Naprawa testów starej wersji Pythonowej” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
 rzuty kością w paragrafach, przejścia zależne od przedmiotów i złota,
 osłona na czas walki (hełm w 2), efekty zależne od rzutu (74, 240, 315),
 hazard (145, 201, 334), liczniki i nagrody (193, 26),
-rzut potrząśnięciem (przycisk „Potrząśnij” w stopce, domyślnie wyłączony), tryb testowy (tymczasowy).
+rzut potrząśnięciem (przycisk „Potrząśnij” w stopce, domyślnie wyłączony;
+sprawdzony przez Macieja na telefonie), tryb testowy (tymczasowy).
 
 Znane usterki:
-- `test_game_mechanics.py` (stary Python): 5 z 11 testów nie przechodzi → wątek 7.
 - `README.md` opisuje nieistniejący `main.py` i wersję konsolową → wątek 8.
 
 ## 7. Lista wątków
 
-Bieżący: **5**.
+Bieżący: **8**.
 
-- 5\. **Funkcje mobilne** — potrząśnięcie zrobione; czeka na próbę Macieja
-  na prawdziwym telefonie (czułość: `prog` w `wykrywaczPotrzasniecia`)
-- 7\. Naprawa 5 testów (`test_game_mechanics.py`)
 - 8\. Poprawka README (`main.py`)
 - 10\. Sprawdzić 174 → 200
 - 11\. `ToDo.md`: „zapisz numer” rozwiązany — uaktualnić
@@ -155,7 +153,7 @@ Bieżący: **5**.
 - 24\. Pętle w książce: powtarzalne przeszukanie 305
 - 25\. Przejrzeć etykiety przycisków przy długich paragrafach
 
-Zamknięte: 1–4, 6, 9, 12, 13, 15, 19.
+Zamknięte: 1–7, 9, 12, 13, 15, 19.
 
 ## 8. Otwarte ustalenia projektowe
 

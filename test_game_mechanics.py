@@ -5,6 +5,15 @@ from unittest import TestCase
 import game_mechanics
 import character
 
+# get_monsters() od kwietnia 2025 przyjmuje obiekt Paragraph, a nie numer.
+# Księgę wczytujemy raz, przy imporcie testów.
+KSIEGA = game_mechanics.open_book()
+
+
+def potwory(numer: str):
+    """Potwory z paragrafu o podanym numerze."""
+    return game_mechanics.get_monsters(KSIEGA[numer])
+
 
 class TestDice(unittest.TestCase):
 
@@ -46,7 +55,7 @@ class TestDice(unittest.TestCase):
 
 class TestMonsters(unittest.TestCase):
     def test_get_single_monster_attributes(self):
-        monsters = game_mechanics.get_monsters("2")
+        monsters = potwory("2")
         expected_monster = character.Monster(
             "GARAZAN", 10, 10
         )
@@ -63,7 +72,7 @@ class TestMonsters(unittest.TestCase):
             self.assertEqual(first_monster.stamina, expected_monster.stamina)
 
     def test_get_multiply_monsters_atributes(self):
-        monsters = game_mechanics.get_monsters("312")
+        monsters = potwory("312")
         expected_monsters = [
             ['LUDOJAD', 7, 5],
             ['ZOMBI', 6, 5],
@@ -86,13 +95,13 @@ class TestMonsters(unittest.TestCase):
                 self.assertEqual(monster.stamina, sample_monster.stamina)
 
     def test_no_monster(self):
-        no_monster = game_mechanics.get_monsters("37")
+        no_monster = potwory("37")
         assertion = []
         self.assertEqual(no_monster, assertion)
 
     def test_similar_semantic(self):
         # "Jaką tarczę wybieras[z:] "
-        no_monster = game_mechanics.get_monsters("37")
+        no_monster = potwory("37")
         assertion = []
         self.assertEqual(no_monster, assertion)
 
@@ -144,7 +153,7 @@ class TestMonsters(unittest.TestCase):
 
         for paragraph in new_monsters.keys():
             # extract monsters from paraghaph
-            monsters = game_mechanics.get_monsters(paragraph)
+            monsters = potwory(paragraph)
 
             # for each monster
             for i, monster in enumerate(monsters):
