@@ -157,6 +157,9 @@ Bieżący: **17**.
 - 25\. Przejrzeć etykiety przycisków przy długich paragrafach
 - 26\. Licencja kodu: stare README mówiło „MIT”, ale pliku `LICENSE` nie ma — zdecydować
 - 27\. Zdobyć oficjalną erratę („Razem” nr 40/1987) i porównać z naszymi poprawkami
+- 28\. Mapa: rozróżnić pomieszczenia i akcje — pomieszczenia jako kółka, akcje jako
+  kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
+  uwaga Macieja: obecna mapa mało pomaga
 
 Zamknięte: 1–16, 19.
 
