@@ -136,7 +136,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: „Wędrujące potwory” (15.11.2026).
+Ostatni commit z kodem: „Workflow: nowe wersje akcji” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -152,9 +152,8 @@ Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **18**.
+Bieżący: **20**.
 
-- 18\. Workflow: podbić wersje akcji (Node 20 przestarzały)
 - 20\. Pamięć „z warunkiem”: 97, 189, 261, 290
 - 21\. Skąd szmaragd? (12 go tylko zużywa)
 - 22\. Przed wydaniem: ukryć tryb testowy
@@ -167,7 +166,7 @@ Bieżący: **18**.
   kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
   uwaga Macieja: obecna mapa mało pomaga
 
-Zamknięte: 1–17, 19.
+Zamknięte: 1–19.
 
 ## 8. Otwarte ustalenia projektowe
 
