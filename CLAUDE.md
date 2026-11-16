@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (69)
+node --test web/silnik.test.js      # testy silnika (74)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 -m unittest test_game_mechanics  # stara wersja Pythonowa (11), poza workflow
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
@@ -119,6 +119,12 @@ i silnik zawsze używają prawdziwych numerów; zamiana jest tylko przy rysowani
 `nr()` w `index.html` i `przepiszNumery()` dla tekstu. Każde nowe miejsce, które
 pokazuje numer paragrafu, musi przejść przez `nr()`.
 
+Wędrujące potwory: `stan.spotkania` = tryb włączony. Paragraf z `"korytarz": true`
+(44 sztuki) i głębokością ≥ 4 daje 1 szansę na 6, raz na paragraf (`stan.spotkane`).
+Potwór z tabeli `WEDRUJACE` w `silnik.js` (pule od głębokości 4, 15, 30). Opis takiej
+walki jest w `stan.walka.opis`, nie w księdze — w interfejsie zawsze bierz opis przez
+`opisWalki(stan, akapit)`.
+
 Zasady, których się trzymamy:
 - Cechy, złoto, posiłki i przedmioty idą **jednym zapisem** `efekty`
   i jedną funkcją `zmienCechy()`. Nie tworzymy osobnych mechanizmów.
@@ -130,7 +136,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: „Tryb tajemny” (15.11.2026).
+Ostatni commit z kodem: „Wędrujące potwory” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -139,15 +145,15 @@ osłona na czas walki (hełm w 2), efekty zależne od rzutu (74, 240, 315),
 hazard (145, 201, 334), liczniki i nagrody (193, 26),
 rzut potrząśnięciem (przycisk „Potrząśnij” w stopce, domyślnie wyłączony;
 sprawdzony przez Macieja na telefonie), eliksir (wybór na starcie, dwa łyki,
-pasek pod kartą wyprawy), tryb tajemny (przetasowane numery), tryb testowy (tymczasowy).
+pasek pod kartą wyprawy), tryb tajemny (przetasowane numery),
+wędrujące potwory (tryb na starcie), tryb testowy (tymczasowy).
 
 Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **17**.
+Bieżący: **18**.
 
-- 17\. Losowe spotkania z potworami
 - 18\. Workflow: podbić wersje akcji (Node 20 przestarzały)
 - 20\. Pamięć „z warunkiem”: 97, 189, 261, 290
 - 21\. Skąd szmaragd? (12 go tylko zużywa)
@@ -161,7 +167,7 @@ Bieżący: **17**.
   kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
   uwaga Macieja: obecna mapa mało pomaga
 
-Zamknięte: 1–16, 19.
+Zamknięte: 1–17, 19.
 
 ## 8. Otwarte ustalenia projektowe
 

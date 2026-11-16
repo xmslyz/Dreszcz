@@ -604,3 +604,51 @@ test("przepisz numery: odsyłacze tak, cechy i złoto nie", () => {
 test("przepisz numery: bez numeracji tekst zostaje nietknięty", () => {
   assert.strictEqual(s.przepiszNumery("patrz 25", null), "patrz 25");
 });
+
+// ---------------------------------------------------------------- wędrujące potwory
+// Mała księga: 1 → 2 → 3 → 4 → 5 (korytarz, głębokość 4) → 6
+const TUNEL = Object.fromEntries([1, 2, 3, 4, 5, 6].map((n) => [String(n), { text: "", edges: n < 6 ? [{ target: String(n + 1) }] : [] }]));
+TUNEL["5"].korytarz = true;
+TUNEL["2"].korytarz = true;      // za płytko – tu nic nie wyjdzie
+const wedrowiec = (spotkania = true) => ({ ...s.nowaGra({ Z: 8, W: 20, S: 9, start: { Z: 8, W: 20, S: 9 }, prowiant: 8 }), akapit: "4", historia: ["1", "2", "3", "4"], spotkania });
+
+test("głębokość: liczba przejść od paragrafu 1", () => {
+  const g = s.glebokosci(TUNEL);
+  assert.deepStrictEqual([g["1"], g["5"], g["6"]], [0, 4, 5]);
+});
+
+test("spotkanie: tylko w korytarzu, tylko przy 1 na kostce, nie za płytko", () => {
+  assert.strictEqual(s.losujSpotkanie(TUNEL, "5", kostka(1, 1)).name, "GREMLIN");
+  assert.strictEqual(s.losujSpotkanie(TUNEL, "5", kostka(1, 2)).name, "ORKONIK");
+  assert.strictEqual(s.losujSpotkanie(TUNEL, "5", kostka(2)), null);
+  assert.strictEqual(s.losujSpotkanie(TUNEL, "4", kostka(1, 1)), null);
+  assert.strictEqual(s.losujSpotkanie(TUNEL, "2", kostka(1, 1)), null);
+});
+
+test("spotkanie: tryb wyłączony = gra jak w książce", () => {
+  const st = wykonajPrzejscie(wedrowiec(false), { target: "5" }, null, TUNEL, kostka(1, 1));
+  assert.strictEqual(st.walka, null);
+});
+
+test("spotkanie: walka w korytarzu, po wygranej droga wolna i drugi raz nikt nie wyjdzie", () => {
+  let st = wykonajPrzejscie(wedrowiec(), { target: "5" }, null, TUNEL, kostka(1, 1));
+  const opis = s.opisWalki(st, TUNEL["5"]);
+  assert.strictEqual(opis.wedrujacy, true);
+  assert.deepStrictEqual(s.dostepnePrzejscia(st, TUNEL["5"]), []);
+  st = s.rundaWalki(st, opis, false, kostka(1, 1, 6, 6));      // GREMLIN W 3 → 1
+  st = s.rundaWalki(st, opis, false, kostka(1, 1, 6, 6));      // → 0
+  assert.strictEqual(st.walka.zakonczona, true);
+  assert.strictEqual(s.dostepnePrzejscia(st, TUNEL["5"]).length, 1);
+  assert.ok(!(st.pokonani ?? []).includes("5"));
+  const znowu = wykonajPrzejscie({ ...st, akapit: "4" }, { target: "5" }, null, TUNEL, kostka(1, 1));
+  assert.strictEqual(znowu.walka, null);
+});
+
+test("spotkanie: ucieczka kosztuje 2 W i zostajesz w korytarzu", () => {
+  let st = wykonajPrzejscie(wedrowiec(), { target: "5" }, null, TUNEL, kostka(1, 1));
+  const opis = s.opisWalki(st, TUNEL["5"]);
+  st = s.rundaWalki(st, opis, false, kostka(6, 6, 1, 1));      // obrywasz: 20 → 18
+  assert.strictEqual(s.moznaUciec(st.walka, opis), true);
+  st = s.ucieczka(st, opis, false, kostka(), TUNEL);
+  assert.deepStrictEqual([st.akapit, st.bohater.W, st.walka], ["5", 16, null]);
+});

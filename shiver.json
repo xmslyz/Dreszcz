@@ -513,7 +513,8 @@
         "label": "Południe",
         "target": "247"
       }
-    ]
+    ],
+    "korytarz": true
   },
   "34": {
     "text": "Ujawniasz swe odkrycie w północnej ścianie. Nie robi to na nich wrażenia. Mówisz, że chcesz zobaczyć, co za nimi jest. Nie protestują. Wstajesz od stołu i wzdłuż ściany dochodzisz do sekretnych drzwi. Jeden z KRASNOLUDÓW przekręca ukrytą w ziemi gałkę. Drzwi otwierają się. Wchodzisz - patrz 128.",
@@ -624,7 +625,8 @@
         "label": "Południe",
         "target": "146"
       }
-    ]
+    ],
+    "korytarz": true
   },
   "40": {
     "text": "Czy będziesz polegał tylko na kartach? - patrz 334, czy też będziesz korzystał ze swego SZCZĘŚCIA - patrz 62.",
@@ -781,7 +783,8 @@
         "label": "Zachód",
         "target": "64"
       }
-    ]
+    ],
+    "korytarz": true
   },
   "51": {
     "text": "Możesz wyjść drzwiami południowymi - patrz 134, albo północnymi - patrz 33. Jedne i drugie drzwi zostaw otwarte.",
@@ -1070,7 +1073,8 @@
         "label": "Południe",
         "target": 224
       }
-    ]
+    ],
+    "korytarz": true
   },
   "65": {
     "text": "Masz już dosyć tego miejsca? Jeśli tak - patrz 195, jeśli nie - patrz 283.",
@@ -1392,7 +1396,8 @@
         "label": "Południe",
         "target": 170
       }
-    ]
+    ],
+    "korytarz": true
   },
   "85": {
     "text": "Skręcasz w lewo. Postanowiłeś iść wzdłuż północnej ściany. Ocierasz się plecami o skały. Pośrodku ściany wyczuwasz za sobą jakieś sekretne drzwi. Nic nie mówisz, posuwasz się dalej. Dochodzisz do stołu - patrz 10.",
@@ -1465,7 +1470,8 @@
         "label": "Dalej korytarzem",
         "target": 212
       }
-    ]
+    ],
+    "korytarz": true
   },
   "91": {
     "text": "Jeśli jesteś na brzegu, z którego wyruszyłeś, NIETOPERZ, ku twojemu zaskoczeniu, oddala się. Spróbuj innego sposobu przedostania się przez szczelinę - patrz 35, 74 lub 110. Jeśli jesteś na drugim brzegu - patrz 288.",
@@ -1655,7 +1661,8 @@
         "target": 351,
         "label": "południe"
       }
-    ]
+    ],
+    "korytarz": true
   },
   "103": {
     "text": "Wracasz. Mijasz skrzyżowanie. Idziesz na zachód. Po pewnym czasie widzisz przed sobą skrzyżowanie - patrz 345.",
@@ -1663,7 +1670,8 @@
       {
         "target": 345
       }
-    ]
+    ],
+    "korytarz": true
   },
   "104": {
     "text": "Dajesz motyla, bierzesz złoto i smoczek - patrz 121.",
@@ -1987,7 +1995,8 @@
       {
         "target": 64
       }
-    ]
+    ],
+    "korytarz": true
   },
   "121": {
     "text": "Wychodzisz z komnaty wschodnimi drzwiami - patrz 325.",
@@ -2016,7 +2025,8 @@
       {
         "target": 39
       }
-    ]
+    ],
+    "korytarz": true
   },
   "124": {
     "text": "Tego nie robi się w towarzystwie. Grubasy znikają. Jeśli chcesz przeszukać komnatę - patrz 294, jeśli nie - patrz 231.",
@@ -2092,7 +2102,8 @@
       {
         "target": 345
       }
-    ]
+    ],
+    "korytarz": true
   },
   "130": {
     "text": "Korytarz ma teraz prawie pięć kroków szerokości. Idziesz więc wygodnie. Prostujesz kości. Przeszedłeś zaledwie sto kroków, a tu następne skrzyżowanie. Patrz 212.",
@@ -2100,7 +2111,8 @@
       {
         "target": 212
       }
-    ]
+    ],
+    "korytarz": true
   },
   "131": {
     "text": "Istotnie, krata się podnosi, ale klucz za nic nie daje się wyjąć. Musisz go zostawić. Patrz 251.",
@@ -2142,7 +2154,8 @@
         "target": 276,
         "label": "południe"
       }
-    ]
+    ],
+    "korytarz": true
   },
   "135": {
     "text": "Nie wchodź do tego pokoju, jeśli nie masz choć jednego z tych przedmiotów: blaszanego motyla, drewnianego pala lub szmaragdu, który zapewnia Dar Skrzydeł. Co, nie masz? A, to szkoda - patrz 43. Jeśli masz - patrz 22.",
@@ -2315,7 +2328,8 @@
       {
         "target": 64
       }
-    ]
+    ],
+    "korytarz": true
   },
   "147": {
     "text": "Tak przyjemnie się z Panem rozmawiało. Proszę, oto drewniany pal i słój żrącego pyłu. Prezent od firmy\". Patrz 196.",
@@ -2396,7 +2410,8 @@
       {
         "target": 20
       }
-    ]
+    ],
+    "korytarz": true
   },
   "153": {
     "text": "Szczur to dobry znak. Twój miecz jest zaczarowany. W każdej walce, którą będziesz odtąd prowadził, możesz dodać 1 do siły ataku. Dostajesz +1S. Teraz patrz 115.",
@@ -2494,7 +2509,8 @@
       {
         "target": 78
       }
-    ]
+    ],
+    "korytarz": true
   },
   "160": {
     "text": "Ostrożnie stawiasz kroki. Nogi ocierają się o liście dorodnej sałaty. Mijając środek pokoju dostrzegasz padającą z góry strużkę światła. Nie zdradzasz swego odkrycia. Dochodzisz do stołu - patrz 10.",
@@ -2510,7 +2526,8 @@
       {
         "target": 348
       }
-    ]
+    ],
+    "korytarz": true
   },
   "162": {
     "text": "Tracisz 1W. SSS. Jeśli masz S, NIETOPERZ przechwytuje cię w locie, ale - ścierwo - żąda złota za ratunek. Jeśli obiecasz mu 10 sztuk złota, zaniesie cię na brzeg, z którego wyruszyłeś - patrz 57. Jeśli obiecasz mu 20 sztuk złota, zaniesie cię na drugi brzeg - patrz 57. Musisz obiecać mu jedno lub drugie. Jeśli nie masz S, spadasz w otchłań, zaczepiając o występy skalne przeciwległej krawędzi szczeliny. Gdy przez chwilę zawisnąłeś na jednym z nich, dostrzegasz wylot jakiegoś tunelu. Udaje ci się wpełznąć do tego wylotu. Jesteś piekielnie - to dobre słowo - zmęczony. Powinieneś zjeść Prowiant. Tym razem daje ci on +5W, a za wyczyn dostajesz +2Z. Na dokładkę za diabelskie - to tez dobre słowo! - szczęście +3S. Wstajesz. Korytarz jest przestronny i widny, kończy się okrągłą salką. Z góry zwisa lina. Podciągasz się na niej. Na szczycie \"komina\" wychodzisz do identycznej salki jak na dole. Widzisz przed sobą jakieś drzwi. Popychasz je. Okazuje się, że to drzwi obrotowe. Lądujesz w jakimś korytarzu, a drzwi szczelnie się zamykają. Nie sposób poznać, że tu istnieją. Trafiłeś akurat na zakręt tunelu, który biegnie z północy na wschód. Idziesz w kierunku wschodnim. Dochodzisz do grubych drzwi. Otwierasz je. Patrz 13.",
@@ -2689,7 +2706,8 @@
       {
         "target": 357
       }
-    ]
+    ],
+    "korytarz": true
   },
   "171": {
     "text": "Pospiesznie wychodzisz z komnaty. Są dwa wyjścia: to, którym wszedłeś i drugie - na wschodniej ścianie. Jeśli wybierasz pierwsze - patrz 50, a jeśli drugie - patrz 99.",
@@ -2719,7 +2737,8 @@
       {
         "target": 134
       }
-    ]
+    ],
+    "korytarz": true
   },
   "174": {
     "text": "Gdziekolwiek stąpniesz, ziemia pali cię w stopy. By określić, czy ten żar wyrządza ci krzywdę - patrz 315, a potem 200.",
@@ -2748,7 +2767,8 @@
       {
         "target": 230
       }
-    ]
+    ],
+    "korytarz": true
   },
   "177": {
     "text": "Pod kamieniem schowana była ognista kula. Możesz ja zabrać. Dolicz sobie +3S. Wychodzisz. Patrz 330.",
@@ -2870,7 +2890,8 @@
       {
         "target": 252
       }
-    ]
+    ],
+    "korytarz": true
   },
   "186": {
     "text": "Udało ci się dotrzeć na drugi brzeg. Masz trzy wyjścia: jedno prowadzi na zachód (A), a dwa na północ, jedno z nich jest położone bardziej na zachód (B) niż drugie (C). Które wybierasz? A - patrz 368, B - patrz 117, C - patrz 360.",
@@ -2903,7 +2924,8 @@
       {
         "target": 221
       }
-    ]
+    ],
+    "korytarz": true
   },
   "189": {
     "text": "Jeśli nie grałeś jeszcze ze wszystkimi trzema ZŁYMI - patrz 303. Jeśli grałeś już ze wszystkimi trzema - patrz 156.",
@@ -3142,7 +3164,8 @@
       {
         "target": 348
       }
-    ]
+    ],
+    "korytarz": true
   },
   "207": {
     "text": "Jedna noga, druga, teraz głęboki wdech, głowa i już z wąskiego, skalnego gardła wpadasz na płaską, kamienną posadzkę, a na głowę leci ci cały oręż i ekwipunek, który zgromadziłeś. O, wielki Almanhagorze, gdybyś to widział! W tej jaskini zmieściłby się cały twój zamek. Razem w wieżami! Wszystko wokół jest purpurowe i połyskliwe. Ze sklepienia zwisają skalne jęzory. Ich cienie odbijają się w błyszczącej tafli kamiennej posadzki. Czujesz się jak mrówka, którą przygniata jeż wygrzewający swój brzuch. Ja to wszystko widzę... Dlaczego ja to widzę? Moja latarnia może oświetlić tylko niewielkie pieczary. Na miłość Zarganny, mojej boginki, tam jest ogień piekielny! Lustrzana podłoga rozdarta jest pośrodku głębokim rowem. To z jego wnętrza wyziera czerwona jasność. Pełzniesz w ciszy, podciągając się wilgotnymi ze strachu dłońmi. Przesłaniasz ręką oczy, zaglądasz w otchłań. Ziemia płonie. Haruum, ojcze, jaki byłem naiwny, gdy myślałem że wystarczy rzemieniem przywiązać do pasa miecz, zapakować suchary, a później ruszyć przez korytarze by wydrzeć Podziemiom ich tajemnicę... Wracasz pod ścianę jaskini. Łyk zaczarowanej wody (jeśli ją masz): +3W, +3Z. Rozglądasz się po jaskini. Musisz przeprawić się przez tę piekielną rozpadlinę. To jedyna droga. W przeciwległym końcu pieczary widzisz jakiś mostek. Och, już jest nadzieja... Przeglądasz swój ekwipunek. Jeśli masz linę z hakiem, twoje szanse rosną. To dodaje ci odwagi. Wstajesz. Jeszcze raz zbliżasz się do jamy. Teraz, gdy stoisz, wydaje ci się nie tak szeroka jak przedtem. I ogień jakby zelżał. To zastanawiające: taki ogrom, taka jasność i... taka cisza. Ale nie. Czy to śpiew? Gdzieś z końca pieczary słychać coraz donioślejszy, niski głos. Zza skał wylania się grube cielsko w zielono-żółte paski, z czerwonym grzebieniem wzdłuż całego grzbietu. To Smok! Czy słyszałeś opowieści o zwariowanym smoku, które snują niektórzy mieszkańcy podziemi? To właśnie on. Odważnie podchodzisz do smoka. Właśnie przybija do skały tablicę. Na niej napis: \"Smok ROZKROK. Transport przez dziurę. Miła obsługa - jeśli masz 10 sztuk złota\". Przygląda ci się jakby cię tu codziennie widywał. Masz cztery wyjścia. Możesz: · skorzystać ze smoczego transportu - patrz 35, · spróbować przerzucić linę na drugi brzeg i przejść po niej (jeśli ją masz) - patrz 269, · zaryzykować spacer przez most - patrz 74, · zrobić gigantyczny skok kosztem prawie całej swojej siły - patrz 110.",
@@ -3189,7 +3212,8 @@
       {
         "target": 207
       }
-    ]
+    ],
+    "korytarz": true
   },
   "210": {
     "text": "Możesz opuścić tę komnatę tylko wyjściem północnym - patrz 248.",
@@ -3318,7 +3342,8 @@
         "target": 333,
         "label": "północ"
       }
-    ]
+    ],
+    "korytarz": true
   },
   "219": {
     "text": "To co: bierzesz ten drewniany pal i słój żrącego pyłu? Może lepiej wziąć? Jeśli podoba ci się ten pomysł patrz 323, jeśli nie - patrz 147.",
@@ -3363,7 +3388,8 @@
         "target": 173,
         "label": "południe"
       }
-    ]
+    ],
+    "korytarz": true
   },
   "222": {
     "text": "Wykładasz na stół całe złoto, które zdobyłeś, niektóre przedmioty i skarby, obiecujesz mu swój zaczarowany miecz. To wszystko za otwarcie skarbca. On nie mówi ani słowa. Patrz 311.",
@@ -3442,7 +3468,8 @@
       {
         "target": 102
       }
-    ]
+    ],
+    "korytarz": true
   },
   "229": {
     "text": "SSS. Jeśli masz S - patrz 66. Jeśli nie masz S - patrz 383.",
@@ -3471,7 +3498,8 @@
         "target": 176,
         "label": "nie"
       }
-    ]
+    ],
+    "korytarz": true
   },
   "231": {
     "text": "Cicho wchodzisz do pokoju. W kilku miejscach palą się oliwne lampy. Wszystkie ściany od góry do dołu obwieszone są pękami różnych ziół. W powietrzu unosi się dziwny, mdły zapach. Dopiero teraz zatrzymujesz wzrok na kilku postaciach, które siedzą w przeciwległym rogu pokoju. Siedzą na wielkiej skórze rozpostartej na ziemi. Powoli podchodzisz do nich. Stary humanoid o długich, opadających na ramiona włosach wydaje się być postacią najważniejszą. Pozostałe trzy to potwory, o których mówią: ZŁE. Pomarszczona ziemista skóra, wyłupiaste groźne oczy. Ubrane są w krótkie kurtki z wędzonych, mięsistych liści Menalois. Kurtki przepasali giętkimi korzeniami drzew, które miejscami które miejscami przerastają sklepienia korytarzy. Do korzeni przywiązane są za ogony zielone jaszczury zamieszkujące brzegi podziemnego jeziora. ZŁE zapewne dopiero co stamtąd przyszły i szykują posiłek. W ich okrągłych ślepiach widzisz błysk radości. Chcą zaprosić cię na przekąskę? Nie, oni widzą w tobie partnera. Największą słabością ZŁYCH jest gra. Nie w karty, kulki, czy łapanie skalnych myszy. One uwielbiają rzucanie strzałkami. Bez słów wstają i uprzejmym gestem pokazują ci otwór w południowej ścianie. To przejście do następnego pomieszczenia. Chcesz iść z nimi? Jeśli tak patrz 18, jeśli nie - patrz 286.",
@@ -3515,7 +3543,8 @@
       {
         "target": 78
       }
-    ]
+    ],
+    "korytarz": true
   },
   "234": {
     "text": "Kończysz walkę z DEMONEM. Czy chcesz zajrzeć do kamiennej puszki stojącej na ołtarzyku? - patrz 205, czy też interesuje cię tylko złoto? - patrz 199.",
@@ -3811,7 +3840,8 @@
       {
         "target": 267
       }
-    ]
+    ],
+    "korytarz": true
   },
   "254": {
     "text": "Nagle z końca komnaty rozlega się potężny ryk. Udaje ci się pochwycić garść złota (jak się później okazało 10 sztuk) i ratujesz się Ucieczką - patrz 385.",
@@ -3929,7 +3959,8 @@
       {
         "target": 102
       }
-    ]
+    ],
+    "korytarz": true
   },
   "265": {
     "text": "Drzwi same się otwierają. Same? O, nie! \"Wchodź, wchodź przyjacielu. Czekamy na ciebie\" - niesamowicie gruby, zarośnięty osobnik wskazuje ci drogę. Prowadzi w drugi koniec pieczary. Przy okrągłym stole siedzi jeszcze pięciu takich samych grubasów. \"Drogi podróżniku\" - zaczyna gospodarz - \"oto pięciu wspaniałych facetów. Największe zgrywusy w całym labiryncie\". Przyglądasz się im, ale za nic nie możesz doliczyć się pięciu. Liczysz: \"Jeden, dwa ,trzy\", a tu już nie ma pierwszego. No to od początku: \"jeden, dwa, trzy, czte...\" i znowu coś nie tak - gdzie jest ten trzeci? Zniknął, czy co? Grubasy zauważyły twoje zmieszanie i rechocą aż strop się trzęsie. Brzęczą pucharki stojące przed każdym z nich i zdobiona waza, a raczej, konewka z jakimś napojem. Zaczynasz jeszcze raz: \"jeden, dwa, trzy, cztery...\" I znowu to samo. Policzyłeś do czterech, a teraz siedzi tylko dwóch. Dość tego! Cholera cię bierze. Wyciągasz miecz. Patrzysz na grubasów. Co chwilę któryś znika i pojawia się. Jak go trafić? Wybierz sobie jednego, powiedzmy piątego. Rzuć raz kostką. Jeśli wyrzucisz 1, 2, 3, 4 lub 6, to znaczy, że - gdy twój miecz wisiał mu tuż nad głową - on zniknął. Jeśli trafisz 5, jest już po nim. Gdy wykonasz trzy takie próby, gospodarz krzyczy: \"Miły przyjacielu, zostaw ich w spokoju!\" Posłuchasz go? Jeśli tak - patrz 83, jeśli nie - patrz 359.",
@@ -3973,7 +4004,8 @@
         "target": 345,
         "label": "południe"
       }
-    ]
+    ],
+    "korytarz": true
   },
   "268": {
     "text": "Krótki tunel dochodzi do zbutwiałych, starych drzwi. Jeśli jeszcze za nimi nie byłeś, możesz wejść - patrz 317. Jeśli wolisz zawrócić - patrz 102.",
@@ -4113,7 +4145,8 @@
       {
         "target": 215
       }
-    ]
+    ],
+    "korytarz": true
   },
   "277": {
     "text": "No, to do dzieła. Najpierw WAMPIR, później ORK. WAMPIR Z:9 W:7 ORK Z:7 W:7 | Pamiętaj, że w trakcie walki nie możesz ratować się Ucieczką. Dopiero po rozprawieniu się z ORKIEM lub WAMPIREM. Jeśli korzystasz z tej możliwości - patrz 193. Po pokonaniu ORKA patrz 312.",
@@ -4170,7 +4203,8 @@
       {
         "target": 47
       }
-    ]
+    ],
+    "korytarz": true
   },
   "280": {
     "text": "\"Dzień dobry. O, pardon. Noc dobra. Czy mogę służyć?\" - zgarbiony ORK zaciera spiczaste, pomarszczone paluchy. Wskazuje ci miejsce przy stole. Sam siada. Masz złoto? Jeśli nie, to lepiej zwiewaj stąd ile sił w nogach - patrz 196. Jeśli masz - patrz 100.",
@@ -4256,7 +4290,8 @@
       {
         "target": 50
       }
-    ]
+    ],
+    "korytarz": true
   },
   "288": {
     "text": "Ledwie żywy leżysz na skalnej gładzi, gdy znienacka atakuje cię NIETOPERZ. NIETOPERZ Z:7 W:6 | Jeśli zwyciężyłeś - patrz 186.",
@@ -4547,7 +4582,8 @@
         "target": 276,
         "label": "rezygnuję"
       }
-    ]
+    ],
+    "korytarz": true
   },
   "309": {
     "text": "WILKOŁAK Z:9 W:6 | Po pierwszej rundzie okazuje się, że twoje ciosy są nieskuteczne. Potwór nie odnosi żadnych ran. Możesz albo ratować się Ucieczką - patrz 275, albo walczyć inną bronią - patrz 63.",
@@ -4688,7 +4724,8 @@
       {
         "target": 176
       }
-    ]
+    ],
+    "korytarz": true
   },
   "317": {
     "text": "Drzwi ustępują. Bucha spoza nich przeraźliwy smród. W nikłym świetle oliwnej lampy stojącej na ławie porozrzucane po całym pomieszczeniu jakieś szczątki. Przyglądasz się bliżej. To kości! Odwracasz z obrzydzeniem twarz. A czego tu się spodziewałeś? Wonnych kwiatów? Tańczących elfów? Melancholijnej muzyki? To są, bracie podziemia - królestwo zła. I dlatego tu jesteś. Masz wydrzeć ich tajemnicę. Śmiało - rozgarnij te gnaty! Teraz szaaa... Słyszysz te ciche kroki? Są coraz głośniejsze... O, królu Almanhagorze, ten hałas rozwala mi łeb! Już nie słychać kroków, tylko przeraźliwy syk powietrza przelatującego przez nozdrza. W drzwiach stoi OGRE. Błyskawicznie wyciągasz miecz. Zapierasz się o ścianę. OGRE wbiega do pieczary. Ale nie rusza na ciebie. Dopada przeciwległej ściany i rozkłada ramiona. Jakby coś ukrywał za plecami. Szczerzy zęby, wymachuje porwaną z klepiska długą kością. W jego oczach widzisz przerażenie. Teraz twój ruch. Powoli, rozgarniając nogami wszelkie paskudztwa, podchodzisz do potwora. OGRE Z:8 W:10 | OGRE leży u twych stóp. Ciągle jeszcze się brzydzisz? Jeśli tak, rozejrzyj się chociaż po ścianach - patrz 119, jeśli nie - patrz 31.",
@@ -4920,7 +4957,8 @@
       {
         "target": 218
       }
-    ]
+    ],
+    "korytarz": true
   },
   "334": {
     "text": "Rzucasz dwiema kostkami. Jeśli wylosowałeś liczbę parzystą, przegrywasz tyle sztuk złota, ile oczek pokazała kostka. Jeśli masz liczbę nieparzystą, tyle właśnie sztuk złota wygrywasz. Możesz grać dowolną liczbę razy. Gdy postanawiasz skończyć grę - patrz 19.",
@@ -5112,7 +5150,8 @@
       {
         "target": 267
       }
-    ]
+    ],
+    "korytarz": true
   },
   "346": {
     "text": "W jednej z potyczek między trollami a goblinami, ci pierwsi zdobyli imponujący młot wojenny. Znalazłeś go w zbrojowni. Spróbuj zrobić z niego użytek. Chwytasz za trzon, robisz półobrót i... traach. Łamie się drewniane stylisko: -1W. Co prędzej ratuj się Ucieczką - patrz 275.",
@@ -5147,7 +5186,8 @@
       {
         "target": 239
       }
-    ]
+    ],
+    "korytarz": true
   },
   "349": {
     "text": "Delikatnie wsuwasz stopę w wąską szparę. Biodrami rozpychasz drzwi. Odskakują na bok. To jest metoda! Wyczuwasz lekki zapach suszonych ziół. Przy lewej ścianie stoją dwie gładkie kolumienki. Miedzy nimi na wysokości oczu rozciągnięta jest granitowa półka. Stoją tam dwie lampki, a na środku kamienne pudełko. Posadzka wyłożona jest włochatymi skórami zwierząt i potworów. To chyba podziemna kaplica! Pod ścianą, naprzeciw ołtarzyka widzisz niski, wykuty w skale stół. Cos tam na nim stoi. Podnosisz wyżej latarnię. Och, królu Almanhagorze, to dwie wazy pełne złota. Każda ma taki sam wyszukany kształt. Z jednej strony ozdobiona jest łbem jakiegoś stwora, z drugiej - przymocowane są dwa połyskujące skrzydła. Czy chcesz zabrać złoto? Jeśli tak - patrz 48, jeśli nie - patrz 385.",
@@ -5186,7 +5226,8 @@
       {
         "target": 64
       }
-    ]
+    ],
+    "korytarz": true
   },
   "352": {
     "text": "Ziemia drży ponownie, rozstępuje się. Wali się strop. Wpadasz w szczelinę. To koniec.",
@@ -5346,7 +5387,8 @@
       {
         "target": 170
       }
-    ]
+    ],
+    "korytarz": true
   },
   "364": {
     "text": "Popychasz drzwi, uchylają się. Otwiera się ciemna czeluść. Wchodzisz oświetlając drogę latarnią. Pod stopami czujesz kamyki. Z przeciwległego końca pokoju dochodzi ciebie ciche chrapanie. Na podłodze śpi ORK. Obok niego leży jakieś pudełko. Jeśli chcesz spróbować zabrać ukradkiem pudełko - patrz 29. Jeśli decydujesz się podjąć walkę - patrz 116.",
@@ -5407,7 +5449,8 @@
       {
         "target": 354
       }
-    ]
+    ],
+    "korytarz": true
   },
   "369": {
     "text": "Dajesz pal, bierzesz smoczek - patrz 121.",
@@ -5641,7 +5684,8 @@
       {
         "target": 273
       }
-    ]
+    ],
+    "korytarz": true
   },
   "387": {
     "text": "Wkładasz klucze do zamka. Najpierw pierwszy... stuk, później drugi... stuk i trzeci... stuk. Delikatnie podnosisz wieko skrzyni. Na jej dnie leżą jakieś papiery. Nie, to złożony na kilkanaście stron, ilustrowany druk. Ostrożnie przewracasz kartki. Znajdujesz w nim dokładny opis wędrówki po podziemnym labiryncie. Zatrzymaj go, bo to papier niezwykle wartościowy!",

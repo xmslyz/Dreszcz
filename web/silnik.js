@@ -73,7 +73,7 @@ function nowaGra(bohater = null) {
  * Wykonuje jedno przejście (edge) i zwraca NOWY stan.
  * Gdy podamy księgę, a w nowym paragrafie jest walka – walka się zaczyna.
  */
-function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null) {
+function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null, kostka = k6) {
   const stos = [...stan.stos];          // kopia listy: list(stan.stos)
   if (przejscie.return_to) {
     stos.push(String(przejscie.return_to));
@@ -99,8 +99,68 @@ function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null) {
 
   // Potwory pokonane raz już nie wstają (np. pętla 170 → 319 → 69 → … → 330 → 170).
   const juzPokonani = (stan.pokonani ?? []).includes(cel);
-  const walka = ksiega && !juzPokonani ? rozpocznijWalke(ksiega[cel], bohater) : null;
-  return { ...stan, bohater, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany, testSSS: null, kosci: null };
+  let walka = ksiega && !juzPokonani ? rozpocznijWalke(ksiega[cel], bohater) : null;
+
+  // Tryb „wędrujące potwory”: w korytarzu może ktoś wyjść naprzeciw.
+  let spotkane = stan.spotkane ?? [];
+  if (!walka && stan.spotkania && ksiega && !spotkane.includes(cel)) {
+    const potwor = losujSpotkanie(ksiega, cel, kostka);
+    if (potwor) {
+      walka = rozpocznijWalke({ combat: { monsters: [potwor] } }, bohater);
+      // Opis tej walki nie pochodzi z księgi, więc niesiemy go w stanie.
+      walka.opis = { wedrujacy: true, monsters: [potwor], escape: { from_round: 1 } };
+      spotkane = [...spotkane, cel];
+    }
+  }
+  return { ...stan, bohater, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany, testSSS: null, kosci: null, spotkane };
+}
+
+// ---------------------------------------------------------------- wędrujące potwory
+
+// Potwory, które książka sama nazywa wędrującymi (paragraf 238), od najsłabszego.
+// Im głębiej w podziemiach, tym groźniejsza trójka do wylosowania.
+const WEDRUJACE = [
+  { od: 4, potwory: [{ name: "GREMLIN", Z: 5, W: 3 }, { name: "ORKONIK", Z: 6, W: 4 }] },
+  { od: 15, potwory: [{ name: "ORKONIK", Z: 6, W: 4 }, { name: "LICHA", Z: 6, W: 5 }, { name: "SAMASKÓRA", Z: 6, W: 5 }] },
+  { od: 30, potwory: [{ name: "LICHA", Z: 6, W: 5 }, { name: "SAMASKÓRA", Z: 6, W: 5 }, { name: "BRONGO", Z: 8, W: 4 }] },
+];
+const SZANSA_SPOTKANIA = 1;   // spotkanie, gdy na kostce wypadnie 1 (czyli 1 na 6)
+
+/**
+ * Głębokość każdego paragrafu = najmniejsza liczba przejść od paragrafu 1.
+ * Przeszukiwanie wszerz (BFS): kolejka, z której bierzemy od początku,
+ * a nowe paragrafy dokładamy na koniec. Wynik pamiętamy – księga się nie zmienia.
+ */
+let pamiecGlebokosci = { ksiega: null, wynik: null };
+function glebokosci(ksiega) {
+  if (pamiecGlebokosci.ksiega === ksiega) return pamiecGlebokosci.wynik;
+  const wynik = { [START]: 0 };
+  const kolejka = [START];
+  for (let i = 0; i < kolejka.length; i++) {          // i przesuwa się jak deque.popleft()
+    const nr = kolejka[i];
+    const a = ksiega[nr];
+    const cele = (a?.edges ?? []).flatMap((e) => [e.target, e.return_to, ...(e.possible_targets ?? [])]);
+    if (a?.combat?.escape) cele.push(a.combat.escape.target);
+    for (const cel of cele.map(String)) {
+      if (cel in ksiega && !(cel in wynik)) { wynik[cel] = wynik[nr] + 1; kolejka.push(cel); }
+    }
+  }
+  pamiecGlebokosci = { ksiega, wynik };
+  return wynik;
+}
+
+/** Potwór na ten korytarz albo null. Pierwszy rzut: czy w ogóle; drugi: który. */
+function losujSpotkanie(ksiega, nr, kostka = k6) {
+  if (!ksiega[nr]?.korytarz) return null;
+  const glebokosc = glebokosci(ksiega)[nr] ?? 0;
+  const pula = WEDRUJACE.filter((p) => glebokosc >= p.od).at(-1);   // najgłębsza pasująca pula
+  if (!pula || kostka() > SZANSA_SPOTKANIA) return null;
+  return { ...pula.potwory[(kostka() - 1) % pula.potwory.length] };
+}
+
+/** Opis trwającej walki: wędrujący potwór niesie go w stanie, reszta jest w księdze. */
+function opisWalki(stan, akapit) {
+  return stan.walka?.opis ?? akapit?.combat ?? null;
 }
 
 // ---------------------------------------------------------------- walka
@@ -213,7 +273,8 @@ function rundaWalki(stan, opis, uzyjSSS = false, kostka = k6) {
   let pokonani = stan.pokonani ?? [];
   if (!biezacyPotwor(walka)) {
     walka.zakonczona = true;
-    pokonani = [...pokonani, stan.akapit];      // wszyscy potwory tego paragrafu nie żyją
+    // wszystkie potwory tego paragrafu nie żyją (wędrujący nie należy do paragrafu)
+    if (!opis.wedrujacy) pokonani = [...pokonani, stan.akapit];
   }
   if (opis.rounds && walka.rundy >= opis.rounds) walka.zakonczona = true;
   if (opis.until_round_won && wygrana) walka.zakonczona = true;
@@ -262,6 +323,7 @@ function ucieczka(stan, opis, uzyjSSS = false, kostka = k6, ksiega = null) {
   }
   [bohater] = przyjmijRane(bohater, structuredClone(stan.walka), rana);
   if (bohater.W <= 0) return { ...stan, bohater, koniec: "porazka" };
+  if (opis.wedrujacy) return { ...stan, bohater, walka: null };   // zostajesz w korytarzu, potwór odchodzi
   return wykonajPrzejscie({ ...stan, bohater, walka: null }, opis.escape, null, ksiega);
 }
 
@@ -749,6 +811,7 @@ if (typeof module !== "undefined") {
     dostepnePrzejscia, tekstAkapitu, etykieta, czekaNaSSS, testSzczescia,
     oczkaTutaj, czekaNaKosci, rzucKoscia, ileTrafien, wykrywaczPotrzasniecia,
     losowaZZiarnem, tajnaNumeracja, przepiszNumery,
+    glebokosci, losujSpotkanie, opisWalki, WEDRUJACE,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,
     ELIKSIRY, wybierzEliksir, moznaPicEliksir, wypijEliksir,
     zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,

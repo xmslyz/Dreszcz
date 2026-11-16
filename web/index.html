@@ -507,6 +507,13 @@ function rysujStart(box) {
     s.append(tacka);
     s.append(el("p", "tekst", "Możesz zabrać jedną butelkę eliksiru. Wypijesz go w dowolnej chwili, ale tylko dwa razy podczas całej przygody."));
     s.append(przyciskiEliksirow(kandydat.eliksir?.cecha, (cecha) => { kandydat = wybierzEliksir(kandydat, cecha); rysuj(); }));
+    const wedr = el("label", "przelacznik");
+    const poleW = el("input");
+    poleW.type = "checkbox";
+    poleW.checked = Boolean(kandydat.spotkania);
+    poleW.addEventListener("change", () => { kandydat = { ...kandydat, spotkania: poleW.checked }; });
+    wedr.append(poleW, el("span", "", "Wędrujące potwory: w korytarzach możesz czasem natknąć się na potwora, którego nie ma w książce. Im głębiej, tym groźniejszy."));
+    s.append(wedr);
     const tajny = el("label", "przelacznik");
     const pole = el("input");
     pole.type = "checkbox";
@@ -518,9 +525,10 @@ function rysujStart(box) {
     b.type = "button";
     b.disabled = !kandydat.eliksir;
     b.addEventListener("click", () => {
-      const { tajny: chceTajny, ...h } = kandydat;       // tajny to ustawienie gry, nie cecha bohatera
+      // tajny i spotkania to ustawienia gry, nie cechy bohatera
+      const { tajny: chceTajny, spotkania: chceSpotkan, ...h } = kandydat;
       kandydat = null;
-      const gra = nowaGra(h);
+      const gra = { ...nowaGra(h), spotkania: Boolean(chceSpotkan) };
       // Ziarno losujemy raz i zapisujemy w stanie – po wczytaniu zapisu numeracja będzie ta sama.
       zmien(chceTajny ? { ...gra, tajny: Math.floor(Math.random() * 2 ** 32) } : gra);
     });
@@ -530,10 +538,13 @@ function rysujStart(box) {
 }
 
 function rysujWalke(akapit) {
-  const opis = akapit.combat;
+  const opis = opisWalki(stan, akapit);
   const w = stan.walka;
   const sekcja = el("section", "walka");
   sekcja.append(el("h2", "", w.zakonczona ? "Po walce" : "Walka"));
+  if (opis.wedrujacy) sekcja.append(el("p", "oslona", w.zakonczona
+    ? "Wędrujący potwór pokonany. Droga wolna."
+    : "Z bocznego korytarza wychodzi wędrujący potwór!"));
 
   w.potwory.forEach((m, i) => {
     const poczatek = opis.monsters[i].W;
