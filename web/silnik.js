@@ -98,7 +98,8 @@ function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null, k
   if (przejscie.efekt && bohater) ({ bohater, opisy: zmiany } = zmienCechy(bohater, przejscie.efekt));
 
   // Potwory pokonane raz już nie wstają (np. pętla 170 → 319 → 69 → … → 330 → 170).
-  const juzPokonani = (stan.pokonani ?? []).includes(cel);
+  // Wyjątek: "powtarzalna" – za każdym razem inny potwór (trzech ZŁYCH w 367).
+  const juzPokonani = (stan.pokonani ?? []).includes(cel) && !ksiega?.[cel]?.combat?.powtarzalna;
   let walka = ksiega && !juzPokonani ? rozpocznijWalke(ksiega[cel], bohater) : null;
 
   // Tryb „wędrujące potwory”: w korytarzu może ktoś wyjść naprzeciw.
@@ -112,7 +113,48 @@ function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null, k
       spotkane = [...spotkane, cel];
     }
   }
-  return { ...stan, bohater, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany, testSSS: null, kosci: null, spotkane };
+  // Paragraf z zakładami (211): siada nowy przeciwnik ze swoim złotem.
+  const reguly = ksiega?.[cel]?.zaklady;
+  const zaklad = reguly ? { zloto: reguly.zloto, rundy: [], koniec: null } : null;
+  const liczniki = reguly?.licznik_gier ? doliczDoLicznika(stan.liczniki ?? {}, reguly.licznik_gier, 1) : stan.liczniki;
+  return { ...stan, bohater, akapit: cel, stos, historia: [...stan.historia, cel], walka, zmiany, testSSS: null, kosci: null, spotkane, zaklad, liczniki };
+}
+
+// ---------------------------------------------------------------- zakłady (strzałki ze ZŁYMI, 211)
+
+/** Najwyższa stawka, jaką teraz wolno postawić (0 = nie da się grać). */
+function maksStawka(stan, akapit) {
+  const reguly = akapit?.zaklady;
+  if (!reguly || !stan.zaklad || stan.zaklad.koniec) return 0;
+  return Math.min(reguly.stawka[1], stan.bohater.zloto ?? 0, stan.zaklad.zloto);
+}
+
+/**
+ * Jeden zakład: rzut za siebie i za przeciwnika, wyższy wynik zabiera stawkę.
+ * Remis – nikt nic nie traci. Gra kończy się, gdy przeciwnik zostaje bez złota
+ * ("ograny") albo gdy bohater traci wszystko ("bankrut").
+ */
+function postawZaklad(stan, akapit, stawka, kostka = k6) {
+  const maks = maksStawka(stan, akapit);
+  const reguly = akapit?.zaklady;
+  if (!maks || stawka < reguly.stawka[0] || stawka > maks) return stan;
+  const ty = kostka();
+  const on = kostka();
+  const wynik = Math.sign(ty - on);                 // 1 wygrana, 0 remis, -1 przegrana
+  const bohater = { ...stan.bohater, zloto: stan.bohater.zloto + wynik * stawka };
+  const zaklad = {
+    ...stan.zaklad,
+    zloto: stan.zaklad.zloto - wynik * stawka,
+    rundy: [...stan.zaklad.rundy, { ty, on, stawka, wynik }],
+  };
+  let liczniki = stan.liczniki ?? {};
+  if (zaklad.zloto <= 0) {
+    zaklad.koniec = "ograny";
+    if (reguly.licznik_ogranych) liczniki = doliczDoLicznika(liczniki, reguly.licznik_ogranych, 1);
+  } else if (bohater.zloto <= 0) {
+    zaklad.koniec = "bankrut";
+  }
+  return { ...stan, bohater, zaklad, liczniki };
 }
 
 // ---------------------------------------------------------------- wędrujące potwory
@@ -268,7 +310,7 @@ function rundaWalki(stan, opis, uzyjSSS = false, kostka = k6) {
     walka.indeks += 1;
     walka.rundaPotwora = 0;
     // "licznik": "jatka" – każdy zabity potwór liczy się do nagrody (193)
-    if (opis.licznik) liczniki = doliczDoLicznika(liczniki, opis.licznik, 1);
+    for (const nazwa of [opis.licznik ?? []].flat()) liczniki = doliczDoLicznika(liczniki, nazwa, 1);
   }
   let pokonani = stan.pokonani ?? [];
   if (!biezacyPotwor(walka)) {
@@ -407,6 +449,10 @@ function warunkiPozwalaja(stan, e) {
   if (e.zloto_min && (stan.bohater?.zloto ?? 0) < e.zloto_min) return false;
   if (e.cecha_min && stan.bohater && stan.bohater[e.cecha_min[0]] < e.cecha_min[1]) return false;
   if (e.cecha_ponizej && stan.bohater && stan.bohater[e.cecha_ponizej[0]] >= e.cecha_ponizej[1]) return false;
+  // Liczniki: "licznik_min": ["zle_grane", 3] – co najmniej trzy gry ze ZŁYMI.
+  if (e.licznik_min && (stan.liczniki?.[e.licznik_min[0]] ?? 0) < e.licznik_min[1]) return false;
+  // Zakłady: "gdy_bankrut": true – tylko gdy przeciwnik wygrał całe złoto.
+  if (e.gdy_bankrut !== undefined && e.gdy_bankrut !== (stan.zaklad?.koniec === "bankrut")) return false;
   return true;
 }
 
@@ -815,6 +861,7 @@ if (typeof module !== "undefined") {
     oczkaTutaj, czekaNaKosci, rzucKoscia, ileTrafien, wykrywaczPotrzasniecia,
     losowaZZiarnem, tajnaNumeracja, przepiszNumery,
     glebokosci, losujSpotkanie, opisWalki, WEDRUJACE,
+    maksStawka, postawZaklad,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,
     ELIKSIRY, wybierzEliksir, moznaPicEliksir, wypijEliksir,
     zmienCechy, zastosujEfekty, dostepneOpcje, wezOpcje, moznaJesc, zjedzPosilek,

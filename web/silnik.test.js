@@ -686,3 +686,57 @@ test("\"inaczej\" pokazuje się tylko wtedy, gdy żadna inna droga nie pasuje", 
   assert.deepStrictEqual(s.dostepnePrzejscia(wMiejscu("9", ["1"], ["lina"]), a).map((e) => e.target), ["2"]);
   assert.deepStrictEqual(s.dostepnePrzejscia(wMiejscu("9", ["1"]), a).map((e) => e.target), ["3"]);
 });
+
+// ---------------------------------------------------------------- strzałki ze ZŁYMI (211, 367, 189, 156, 97)
+const gracz = (zloto, liczniki = {}) => ({
+  ...s.nowaGra({ Z: 8, W: 20, S: 9, start: { Z: 8, W: 20, S: 9 }, prowiant: 8, zloto, ekwipunek: [] }),
+  akapit: "18", historia: ["1", "18"], liczniki,
+});
+const doStolu = (zloto, liczniki) => wykonajPrzejscie(gracz(zloto, liczniki), { target: "211" }, null, KSIEGA);
+
+test("strzałki: przy stole siada ZŁY z 10 sztukami złota i liczy się nowa gra", () => {
+  const st = doStolu(8);
+  assert.deepStrictEqual([st.zaklad.zloto, st.liczniki.zle_grane], [10, 1]);
+  assert.strictEqual(s.maksStawka(st, KSIEGA["211"]), 5);
+  assert.strictEqual(s.maksStawka(doStolu(3), KSIEGA["211"]), 3);     // nie postawisz więcej, niż masz
+});
+
+test("strzałki: wyższy rzut zabiera stawkę, remis nic nie zmienia", () => {
+  let st = s.postawZaklad(doStolu(8), KSIEGA["211"], 5, kostka(6, 2));
+  assert.deepStrictEqual([st.bohater.zloto, st.zaklad.zloto], [13, 5]);
+  st = s.postawZaklad(st, KSIEGA["211"], 4, kostka(1, 3));
+  assert.deepStrictEqual([st.bohater.zloto, st.zaklad.zloto], [9, 9]);
+  st = s.postawZaklad(st, KSIEGA["211"], 4, kostka(3, 3));
+  assert.deepStrictEqual([st.bohater.zloto, st.zaklad.zloto], [9, 9]);
+  assert.strictEqual(s.postawZaklad(st, KSIEGA["211"], 6, kostka(6, 1)), st);   // stawka ponad limit
+});
+
+test("strzałki: ograny ZŁY liczy się do pokonanych i gra się kończy", () => {
+  let st = s.postawZaklad(doStolu(8), KSIEGA["211"], 5, kostka(6, 1));
+  st = s.postawZaklad(st, KSIEGA["211"], 5, kostka(6, 1));
+  assert.deepStrictEqual([st.zaklad.koniec, st.liczniki.zle_pokonane, st.bohater.zloto], ["ograny", 1, 18]);
+  assert.strictEqual(s.maksStawka(st, KSIEGA["211"]), 0);
+  assert.deepStrictEqual(cele(st), ["189"]);
+});
+
+test("strzałki: bankrut musi walczyć (367), a każdy ZŁY to nowa walka", () => {
+  let st = s.postawZaklad(doStolu(5), KSIEGA["211"], 5, kostka(1, 6));
+  assert.strictEqual(st.zaklad.koniec, "bankrut");
+  assert.deepStrictEqual(cele(st), ["367"]);
+  st = wykonajPrzejscie(st, { target: "367" }, null, KSIEGA);
+  const opis = KSIEGA["367"].combat;
+  for (let i = 0; i < 3; i++) st = s.rundaWalki(st, opis, false, kostka(1, 1, 6, 6));   // ZŁY W 6 → 0
+  assert.deepStrictEqual([st.liczniki.zle_pokonane, st.liczniki.zle_zabite], [1, 1]);
+  const drugi = wykonajPrzejscie({ ...st, akapit: "211" }, { target: "367" }, null, KSIEGA);
+  assert.ok(drugi.walka && !drugi.walka.zakonczona);
+});
+
+test("189, 156 i 97 rozstrzyga licznik, nie gracz", () => {
+  const w = (nr, liczniki) => cele({ ...gracz(5, liczniki), akapit: nr, historia: ["1", nr] });
+  assert.deepStrictEqual(w("189", { zle_grane: 2 }), ["303"]);
+  assert.deepStrictEqual(w("189", { zle_grane: 3 }), ["156"]);
+  assert.deepStrictEqual(w("156", { zle_pokonane: 1 }), ["286"]);
+  assert.deepStrictEqual(w("156", { zle_pokonane: 2 }), ["350"]);
+  assert.deepStrictEqual(w("97", { zle_zabite: 2 }), ["211"]);
+  assert.deepStrictEqual(w("97", { zle_zabite: 3 }), ["286"]);
+});

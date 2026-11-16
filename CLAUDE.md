@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (78)
+node --test web/silnik.test.js      # testy silnika (83)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 -m unittest test_game_mechanics  # stara wersja Pythonowa (11), poza workflow
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
@@ -98,6 +98,8 @@ Przejście (`edges[]`): `target`, `label` i opcjonalne warunki:
 | `efekt` | efekt przy wyborze tej drogi (zakup, wymiana) |
 | `return_to` | powrót pod zapisany numer |
 | `inaczej` | droga „w przeciwnym razie”: tylko gdy żadna inna nie pasuje |
+| `licznik_min` | `["nazwa", n]`: licznik ma co najmniej n |
+| `gdy_bankrut` | `true`/`false`: czy przeciwnik w zakładach wygrał całe złoto |
 
 Walka (`combat`): `monsters`, `escape` oraz opcjonalnie
 `oslona: {"ma": [rzeczy], "W": n}` — zapas punktów na czas tej walki,
@@ -109,8 +111,13 @@ Wartości z rzutu dla `W` i `zloto`: `"kosc"` = plus oczka, `"-kosc"` = minus oc
 `"zostaw_W": 1` = nie mniej niż 1 W (240). Złoto nie spada poniżej 0.
 
 Liczniki (`stan.liczniki`, np. `{"jatka": 3}`): rosną przez `combat.licznik`
-(każdy zabity potwór) albo `rzut_kosci: {"trafienie": 5, "na_probe": 2, "licznik": ...}`
+(każdy zabity potwór; nazwa albo lista nazw) albo `rzut_kosci: {"trafienie": 5, "na_probe": 2, "licznik": ...}`
 (udane próby). Wypłata: efekt `{"zloto_za": {"licznik": nazwa, "po": 5}}`.
+
+Zakłady (211): `zaklady: {przeciwnik, zloto, stawka: [od, do], licznik_gier,
+licznik_ogranych}`; stan w `stan.zaklad: {zloto, rundy, koniec}` (`"ograny"` /
+`"bankrut"`), funkcje `maksStawka()` i `postawZaklad()`. `combat.powtarzalna: true`
+= za każdym wejściem nowy potwór (367), wbrew zasadzie o pokonanych.
 
 Bohater: `Z`, `W`, `S`, `start: {Z, W, S}`, `prowiant`, `zloto`, `ekwipunek`,
 `eliksir: {cecha, lyki}`. Eliksir S podnosi też `start.S` o 1 (zasady V).
@@ -137,7 +144,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: „Pamięć z warunkiem: 258, 261, 290” (15.11.2026).
+Ostatni commit z kodem: „Strzałki ze ZŁYMI” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -147,16 +154,15 @@ hazard (145, 201, 334), liczniki i nagrody (193, 26),
 rzut potrząśnięciem (przycisk „Potrząśnij” w stopce, domyślnie wyłączony;
 sprawdzony przez Macieja na telefonie), eliksir (wybór na starcie, dwa łyki,
 pasek pod kartą wyprawy), tryb tajemny (przetasowane numery),
-wędrujące potwory (tryb na starcie), tryb testowy (tymczasowy).
+wędrujące potwory (tryb na starcie), pamięć z warunkiem (258, 261, 290),
+strzałki ze ZŁYMI (211, 367, 189, 156, 97), tryb testowy (tymczasowy).
 
 Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **20**.
+Bieżący: **21**.
 
-- 20\. **Pamięć „z warunkiem”** — zrobione: 258, 261, 290. Zostało: gra w strzałki
-  ze ZŁYMI (211) i zależne od niej 97, 189, 156
 - 21\. Skąd szmaragd? (12 go tylko zużywa)
 - 22\. Przed wydaniem: ukryć tryb testowy
 - 23\. 95: kara −1 Z w najbliższej walce
@@ -168,7 +174,7 @@ Bieżący: **20**.
   kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
   uwaga Macieja: obecna mapa mało pomaga
 
-Zamknięte: 1–19.
+Zamknięte: 1–20.
 
 ## 8. Otwarte ustalenia projektowe
 

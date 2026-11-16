@@ -1578,12 +1578,17 @@
     "text": "Wchodzisz do małej pieczary przylegającej do komnaty. Pamiętasz, że - kiedy pierwszy raz tu wszedłeś - spotkałeś trzy ZŁE. Jeśli nie zabiłeś wszystkich potworów - patrz 211 i pamiętaj, że każdy z nich ma znowu 10 sztuk złota (skąd one je biorą?). Jeśli zabiłeś wszystkie ZŁE - patrz 286.",
     "edges": [
       {
-        "label": "Zabici wszyscy",
-        "target": 286
+        "target": "286",
+        "licznik_min": [
+          "zle_zabite",
+          3
+        ],
+        "label": "Zabiłeś wszystkie ZŁE"
       },
       {
-        "label": "Nie zabici wszyscy",
-        "target": 211
+        "target": "211",
+        "inaczej": true,
+        "label": "ZŁE znów chcą grać"
       }
     ]
   },
@@ -2451,10 +2456,17 @@
     "text": "Zabiłeś, albo ograłeś do cna, przynajmniej dwa ZŁE! Jeśli tak - patrz 350, jeśli nie - patrz 286.",
     "edges": [
       {
-        "target": 350
+        "target": "350",
+        "licznik_min": [
+          "zle_pokonane",
+          2
+        ],
+        "label": "Zabiłeś lub ograłeś do cna co najmniej dwóch"
       },
       {
-        "target": 286
+        "target": "286",
+        "inaczej": true,
+        "label": "Nie pokonałeś dwóch ZŁYCH"
       }
     ]
   },
@@ -2931,12 +2943,17 @@
     "text": "Jeśli nie grałeś jeszcze ze wszystkimi trzema ZŁYMI - patrz 303. Jeśli grałeś już ze wszystkimi trzema - patrz 156.",
     "edges": [
       {
-        "target": 303,
-        "condition": "not played_all"
+        "target": "156",
+        "licznik_min": [
+          "zle_grane",
+          3
+        ],
+        "label": "Grałeś już ze wszystkimi trzema"
       },
       {
-        "target": 156,
-        "condition": "played_all"
+        "target": "303",
+        "inaczej": true,
+        "label": "Zostali jeszcze inni ZŁE"
       }
     ]
   },
@@ -3227,14 +3244,26 @@
     "text": "ZŁY wyciąga przed siebie dłoń i pokazuje, że ma wszystkiego 10 sztuk złota. Ustalasz stawkę (od 1 do 5 sztuk złota). Rzucasz jedną kostką: najpierw za siebie, a potem za potwora. Kostka pokazuje ile strzałek było celnych. Kto trafił więcej razy ten zabiera stawkę. Możesz wielokrotnie robić takie zakłady i przerwać grę w dowolnym momencie. Jeśli przerywasz grę albo ogrywasz ZŁEGO do ostatniej sztuki złota - patrz 189. Może zdarzyć się, że ZŁY wygra całe twoje złoto - patrz 367.",
     "edges": [
       {
-        "target": 189,
-        "label": "przerywasz lub wygrywasz"
+        "target": "189",
+        "gdy_bankrut": false,
+        "label": "Kończysz grę z tym ZŁYM"
       },
       {
-        "target": 367,
-        "label": "przegrywasz wszystko"
+        "target": "367",
+        "gdy_bankrut": true,
+        "label": "ZŁY wygrał całe twoje złoto"
       }
-    ]
+    ],
+    "zaklady": {
+      "przeciwnik": "ZŁY",
+      "zloto": 10,
+      "stawka": [
+        1,
+        5
+      ],
+      "licznik_gier": "zle_grane",
+      "licznik_ogranych": "zle_pokonane"
+    }
   },
   "212": {
     "text": "Dochodzisz do sporego placyku, którego drogi rozchodzą się w czterech kierunkach. Który wybierasz? · zachód - patrz 287, · północ - patrz 38, · wschód - patrz 82, · południe - patrz 336.",
@@ -5460,7 +5489,12 @@
           "Z": 6,
           "W": 6
         }
-      ]
+      ],
+      "licznik": [
+        "zle_pokonane",
+        "zle_zabite"
+      ],
+      "powtarzalna": true
     },
     "edges": [
       {

@@ -411,6 +411,7 @@ function rysuj() {
   }
 
   if (p?.rzut_kosci && !stan.walka) box.append(rysujRzutKosci(p));
+  if (p?.zaklady && stan.zaklad) box.append(rysujZaklad(p));
 
   const wybory = el("div", "wybory");
   for (const opcja of dostepneOpcje(stan, p)) {
@@ -631,6 +632,47 @@ let animujKosc = -1;     // numer kości, która właśnie została rzucona
  * Rzut kośćmi w paragrafie (np. 112: cztery kości, suma ≥ 18).
  * Każdą kość rzuca się osobno – dotknięciem pustej ścianki.
  */
+let animujZaklad = false;   // true tylko zaraz po postawieniu
+let ostatniaStawka = 1;     // tę stawkę „naciska” potrząśnięcie telefonem
+
+/** Strzałki ze ZŁYM: stan złota, ostatni rzut i przyciski stawek. */
+function rysujZaklad(akapit) {
+  const reguly = akapit.zaklady;
+  const z = stan.zaklad;
+  const sekcja = el("section", "walka");
+  sekcja.append(el("h2", "", "Strzałki"));
+  sekcja.append(el("p", "oslona", `${reguly.przeciwnik} ma ${z.zloto} szt. złota · Ty masz ${stan.bohater.zloto ?? 0}`));
+
+  const r = z.rundy.at(-1);
+  if (r) {
+    const tacka = el("div", "tacka");
+    tacka.append(rzut("Ty", [r.ty], "celnych", animujZaklad), rzut(reguly.przeciwnik, [r.on], "celnych", animujZaklad));
+    sekcja.append(tacka);
+    const wynik = r.wynik > 0 ? `Wygrywasz ${r.stawka} szt. złota.` : r.wynik < 0 ? `Przegrywasz ${r.stawka} szt. złota.` : "Remis – stawka zostaje.";
+    sekcja.append(el("p", "uwaga", wynik));
+  }
+  animujZaklad = false;
+
+  if (z.koniec === "ograny") sekcja.append(el("p", "uwaga", `${reguly.przeciwnik} ograny do ostatniej sztuki złota.`));
+  if (z.koniec === "bankrut") sekcja.append(el("p", "uwaga", `${reguly.przeciwnik} wygrał całe twoje złoto.`));
+
+  const maks = maksStawka(stan, akapit);
+  if (maks > 0) {
+    const akcje = el("div", "akcje");
+    for (let stawka = reguly.stawka[0]; stawka <= maks; stawka++) {
+      const b = el("button", "przycisk" + (stawka === Math.min(ostatniaStawka, maks) ? "" : " cichy"), `Postaw ${stawka}`);
+      b.type = "button";
+      if (stawka === Math.min(ostatniaStawka, maks)) b.dataset.rzut = "";
+      b.addEventListener("click", () => { ostatniaStawka = stawka; animujZaklad = true; zmien(postawZaklad(stan, akapit, stawka), false); });
+      akcje.append(b);
+    }
+    sekcja.append(akcje);
+  } else if (!z.koniec) {
+    sekcja.append(el("p", "uwaga", "Nie masz złota na zakład."));
+  }
+  return sekcja;
+}
+
 function rysujRzutKosci(akapit) {
   const { ile, opis } = akapit.rzut_kosci;
   const oczka = oczkaTutaj(stan);
