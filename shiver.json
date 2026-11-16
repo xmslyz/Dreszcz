@@ -3894,12 +3894,26 @@
     "text": "Rozbijasz mieczem łańcuchy, którymi przykuty był do skały. Biedaczysko, słania się na nogach. Prowadzisz go do pokoju i kładziesz na skórze. Teraz już spokojnie otwierasz księgę. Próbujesz czytać. Nie rozumiesz ani słowa. Księga napisana jest w języku gremlinów. Szarpiesz za ramię nieprzytomnego stworka. Nie jest w stanie podnieść głowy. Cicho szepce: \"pić, pić\". Masz wodę? Jeśli tak - patrz 122, jeśli nie - patrz 337.",
     "edges": [
       {
-        "target": 122,
-        "condition": "has_water"
+        "target": "122",
+        "ma": [
+          "flasza z wodą z jeziora",
+          "naczynie z zaczarowaną wodą"
+        ],
+        "efekt": {
+          "zuzyj": [
+            "flasza z wodą z jeziora",
+            "naczynie z zaczarowaną wodą"
+          ]
+        },
+        "label": "Masz wodę – poisz gremlina"
       },
       {
-        "target": 337,
-        "condition": "no_water"
+        "target": "337",
+        "nie_ma": [
+          "flasza z wodą z jeziora",
+          "naczynie z zaczarowaną wodą"
+        ],
+        "label": "Nie masz wody"
       }
     ]
   },
@@ -3923,12 +3937,24 @@
     "text": "Czy poszedłeś po wodę? Jeśli tak - patrz 122, jeśli nie - patrz 313.",
     "edges": [
       {
-        "target": 122,
-        "condition": "went_for_water"
+        "target": "122",
+        "byl_w": "337",
+        "ma": [
+          "flasza z wodą z jeziora",
+          "naczynie z zaczarowaną wodą"
+        ],
+        "efekt": {
+          "zuzyj": [
+            "flasza z wodą z jeziora",
+            "naczynie z zaczarowaną wodą"
+          ]
+        },
+        "label": "Wróciłeś z wodą – poisz gremlina"
       },
       {
-        "target": 313,
-        "condition": "did_not_go"
+        "target": "313",
+        "inaczej": true,
+        "label": "Nie przynosisz wody"
       }
     ]
   },
@@ -4322,12 +4348,14 @@
     "text": "Czy ktoś cię tu przysłał? Jeśli tak - patrz 96, jeśli nie - patrz 253.",
     "edges": [
       {
-        "target": 96,
-        "condition": "was_sent"
+        "target": "96",
+        "byl_w": "347",
+        "label": "Przysłał cię potwór – szukasz klucza nad drzwiami"
       },
       {
-        "target": 253,
-        "condition": "not_sent"
+        "target": "253",
+        "nie_byl_w": "347",
+        "label": "Nikt cię tu nie przysłał"
       }
     ]
   },

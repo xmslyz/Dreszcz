@@ -415,7 +415,10 @@ function dostepnePrzejscia(stan, akapit) {
   const doWyboru = (akapit?.edges ?? [])
     .filter((e) => pamiecPozwala(stan, e))
     .filter((e) => e.sss === undefined || e.sss === stan.testSSS?.szczescie);
-  const spelnione = doWyboru.filter((e) => warunkiPozwalaja(stan, e));
+  const pasuje = doWyboru.filter((e) => warunkiPozwalaja(stan, e));
+  // "inaczej": true – droga „w przeciwnym razie”: tylko gdy żadna inna nie pasuje (jak else).
+  const zwykle = pasuje.filter((e) => !e.inaczej);
+  const spelnione = zwykle.length ? zwykle : pasuje;
   // Zabezpieczenie przed „ślepą uliczką”: gdyby warunki przedmiotów odrzuciły
   // wszystko (np. brak przedmiotu, którego zdobycia gra jeszcze nie obsługuje),
   // pokaż przejścia bez tych warunków, zamiast zostawić gracza bez wyjścia.

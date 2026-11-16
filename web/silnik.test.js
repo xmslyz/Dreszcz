@@ -652,3 +652,37 @@ test("spotkanie: ucieczka kosztuje 2 W i zostajesz w korytarzu", () => {
   st = s.ucieczka(st, opis, false, kostka(), TUNEL);
   assert.deepStrictEqual([st.akapit, st.bohater.W, st.walka], ["5", 16, null]);
 });
+
+// ---------------------------------------------------------------- pamięć z warunkiem (261, 290) i "inaczej"
+const KSIEGA = require("../shiver.json");
+const wMiejscu = (nr, historia, ekwipunek = []) => ({
+  ...s.nowaGra({ Z: 8, W: 20, S: 9, start: { Z: 8, W: 20, S: 9 }, prowiant: 8, ekwipunek }),
+  akapit: nr, historia: [...historia, nr],
+});
+const cele = (st) => s.dostepnePrzejscia(st, KSIEGA[st.akapit]).map((e) => String(e.target));
+
+test("290: klucz znajdziesz tylko wtedy, gdy potwór z 347 powiedział, gdzie szukać", () => {
+  assert.deepStrictEqual(cele(wMiejscu("290", ["1", "302", "347"])), ["96"]);
+  assert.deepStrictEqual(cele(wMiejscu("290", ["1", "302"])), ["253"]);
+});
+
+test("258: z wodą poisz gremlina i woda znika, bez wody idziesz jej szukać", () => {
+  assert.deepStrictEqual(cele(wMiejscu("258", ["1"])), ["337"]);
+  const zWoda = wMiejscu("258", ["1"], ["miecz", "flasza z wodą z jeziora"]);
+  assert.deepStrictEqual(cele(zWoda), ["122"]);
+  const po = wykonajPrzejscie(zWoda, s.dostepnePrzejscia(zWoda, KSIEGA["258"])[0], null, KSIEGA);
+  assert.deepStrictEqual(po.bohater.ekwipunek, ["miecz"]);
+});
+
+test("261: 122 tylko gdy byłeś w 337 i wracasz z wodą; w każdym innym razie 313", () => {
+  const woda = ["naczynie z zaczarowaną wodą"];
+  assert.deepStrictEqual(cele(wMiejscu("261", ["1", "337"], woda)), ["122"]);
+  assert.deepStrictEqual(cele(wMiejscu("261", ["1", "337"])), ["313"]);        // bez wody
+  assert.deepStrictEqual(cele(wMiejscu("261", ["1"], woda)), ["313"]);         // nikt o wodę nie prosił
+});
+
+test("\"inaczej\" pokazuje się tylko wtedy, gdy żadna inna droga nie pasuje", () => {
+  const a = { text: "", edges: [{ target: "2", ma: "lina" }, { target: "3", inaczej: true }] };
+  assert.deepStrictEqual(s.dostepnePrzejscia(wMiejscu("9", ["1"], ["lina"]), a).map((e) => e.target), ["2"]);
+  assert.deepStrictEqual(s.dostepnePrzejscia(wMiejscu("9", ["1"]), a).map((e) => e.target), ["3"]);
+});

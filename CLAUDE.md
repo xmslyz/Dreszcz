@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (74)
+node --test web/silnik.test.js      # testy silnika (78)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 -m unittest test_game_mechanics  # stara wersja Pythonowa (11), poza workflow
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
@@ -97,6 +97,7 @@ Przejście (`edges[]`): `target`, `label` i opcjonalne warunki:
 | `suma` | wynik rzutu kośćmi |
 | `efekt` | efekt przy wyborze tej drogi (zakup, wymiana) |
 | `return_to` | powrót pod zapisany numer |
+| `inaczej` | droga „w przeciwnym razie”: tylko gdy żadna inna nie pasuje |
 
 Walka (`combat`): `monsters`, `escape` oraz opcjonalnie
 `oslona: {"ma": [rzeczy], "W": n}` — zapas punktów na czas tej walki,
@@ -136,7 +137,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (15.11.2026)
 
-Ostatni commit z kodem: „Workflow: nowe wersje akcji” (15.11.2026).
+Ostatni commit z kodem: „Pamięć z warunkiem: 258, 261, 290” (15.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -154,7 +155,8 @@ Znane usterki: brak.
 
 Bieżący: **20**.
 
-- 20\. Pamięć „z warunkiem”: 97, 189, 261, 290
+- 20\. **Pamięć „z warunkiem”** — zrobione: 258, 261, 290. Zostało: gra w strzałki
+  ze ZŁYMI (211) i zależne od niej 97, 189, 156
 - 21\. Skąd szmaragd? (12 go tylko zużywa)
 - 22\. Przed wydaniem: ukryć tryb testowy
 - 23\. 95: kara −1 Z w najbliższej walce
