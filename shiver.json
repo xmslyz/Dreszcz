@@ -4005,6 +4005,11 @@
     "efekty": [
       {
         "W": -2
+      },
+      {
+        "dodaj": [
+          "szmaragd"
+        ]
       }
     ]
   },
@@ -5431,10 +5436,12 @@
     "text": "Wdzięczny potwór zdradza ci tajemnicę. W kamiennym pudełku stojącym na ołtarzyku jest zaczarowany szmaragd. Temu, kto go posiada, daje - choć tylko raz - Dar Skrzydeł. Ale musisz uważać: nie wolno ci dotknąć szmaragdu. Musisz po prostu przechylić pudełko i wysypać kamień do plecaka. Czy wierzysz potworowi? Jeśli tak - patrz 263, jeśli nie - patrz 72.",
     "edges": [
       {
-        "target": 263
+        "target": 263,
+        "label": "Wierzysz potworowi – wysypujesz szmaragd do plecaka"
       },
       {
-        "target": 72
+        "target": 72,
+        "label": "Nie wierzysz – kończysz walkę"
       }
     ]
   },

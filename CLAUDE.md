@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (83)
+node --test web/silnik.test.js      # testy silnika (84)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 -m unittest test_game_mechanics  # stara wersja Pythonowa (11), poza workflow
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
@@ -142,9 +142,9 @@ Zasady, których się trzymamy:
 - Stare klucze angielskie (`effects`, `actions`, `requires_*`, `condition`,
   `stat_change(s)` itd.) to pozostałość do stopniowego przeniesienia.
 
-## 6. Stan (15.11.2026)
+## 6. Stan (20.11.2026)
 
-Ostatni commit z kodem: „Strzałki ze ZŁYMI” (15.11.2026).
+Ostatni commit z kodem: „Szmaragd w 263” (20.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -161,9 +161,8 @@ Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **21**.
+Bieżący: **22**.
 
-- 21\. Skąd szmaragd? (12 go tylko zużywa)
 - 22\. Przed wydaniem: ukryć tryb testowy
 - 23\. 95: kara −1 Z w najbliższej walce
 - 24\. Pętle w książce: powtarzalne przeszukanie 305
@@ -174,7 +173,7 @@ Bieżący: **21**.
   kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
   uwaga Macieja: obecna mapa mało pomaga
 
-Zamknięte: 1–20.
+Zamknięte: 1–21.
 
 ## 8. Otwarte ustalenia projektowe
 

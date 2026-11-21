@@ -740,3 +740,16 @@ test("189, 156 i 97 rozstrzyga licznik, nie gracz", () => {
   assert.deepStrictEqual(w("97", { zle_zabite: 2 }), ["211"]);
   assert.deepStrictEqual(w("97", { zle_zabite: 3 }), ["286"]);
 });
+
+// ---------------------------------------------------------------- szmaragd (263 → 314 → 12)
+test("szmaragd: dostajesz go w 263, ratuje w 314 i znika w 12", () => {
+  let st = wykonajPrzejscie(wMiejscu("362", ["1"]), { target: "263" }, null, KSIEGA);
+  st = s.zastosujEfekty(st, KSIEGA["263"]);
+  assert.ok(st.bohater.ekwipunek.includes("szmaragd"));
+  assert.strictEqual(st.bohater.W, 18);
+  const spada = { ...st, akapit: "314", historia: [...st.historia, "314"] };
+  assert.deepStrictEqual(cele(spada), ["12"]);
+  assert.deepStrictEqual(cele(wMiejscu("314", ["1"])), ["370"]);          // bez szmaragdu
+  const po = s.zastosujEfekty(wykonajPrzejscie(spada, { target: "12" }, null, KSIEGA), KSIEGA["12"]);
+  assert.ok(!po.bohater.ekwipunek.includes("szmaragd"));
+});
