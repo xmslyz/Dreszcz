@@ -144,7 +144,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (20.11.2026)
 
-Ostatni commit z kodem: „Szmaragd w 263” (20.11.2026).
+Ostatni commit z kodem: „Tryb testowy ukryty” (20.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -155,15 +155,14 @@ rzut potrząśnięciem (przycisk „Potrząśnij” w stopce, domyślnie wyłąc
 sprawdzony przez Macieja na telefonie), eliksir (wybór na starcie, dwa łyki,
 pasek pod kartą wyprawy), tryb tajemny (przetasowane numery),
 wędrujące potwory (tryb na starcie), pamięć z warunkiem (258, 261, 290),
-strzałki ze ZŁYMI (211, 367, 189, 156, 97), tryb testowy (tymczasowy).
+strzałki ze ZŁYMI (211, 367, 189, 156, 97), tryb testowy (ukryty: `?test` w adresie albo 5 dotknięć tytułu; `?test=0` wyłącza).
 
 Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **22**.
+Bieżący: **23**.
 
-- 22\. Przed wydaniem: ukryć tryb testowy
 - 23\. 95: kara −1 Z w najbliższej walce
 - 24\. Pętle w książce: powtarzalne przeszukanie 305
 - 25\. Przejrzeć etykiety przycisków przy długich paragrafach
@@ -173,7 +172,7 @@ Bieżący: **22**.
   kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
   uwaga Macieja: obecna mapa mało pomaga
 
-Zamknięte: 1–21.
+Zamknięte: 1–22.
 
 ## 8. Otwarte ustalenia projektowe
 

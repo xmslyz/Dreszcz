@@ -40,7 +40,8 @@ self.addEventListener("fetch", (zdarzenie) => {
   if (zdarzenie.request.method !== "GET") return;
   zdarzenie.respondWith(
     caches.open(PAMIEC).then(async (pamiec) => {
-      const zPamieci = await pamiec.match(zdarzenie.request);
+      // ignoreSearch: adres z dopiskiem (?test) to ta sama strona co bez niego
+      const zPamieci = await pamiec.match(zdarzenie.request, { ignoreSearch: true });
       const zSieci = fetch(zdarzenie.request)
         .then((odpowiedz) => {
           if (odpowiedz.ok) pamiec.put(zdarzenie.request, odpowiedz.clone());

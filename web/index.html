@@ -189,7 +189,7 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 
 <main class="strona">
   <header>
-    <h1>Dreszcz</h1>
+    <h1 id="tytul">Dreszcz</h1>
     <span class="licznik" id="licznik">wczytywanie…</span>
   </header>
   <div class="karta-wyprawy" id="karta" hidden></div>
@@ -374,7 +374,7 @@ function rysuj() {
     box.append(el("p", "koniec", stan.koniec === "zwyciestwo" ? "Zwycięstwo!" : "Koniec przygody"));
     if (stan.walka && stan.koniec === "porazka") box.append(rysujWalke(p));
     box.append(el("p", "uwaga", `Odwiedzone paragrafy: ${stan.historia.length}. Zacznij od nowa przyciskiem poniżej.`));
-    if (stan.koniec === "porazka" && stan.bohater) {
+    if (trybTestowy && stan.koniec === "porazka" && stan.bohater) {
       // Tryb testowy – do sprawdzania dalszych paragrafów bez zaczynania od nowa.
       const b = el("button", "przycisk cichy", "Tryb testowy: wróć tu jako zwycięzca");
       b.type = "button";
@@ -917,6 +917,39 @@ document.getElementById("zoom-tu").addEventListener("click", () => {
   });
   svg.addEventListener("pointerup", () => { start = null; });
   svg.addEventListener("pointercancel", () => { start = null; });
+})();
+
+// ---------------------------------------------------------------- tryb testowy (ukryty)
+// Gracz go nie widzi. Włącza się na dwa sposoby i zostaje zapamiętany na urządzeniu:
+//   1) adres gry z dopiskiem ?test (wyłączenie: ?test=0),
+//   2) pięć szybkich dotknięć tytułu „Dreszcz” – dla gry zainstalowanej na ekranie
+//      początkowym, gdzie nie ma paska adresu.
+const KLUCZ_TESTU = "dreszcz-tryb-testowy";
+let trybTestowy = false;
+
+function ustawTrybTestowy(wlacz) {
+  trybTestowy = wlacz;
+  try { localStorage.setItem(KLUCZ_TESTU, wlacz ? "1" : "0"); } catch (e) { /* bez pamięci też działa */ }
+  document.getElementById("tytul").title = wlacz ? "tryb testowy włączony" : "";
+}
+
+(function przygotujTrybTestowy() {
+  const zAdresu = new URLSearchParams(location.search).get("test");   // null, "" albo wartość
+  let zapamietany = null;
+  try { zapamietany = localStorage.getItem(KLUCZ_TESTU); } catch (e) { /* nic */ }
+  ustawTrybTestowy(zAdresu !== null ? zAdresu !== "0" : zapamietany === "1");
+
+  let dotkniecia = [];
+  document.getElementById("tytul").addEventListener("click", () => {
+    const teraz = Date.now();
+    dotkniecia = [...dotkniecia.filter((t) => teraz - t < 2000), teraz];   // tylko z ostatnich 2 s
+    if (dotkniecia.length < 5) return;
+    dotkniecia = [];
+    ustawTrybTestowy(!trybTestowy);
+    if (stan) rysuj();
+    // po rysuj(), bo ono samo wpisuje licznik – komunikat ma zostać na wierzchu
+    document.getElementById("licznik").textContent = `tryb testowy ${trybTestowy ? "włączony" : "wyłączony"}`;
+  });
 })();
 
 // ---------------------------------------------------------------- rzut potrząśnięciem
