@@ -836,3 +836,57 @@ test("graf wędrówki: pierwszy paragraf jest miejscem, nawet gdy wygląda na ak
   const g = s.grafWedrowki({ ...s.nowaGra(), historia: ["96"], akapit: "96" }, KSIEGA);
   assert.strictEqual(g.wezly[0].typ, "miejsce");
 });
+
+// ---------------------------------------------------------------- pytania, na które odpowiada gra (wątek 29)
+test("drzwi komnaty ORKA (200, 224): otwarte dopiero, gdy przez nie przeszedłeś (364)", () => {
+  assert.deepStrictEqual(cele(wMiejscu("200", ["1", "25"])), ["301"]);
+  assert.deepStrictEqual(cele(wMiejscu("200", ["1", "25", "200", "301", "364", "116", "120", "64", "25"])), ["120"]);
+  assert.deepStrictEqual(cele(wMiejscu("224", ["1", "64"])), ["301"]);
+  assert.deepStrictEqual(cele(wMiejscu("224", ["1", "301", "364", "120", "64"])), ["180"]);
+});
+
+test("drzwi komnaty z 5 (247, 270): po pierwszej wizycie zostaje tylko odwrót", () => {
+  assert.deepStrictEqual(cele(wMiejscu("247", ["1", "33"])), ["5", "33"]);
+  assert.deepStrictEqual(cele(wMiejscu("247", ["1", "5", "140", "33"])), ["33"]);
+  assert.deepStrictEqual(cele(wMiejscu("270", ["1", "134"])), ["5", "134"]);
+  assert.deepStrictEqual(cele(wMiejscu("270", ["1", "5", "134"])), ["134"]);
+});
+
+test("jezioro (172, 365): brzeg wynika z liczby przepraw, czyli wizyt w 214", () => {
+  const poPrzeprawach = (nr, ile) => cele(wMiejscu(nr, ["1", ...Array(ile).fill("214")]));
+  assert.deepStrictEqual(poPrzeprawach("172", 2), ["266"]);
+  assert.deepStrictEqual(poPrzeprawach("172", 3), ["365"]);
+  assert.deepStrictEqual(poPrzeprawach("365", 3), ["195"]);
+  assert.deepStrictEqual(poPrzeprawach("365", 4), ["15"]);
+});
+
+test("przepaść (162 → 57 → 335/91): gra pamięta, który brzeg obiecał NIETOPERZ", () => {
+  const poObietnicy = (ktora) => {
+    const st = { ...wMiejscu("162", ["1", "358"]), testSSS: { akapit: "162", szczescie: true, rzut: 5 } };
+    const zeZlotem = { ...st, bohater: { ...st.bohater, zloto: 30 } };
+    return wykonajPrzejscie(zeZlotem, s.dostepnePrzejscia(zeZlotem, KSIEGA["162"])[ktora], null, KSIEGA);
+  };
+  const swoj = poObietnicy(0), drugi = poObietnicy(1);
+  assert.deepStrictEqual([swoj.akapit, swoj.bohater.znaczniki.brzeg, drugi.bohater.znaczniki.brzeg], ["57", "swoj", "drugi"]);
+  // zapłata zgodna z obietnicą
+  const placi = (st) => wykonajPrzejscie(st, s.dostepnePrzejscia(st, KSIEGA["57"])[0], null, KSIEGA);
+  assert.deepStrictEqual([placi(swoj).bohater.zloto, placi(drugi).bohater.zloto], [20, 10]);
+  assert.deepStrictEqual(cele(placi(swoj)), ["35", "74", "110"]);
+  assert.deepStrictEqual(cele(placi(drugi)), ["186"]);
+  // bez zapłaty (91): ten sam podział, ale na drugim brzegu czeka NIETOPERZ (288)
+  const nic = (st) => wykonajPrzejscie(st, s.dostepnePrzejscia(st, KSIEGA["57"]).at(-1), null, KSIEGA);
+  assert.deepStrictEqual(cele(nic(drugi)), ["288"]);
+  assert.deepStrictEqual(cele(nic(swoj)), ["35", "74", "110"]);
+});
+
+test("krata (366) i picie dla KRASNOLUDÓW (371)", () => {
+  const zKluczem = wMiejscu("366", ["1"], ["błyszczący kluczyk"]);
+  const po = wykonajPrzejscie(zKluczem, s.dostepnePrzejscia(zKluczem, KSIEGA["366"])[0], null, KSIEGA);
+  assert.deepStrictEqual([po.akapit, po.bohater.ekwipunek], ["131", []]);          // klucz zostaje w zamku
+  assert.deepStrictEqual(cele(wMiejscu("371", ["1"])), ["90", "318"]);
+  assert.deepStrictEqual(cele(wMiejscu("371", ["1"], ["naczynie z zaczarowaną wodą"])), ["90", "318"]);   // zaczarowana szkodzi
+  const zWoda = wMiejscu("371", ["1"], ["flasza z wodą z jeziora", "eliksir niewidzialności"]);
+  assert.deepStrictEqual(cele(zWoda), ["4", "318"]);
+  const uczta = wykonajPrzejscie(zWoda, s.dostepnePrzejscia(zWoda, KSIEGA["371"])[0], null, KSIEGA);
+  assert.deepStrictEqual(uczta.bohater.ekwipunek, ["eliksir niewidzialności"]);     // idzie zwykła woda
+});

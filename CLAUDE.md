@@ -69,7 +69,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (94)
+node --test web/silnik.test.js      # testy silnika (99)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 -m unittest test_game_mechanics  # stara wersja Pythonowa (11), poza workflow
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
@@ -93,13 +93,14 @@ Przejście (`edges[]`): `target`, `label` i opcjonalne warunki:
 |---|---|
 | `ma`, `nie_ma`, `ma_wszystkie` | zależność od przedmiotów |
 | `zloto_min` | wymagane złoto |
-| `byl_w`, `nie_byl_w`, `pierwsza_wizyta`, `wizyty` | pamięć gry („czy już tu byłeś?”) |
+| `byl_w`, `nie_byl_w`, `pierwsza_wizyta`, `wizyty`, `wizyty_parzyste` | pamięć gry („czy już tu byłeś?”, „który raz?”) |
 | `sss` | wynik testu szczęścia |
 | `suma` | wynik rzutu kośćmi |
 | `efekt` | efekt przy wyborze tej drogi (zakup, wymiana) |
 | `return_to` | powrót pod zapisany numer |
 | `inaczej` | droga „w przeciwnym razie”: tylko gdy żadna inna nie pasuje |
 | `licznik_min` | `["nazwa", n]`: licznik ma co najmniej n |
+| `gdy_znacznik` | `["nazwa", wartość]`: wcześniejszy wybór gracza zapisany efektem `znacznik` |
 | `gdy_bankrut` | `true`/`false`: czy przeciwnik w zakładach wygrał całe złoto |
 
 Walka (`combat`): `monsters`, `escape` oraz opcjonalnie
@@ -123,6 +124,11 @@ licznik_ogranych}`; stan w `stan.zaklad: {zloto, rundy, koniec}` (`"ograny"` /
 Kara do najbliższej walki (95): efekt `{"kara_w_walce": {"Z": -1, "powod": ...}}`
 czeka w `bohater.karaWalki`, przy starcie walki przechodzi do `walka.kara` i liczy się
 tylko w niej.
+
+Znaczniki: efekt `{"znacznik": {"brzeg": "drugi"}}` zapisuje wybór w `bohater.znaczniki`
+(niewidoczny dla gracza); pyta o niego `gdy_znacznik` (162 → 57 → 335/91).
+Drzwi: „otwarte” = byłeś już za nimi (`byl_w`), bo tak mówi zasada z paragrafu 200.
+Jezioro: liczba przepraw = liczba wizyt w 214.
 
 Bohater: `Z`, `W`, `S`, `start: {Z, W, S}`, `prowiant`, `zloto`, `ekwipunek`,
 `eliksir: {cecha, lyki}`, opcjonalnie `karaWalki: {Z, powod}`. Eliksir S podnosi też `start.S` o 1 (zasady V).
@@ -156,7 +162,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (20.11.2026)
 
-Ostatni commit z kodem: „Mapa: miejsca i akcje” (20.11.2026).
+Ostatni commit z kodem: „Pytania, na które odpowiada gra” (20.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki (kółka = miejsca, kwadraty = akcje), pamięć odwiedzin, SSS poza walką,
@@ -167,22 +173,20 @@ rzut potrząśnięciem (przycisk „Potrząśnij” w stopce, domyślnie wyłąc
 sprawdzony przez Macieja na telefonie), eliksir (wybór na starcie, dwa łyki,
 pasek pod kartą wyprawy), tryb tajemny (przetasowane numery),
 wędrujące potwory (tryb na starcie), pamięć z warunkiem (258, 261, 290),
-strzałki ze ZŁYMI (211, 367, 189, 156, 97), tryb testowy (ukryty: `?test` w adresie albo 5 dotknięć tytułu; `?test=0` wyłącza).
+strzałki ze ZŁYMI (211, 367, 189, 156, 97), drzwi, jezioro, brzeg przepaści,
+krata i picie rozstrzygane przez grę (200, 224, 247, 270, 172, 365, 57, 335, 91, 366, 371), tryb testowy (ukryty: `?test` w adresie albo 5 dotknięć tytułu; `?test=0` wyłącza).
 
 Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **29**.
+Bieżący: **27** (czeka na Macieja; poza nim lista jest pusta).
 
-- 29\. Pytania, na które wciąż odpowiada gracz zamiast gry: drzwi otwarte/zamknięte
-  (200, 224, 247, 270), liczba przepraw przez jezioro (172, 365), który brzeg (335),
-  klucz do kraty (366), coś do picia (371)
 - 27\. Zdobyć oficjalną erratę („Razem” nr 40/1987, rubryka „Wszystko Gra”) i porównać
   z naszymi poprawkami — w sieci jej nie ma (szukane dwa razy, notatki w `ToDo.md`);
   czeka na zdjęcie strony od Macieja
 
-Zamknięte: 1–26, 28.
+Zamknięte: 1–26, 28, 29.
 
 ## 8. Otwarte ustalenia projektowe
 

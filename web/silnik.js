@@ -392,6 +392,12 @@ function pamiecPozwala(stan, przejscie) {
     const [nr, ile] = przejscie.wizyty;
     if (stan.historia.filter((x) => x === String(nr)).length !== ile) return false;
   }
+  if (przejscie.wizyty_parzyste) {
+    // "wizyty_parzyste": ["214", true] – paragraf 214 odwiedzony parzystą liczbę razy (przeprawy)
+    const [nr, parzyscie] = przejscie.wizyty_parzyste;
+    const ile = stan.historia.filter((x) => x === String(nr)).length;
+    if ((ile % 2 === 0) !== parzyscie) return false;
+  }
   if (przejscie.pierwsza_wizyta !== undefined) {
     const ileRazy = stan.historia.filter((nr) => nr === stan.akapit).length;
     if (przejscie.pierwsza_wizyta !== (ileRazy === 1)) return false;
@@ -455,6 +461,8 @@ function warunkiPozwalaja(stan, e) {
   if (e.cecha_ponizej && stan.bohater && stan.bohater[e.cecha_ponizej[0]] >= e.cecha_ponizej[1]) return false;
   // Liczniki: "licznik_min": ["zle_grane", 3] – co najmniej trzy gry ze ZŁYMI.
   if (e.licznik_min && (stan.liczniki?.[e.licznik_min[0]] ?? 0) < e.licznik_min[1]) return false;
+  // Znaczniki: "gdy_znacznik": ["brzeg", "drugi"] – wcześniejszy wybór gracza (patrz efekt "znacznik").
+  if (e.gdy_znacznik && stan.bohater?.znaczniki?.[e.gdy_znacznik[0]] !== e.gdy_znacznik[1]) return false;
   // Zakłady: "gdy_bankrut": true – tylko gdy przeciwnik wygrał całe złoto.
   if (e.gdy_bankrut !== undefined && e.gdy_bankrut !== (stan.zaklad?.koniec === "bankrut")) return false;
   return true;
@@ -546,6 +554,11 @@ function zmienCechy(bohater, efekt) {
     const naprawde = b.zloto - przed;   // przegrać można najwyżej tyle, ile się ma
     opisy.push(naprawde === 0 && efekt.zloto < 0 ? "nie masz złota"
       : `${naprawde >= 0 ? "+" : "−"}${Math.abs(naprawde)} złota`);
+  }
+  if (efekt.znacznik) {
+    // Zapamiętany wybór, o który książka zapyta później: {"znacznik": {"brzeg": "drugi"}}.
+    // Nie jest rzeczą ani cechą, więc gracz go nie widzi.
+    b.znaczniki = { ...(b.znaczniki ?? {}), ...efekt.znacznik };
   }
   if (efekt.kara_w_walce) {
     // Nie zmienia cech od razu: czeka na bohaterze do najbliższej walki i tylko w niej działa.

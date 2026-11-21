@@ -896,8 +896,26 @@
     "text": "Po wylądowaniu łajdak żąda całego twojego złota. Możesz powiedzieć, że dasz tylko tyle, ile żądał - patrz 335, albo, że w takim razie - nie dasz nic - patrz 91.",
     "edges": [
       {
-        "label": "Dajesz tyle ile żądał",
-        "target": 335
+        "label": "Dajesz obiecane 10 sztuk złota",
+        "target": 335,
+        "gdy_znacznik": [
+          "brzeg",
+          "swoj"
+        ],
+        "efekt": {
+          "zloto": -10
+        }
+      },
+      {
+        "label": "Dajesz obiecane 20 sztuk złota",
+        "target": 335,
+        "gdy_znacznik": [
+          "brzeg",
+          "drugi"
+        ],
+        "efekt": {
+          "zloto": -20
+        }
       },
       {
         "label": "Nie dajesz nic",
@@ -1478,21 +1496,37 @@
     "text": "Jeśli jesteś na brzegu, z którego wyruszyłeś, NIETOPERZ, ku twojemu zaskoczeniu, oddala się. Spróbuj innego sposobu przedostania się przez szczelinę - patrz 35, 74 lub 110. Jeśli jesteś na drugim brzegu - patrz 288.",
     "edges": [
       {
-        "label": "Opcja 1",
         "target": "35",
-        "zloto_min": 10
+        "zloto_min": 10,
+        "label": "Smoczy transport (10 sztuk złota)",
+        "gdy_znacznik": [
+          "brzeg",
+          "swoj"
+        ]
       },
       {
-        "label": "Opcja 2",
-        "target": "74"
+        "target": "74",
+        "label": "Most",
+        "gdy_znacznik": [
+          "brzeg",
+          "swoj"
+        ]
       },
       {
-        "label": "Opcja 3",
-        "target": "110"
+        "target": "110",
+        "label": "Gigantyczny skok",
+        "gdy_znacznik": [
+          "brzeg",
+          "swoj"
+        ]
       },
       {
-        "label": "Na drugim brzegu",
-        "target": "288"
+        "target": "288",
+        "label": "Jesteś na drugim brzegu",
+        "gdy_znacznik": [
+          "brzeg",
+          "drugi"
+        ]
       }
     ]
   },
@@ -2554,12 +2588,22 @@
       {
         "label": "Obiecujesz NIETOPERZOWI 10 sztuk złota (twój brzeg)",
         "target": "57",
-        "sss": true
+        "sss": true,
+        "efekt": {
+          "znacznik": {
+            "brzeg": "swoj"
+          }
+        }
       },
       {
         "label": "Obiecujesz NIETOPERZOWI 20 sztuk złota (drugi brzeg)",
         "target": "57",
-        "sss": true
+        "sss": true,
+        "efekt": {
+          "znacznik": {
+            "brzeg": "drugi"
+          }
+        }
       },
       {
         "label": "Spadasz, wpełzasz do tunelu… i otwierasz grube drzwi",
@@ -2753,11 +2797,16 @@
     "edges": [
       {
         "target": "266",
-        "label": "Przepłynąłeś jezioro po raz drugi"
+        "wizyty": [
+          "214",
+          2
+        ],
+        "label": "Druga przeprawa – południowy brzeg"
       },
       {
         "target": 365,
-        "label": "Przepłynąłeś je więcej niż dwa razy"
+        "inaczej": true,
+        "label": "Kolejna przeprawa"
       }
     ]
   },
@@ -3129,12 +3178,12 @@
     "edges": [
       {
         "target": 120,
-        "condition": "doors_open",
-        "label": "Drzwi są otwarte"
+        "byl_w": "364",
+        "label": "Drzwi są otwarte – idziesz dalej"
       },
       {
         "target": 301,
-        "condition": "doors_closed",
+        "nie_byl_w": "364",
         "label": "Drzwi są zamknięte"
       }
     ]
@@ -3463,12 +3512,12 @@
     "edges": [
       {
         "target": 180,
-        "condition": "doors_open",
-        "label": "Drzwi są otwarte"
+        "byl_w": "364",
+        "label": "Drzwi są otwarte – zaglądasz ponownie"
       },
       {
         "target": 301,
-        "condition": "doors_closed",
+        "nie_byl_w": "364",
         "label": "Drzwi są zamknięte"
       }
     ]
@@ -3824,12 +3873,11 @@
     "edges": [
       {
         "target": 5,
-        "condition": "locked",
+        "nie_byl_w": "5",
         "label": "Drzwi zamknięte – próbujesz je otworzyć"
       },
       {
         "target": 33,
-        "condition": "open_or_retreat",
         "label": "Wycofujesz się"
       }
     ]
@@ -4141,12 +4189,11 @@
     "edges": [
       {
         "target": 5,
-        "condition": "door_closed",
+        "nie_byl_w": "5",
         "label": "Drzwi zamknięte – wchodzisz"
       },
       {
         "target": 134,
-        "condition": "door_open_or_retreat",
         "label": "Wycofujesz się"
       }
     ]
@@ -5120,19 +5167,35 @@
       {
         "target": "35",
         "zloto_min": 10,
-        "label": "Ten sam brzeg: smoczy transport (10 sztuk złota)"
+        "label": "Smoczy transport (10 sztuk złota)",
+        "gdy_znacznik": [
+          "brzeg",
+          "swoj"
+        ]
       },
       {
         "target": "74",
-        "label": "Ten sam brzeg: most"
+        "label": "Most",
+        "gdy_znacznik": [
+          "brzeg",
+          "swoj"
+        ]
       },
       {
         "target": "110",
-        "label": "Ten sam brzeg: gigantyczny skok"
+        "label": "Gigantyczny skok",
+        "gdy_znacznik": [
+          "brzeg",
+          "swoj"
+        ]
       },
       {
         "target": "186",
-        "label": "Jesteś na drugim brzegu"
+        "label": "Jesteś na drugim brzegu",
+        "gdy_znacznik": [
+          "brzeg",
+          "drugi"
+        ]
       }
     ]
   },
@@ -5553,11 +5616,19 @@
     "edges": [
       {
         "target": 15,
-        "label": "Parzysta liczba przepraw"
+        "wizyty_parzyste": [
+          "214",
+          true
+        ],
+        "label": "Parzysta przeprawa – południowy brzeg"
       },
       {
         "target": 195,
-        "label": "Nieparzysta liczba przepraw"
+        "wizyty_parzyste": [
+          "214",
+          false
+        ],
+        "label": "Nieparzysta przeprawa – północny brzeg"
       }
     ]
   },
@@ -5566,6 +5637,12 @@
     "edges": [
       {
         "target": 131,
+        "ma": "błyszczący kluczyk",
+        "efekt": {
+          "usun": [
+            "błyszczący kluczyk"
+          ]
+        },
         "label": "Próbujesz podnieść kratę kluczem"
       },
       {
@@ -5632,10 +5709,27 @@
     "edges": [
       {
         "target": 4,
+        "ma": [
+          "flasza z wodą z jeziora",
+          "flasza z napojem niewidzialności",
+          "eliksir niewidzialności"
+        ],
+        "efekt": {
+          "zuzyj": [
+            "flasza z wodą z jeziora",
+            "flasza z napojem niewidzialności",
+            "eliksir niewidzialności"
+          ]
+        },
         "label": "Masz coś do picia – uczta"
       },
       {
         "target": 90,
+        "nie_ma": [
+          "flasza z wodą z jeziora",
+          "flasza z napojem niewidzialności",
+          "eliksir niewidzialności"
+        ],
         "label": "Idziesz szukać picia"
       },
       {
