@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (84)
+node --test web/silnik.test.js      # testy silnika (86)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 -m unittest test_game_mechanics  # stara wersja Pythonowa (11), poza workflow
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
@@ -119,8 +119,12 @@ licznik_ogranych}`; stan w `stan.zaklad: {zloto, rundy, koniec}` (`"ograny"` /
 `"bankrut"`), funkcje `maksStawka()` i `postawZaklad()`. `combat.powtarzalna: true`
 = za każdym wejściem nowy potwór (367), wbrew zasadzie o pokonanych.
 
+Kara do najbliższej walki (95): efekt `{"kara_w_walce": {"Z": -1, "powod": ...}}`
+czeka w `bohater.karaWalki`, przy starcie walki przechodzi do `walka.kara` i liczy się
+tylko w niej.
+
 Bohater: `Z`, `W`, `S`, `start: {Z, W, S}`, `prowiant`, `zloto`, `ekwipunek`,
-`eliksir: {cecha, lyki}`. Eliksir S podnosi też `start.S` o 1 (zasady V).
+`eliksir: {cecha, lyki}`, opcjonalnie `karaWalki: {Z, powod}`. Eliksir S podnosi też `start.S` o 1 (zasady V).
 
 Tryb tajemny: `stan.tajny` = ziarno losowania (liczba) albo brak. Stan gry, dane
 i silnik zawsze używają prawdziwych numerów; zamiana jest tylko przy rysowaniu:
@@ -144,7 +148,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (20.11.2026)
 
-Ostatni commit z kodem: „Tryb testowy ukryty” (20.11.2026).
+Ostatni commit z kodem: „95: kara w najbliższej walce” (20.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -161,9 +165,8 @@ Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **23**.
+Bieżący: **24**.
 
-- 23\. 95: kara −1 Z w najbliższej walce
 - 24\. Pętle w książce: powtarzalne przeszukanie 305
 - 25\. Przejrzeć etykiety przycisków przy długich paragrafach
 - 26\. Licencja kodu: stare README mówiło „MIT”, ale pliku `LICENSE` nie ma — zdecydować
@@ -172,7 +175,7 @@ Bieżący: **23**.
   kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
   uwaga Macieja: obecna mapa mało pomaga
 
-Zamknięte: 1–22.
+Zamknięte: 1–23.
 
 ## 8. Otwarte ustalenia projektowe
 

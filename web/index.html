@@ -346,6 +346,10 @@ function rysujKarte() {
   karta.append(p, z);
 
   rysujEliksir(b);
+  if (b.karaWalki) {
+    // Kara czekająca na najbliższą walkę – żeby gracz nie zapomniał, że ją niesie.
+    document.getElementById("eliksir").append(el("span", "", `· ${b.karaWalki.powod ?? "kara"}: ${String(b.karaWalki.Z).replace("-", "−")} Z w najbliższej walce`));
+  }
 
   const rzeczy = b.ekwipunek ?? [];
   const szczegoly = document.getElementById("ekwipunek");
@@ -543,6 +547,7 @@ function rysujWalke(akapit) {
   const w = stan.walka;
   const sekcja = el("section", "walka");
   sekcja.append(el("h2", "", w.zakonczona ? "Po walce" : "Walka"));
+  if (w.kara && !w.zakonczona) sekcja.append(el("p", "oslona", `${w.kara.powod ?? "Kara"}: ${String(w.kara.Z).replace("-", "−")} Z w tej walce.`));
   if (opis.wedrujacy) sekcja.append(el("p", "oslona", w.zakonczona
     ? "Wędrujący potwór pokonany. Droga wolna."
     : "Z bocznego korytarza wychodzi wędrujący potwór!"));

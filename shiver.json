@@ -1538,11 +1538,6 @@
   },
   "95": {
     "text": "Wybierasz rękawice. Nie, te ci nie odpowiadają. Nie możesz ich ściągnąć. Czujesz jak coraz mocniej ściskają ręce, zaczynają miażdżyć palce. SSS. Jeśli masz S, udaje ci się oswobodzić. Jeżeli nie masz S, cierpisz aż do najbliższej walki, w której obniżasz Z o 1. Jeżeli rękawice były pierwszą rzeczą wybraną przez ciebie patrz 115, jeśli drugą patrz 68.",
-    "effects": [
-      {
-        "agility": -1
-      }
-    ],
     "edges": [
       {
         "label": "Pierwsza rzecz",
@@ -1553,7 +1548,16 @@
         "target": 68
       }
     ],
-    "test_sss": true
+    "test_sss": true,
+    "efekty": [
+      {
+        "gdy_sss": false,
+        "kara_w_walce": {
+          "Z": -1,
+          "powod": "zaciśnięte rękawice"
+        }
+      }
+    ]
   },
   "96": {
     "text": "Znajdujesz klucz. Ma numer 12. Dostajesz +2S - patrz 253.",

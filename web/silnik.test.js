@@ -753,3 +753,29 @@ test("szmaragd: dostajesz go w 263, ratuje w 314 i znika w 12", () => {
   const po = s.zastosujEfekty(wykonajPrzejscie(spada, { target: "12" }, null, KSIEGA), KSIEGA["12"]);
   assert.ok(!po.bohater.ekwipunek.includes("szmaragd"));
 });
+
+// ---------------------------------------------------------------- 95: kara w najbliższej walce
+const poRekawicach = (szczescie) => {
+  const st = { ...wMiejscu("95", ["1", "115"]), testSSS: { akapit: "95", szczescie, rzut: 7 } };
+  return s.zastosujEfekty(st, KSIEGA["95"]);
+};
+const POTYCZKA = { 1: { text: "", edges: [{ target: "2" }] }, 2: { text: "", combat: { monsters: [{ name: "ORK", Z: 8, W: 4 }] }, edges: [{ target: "3" }] }, 3: { text: "", combat: { monsters: [{ name: "ORK", Z: 8, W: 4 }] }, edges: [] } };
+
+test("95: ze szczęściem nic, bez szczęścia kara czeka i nie zmienia Z od razu", () => {
+  assert.strictEqual(poRekawicach(true).bohater.karaWalki, undefined);
+  const st = poRekawicach(false);
+  assert.deepStrictEqual([st.bohater.Z, st.bohater.karaWalki.Z], [8, -1]);
+  assert.deepStrictEqual(st.zmiany, ["−1 Z w najbliższej walce"]);
+});
+
+test("95: kara działa w jednej, najbliższej walce, potem znika", () => {
+  let st = wykonajPrzejscie({ ...poRekawicach(false), akapit: "1" }, { target: "2" }, null, POTYCZKA);
+  assert.strictEqual(st.walka.kara.Z, -1);
+  assert.strictEqual(st.bohater.karaWalki, undefined);
+  // obie strony rzucają 3+3: ORK 8+6=14, Ty 8+6−1=13 → obrywasz (bez kary byłby remis)
+  st = s.rundaWalki(st, POTYCZKA[2].combat, false, kostka(3, 3, 3, 3));
+  assert.deepStrictEqual([st.walka.dziennik.at(-1).silaBohatera, st.bohater.W], [13, 18]);
+  const nastepna = wykonajPrzejscie({ ...st, walka: null }, { target: "3" }, null, POTYCZKA);
+  assert.strictEqual(nastepna.walka.kara, null);
+  assert.strictEqual(nastepna.bohater.Z, 8);
+});

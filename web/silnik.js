@@ -113,6 +113,9 @@ function wykonajPrzejscie(stan, przejscie, wybranyNumer = null, ksiega = null, k
       spotkane = [...spotkane, cel];
     }
   }
+  // Kara „do najbliższej walki” (rękawice z 95) przeszła właśnie do walki – z bohatera znika.
+  if (walka?.kara) { bohater = { ...bohater }; delete bohater.karaWalki; }
+
   // Paragraf z zakładami (211): siada nowy przeciwnik ze swoim złotem.
   const reguly = ksiega?.[cel]?.zaklady;
   const zaklad = reguly ? { zloto: reguly.zloto, rundy: [], koniec: null } : null;
@@ -219,6 +222,7 @@ function rozpocznijWalke(akapit, bohater = null) {
   return {
     oslona: rzecz ? opis.oslona.W : 0,   // ile ran jeszcze przyjmie osłona
     oslonaZ: rzecz ?? null,              // z czego jest (do pokazania na ekranie)
+    kara: bohater?.karaWalki ?? null,    // kara czekająca na tę walkę, np. {Z: -1, powod: "rękawice"}
     potwory: structuredClone(opis.monsters), // kopia – nie psujemy księgi
     indeks: 0,              // z którym potworem walczymy (walka po kolei)
     rundaPotwora: 0,        // rundy z bieżącym potworem
@@ -266,7 +270,7 @@ function rundaWalki(stan, opis, uzyjSSS = false, kostka = k6) {
   const a = rzut2k(kostka);
   const b = rzut2k(kostka);
   const silaPotwora = a.suma + potwor.Z;
-  const silaBohatera = b.suma + bohater.Z + (opis.hero_Z_bonus ?? 0) + (opis.hero_attack_bonus ?? 0);
+  const silaBohatera = b.suma + bohater.Z + (opis.hero_Z_bonus ?? 0) + (opis.hero_attack_bonus ?? 0) + (walka.kara?.Z ?? 0);
   const wpis = { potwor: potwor.name, a, b, silaPotwora, silaBohatera };
 
   if (silaPotwora === silaBohatera) {
@@ -542,6 +546,11 @@ function zmienCechy(bohater, efekt) {
     const naprawde = b.zloto - przed;   // przegrać można najwyżej tyle, ile się ma
     opisy.push(naprawde === 0 && efekt.zloto < 0 ? "nie masz złota"
       : `${naprawde >= 0 ? "+" : "−"}${Math.abs(naprawde)} złota`);
+  }
+  if (efekt.kara_w_walce) {
+    // Nie zmienia cech od razu: czeka na bohaterze do najbliższej walki i tylko w niej działa.
+    b.karaWalki = { ...efekt.kara_w_walce };
+    opisy.push(`${efekt.kara_w_walce.Z} Z w najbliższej walce`.replace("-", "−"));
   }
   if (efekt.dodaj || efekt.usun || efekt.zuzyj) {
     let rzeczy = [...(b.ekwipunek ?? [])];
