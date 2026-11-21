@@ -169,7 +169,9 @@ Znane usterki: brak.
 
 Bieżący: **27**.
 
-- 27\. Zdobyć oficjalną erratę („Razem” nr 40/1987) i porównać z naszymi poprawkami
+- 27\. Zdobyć oficjalną erratę („Razem” nr 40/1987, rubryka „Wszystko Gra”) i porównać
+  z naszymi poprawkami — w sieci jej nie ma (szukane dwa razy, notatki w `ToDo.md`);
+  czeka na zdjęcie strony od Macieja
 - 28\. Mapa: rozróżnić pomieszczenia i akcje — pomieszczenia jako kółka, akcje jako
   kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
   uwaga Macieja: obecna mapa mało pomaga

@@ -40,3 +40,12 @@ Zadania do zrobienia są w `CLAUDE.md` (lista wątków). Tu zostaje wiedza o ksi
   - Inne przeszukania (58, 116, 119, 124, 180, 380…) nie mają losowej bramki,
     a ich efekty i tak działają raz na grę – bez zmian.
   - Hazard (40 → 62 → 201/145, 334) jest powtarzalny celowo: tak mówi książka.
+
+* Errata z „Razem” nr 40/1987 – drugie szukanie (20.11.2026)
+  - Rubryka nazywała się „Wszystko Gra”; Dreszcz był w numerach 33/87 (553),
+    34/87 (554) i 40/87 (560).
+  - Skany „Razem” na archive.org i chomikuj (użytkownik uicr0Bee) obejmują tylko
+    okładki i dział Mikro, a numerów 33, 34 i 40/87 ten zbiór w ogóle nie ma.
+  - Treści erraty nadal nie ma w sieci. Zostaje papier: czytelnia czasopism
+    (rocznik 1987 ma m.in. WBP w Olsztynie i Biblioteka Kórnicka) albo zakup
+    numeru 40/87 na aukcji. Potrzebne jest zdjęcie strony „Wszystko Gra”.
