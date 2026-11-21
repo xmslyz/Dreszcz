@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (86)
+node --test web/silnik.test.js      # testy silnika (87)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 -m unittest test_game_mechanics  # stara wersja Pythonowa (11), poza workflow
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
@@ -148,7 +148,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (20.11.2026)
 
-Ostatni commit z kodem: „95: kara w najbliższej walce” (20.11.2026).
+Ostatni commit z kodem: „69/305: przeszukanie tylko raz” (20.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -165,9 +165,8 @@ Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **24**.
+Bieżący: **25**.
 
-- 24\. Pętle w książce: powtarzalne przeszukanie 305
 - 25\. Przejrzeć etykiety przycisków przy długich paragrafach
 - 26\. Licencja kodu: stare README mówiło „MIT”, ale pliku `LICENSE` nie ma — zdecydować
 - 27\. Zdobyć oficjalną erratę („Razem” nr 40/1987) i porównać z naszymi poprawkami
@@ -175,7 +174,7 @@ Bieżący: **24**.
   kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
   uwaga Macieja: obecna mapa mało pomaga
 
-Zamknięte: 1–23.
+Zamknięte: 1–24.
 
 ## 8. Otwarte ustalenia projektowe
 

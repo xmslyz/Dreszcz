@@ -779,3 +779,10 @@ test("95: kara działa w jednej, najbliższej walce, potem znika", () => {
   assert.strictEqual(nastepna.walka.kara, null);
   assert.strictEqual(nastepna.bohater.Z, 8);
 });
+
+// ---------------------------------------------------------------- 69/305: komnatę przeszukujesz tylko raz
+test("69: po pierwszym przeszukaniu (305) zostaje tylko wyjście", () => {
+  const poWalce = (historia) => ({ ...wMiejscu("69", historia), pokonani: ["69"] });
+  assert.deepStrictEqual(cele(poWalce(["1", "319"])), ["305", "291"]);
+  assert.deepStrictEqual(cele(poWalce(["1", "319", "69", "305", "112", "291", "330", "170", "319"])), ["291"]);
+});

@@ -1148,11 +1148,12 @@
     },
     "edges": [
       {
-        "label": "Przeszukujesz",
-        "target": "305"
+        "label": "Przeszukujesz komnatę",
+        "target": "305",
+        "nie_byl_w": "305"
       },
       {
-        "label": "Nie przeszukujesz",
+        "label": "Wychodzisz",
         "target": "291"
       }
     ]

@@ -32,3 +32,11 @@ Zadania do zrobienia są w `CLAUDE.md` (lista wątków). Tu zostaje wiedza o ksi
   - Skargi na „Szalone Pola” (20, 27 → 238 → 316 → 176): wraca się w kółko.
     U nas 176 ma też wyjście na wschód (230), więc pułapki nie ma.
   - Naszych poprawek (63, 166, 172, 174) nikt w sieci nie opisał – to nasze wnioski.
+
+* Pętle (sprawdzone 20.11.2026)
+  - 69 → 305 → 112/381 → … → 330 → 170 → 319 → 69: do komnaty da się wracać,
+    więc rzut „co najmniej 18” można było powtarzać do skutku. Teraz przeszukanie
+    jest jedno na grę (przejście 69 → 305 ma `nie_byl_w: 305`).
+  - Inne przeszukania (58, 116, 119, 124, 180, 380…) nie mają losowej bramki,
+    a ich efekty i tak działają raz na grę – bez zmian.
+  - Hazard (40 → 62 → 201/145, 334) jest powtarzalny celowo: tak mówi książka.
