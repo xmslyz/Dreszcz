@@ -2415,10 +2415,12 @@
     "text": "Przeszkoda ustępuje. Idziesz korytarzem na wschód, a później skręca on na północ. Po pewnym czasie napotykasz skrzyżowanie. Możesz pójść albo na zachód - patrz 73, albo na północ - patrz 20.",
     "edges": [
       {
-        "target": 73
+        "target": 73,
+        "label": "Na zachód"
       },
       {
-        "target": 20
+        "target": 20,
+        "label": "Na północ"
       }
     ],
     "korytarz": true
@@ -2642,10 +2644,12 @@
     "text": "Przekomarzasz się z KRASNALEM. Dzięki temu odpoczywasz: +3W, +2Z, w końcu odstępujesz motyla. Za darmo - patrz 202, czy za złoto? - patrz 320.",
     "edges": [
       {
-        "target": 202
+        "target": 202,
+        "label": "Oddajesz motyla za darmo"
       },
       {
-        "target": "353"
+        "target": "353",
+        "label": "Oddajesz motyla za złoto"
       }
     ],
     "efekty": [
@@ -2682,10 +2686,12 @@
     "text": "Możesz użyć miecza - patrz 213. Jeśli nie chcesz walki, musisz ratować się Ucieczką - patrz 320.",
     "edges": [
       {
-        "target": 213
+        "target": 213,
+        "label": "Używasz miecza"
       },
       {
-        "target": 320
+        "target": 320,
+        "label": "Ratujesz się Ucieczką"
       }
     ]
   },
@@ -2715,13 +2721,16 @@
     "text": "Dochodzisz do skrzyżowania. Ma kształt litery T. Możesz iść na: · północ - patrz 84, · wschód - patrz 319, · południe - patrz 357.",
     "edges": [
       {
-        "target": 84
+        "target": 84,
+        "label": "Na północ"
       },
       {
-        "target": 319
+        "target": 319,
+        "label": "Na wschód"
       },
       {
-        "target": 357
+        "target": 357,
+        "label": "Na południe"
       }
     ],
     "korytarz": true
@@ -2730,10 +2739,12 @@
     "text": "Pospiesznie wychodzisz z komnaty. Są dwa wyjścia: to, którym wszedłeś i drugie - na wschodniej ścianie. Jeśli wybierasz pierwsze - patrz 50, a jeśli drugie - patrz 99.",
     "edges": [
       {
-        "target": 50
+        "target": 50,
+        "label": "Wyjście, którym wszedłeś"
       },
       {
-        "target": 99
+        "target": 99,
+        "label": "Wyjście na wschodniej ścianie"
       }
     ]
   },
@@ -2741,10 +2752,12 @@
     "text": "Czy przepłynąłeś jezioro po raz drugi? Jeśli tak - patrz 15, jeśli przepłynąłeś je więcej niż dwa razy - patrz 365.",
     "edges": [
       {
-        "target": "266"
+        "target": "266",
+        "label": "Przepłynąłeś jezioro po raz drugi"
       },
       {
-        "target": 365
+        "target": 365,
+        "label": "Przepłynąłeś je więcej niż dwa razy"
       }
     ]
   },
@@ -2779,10 +2792,12 @@
     "text": "Zbliżasz się do skrzyżowania. Możesz pójść na: · północ - patrz 27, · wschód - patrz 230.",
     "edges": [
       {
-        "target": 27
+        "target": 27,
+        "label": "Na północ"
       },
       {
-        "target": 230
+        "target": 230,
+        "label": "Na wschód"
       }
     ],
     "korytarz": true
@@ -3114,11 +3129,13 @@
     "edges": [
       {
         "target": 120,
-        "condition": "doors_open"
+        "condition": "doors_open",
+        "label": "Drzwi są otwarte"
       },
       {
         "target": 301,
-        "condition": "doors_closed"
+        "condition": "doors_closed",
+        "label": "Drzwi są zamknięte"
       }
     ]
   },
@@ -3446,11 +3463,13 @@
     "edges": [
       {
         "target": 180,
-        "condition": "doors_open"
+        "condition": "doors_open",
+        "label": "Drzwi są otwarte"
       },
       {
         "target": 301,
-        "condition": "doors_closed"
+        "condition": "doors_closed",
+        "label": "Drzwi są zamknięte"
       }
     ]
   },
@@ -3805,11 +3824,13 @@
     "edges": [
       {
         "target": 5,
-        "condition": "locked"
+        "condition": "locked",
+        "label": "Drzwi zamknięte – próbujesz je otworzyć"
       },
       {
         "target": 33,
-        "condition": "open_or_retreat"
+        "condition": "open_or_retreat",
+        "label": "Wycofujesz się"
       }
     ]
   },
@@ -4090,16 +4111,20 @@
     "edges": [
       {
         "target": "35",
-        "zloto_min": 10
+        "zloto_min": 10,
+        "label": "Smoczy transport (10 sztuk złota)"
       },
       {
-        "target": "74"
+        "target": "74",
+        "label": "Ryzykujesz spacer przez most"
       },
       {
-        "target": "110"
+        "target": "110",
+        "label": "Gigantyczny skok (kosztem prawie całej siły)"
       },
       {
-        "target": "358"
+        "target": "358",
+        "label": "Ponawiasz próbę z liną"
       }
     ],
     "efekty": [
@@ -4116,11 +4141,13 @@
     "edges": [
       {
         "target": 5,
-        "condition": "door_closed"
+        "condition": "door_closed",
+        "label": "Drzwi zamknięte – wchodzisz"
       },
       {
         "target": 134,
-        "condition": "door_open_or_retreat"
+        "condition": "door_open_or_retreat",
+        "label": "Wycofujesz się"
       }
     ]
   },
@@ -4202,13 +4229,16 @@
     "text": "Dochodzisz do skrzyżowania, na którym możesz iść na: · północ - patrz 308, · wschód - patrz 382, · południe - patrz 215.",
     "edges": [
       {
-        "target": 308
+        "target": 308,
+        "label": "Na północ"
       },
       {
-        "target": 382
+        "target": 382,
+        "label": "Na wschód"
       },
       {
-        "target": 215
+        "target": 215,
+        "label": "Na południe"
       }
     ],
     "korytarz": true
@@ -4263,10 +4293,12 @@
     "text": "Korytarz prowadzi na wschód. Zbliżasz się do skrzyżowania. Możesz skręcić albo na północ - patrz 191, albo iść dalej na wschód - patrz 47.",
     "edges": [
       {
-        "target": 191
+        "target": 191,
+        "label": "Skręcasz na północ"
       },
       {
-        "target": 47
+        "target": 47,
+        "label": "Dalej na wschód"
       }
     ],
     "korytarz": true
@@ -4276,11 +4308,15 @@
     "edges": [
       {
         "target": 100,
-        "condition": "has_gold"
+        "condition": "has_gold",
+        "label": "Masz złoto – siadasz do stołu",
+        "zloto_min": 1
       },
       {
         "target": 196,
-        "condition": "no_gold"
+        "condition": "no_gold",
+        "label": "Nie masz złota – zwiewasz",
+        "inaczej": true
       }
     ]
   },
@@ -4456,11 +4492,15 @@
     "edges": [
       {
         "target": 183,
-        "condition": "has_gold"
+        "condition": "has_gold",
+        "label": "Masz złoto – grasz",
+        "zloto_min": 1
       },
       {
         "target": 19,
-        "condition": "no_gold"
+        "condition": "no_gold",
+        "label": "Nie masz złota",
+        "inaczej": true
       }
     ]
   },
@@ -4807,10 +4847,12 @@
     },
     "edges": [
       {
-        "target": "119"
+        "target": "119",
+        "label": "Rozglądasz się po ścianach"
       },
       {
-        "target": "31"
+        "target": "31",
+        "label": "Przeszukujesz ciało OGRA"
       }
     ]
   },
@@ -4866,10 +4908,12 @@
     "text": "Komnata jest zupełnie pusta. Możesz albo wrócić - patrz 194, albo wyjść wschodnimi drzwiami - patrz 242.",
     "edges": [
       {
-        "target": 194
+        "target": 194,
+        "label": "Wracasz"
       },
       {
-        "target": 242
+        "target": 242,
+        "label": "Wschodnie drzwi"
       }
     ]
   },
@@ -4877,10 +4921,12 @@
     "text": "\"Ile to kosztuje\" - pytasz. \"Mały drobiazg: 15 sztuk złota za pal i 10 za słój z pyłem. Jak darmo\". Kupujesz? Jeśli tak - patrz 55, jeśli nie - patrz 196.",
     "edges": [
       {
-        "target": 55
+        "target": 55,
+        "label": "Kupujesz"
       },
       {
-        "target": 196
+        "target": 196,
+        "label": "Nie kupujesz"
       }
     ]
   },
@@ -4941,10 +4987,12 @@
     "text": "Przykładasz ucho do drzwi. Słyszysz jakieś rozmowy i stukanie. Jeśli chcesz wejść do komnaty - patrz 151, jeśli nie - patrz 90.",
     "edges": [
       {
-        "target": 151
+        "target": 151,
+        "label": "Wchodzisz do komnaty"
       },
       {
-        "target": 90
+        "target": 90,
+        "label": "Nie wchodzisz"
       }
     ]
   },
@@ -5013,16 +5061,20 @@
     "text": "Zbliżasz się do skrzyżowania. Możesz pójść na: · zachód - patrz 304, · północ - patrz 176, · wschód - patrz 267, · południe - patrz 218.",
     "edges": [
       {
-        "target": 304
+        "target": 304,
+        "label": "Na zachód"
       },
       {
-        "target": 176
+        "target": 176,
+        "label": "Na północ"
       },
       {
-        "target": 267
+        "target": 267,
+        "label": "Na wschód"
       },
       {
-        "target": 218
+        "target": 218,
+        "label": "Na południe"
       }
     ],
     "korytarz": true
@@ -5067,16 +5119,20 @@
     "edges": [
       {
         "target": "35",
-        "zloto_min": 10
+        "zloto_min": 10,
+        "label": "Ten sam brzeg: smoczy transport (10 sztuk złota)"
       },
       {
-        "target": "74"
+        "target": "74",
+        "label": "Ten sam brzeg: most"
       },
       {
-        "target": "110"
+        "target": "110",
+        "label": "Ten sam brzeg: gigantyczny skok"
       },
       {
-        "target": "186"
+        "target": "186",
+        "label": "Jesteś na drugim brzegu"
       }
     ]
   },
@@ -5084,13 +5140,18 @@
     "text": "W niewielkiej odległości dostrzegasz jakieś drzwi. Podchodzisz bliżej, jeżeli jeszcze nie byłeś za tymi drzwiami - patrz 21. Jeśli byłeś i chcesz jeszcze raz wejść - patrz 6. Nie chcesz? No to patrz 212.",
     "edges": [
       {
-        "target": 21
+        "target": 21,
+        "label": "Podchodzisz do drzwi",
+        "nie_byl_w": "21"
       },
       {
-        "target": 6
+        "target": 6,
+        "label": "Wchodzisz jeszcze raz",
+        "byl_w": "21"
       },
       {
-        "target": 212
+        "target": 212,
+        "label": "Nie wchodzisz"
       }
     ]
   },
@@ -5115,10 +5176,12 @@
           "dodaj": [
             "smoczek"
           ]
-        }
+        },
+        "label": "Akceptujesz 30 sztuk złota i smoczek"
       },
       {
-        "target": 300
+        "target": 300,
+        "label": "Nie akceptujesz"
       }
     ]
   },
@@ -5212,10 +5275,12 @@
     "text": "Idziesz w stronę skrzyżowania. Możesz pójść na: · zachód - patrz 218, · północ - patrz 267.",
     "edges": [
       {
-        "target": 218
+        "target": 218,
+        "label": "Na zachód"
       },
       {
-        "target": 267
+        "target": 267,
+        "label": "Na północ"
       }
     ],
     "korytarz": true
@@ -5245,13 +5310,16 @@
     "text": "Korytarz rozwidla się. Możesz iść na: · zachód - patrz 221, · wschód - patrz 79, · południe - patrz 239.",
     "edges": [
       {
-        "target": 221
+        "target": 221,
+        "label": "Na zachód"
       },
       {
-        "target": 79
+        "target": 79,
+        "label": "Na wschód"
       },
       {
-        "target": 239
+        "target": 239,
+        "label": "Na południe"
       }
     ],
     "korytarz": true
@@ -5260,10 +5328,12 @@
     "text": "Delikatnie wsuwasz stopę w wąską szparę. Biodrami rozpychasz drzwi. Odskakują na bok. To jest metoda! Wyczuwasz lekki zapach suszonych ziół. Przy lewej ścianie stoją dwie gładkie kolumienki. Miedzy nimi na wysokości oczu rozciągnięta jest granitowa półka. Stoją tam dwie lampki, a na środku kamienne pudełko. Posadzka wyłożona jest włochatymi skórami zwierząt i potworów. To chyba podziemna kaplica! Pod ścianą, naprzeciw ołtarzyka widzisz niski, wykuty w skale stół. Cos tam na nim stoi. Podnosisz wyżej latarnię. Och, królu Almanhagorze, to dwie wazy pełne złota. Każda ma taki sam wyszukany kształt. Z jednej strony ozdobiona jest łbem jakiegoś stwora, z drugiej - przymocowane są dwa połyskujące skrzydła. Czy chcesz zabrać złoto? Jeśli tak - patrz 48, jeśli nie - patrz 385.",
     "edges": [
       {
-        "target": 48
+        "target": 48,
+        "label": "Zabierasz złoto"
       },
       {
-        "target": 385
+        "target": 385,
+        "label": "Zostawiasz złoto"
       }
     ]
   },
@@ -5315,10 +5385,12 @@
           "usun": [
             "blaszany motyl"
           ]
-        }
+        },
+        "label": "Akceptujesz 10 sztuk złota"
       },
       {
-        "target": 60
+        "target": 60,
+        "label": "Nie akceptujesz"
       }
     ]
   },
@@ -5326,10 +5398,12 @@
     "text": "Idziesz na północ. Z czasem korytarz skręca na wschód. Przechodzisz pięćdziesiąt kroków i znów słyszysz dziwne hałasy; śmiechy i piski. Jeśli chcesz zbadać, czy w południowej ścianie są jakieś sekretne drzwi - patrz 256. Jeśli decydujesz się iść dalej - patrz 378.",
     "edges": [
       {
-        "target": 256
+        "target": 256,
+        "label": "Szukasz sekretnych drzwi"
       },
       {
-        "target": 378
+        "target": 378,
+        "label": "Idziesz dalej"
       }
     ]
   },
@@ -5364,10 +5438,12 @@
     "text": "Po pewnym czasie zauważasz drzwi w zachodniej ścianie korytarza. Czy chcesz wyważyć te drzwi? Jeśli tak - patrz 245, jeśli nie - patrz 108.",
     "edges": [
       {
-        "target": 245
+        "target": 245,
+        "label": "Wyważasz drzwi"
       },
       {
-        "target": 108
+        "target": 108,
+        "label": "Idziesz dalej"
       }
     ]
   },
@@ -5463,10 +5539,12 @@
     "text": "Popychasz drzwi, uchylają się. Otwiera się ciemna czeluść. Wchodzisz oświetlając drogę latarnią. Pod stopami czujesz kamyki. Z przeciwległego końca pokoju dochodzi ciebie ciche chrapanie. Na podłodze śpi ORK. Obok niego leży jakieś pudełko. Jeśli chcesz spróbować zabrać ukradkiem pudełko - patrz 29. Jeśli decydujesz się podjąć walkę - patrz 116.",
     "edges": [
       {
-        "target": 29
+        "target": 29,
+        "label": "Próbujesz ukradkiem zabrać pudełko"
       },
       {
-        "target": 116
+        "target": 116,
+        "label": "Podejmujesz walkę"
       }
     ]
   },
@@ -5474,10 +5552,12 @@
     "text": "Jeśli przepłynąłeś jezioro parzystą ilość razy - patrz 15, jeśli nieparzystą - patrz 195.",
     "edges": [
       {
-        "target": 15
+        "target": 15,
+        "label": "Parzysta liczba przepraw"
       },
       {
-        "target": 195
+        "target": 195,
+        "label": "Nieparzysta liczba przepraw"
       }
     ]
   },
@@ -5485,10 +5565,12 @@
     "text": "W ścianie, obok przejścia, którym się tu dostałeś, dostrzegasz jakiś zamek. Chcesz spróbować, czy znalezionym kluczem da się podnieść kratę? Jeśli tak - patrz 131, jeśli nie - patrz 278.",
     "edges": [
       {
-        "target": 131
+        "target": 131,
+        "label": "Próbujesz podnieść kratę kluczem"
       },
       {
-        "target": 278
+        "target": 278,
+        "label": "Nie próbujesz"
       }
     ]
   },
@@ -5518,10 +5600,12 @@
     "text": "Przechodzisz kilkanaście kroków i korytarz skręca na północ. Po pewnym czasie słyszysz jakiś rechot. Rzeczywiście, ktoś pęka ze śmiechu. Czy chcesz szukać sekretnego przejścia? Jeśli tak - patrz 87, jeśli nie - patrz 354.",
     "edges": [
       {
-        "target": 87
+        "target": 87,
+        "label": "Szukasz sekretnego przejścia"
       },
       {
-        "target": 354
+        "target": 354,
+        "label": "Idziesz dalej"
       }
     ],
     "korytarz": true
@@ -5547,13 +5631,16 @@
     "text": "KRASNOLUDY mają dobry charakter. Uwielbiają towarzystwo i wizyty. Choć trzeba przyznać, ze najczęściej wpadają tu jakieś włochate stwory, obżerają się sałatą, biorą parę główek pod pachę i znikają. Podbiegają do ciebie dwa KRASNOLUDY. Stoisz jeszcze w drzwiach, zapraszają cię do środka. Ale... no właśnie, jeden ze stworków drapie się w kudłaty łeb: \"Chcemy poczęstować cię naszą sałatką, lecz nie mamy nic do picia. Może ty masz? Byle nie zaczarowana woda, bo nam trochę szkodzi!\" Jeśli masz coś takiego, to uczta gotowa - patrz 4. Jeśli nie, możesz poszukać w okolicy. Będziesz musiał wyjść z komnaty. Pamiętaj, że musisz mieć jakieś naczynie, do którego nabierzesz czegoś do picia; może być pusta flasza, a nawet hełm. Idziesz po picie? No, to wychodzisz tymi samymi drzwiami, którymi wszedłeś - patrz 90. Jeśli nie chcesz szukać picia, pozostaje ci tylko walka - patrz 318.",
     "edges": [
       {
-        "target": 4
+        "target": 4,
+        "label": "Masz coś do picia – uczta"
       },
       {
-        "target": 90
+        "target": 90,
+        "label": "Idziesz szukać picia"
       },
       {
-        "target": 318
+        "target": 318,
+        "label": "Walczysz"
       }
     ]
   },
@@ -5597,13 +5684,16 @@
     "text": "Chcesz podbić cenę? - patrz 246. Chcesz zaatakować stwora, by przekonać się, czy nie chowa większej ilości złota? - patrz 223. A może, po prostu, nie chcesz złota? - patrz 81.",
     "edges": [
       {
-        "target": 246
+        "target": 246,
+        "label": "Podbijasz cenę"
       },
       {
-        "target": 223
+        "target": 223,
+        "label": "Atakujesz stwora"
       },
       {
-        "target": 81
+        "target": 81,
+        "label": "Nie chcesz złota"
       }
     ]
   },
@@ -5670,21 +5760,37 @@
     "text": "\"Śmierć albo informacja\" - mówisz do GIGANTA. Rzucasz raz kostką. Jeśli wylosowałeś 1, 2, 3 wówczas GIGANT zgadza się przekazać ci pewne wiadomości - patrz 347. Jeśli wyrzuciłeś 4, 5, 6, potwór chce walczyć - patrz 86.",
     "edges": [
       {
-        "target": 347
+        "target": 347,
+        "label": "1–3: GIGANT przekazuje wiadomości",
+        "suma": [
+          1,
+          3
+        ]
       },
       {
-        "target": 86
+        "target": 86,
+        "label": "4–6: GIGANT chce walczyć",
+        "suma": [
+          4,
+          6
+        ]
       }
-    ]
+    ],
+    "rzut_kosci": {
+      "ile": 1,
+      "opis": "Rzuć kostką: 1–3 GIGANT mówi, 4–6 chce walczyć"
+    }
   },
   "380": {
     "text": "Czy chcesz przeszukać pokój? Jeśli tak - patrz 118, jeśli nie - patrz 372. Za odwagę otrzymujesz +1Z.",
     "edges": [
       {
-        "target": 118
+        "target": 118,
+        "label": "Przeszukujesz pokój"
       },
       {
-        "target": 372
+        "target": 372,
+        "label": "Wychodzisz"
       }
     ],
     "efekty": [
@@ -5742,10 +5848,12 @@
     "text": "Możesz wydostać się z komnaty DEMONÓW albo przez wschodnie albo przez zachodnie drzwi. Co wybierasz? Drzwi zachodnie - patrz 194. Drzwi wschodnie - patrz 242.",
     "edges": [
       {
-        "target": 194
+        "target": 194,
+        "label": "Drzwi zachodnie"
       },
       {
-        "target": 242
+        "target": 242,
+        "label": "Drzwi wschodnie"
       }
     ]
   },
@@ -5753,10 +5861,12 @@
     "text": "Zbliżasz się do skrzyżowania. Możesz iść albo na zachód - patrz 345, albo na wschód - patrz 273.",
     "edges": [
       {
-        "target": 345
+        "target": 345,
+        "label": "Na zachód"
       },
       {
-        "target": 273
+        "target": 273,
+        "label": "Na wschód"
       }
     ],
     "korytarz": true

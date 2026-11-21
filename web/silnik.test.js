@@ -786,3 +786,29 @@ test("69: po pierwszym przeszukaniu (305) zostaje tylko wyjście", () => {
   assert.deepStrictEqual(cele(poWalce(["1", "319"])), ["305", "291"]);
   assert.deepStrictEqual(cele(poWalce(["1", "319", "69", "305", "112", "291", "330", "170", "319"])), ["291"]);
 });
+
+// ---------------------------------------------------------------- etykiety i proste warunki (280, 295, 336, 379)
+test("każdy paragraf z kilkoma wyjściami ma opisane przyciski", () => {
+  const bez = Object.entries(KSIEGA).filter(([, p]) => p.edges.length > 1 && p.edges.some((e) => !e.label)).map(([nr]) => nr);
+  assert.deepStrictEqual(bez, []);
+});
+
+test("280 i 295: o złoto pyta gra, nie gracz", () => {
+  const zeZlotem = (nr, zloto) => { const st = wMiejscu(nr, ["1"]); return cele({ ...st, bohater: { ...st.bohater, zloto } }); };
+  assert.deepStrictEqual(zeZlotem("280", 3), ["100"]);
+  assert.deepStrictEqual(zeZlotem("280", 0), ["196"]);
+  assert.deepStrictEqual(zeZlotem("295", 1), ["183"]);
+  assert.deepStrictEqual(zeZlotem("295", 0), ["19"]);
+});
+
+test("336: za drzwi pierwszy raz idziesz do 21, potem możesz wejść ponownie (6)", () => {
+  assert.deepStrictEqual(cele(wMiejscu("336", ["1"])), ["21", "212"]);
+  assert.deepStrictEqual(cele(wMiejscu("336", ["1", "21"])), ["6", "212"]);
+});
+
+test("379: o rozmowie z GIGANTEM decyduje kostka", () => {
+  const st = wMiejscu("379", ["1"]);
+  assert.deepStrictEqual(cele(st), []);                                  // najpierw rzut
+  assert.deepStrictEqual(cele(s.rzucKoscia(st, kostka(2))), ["347"]);
+  assert.deepStrictEqual(cele(s.rzucKoscia(st, kostka(5))), ["86"]);
+});

@@ -68,7 +68,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (87)
+node --test web/silnik.test.js      # testy silnika (91)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 -m unittest test_game_mechanics  # stara wersja Pythonowa (11), poza workflow
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
@@ -141,6 +141,7 @@ Zasady, których się trzymamy:
 - Cechy, złoto, posiłki i przedmioty idą **jednym zapisem** `efekty`
   i jedną funkcją `zmienCechy()`. Nie tworzymy osobnych mechanizmów.
 - Filtrowanie warunkami nigdy nie może zostawić gracza bez wyjścia.
+- Paragraf z kilkoma wyjściami ma etykietę na każdym przycisku (pilnuje tego test).
 - Pokonane potwory nie wstają po powrocie do paragrafu.
 - Erratę wprowadzamy w `edges`; tekstu książki nie zmieniamy.
 - Stare klucze angielskie (`effects`, `actions`, `requires_*`, `condition`,
@@ -148,7 +149,7 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (20.11.2026)
 
-Ostatni commit z kodem: „69/305: przeszukanie tylko raz” (20.11.2026).
+Ostatni commit z kodem: „Etykiety przycisków” (20.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
 efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
@@ -165,16 +166,18 @@ Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **25**.
+Bieżący: **26**.
 
-- 25\. Przejrzeć etykiety przycisków przy długich paragrafach
 - 26\. Licencja kodu: stare README mówiło „MIT”, ale pliku `LICENSE` nie ma — zdecydować
 - 27\. Zdobyć oficjalną erratę („Razem” nr 40/1987) i porównać z naszymi poprawkami
 - 28\. Mapa: rozróżnić pomieszczenia i akcje — pomieszczenia jako kółka, akcje jako
   kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
   uwaga Macieja: obecna mapa mało pomaga
+- 29\. Pytania, na które wciąż odpowiada gracz zamiast gry: drzwi otwarte/zamknięte
+  (200, 224, 247, 270), liczba przepraw przez jezioro (172, 365), który brzeg (335),
+  klucz do kraty (366), coś do picia (371)
 
-Zamknięte: 1–24.
+Zamknięte: 1–25.
 
 ## 8. Otwarte ustalenia projektowe
 
