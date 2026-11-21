@@ -86,5 +86,6 @@ Poprawione odnośniki (prawdopodobne błędy druku; szczegóły w `ToDo.md`):
 
 - Książka „Dreszcz”: **Jacek Ciesielski**. Tekst paragrafów należy do autora
   i wydawcy; ta wersja powstała do użytku prywatnego.
-- Program: **Maciej Słyż**. Pytania, uwagi i błędy: xmslyz@gmail.com albo
+- Program: **Maciej Słyż**, licencja MIT (plik `LICENSE`). Licencja obejmuje tylko kod,
+  nie tekst książki. Pytania, uwagi i błędy: xmslyz@gmail.com albo
   zgłoszenie (Issue) w tym repozytorium.

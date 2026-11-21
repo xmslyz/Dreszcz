@@ -15,6 +15,7 @@ Po każdym zamkniętym wątku aktualizuj sekcje „Stan” i „Lista wątków�
   z instrukcji projektu oznacza tutaj `master`).
 - Prawa autorskie: tekst książki należy do autora/wydawcy. Użytek prywatny
   jest w porządku; publikacja w sklepach wymagałaby zgody.
+- Kod programu: licencja MIT (`LICENSE`), z zastrzeżeniem, że nie obejmuje tekstu książki.
 
 ## 2. Jak pracujemy
 
@@ -166,9 +167,8 @@ Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **26**.
+Bieżący: **27**.
 
-- 26\. Licencja kodu: stare README mówiło „MIT”, ale pliku `LICENSE` nie ma — zdecydować
 - 27\. Zdobyć oficjalną erratę („Razem” nr 40/1987) i porównać z naszymi poprawkami
 - 28\. Mapa: rozróżnić pomieszczenia i akcje — pomieszczenia jako kółka, akcje jako
   kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
@@ -177,7 +177,7 @@ Bieżący: **26**.
   (200, 224, 247, 270), liczba przepraw przez jezioro (172, 365), który brzeg (335),
   klucz do kraty (366), coś do picia (371)
 
-Zamknięte: 1–25.
+Zamknięte: 1–26.
 
 ## 8. Otwarte ustalenia projektowe
 
