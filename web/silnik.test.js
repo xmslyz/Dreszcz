@@ -179,8 +179,8 @@ test("połowa Wytrzymałości (paragraf 110)", () => {
 test("graf wędrówki: odwiedziny, pętle i niezbadane wyjścia", () => {
   const ksiega = {
     "1": { text: "Start. Dalej.", edges: [{ target: "25" }] },
-    "25": { text: "Skrzyżowanie T. Idź.", edges: [{ target: "64" }, { target: "90" }, { target: "END" }] },
-    "64": { text: "Korytarz.", edges: [{ target: "25" }] },
+    "25": { text: "Skrzyżowanie T. Idź.", miejsce: true, edges: [{ target: "64" }, { target: "90" }, { target: "END" }] },
+    "64": { text: "Korytarz.", miejsce: true, edges: [{ target: "25" }] },
   };
   const stan = { ...s.nowaGra(), historia: ["1", "25", "64", "25", "64"], akapit: "64" };
   const g = s.grafWedrowki(stan, ksiega);
@@ -811,4 +811,28 @@ test("379: o rozmowie z GIGANTEM decyduje kostka", () => {
   assert.deepStrictEqual(cele(st), []);                                  // najpierw rzut
   assert.deepStrictEqual(cele(s.rzucKoscia(st, kostka(2))), ["347"]);
   assert.deepStrictEqual(cele(s.rzucKoscia(st, kostka(5))), ["86"]);
+});
+
+// ---------------------------------------------------------------- mapa: miejsca i akcje
+test("czyMiejsce: korytarze i skrzyżowania tak, walki i znaleziska nie", () => {
+  for (const nr of ["170", "267", "333", "253", "319"]) assert.strictEqual(s.czyMiejsce(KSIEGA[nr]), true, nr);
+  for (const nr of ["96", "211", "367", "305", "291", "263"]) assert.strictEqual(s.czyMiejsce(KSIEGA[nr]), false, nr);
+  assert.strictEqual(s.czyMiejsce({ text: "Znajdujesz klucz.", miejsce: true, edges: [] }), true);    // ręczna poprawka wygrywa
+  assert.strictEqual(s.czyMiejsce({ text: "Korytarz.", korytarz: true, miejsce: false, edges: [] }), false);
+});
+
+test("graf wędrówki: akcje wiszą przy miejscu, drogi łączą tylko miejsca", () => {
+  // 319 (drzwi) → 69 (walka) → 305 (przeszukanie) → 112 (rzut) → 291 (strzałka) → 330 → 170 (skrzyżowanie)
+  const historia = ["319", "69", "305", "112", "291", "330", "170"];
+  const g = s.grafWedrowki({ ...s.nowaGra(), historia, akapit: "170" }, KSIEGA);
+  const w = Object.fromEntries(g.wezly.map((x) => [x.id, x]));
+  assert.deepStrictEqual([w["319"].typ, w["170"].typ], ["miejsce", "miejsce"]);
+  for (const nr of ["69", "305", "112", "291"]) assert.deepStrictEqual([w[nr].typ, w[nr].rodzic], ["akcja", "319"], nr);
+  assert.ok(g.krawedzie.every(([a, b]) => w[a].typ === "miejsce" && w[b].typ === "miejsce"));
+  assert.ok(g.wiazania.some(([a, b]) => a === "319" && b === "69"));
+});
+
+test("graf wędrówki: pierwszy paragraf jest miejscem, nawet gdy wygląda na akcję", () => {
+  const g = s.grafWedrowki({ ...s.nowaGra(), historia: ["96"], akapit: "96" }, KSIEGA);
+  assert.strictEqual(g.wezly[0].typ, "miejsce");
 });

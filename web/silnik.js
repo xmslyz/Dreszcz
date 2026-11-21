@@ -753,23 +753,66 @@ function wyjscia(akapit) {
  *   krawędzie – przejścia, które gracz naprawdę wykonał (bez powtórzeń).
  * Niczego nie zdradza: o niezbadanych wyjściach mówi tylko, ile ich jest.
  */
+// Po czym poznać miejsce (korytarz, komnatę, skrzyżowanie), a po czym wydarzenie w nim.
+const KIERUNEK = /północ|południ|wsch[oó]d|zach[oó]d/i;
+const PRZYBYCIE = /^\P{L}*(Wchodzisz|Dochodzisz|Zbliżasz się|Idziesz|Korytarz|Krótki|Długi|Po (kilku|pewnym|kilkunastu|przejściu|długim)|Docierasz|Stajesz|Otwierasz|Przechodzisz|Komnata|W niewielkiej|Schodzisz|Opuszczasz|Przejście|Kopnij|Cicho wchodzisz|Robisz kilk|Udało ci się dotrzeć|Tunel|Drzwi|Skręcasz|Maszerujesz|Ruszasz|Wkraczasz|Jesteś|Wracasz|Możesz (iść|pójść))/iu;
+const LOKAL = /korytarz|skrzyżowani|komnat|pieczar|jaskini|pok[oó]j|drzwi|tunel|schod|zaułk/i;
+
+/**
+ * Czy paragraf jest MIEJSCEM na mapie? Reszta to AKCJE: walki, znaleziska, rozmowy,
+ * rzuty – rzeczy, które dzieją się w jakimś miejscu.
+ * Kolejność: 1) pole "miejsce" w księdze rozstrzyga zawsze (ręczna poprawka),
+ * 2) korytarze, 3) co najmniej dwa wyjścia opisane kierunkami świata,
+ * 4) tekst zaczyna się od dojścia dokądś i od razu nazywa lokal.
+ * Punkty 2–4 to zgadywanie po tekście – trafne zwykle, nie zawsze.
+ */
+function czyMiejsce(akapit) {
+  if (!akapit) return false;
+  if (typeof akapit.miejsce === "boolean") return akapit.miejsce;
+  if (akapit.korytarz) return true;
+  if ((akapit.edges ?? []).filter((e) => KIERUNEK.test(e.label ?? "")).length >= 2) return true;
+  const tekst = akapit.text ?? "";
+  return PRZYBYCIE.test(tekst) && LOKAL.test(tekst.slice(0, 160));
+}
+
+/**
+ * Mapa wędrówki z historii gry.
+ *   wezly     – odwiedzone paragrafy; typ "miejsce" albo "akcja"; akcja ma "rodzic"
+ *               (miejsce, w którym się wydarzyła)
+ *   krawedzie – drogi między miejscami [skąd, dokąd]
+ *   wiazania  – [miejsce, akcja]: co wydarzyło się gdzie
+ */
 function grafWedrowki(stan, ksiega) {
   const odwiedziny = new Map();          // Map ≈ dict z zachowaną kolejnością
   for (const nr of stan.historia) odwiedziny.set(nr, (odwiedziny.get(nr) ?? 0) + 1);
 
+  const typ = new Map();
+  const rodzic = new Map();
   const krawedzie = new Map();
-  for (let i = 1; i < stan.historia.length; i++) {
-    const [a, b] = [stan.historia[i - 1], stan.historia[i]];
-    if (a !== b) krawedzie.set(`${a}>${b}`, [a, b]);
+  const wiazania = new Map();
+  let tu = null;                         // miejsce, w którym teraz „stoimy”
+  for (const nr of stan.historia) {
+    // Pierwszy paragraf zawsze jest miejscem – akcja musi mieć gdzie się dziać.
+    const miejsce = tu === null || czyMiejsce(ksiega[nr]);
+    if (!typ.has(nr)) typ.set(nr, miejsce ? "miejsce" : "akcja");
+    if (typ.get(nr) === "miejsce") {
+      if (tu !== null && tu !== nr) krawedzie.set(`${tu}>${nr}`, [tu, nr]);
+      tu = nr;
+    } else {
+      if (!rodzic.has(nr)) rodzic.set(nr, tu);
+      wiazania.set(`${tu}>${nr}`, [tu, nr]);
+    }
   }
 
   const wezly = [...odwiedziny].map(([id, ile]) => ({
     id,
+    typ: typ.get(id),
+    rodzic: rodzic.get(id) ?? null,
     odwiedzin: ile,
     biezacy: id === stan.akapit,
     niezbadane: wyjscia(ksiega[id]).filter((t) => !odwiedziny.has(t)).length,
   }));
-  return { wezly, krawedzie: [...krawedzie.values()] };
+  return { wezly, krawedzie: [...krawedzie.values()], wiazania: [...wiazania.values()] };
 }
 
 /** Pierwsze zdanie paragrafu – do podpisu na mapie. */
@@ -870,6 +913,7 @@ if (typeof module !== "undefined") {
     oczkaTutaj, czekaNaKosci, rzucKoscia, ileTrafien, wykrywaczPotrzasniecia,
     losowaZZiarnem, tajnaNumeracja, przepiszNumery,
     glebokosci, losujSpotkanie, opisWalki, WEDRUJACE,
+    czyMiejsce,
     maksStawka, postawZaklad,
     wyjscia, grafWedrowki, pierwszeZdanie, pamiecPozwala, pamiecRozstrzyga,
     ELIKSIRY, wybierzEliksir, moznaPicEliksir, wypijEliksir,

@@ -69,7 +69,7 @@ Na Macu: kod w `~/DEV/Dreszcz`, archiwum starej kopii w `~/DEV/Dreszcz ARCH`
 ## 4. Polecenia
 
 ```
-node --test web/silnik.test.js      # testy silnika (91)
+node --test web/silnik.test.js      # testy silnika (94)
 python3 -m unittest -v test_ksiega  # testy książki (2)
 python3 -m unittest test_game_mechanics  # stara wersja Pythonowa (11), poza workflow
 python3 sprawdz_ksiege.py           # oczekiwane: „Książka spójna.”
@@ -132,6 +132,12 @@ i silnik zawsze używają prawdziwych numerów; zamiana jest tylko przy rysowani
 `nr()` w `index.html` i `przepiszNumery()` dla tekstu. Każde nowe miejsce, które
 pokazuje numer paragrafu, musi przejść przez `nr()`.
 
+Mapa: `czyMiejsce(akapit)` dzieli paragrafy na miejsca i akcje. Zgaduje po tekście
+(korytarz, wyjścia z kierunkami świata, „Wchodzisz do komnaty…”); pole `"miejsce": true/false`
+w księdze rozstrzyga ręcznie. `grafWedrowki()` zwraca `wezly` (z `typ` i `rodzic`),
+`krawedzie` (drogi między miejscami) i `wiazania` (miejsce–akcja). Układ siłowy dotyczy
+tylko miejsc; akcje rozstawia `rozstawAkcje()` w `index.html`.
+
 Wędrujące potwory: `stan.spotkania` = tryb włączony. Paragraf z `"korytarz": true`
 (44 sztuki) i głębokością ≥ 4 daje 1 szansę na 6, raz na paragraf (`stan.spotkane`).
 Potwór z tabeli `WEDRUJACE` w `silnik.js` (pule od głębokości 4, 15, 30). Opis takiej
@@ -150,10 +156,10 @@ Zasady, których się trzymamy:
 
 ## 6. Stan (20.11.2026)
 
-Ostatni commit z kodem: „Etykiety przycisków” (20.11.2026).
+Ostatni commit z kodem: „Mapa: miejsca i akcje” (20.11.2026).
 
 Zrobione: gra w przeglądarce, walka, PWA na GitHub Pages, kości na ekranie,
-efekty paragrafów, ekwipunek, mapa wędrówki, pamięć odwiedzin, SSS poza walką,
+efekty paragrafów, ekwipunek, mapa wędrówki (kółka = miejsca, kwadraty = akcje), pamięć odwiedzin, SSS poza walką,
 rzuty kością w paragrafach, przejścia zależne od przedmiotów i złota,
 osłona na czas walki (hełm w 2), efekty zależne od rzutu (74, 240, 315),
 hazard (145, 201, 334), liczniki i nagrody (193, 26),
@@ -167,19 +173,16 @@ Znane usterki: brak.
 
 ## 7. Lista wątków
 
-Bieżący: **27**.
+Bieżący: **29**.
 
-- 27\. Zdobyć oficjalną erratę („Razem” nr 40/1987, rubryka „Wszystko Gra”) i porównać
-  z naszymi poprawkami — w sieci jej nie ma (szukane dwa razy, notatki w `ToDo.md`);
-  czeka na zdjęcie strony od Macieja
-- 28\. Mapa: rozróżnić pomieszczenia i akcje — pomieszczenia jako kółka, akcje jako
-  kwadraty powiązane z pomieszczeniem (np. podwójna linia albo figura w figurze);
-  uwaga Macieja: obecna mapa mało pomaga
 - 29\. Pytania, na które wciąż odpowiada gracz zamiast gry: drzwi otwarte/zamknięte
   (200, 224, 247, 270), liczba przepraw przez jezioro (172, 365), który brzeg (335),
   klucz do kraty (366), coś do picia (371)
+- 27\. Zdobyć oficjalną erratę („Razem” nr 40/1987, rubryka „Wszystko Gra”) i porównać
+  z naszymi poprawkami — w sieci jej nie ma (szukane dwa razy, notatki w `ToDo.md`);
+  czeka na zdjęcie strony od Macieja
 
-Zamknięte: 1–26.
+Zamknięte: 1–26, 28.
 
 ## 8. Otwarte ustalenia projektowe
 

@@ -176,10 +176,15 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 .mapa-legenda { font: 500 .72rem/1.5 var(--f-cyfry); color: var(--przygaszony); padding: 0 16px 10px; }
 .wezel { outline: none; cursor: pointer; }
 .wezel:focus-visible circle { stroke: var(--akcent); stroke-width: 3; }
-.wezel circle { fill: var(--karta); stroke: var(--przygaszony); stroke-width: 1.5; }
-.wezel.wielokrotny circle { stroke: var(--atrament); stroke-width: 3; }
-.wezel.biezacy circle { fill: var(--akcent); stroke: var(--akcent); }
-.wezel.wybrany circle { stroke: var(--akcent); stroke-width: 3; }
+.wezel circle, .wezel rect { fill: var(--karta); stroke: var(--przygaszony); stroke-width: 1.5; }
+.wezel.akcja rect { fill: var(--tlo); stroke-width: 1.2; }
+.wezel.akcja text { font-size: 8.5px; }
+.wezel.wielokrotny circle, .wezel.wielokrotny rect { stroke: var(--atrament); stroke-width: 3; }
+.wezel.biezacy circle, .wezel.biezacy rect { fill: var(--akcent); stroke: var(--akcent); }
+.wezel.wybrany circle, .wezel.wybrany rect { stroke: var(--akcent); stroke-width: 3; }
+.wezel:focus-visible rect { stroke: var(--akcent); stroke-width: 3; }
+.wiazanie { stroke: var(--przygaszony); stroke-width: 1; }
+.mapa-podpis .rodzaj { font: 500 .72rem var(--f-cyfry); color: var(--przygaszony); text-transform: uppercase; letter-spacing: .04em; }
 .wezel text { font: 500 10px var(--f-cyfry); fill: var(--atrament); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
 .wezel.biezacy text { fill: var(--tlo); }
 .droga { stroke: var(--przygaszony); stroke-width: 1.3; fill: none; }
@@ -226,7 +231,7 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
   </div>
   <div>
     <p class="mapa-podpis" id="mapa-podpis">Dotknij punktu, by przypomnieć sobie to miejsce.</p>
-    <p class="mapa-legenda">● tu jesteś · gruby pierścień = byłeś kilka razy · przerywane kreski = niezbadane wyjścia</p>
+    <p class="mapa-legenda">○ miejsce · □ akcja w tym miejscu · → droga · ● tu jesteś · gruba obwódka = kilka razy · kreski = niezbadane wyjścia</p>
   </div>
 </div>
 
@@ -762,21 +767,59 @@ function svgEl(tag, atrybuty = {}) {
   return e;
 }
 
-/** Nowy punkt startuje obok paragrafu, z którego do niego przyszliśmy. */
+/** Nowe miejsce startuje obok miejsca, z którego do niego przyszliśmy. */
 function zasiej(graf) {
-  const historia = stan.historia;
-  for (let i = 0; i < historia.length; i++) {
-    const id = historia[i];
-    if (pozycje.has(id)) continue;
-    const rodzic = pozycje.get(historia[i - 1]) ?? { x: 0, y: 0 };
-    const kat = (Number(id) * 2.399) % (2 * Math.PI);   // „złoty kąt” – rozrzut bez losowania
-    pozycje.set(id, { x: rodzic.x + Math.cos(kat) * 70, y: rodzic.y + Math.sin(kat) * 70 });
+  const skad = new Map(graf.krawedzie.map(([a, b]) => [b, a]));
+  for (const w of graf.wezly) {
+    if (w.typ !== "miejsce" || pozycje.has(w.id)) continue;
+    const rodzic = pozycje.get(skad.get(w.id)) ?? { x: 0, y: 0 };
+    const kat = (Number(w.id) * 2.399) % (2 * Math.PI);   // „złoty kąt” – rozrzut bez losowania
+    pozycje.set(w.id, { x: rodzic.x + Math.cos(kat) * DLUGOSC_DROGI, y: rodzic.y + Math.sin(kat) * DLUGOSC_DROGI });
+  }
+}
+
+const DLUGOSC_DROGI = 96;    // odstęp między miejscami – musi zmieścić kwadraty akcji
+const R_MIEJSCA = 14;        // promień kółka
+const BOK_AKCJI = 19;        // bok kwadratu
+
+/**
+ * Akcje nie biorą udziału w układaniu mapy. Każda staje przy swoim miejscu, po stronie
+ * przeciwnej do dróg (żeby ich nie zasłaniać), w wachlarzu; gdy jest ich dużo – w drugim rzędzie.
+ */
+function rozstawAkcje(graf) {
+  const sasiedzi = new Map();
+  for (const [a, b] of graf.krawedzie) {
+    sasiedzi.set(a, [...(sasiedzi.get(a) ?? []), b]);
+    sasiedzi.set(b, [...(sasiedzi.get(b) ?? []), a]);
+  }
+  const przyMiejscu = new Map();
+  for (const w of graf.wezly) {
+    if (w.typ === "akcja") przyMiejscu.set(w.rodzic, [...(przyMiejscu.get(w.rodzic) ?? []), w.id]);
+  }
+  for (const [miejsce, akcje] of przyMiejscu) {
+    const p = pozycje.get(miejsce);
+    // średni kierunek dróg; akcje idą w przeciwną stronę
+    let sx = 0, sy = 0;
+    for (const n of sasiedzi.get(miejsce) ?? []) {
+      const q = pozycje.get(n);
+      const d = Math.hypot(q.x - p.x, q.y - p.y) || 1;
+      sx += (q.x - p.x) / d; sy += (q.y - p.y) / d;
+    }
+    const baza = (sx || sy) ? Math.atan2(-sy, -sx) : -Math.PI / 2;
+    const W_RZEDZIE = 5;
+    akcje.forEach((id, k) => {
+      const rzad = Math.floor(k / W_RZEDZIE), miejsceWRzedzie = k % W_RZEDZIE;
+      const ile = Math.min(akcje.length - rzad * W_RZEDZIE, W_RZEDZIE);
+      const kat = baza + (miejsceWRzedzie - (ile - 1) / 2) * 0.62;
+      const r = R_MIEJSCA + 24 + rzad * (BOK_AKCJI + 6);
+      pozycje.set(id, { x: p.x + Math.cos(kat) * r, y: p.y + Math.sin(kat) * r });
+    });
   }
 }
 
 function rozmiesc(graf, krokow = 300) {
-  const ids = graf.wezly.map((w) => w.id);
-  const DLUGOSC = 70;
+  const ids = graf.wezly.filter((w) => w.typ === "miejsce").map((w) => w.id);   // układają się tylko miejsca
+  const DLUGOSC = DLUGOSC_DROGI;
   for (let krok = 0; krok < krokow; krok++) {
     const temp = 8 * (1 - krok / krokow) + 0.5;   // „stygnięcie”: ruchy coraz mniejsze
     const sila = new Map(ids.map((id) => [id, { x: 0, y: 0 }]));
@@ -785,7 +828,7 @@ function rozmiesc(graf, krokow = 300) {
         const a = pozycje.get(ids[i]), b = pozycje.get(ids[j]);
         let dx = a.x - b.x, dy = a.y - b.y;
         const d2 = Math.max(dx * dx + dy * dy, 1);
-        const f = (DLUGOSC * DLUGOSC) / d2;          // odpychanie
+        const f = (72 * 72) / d2;                    // odpychanie (słabsze niż sprężyna drogi)
         sila.get(ids[i]).x += dx * f / 10; sila.get(ids[i]).y += dy * f / 10;
         sila.get(ids[j]).x -= dx * f / 10; sila.get(ids[j]).y -= dy * f / 10;
       }
@@ -794,7 +837,7 @@ function rozmiesc(graf, krokow = 300) {
       const a = pozycje.get(u), b = pozycje.get(v);
       const dx = b.x - a.x, dy = b.y - a.y;
       const d = Math.hypot(dx, dy) || 1;
-      const f = (d - DLUGOSC) / d * 0.2;            // sprężyna
+      const f = (d - DLUGOSC) / d * 0.3;            // sprężyna
       sila.get(u).x += dx * f; sila.get(u).y += dy * f;
       sila.get(v).x -= dx * f; sila.get(v).y -= dy * f;
     }
@@ -834,6 +877,7 @@ function rysujMape() {
   const graf = grafWedrowki(stan, ksiega);
   zasiej(graf);
   rozmiesc(graf);
+  rozstawAkcje(graf);
   const svg = document.getElementById("mapa-svg");
   svg.replaceChildren();
 
@@ -843,7 +887,21 @@ function rysujMape() {
   defs.append(grot);
   svg.append(defs);
 
-  const R = 14;
+  const R = R_MIEJSCA;
+  // Podwójna kreska: akcja należy do tego miejsca (to nie jest droga).
+  for (const w of graf.wezly) {
+    if (w.typ !== "akcja") continue;
+    const a = pozycje.get(w.rodzic), b = pozycje.get(w.id);
+    const d = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+    const ux = (b.x - a.x) / d, uy = (b.y - a.y) / d;
+    for (const bok of [-1.7, 1.7]) {
+      svg.append(svgEl("line", {
+        class: "wiazanie",
+        x1: a.x + ux * R - uy * bok, y1: a.y + uy * R + ux * bok,
+        x2: b.x - ux * (BOK_AKCJI / 2) - uy * bok, y2: b.y - uy * (BOK_AKCJI / 2) + ux * bok,
+      }));
+    }
+  }
   for (const [u, v] of graf.krawedzie) {
     const a = pozycje.get(u), b = pozycje.get(v);
     const d = Math.hypot(b.x - a.x, b.y - a.y) || 1;
@@ -856,13 +914,16 @@ function rysujMape() {
 
   for (const w of graf.wezly) {
     const p = pozycje.get(w.id);
-    const g = svgEl("g", { class: "wezel" + (w.biezacy ? " biezacy" : "") + (w.odwiedzin > 1 ? " wielokrotny" : ""), tabindex: "0", role: "button" });
-    // kikuty niezbadanych wyjść – skierowane od środka mapy na zewnątrz
-    for (let k = 0; k < Math.min(w.niezbadane, 4); k++) {
+    const akcja = w.typ === "akcja";
+    const g = svgEl("g", { class: "wezel " + w.typ + (w.biezacy ? " biezacy" : "") + (w.odwiedzin > 1 ? " wielokrotny" : ""), tabindex: "0", role: "button" });
+    // kikuty niezbadanych wyjść – tylko przy miejscach, skierowane od środka mapy na zewnątrz
+    for (let k = 0; !akcja && k < Math.min(w.niezbadane, 4); k++) {
       const kat = Math.atan2(p.y, p.x) + (k - (Math.min(w.niezbadane, 4) - 1) / 2) * 0.6;
       g.append(svgEl("line", { class: "kikut", x1: p.x + Math.cos(kat) * R, y1: p.y + Math.sin(kat) * R, x2: p.x + Math.cos(kat) * (R + 12), y2: p.y + Math.sin(kat) * (R + 12) }));
     }
-    g.append(svgEl("circle", { cx: p.x, cy: p.y, r: R }));
+    g.append(akcja
+      ? svgEl("rect", { x: p.x - BOK_AKCJI / 2, y: p.y - BOK_AKCJI / 2, width: BOK_AKCJI, height: BOK_AKCJI, rx: 3 })
+      : svgEl("circle", { cx: p.x, cy: p.y, r: R }));
     const t = svgEl("text", { x: p.x, y: p.y });
     t.textContent = nr(w.id);
     g.append(t);
@@ -870,7 +931,7 @@ function rysujMape() {
       svg.querySelectorAll(".wybrany").forEach((x) => x.classList.remove("wybrany"));
       g.classList.add("wybrany");
       const podpis = document.getElementById("mapa-podpis");
-      podpis.replaceChildren(el("b", "", nr(w.id)), document.createTextNode(przepiszNumery(pierwszeZdanie(ksiega[w.id]), numeracja)));
+      podpis.replaceChildren(el("b", "", nr(w.id)), el("span", "rodzaj", akcja ? `akcja w ${nr(w.rodzic)} · ` : "miejsce · "), document.createTextNode(przepiszNumery(pierwszeZdanie(ksiega[w.id]), numeracja)));
       if (w.odwiedzin > 1) podpis.append(el("span", "uwaga", ` (byłeś tu ${w.odwiedzin} razy)`));
     };
     g.addEventListener("click", pokaz);
